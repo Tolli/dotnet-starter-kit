@@ -1,0 +1,12 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <RootNamespace>FSH.Starter.WebApi.Booking.Infrastructure</RootNamespace>
+    <AssemblyName>FSH.Starter.WebApi.Booking.Infrastructure</AssemblyName>
+  </PropertyGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\..\..\framework\Infrastructure\Infrastructure.csproj" />
+    <ProjectReference Include="..\Booking.Application\Booking.Application.csproj" />
+  </ItemGroup>
+
+</Project>

@@ -186,6 +186,7 @@ csharp_style_prefer_utf8_string_literals = true:suggestion
 dotnet_diagnostic.CA1032.severity = none
 dotnet_diagnostic.CA1812.severity = none
 dotnet_diagnostic.S6667.severity = none
+csharp_prefer_system_threading_lock = true:suggestion
 
 #### Naming styles ####
 [*.{cs,vb}]

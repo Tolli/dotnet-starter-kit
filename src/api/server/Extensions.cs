@@ -4,6 +4,8 @@ using Carter;
 using FluentValidation;
 using FSH.Starter.WebApi.Catalog.Application;
 using FSH.Starter.WebApi.Catalog.Infrastructure;
+using FSH.Starter.WebApi.Booking.Application;
+using FSH.Starter.WebApi.Booking.Infrastructure;
 using FSH.Starter.WebApi.Todo;
 
 namespace FSH.Starter.WebApi.Host;
@@ -18,7 +20,8 @@ public static class Extensions
         var assemblies = new Assembly[]
         {
             typeof(CatalogMetadata).Assembly,
-            typeof(TodoModule).Assembly
+            typeof(TodoModule).Assembly,
+            typeof(BookingMetadata).Assembly
         };
 
         //register validators
@@ -33,12 +36,14 @@ public static class Extensions
         //register module services
         builder.RegisterCatalogServices();
         builder.RegisterTodoServices();
+        builder.RegisterBookingServices();
 
         //add carter endpoint modules
         builder.Services.AddCarter(configurator: config =>
         {
             config.WithModule<CatalogModule.Endpoints>();
             config.WithModule<TodoModule.Endpoints>();
+            config.WithModule<BookingModule.Endpoints>();
         });
 
         return builder;
@@ -51,6 +56,7 @@ public static class Extensions
         //register modules
         app.UseCatalogModule();
         app.UseTodoModule();
+        app.UseBookingModule();
 
         //register api versions
         var versions = app.NewApiVersionSet()

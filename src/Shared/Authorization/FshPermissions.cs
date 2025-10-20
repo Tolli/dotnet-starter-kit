@@ -44,6 +44,30 @@ public static class FshPermissions
         new("Delete Brands", FshActions.Delete, FshResources.Brands),
         new("Export Brands", FshActions.Export, FshResources.Brands),
 
+        //customers
+        new("View Customers", FshActions.View, FshResources.Customers, IsBasic: true),
+        new("Search Customers", FshActions.Search, FshResources.Customers, IsBasic: true),
+        new("Create Customers", FshActions.Create, FshResources.Customers),
+        new("Update Customers", FshActions.Update, FshResources.Customers),
+        new("Delete Customers", FshActions.Delete, FshResources.Customers),
+        new("Export Customers", FshActions.Export, FshResources.Customers),
+
+        //courtrentals
+        new("View CourtRentals", FshActions.View, FshResources.CourtRentals, IsBasic: true),
+        new("Search CourtRentals", FshActions.Search, FshResources.CourtRentals, IsBasic: true),
+        new("Create CourtRentals", FshActions.Create, FshResources.CourtRentals),
+        new("Update CourtRentals", FshActions.Update, FshResources.CourtRentals),
+        new("Delete CourtRentals", FshActions.Delete, FshResources.CourtRentals),
+        new("Export CourtRentals", FshActions.Export, FshResources.CourtRentals),
+
+        //groups
+        new("View Groups", FshActions.View, FshResources.Groups, IsBasic: true),
+        new("Search Groups", FshActions.Search, FshResources.Groups, IsBasic: true),
+        new("Create Groups", FshActions.Create, FshResources.Groups),
+        new("Update Groups", FshActions.Update, FshResources.Groups),
+        new("Delete Groups", FshActions.Delete, FshResources.Groups),
+        new("Export Groups", FshActions.Export, FshResources.Groups),
+
         //todos
         new("View Todos", FshActions.View, FshResources.Todos, IsBasic: true),
         new("Search Todos", FshActions.Search, FshResources.Todos, IsBasic: true),
