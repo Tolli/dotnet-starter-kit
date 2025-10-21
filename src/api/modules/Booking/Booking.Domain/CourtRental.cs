@@ -12,8 +12,6 @@ public class CourtRental : AuditableEntity, IAggregateRoot
     public string Duration { get; private set; }
     public DateTime StartDate { get; private set; }
     public DateTime EndDate { get; private set; }
-
-
     public Guid? GroupId { get; private set; }
     public virtual Group Group { get; private set; } = default!;
 

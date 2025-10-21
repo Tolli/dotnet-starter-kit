@@ -96,6 +96,10 @@
                         {
                             <MudCheckBox T="bool" Value="GetBooleanValue(field.ValueFunc(context))" ReadOnly Color="Color.Secondary"></MudCheckBox>
                         }
+                        else if (field.Type == typeof(DateTime))
+                        {
+                            <MudTd DataLabel="Date">@FormatDateTime(@field.ValueFunc(context))</MudTd>
+                        }
                         else
                         {
                             <MudHighlighter Text="@field.ValueFunc(context)?.ToString()" HighlightedText="@SearchString" />

@@ -3,6 +3,7 @@ using Blazored.LocalStorage;
 using FSH.Starter.Blazor.Infrastructure.Api;
 using FSH.Starter.Blazor.Infrastructure.Auth;
 using FSH.Starter.Blazor.Infrastructure.Auth.Jwt;
+using FSH.Starter.Blazor.Infrastructure.NoonaApi;
 using FSH.Starter.Blazor.Infrastructure.Notifications;
 using FSH.Starter.Blazor.Infrastructure.Preferences;
 using Microsoft.Extensions.Configuration;
@@ -13,7 +14,8 @@ using MudBlazor.Services;
 namespace FSH.Starter.Blazor.Infrastructure;
 public static class Extensions
 {
-    private const string ClientName = "FullStackHero.API";
+    private const string ClientName = "TBR.API";
+    private const string NoonaClientName = "Noona.API";
     public static IServiceCollection AddClientServices(this IServiceCollection services, IConfiguration config)
     {
         services.AddMudServices(configuration =>
@@ -27,7 +29,17 @@ public static class Extensions
         services.AddBlazoredLocalStorage();
         services.AddAuthentication(config);
         services.AddTransient<IApiClient, ApiClient>();
+        services.AddTransient<INoonaApiClient, NoonaApiClient>();
         services.AddHttpClient(ClientName, client =>
+        {
+            client.DefaultRequestHeaders.AcceptLanguage.Clear();
+            client.DefaultRequestHeaders.AcceptLanguage.ParseAdd(CultureInfo.DefaultThreadCurrentCulture?.TwoLetterISOLanguageName);
+            client.BaseAddress = new Uri(config["ApiBaseUrl"]!);
+        })
+           .AddHttpMessageHandler<JwtAuthenticationHeaderHandler>()
+           .Services
+           .AddScoped(sp => sp.GetRequiredService<IHttpClientFactory>().CreateClient(ClientName));
+        services.AddHttpClient(NoonaClientName, client =>
         {
             client.DefaultRequestHeaders.AcceptLanguage.Clear();
             client.DefaultRequestHeaders.AcceptLanguage.ParseAdd(CultureInfo.DefaultThreadCurrentCulture?.TwoLetterISOLanguageName);

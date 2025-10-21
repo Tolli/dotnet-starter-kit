@@ -123,6 +123,15 @@ public partial class EntityTable<TEntity, TId, TRequest>
         }
     }
 
+    private static string FormatDateTime(object valueFunc)
+    {
+        if(valueFunc is DateTime dateValue)
+        {
+            return dateValue.ToString("dd/MM/yyyy");
+        }
+        return null;
+    }
+
     private static bool GetBooleanValue(object valueFunc)
     {
         if (valueFunc is bool boolValue)
