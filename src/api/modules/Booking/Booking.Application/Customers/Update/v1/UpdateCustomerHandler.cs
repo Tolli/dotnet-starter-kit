@@ -16,7 +16,7 @@ public sealed class UpdateCustomerHandler(
         ArgumentNullException.ThrowIfNull(request);
         var customer = await repository.GetByIdAsync(request.Id, cancellationToken);
         _ = customer ?? throw new CustomerNotFoundException(request.Id);
-        var updatedCustomer = customer.Update(request.Name, request.Description, request.Price);
+        var updatedCustomer = customer.Update(request.Name, request.ClubNumber, request.Ssn, request.Address, request.Notes, request.Email, request.PhoneNumber, request.PostalCode);
         await repository.UpdateAsync(updatedCustomer, cancellationToken);
         logger.LogInformation("customer with id : {CustomerId} updated.", customer.Id);
         return new UpdateCustomerResponse(customer.Id);

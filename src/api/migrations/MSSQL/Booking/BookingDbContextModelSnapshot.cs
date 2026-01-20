@@ -29,6 +29,12 @@ namespace FSH.Starter.WebApi.Migrations.MSSQL.Booking
                         .ValueGeneratedOnAdd()
                         .HasColumnType("uniqueidentifier");
 
+                    b.Property<decimal>("Amount")
+                        .HasColumnType("decimal(18,2)");
+
+                    b.Property<int>("Court")
+                        .HasColumnType("int");
+
                     b.Property<DateTimeOffset>("Created")
                         .HasColumnType("datetimeoffset");
 
@@ -41,13 +47,11 @@ namespace FSH.Starter.WebApi.Migrations.MSSQL.Booking
                     b.Property<Guid?>("DeletedBy")
                         .HasColumnType("uniqueidentifier");
 
-                    b.Property<string>("Description")
-                        .HasMaxLength(1000)
-                        .HasColumnType("nvarchar(1000)");
+                    b.Property<decimal>("Discount")
+                        .HasColumnType("decimal(18,2)");
 
-                    b.Property<string>("Duration")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
+                    b.Property<int>("Duration")
+                        .HasColumnType("int");
 
                     b.Property<DateTime>("EndDate")
                         .HasColumnType("datetime2");
@@ -61,39 +65,42 @@ namespace FSH.Starter.WebApi.Migrations.MSSQL.Booking
                     b.Property<Guid?>("LastModifiedBy")
                         .HasColumnType("uniqueidentifier");
 
-                    b.Property<string>("Name")
-                        .IsRequired()
-                        .HasMaxLength(100)
-                        .HasColumnType("nvarchar(100)");
-
-                    b.Property<decimal>("Price")
-                        .HasColumnType("decimal(18,2)");
-
                     b.Property<DateTime>("StartDate")
                         .HasColumnType("datetime2");
+
+                    b.Property<TimeSpan>("StartTime")
+                        .HasColumnType("time");
 
                     b.Property<string>("TenantId")
                         .IsRequired()
                         .HasMaxLength(64)
                         .HasColumnType("nvarchar(64)");
 
-                    b.Property<string>("Time")
+                    b.Property<string>("Weekday")
                         .IsRequired()
-                        .HasColumnType("nvarchar(max)");
+                        .HasColumnType("nvarchar(450)");
 
                     b.HasKey("Id");
 
                     b.HasIndex("GroupId");
+
+                    b.HasIndex("Weekday", "StartTime", "Court", "StartDate", "EndDate");
 
                     b.ToTable("CourtRentals", "booking");
 
                     b.HasAnnotation("Finbuckle:MultiTenant", true);
                 });
 
-            modelBuilder.Entity("FSH.Starter.WebApi.Booking.Domain.Customer", b =>
+            modelBuilder.Entity("FSH.Starter.WebApi.Booking.Domain.CourtRentalSession", b =>
                 {
                     b.Property<Guid>("Id")
                         .ValueGeneratedOnAdd()
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<int>("Court")
+                        .HasColumnType("int");
+
+                    b.Property<Guid?>("CourtRentalId")
                         .HasColumnType("uniqueidentifier");
 
                     b.Property<DateTimeOffset>("Created")
@@ -108,9 +115,134 @@ namespace FSH.Starter.WebApi.Migrations.MSSQL.Booking
                     b.Property<Guid?>("DeletedBy")
                         .HasColumnType("uniqueidentifier");
 
-                    b.Property<string>("Description")
-                        .HasMaxLength(1000)
-                        .HasColumnType("nvarchar(1000)");
+                    b.Property<DateTime>("EndDate")
+                        .HasColumnType("datetime2");
+
+                    b.Property<DateTimeOffset>("LastModified")
+                        .HasColumnType("datetimeoffset");
+
+                    b.Property<Guid?>("LastModifiedBy")
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<DateTime>("StartDate")
+                        .HasColumnType("datetime2");
+
+                    b.Property<string>("TenantId")
+                        .IsRequired()
+                        .HasMaxLength(64)
+                        .HasColumnType("nvarchar(64)");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("CourtRentalId");
+
+                    b.HasIndex("Court", "StartDate", "EndDate");
+
+                    b.ToTable("CourtRentalSessions", "booking");
+
+                    b.HasAnnotation("Finbuckle:MultiTenant", true);
+                });
+
+            modelBuilder.Entity("FSH.Starter.WebApi.Booking.Domain.CourtRentalShare", b =>
+                {
+                    b.Property<Guid>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<decimal>("AmountPaid")
+                        .HasPrecision(18)
+                        .HasColumnType("decimal(18,0)");
+
+                    b.Property<decimal>("AmountTotal")
+                        .HasPrecision(18)
+                        .HasColumnType("decimal(18,0)");
+
+                    b.Property<Guid>("CourtRentalId")
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<DateTimeOffset>("Created")
+                        .HasColumnType("datetimeoffset");
+
+                    b.Property<Guid>("CreatedBy")
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<Guid>("CustomerId")
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<DateTimeOffset?>("Deleted")
+                        .HasColumnType("datetimeoffset");
+
+                    b.Property<Guid?>("DeletedBy")
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<decimal>("Discount")
+                        .HasColumnType("decimal(18,2)");
+
+                    b.Property<DateTime>("DueDate")
+                        .HasColumnType("datetime2");
+
+                    b.Property<string>("ExternalReference")
+                        .HasMaxLength(100)
+                        .HasColumnType("nvarchar(100)");
+
+                    b.Property<bool>("IsPaid")
+                        .HasColumnType("bit");
+
+                    b.Property<DateTimeOffset>("LastModified")
+                        .HasColumnType("datetimeoffset");
+
+                    b.Property<Guid?>("LastModifiedBy")
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<DateTime>("PaidDate")
+                        .HasColumnType("datetime2");
+
+                    b.Property<string>("TenantId")
+                        .IsRequired()
+                        .HasMaxLength(64)
+                        .HasColumnType("nvarchar(64)");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("CourtRentalId");
+
+                    b.HasIndex("CustomerId");
+
+                    b.ToTable("CourtRentalShares", "booking");
+
+                    b.HasAnnotation("Finbuckle:MultiTenant", true);
+                });
+
+            modelBuilder.Entity("FSH.Starter.WebApi.Booking.Domain.Customer", b =>
+                {
+                    b.Property<Guid>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<string>("Address")
+                        .HasMaxLength(200)
+                        .HasColumnType("nvarchar(200)");
+
+                    b.Property<string>("ClubNumber")
+                        .IsRequired()
+                        .HasMaxLength(20)
+                        .HasColumnType("nvarchar(20)");
+
+                    b.Property<DateTimeOffset>("Created")
+                        .HasColumnType("datetimeoffset");
+
+                    b.Property<Guid>("CreatedBy")
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<DateTimeOffset?>("Deleted")
+                        .HasColumnType("datetimeoffset");
+
+                    b.Property<Guid?>("DeletedBy")
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<string>("Email")
+                        .HasMaxLength(100)
+                        .HasColumnType("nvarchar(100)");
 
                     b.Property<DateTimeOffset>("LastModified")
                         .HasColumnType("datetimeoffset");
@@ -123,8 +255,21 @@ namespace FSH.Starter.WebApi.Migrations.MSSQL.Booking
                         .HasMaxLength(100)
                         .HasColumnType("nvarchar(100)");
 
-                    b.Property<decimal>("Price")
-                        .HasColumnType("decimal(18,2)");
+                    b.Property<string>("Notes")
+                        .HasMaxLength(1000)
+                        .HasColumnType("nvarchar(1000)");
+
+                    b.Property<string>("PhoneNumber")
+                        .HasMaxLength(20)
+                        .HasColumnType("nvarchar(20)");
+
+                    b.Property<string>("PostalCode")
+                        .HasMaxLength(3)
+                        .HasColumnType("nvarchar(3)");
+
+                    b.Property<string>("Ssn")
+                        .HasMaxLength(20)
+                        .HasColumnType("nvarchar(20)");
 
                     b.Property<string>("TenantId")
                         .IsRequired()
@@ -191,6 +336,10 @@ namespace FSH.Starter.WebApi.Migrations.MSSQL.Booking
                         .ValueGeneratedOnAdd()
                         .HasColumnType("uniqueidentifier");
 
+                    b.Property<decimal>("Amount")
+                        .HasPrecision(18, 2)
+                        .HasColumnType("decimal(18,2)");
+
                     b.Property<DateTimeOffset>("Created")
                         .HasColumnType("datetimeoffset");
 
@@ -206,6 +355,10 @@ namespace FSH.Starter.WebApi.Migrations.MSSQL.Booking
                     b.Property<Guid?>("DeletedBy")
                         .HasColumnType("uniqueidentifier");
 
+                    b.Property<decimal>("Discount")
+                        .HasPrecision(18, 2)
+                        .HasColumnType("decimal(18,2)");
+
                     b.Property<Guid>("GroupId")
                         .HasColumnType("uniqueidentifier");
 
@@ -217,14 +370,6 @@ namespace FSH.Starter.WebApi.Migrations.MSSQL.Booking
 
                     b.Property<Guid?>("LastModifiedBy")
                         .HasColumnType("uniqueidentifier");
-
-                    b.Property<decimal>("Percentage")
-                        .HasPrecision(8, 5)
-                        .HasColumnType("decimal(8,5)");
-
-                    b.Property<decimal>("Price")
-                        .HasPrecision(18, 2)
-                        .HasColumnType("decimal(18,2)");
 
                     b.Property<string>("TenantId")
                         .IsRequired()
@@ -242,14 +387,108 @@ namespace FSH.Starter.WebApi.Migrations.MSSQL.Booking
                     b.HasAnnotation("Finbuckle:MultiTenant", true);
                 });
 
+            modelBuilder.Entity("FSH.Starter.WebApi.Booking.Domain.Receipt", b =>
+                {
+                    b.Property<Guid>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<decimal>("AmountPaid")
+                        .HasPrecision(18)
+                        .HasColumnType("decimal(18,0)");
+
+                    b.Property<decimal>("AmountTotal")
+                        .HasPrecision(18)
+                        .HasColumnType("decimal(18,0)");
+
+                    b.Property<DateTimeOffset>("Created")
+                        .HasColumnType("datetimeoffset");
+
+                    b.Property<Guid>("CreatedBy")
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<DateTimeOffset?>("Deleted")
+                        .HasColumnType("datetimeoffset");
+
+                    b.Property<Guid?>("DeletedBy")
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<decimal>("Discount")
+                        .HasColumnType("decimal(18,2)");
+
+                    b.Property<DateTime>("DueDate")
+                        .HasColumnType("datetime2");
+
+                    b.Property<string>("ExternalReference")
+                        .HasMaxLength(100)
+                        .HasColumnType("nvarchar(100)");
+
+                    b.Property<Guid>("GroupMemberId")
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<bool>("IsPaid")
+                        .HasColumnType("bit");
+
+                    b.Property<DateTimeOffset>("LastModified")
+                        .HasColumnType("datetimeoffset");
+
+                    b.Property<Guid?>("LastModifiedBy")
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<DateTime>("ReceiptDate")
+                        .HasColumnType("datetime2");
+
+                    b.Property<string>("TenantId")
+                        .IsRequired()
+                        .HasMaxLength(64)
+                        .HasColumnType("nvarchar(64)");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("GroupMemberId");
+
+                    b.ToTable("Receipts", "booking");
+
+                    b.HasAnnotation("Finbuckle:MultiTenant", true);
+                });
+
             modelBuilder.Entity("FSH.Starter.WebApi.Booking.Domain.CourtRental", b =>
                 {
                     b.HasOne("FSH.Starter.WebApi.Booking.Domain.Group", "Group")
                         .WithMany("CourtRentals")
                         .HasForeignKey("GroupId")
-                        .OnDelete(DeleteBehavior.SetNull);
+                        .OnDelete(DeleteBehavior.Cascade);
 
                     b.Navigation("Group");
+                });
+
+            modelBuilder.Entity("FSH.Starter.WebApi.Booking.Domain.CourtRentalSession", b =>
+                {
+                    b.HasOne("FSH.Starter.WebApi.Booking.Domain.CourtRental", "CourtRental")
+                        .WithMany("CourtRentalSessions")
+                        .HasForeignKey("CourtRentalId")
+                        .OnDelete(DeleteBehavior.Cascade);
+
+                    b.Navigation("CourtRental");
+                });
+
+            modelBuilder.Entity("FSH.Starter.WebApi.Booking.Domain.CourtRentalShare", b =>
+                {
+                    b.HasOne("FSH.Starter.WebApi.Booking.Domain.CourtRental", "CourtRental")
+                        .WithMany("CourtRentalShares")
+                        .HasForeignKey("CourtRentalId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("FSH.Starter.WebApi.Booking.Domain.Customer", "Customer")
+                        .WithMany("CourtRentalShares")
+                        .HasForeignKey("CustomerId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("CourtRental");
+
+                    b.Navigation("Customer");
                 });
 
             modelBuilder.Entity("FSH.Starter.WebApi.Booking.Domain.GroupMember", b =>
@@ -271,8 +510,28 @@ namespace FSH.Starter.WebApi.Migrations.MSSQL.Booking
                     b.Navigation("Group");
                 });
 
+            modelBuilder.Entity("FSH.Starter.WebApi.Booking.Domain.Receipt", b =>
+                {
+                    b.HasOne("FSH.Starter.WebApi.Booking.Domain.GroupMember", "GroupMember")
+                        .WithMany("Receipts")
+                        .HasForeignKey("GroupMemberId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("GroupMember");
+                });
+
+            modelBuilder.Entity("FSH.Starter.WebApi.Booking.Domain.CourtRental", b =>
+                {
+                    b.Navigation("CourtRentalSessions");
+
+                    b.Navigation("CourtRentalShares");
+                });
+
             modelBuilder.Entity("FSH.Starter.WebApi.Booking.Domain.Customer", b =>
                 {
+                    b.Navigation("CourtRentalShares");
+
                     b.Navigation("Groups");
                 });
 
@@ -281,6 +540,11 @@ namespace FSH.Starter.WebApi.Migrations.MSSQL.Booking
                     b.Navigation("CourtRentals");
 
                     b.Navigation("Members");
+                });
+
+            modelBuilder.Entity("FSH.Starter.WebApi.Booking.Domain.GroupMember", b =>
+                {
+                    b.Navigation("Receipts");
                 });
 #pragma warning restore 612, 618
         }

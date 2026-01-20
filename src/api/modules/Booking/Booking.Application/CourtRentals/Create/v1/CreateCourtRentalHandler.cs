@@ -13,7 +13,7 @@ public sealed class CreateCourtRentalHandler(
     public async Task<CreateCourtRentalResponse> Handle(CreateCourtRentalCommand request, CancellationToken cancellationToken)
     {
         ArgumentNullException.ThrowIfNull(request);
-        var courtrental = CourtRental.Create(request.Name!, request.Description, request.Price, request.GroupId);
+        var courtrental = CourtRental.Create(request.StartDate, request.StartTime, request.EndDate, Enum.Parse<DayOfWeek>(request.Weekday), request.Amount, request.Discount, request.Duration, request.Court, request.GroupId);
         await repository.AddAsync(courtrental, cancellationToken);
         logger.LogInformation("courtrental created {CourtRentalId}", courtrental.Id);
         return new CreateCourtRentalResponse(courtrental.Id);

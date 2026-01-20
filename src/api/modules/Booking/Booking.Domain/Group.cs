@@ -11,8 +11,7 @@ public class Group : AuditableEntity, IAggregateRoot
 
     public DateTime EndDate { get; private set; }
 
-    public virtual ICollection<GroupMember>? Members { get; private set; } = new HashSet<GroupMember>();
-
+    public virtual ICollection<GroupMember> Members { get; private set; } = new HashSet<GroupMember>();
     public virtual ICollection<CourtRental> CourtRentals { get; private set; } = new HashSet<CourtRental>();
 
     private Group() { }

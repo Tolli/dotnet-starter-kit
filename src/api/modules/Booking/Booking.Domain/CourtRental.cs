@@ -3,61 +3,98 @@ using FSH.Framework.Core.Domain.Contracts;
 using FSH.Starter.WebApi.Booking.Domain.Events;
 
 namespace FSH.Starter.WebApi.Booking.Domain;
-public class CourtRental : AuditableEntity, IAggregateRoot
+public partial class CourtRental : AuditableEntity, IAggregateRoot
 {
-    public string Name { get; private set; } = string.Empty;
-    public string? Description { get; private set; }
-    public decimal Price { get; private set; }
-    public string Time { get; private set; }
-    public string Duration { get; private set; }
     public DateTime StartDate { get; private set; }
+    public TimeSpan StartTime { get; private set; }
+    public DayOfWeek Weekday { get; private set; }
+    public decimal Amount { get; private set; }
+    public decimal Discount { get; private set; }
+    public int Duration { get; private set; }
     public DateTime EndDate { get; private set; }
     public Guid? GroupId { get; private set; }
     public virtual Group Group { get; private set; } = default!;
+    public int Court { get; private set; }
+    
+    public virtual ICollection<CourtRentalShare> CourtRentalShares { get; private set; } = new HashSet<CourtRentalShare>();
+    public virtual ICollection<CourtRentalSession> CourtRentalSessions { get; private set; } = new HashSet<CourtRentalSession>();
 
-    private CourtRental() { }
-
-    private CourtRental(Guid id, string name, string? description, decimal price, Guid? groupId)
+    private CourtRental(Guid id, DateTime startDate, TimeSpan startTime, DateTime endDate, DayOfWeek weekday, decimal amount, decimal discount, int duration, int court, Guid? groupId)
     {
         Id = id;
-        Name = name;
-        Description = description;
-        Price = price;
+        Court = court;
+        Amount = amount;
+        Discount = discount;
+        StartTime = startTime;
+        Duration = duration;
+        StartDate = startDate;
+        EndDate = endDate;
+        Weekday = weekday;
         GroupId = groupId;
 
         QueueDomainEvent(new CourtRentalCreated { CourtRental = this });
     }
 
-    public static CourtRental Create(string name, string? description, decimal price, Guid? groupId)
+    public static CourtRental Create(DateTime startDate, TimeSpan startTime, DateTime endDate, DayOfWeek weekday, decimal amount, decimal discount, int duration, int court, Guid? groupId)
     {
-        return new CourtRental(Guid.NewGuid(), name, description, price, groupId);
+        return new CourtRental(Guid.NewGuid(), startDate, startTime, endDate, weekday, amount, discount, duration, court, groupId);
     }
 
-    public CourtRental Update(string? name, string? description, decimal? price, Guid? brandId)
+    public CourtRental Update(DateTime? startDate, TimeSpan? startTime, DateTime? endDate, DayOfWeek? weekday, decimal? amount, decimal? discount, int? duration, int court, Guid? groupId)
     {
         bool isUpdated = false;
 
-        if (!string.IsNullOrWhiteSpace(name) && !string.Equals(Name, name, StringComparison.OrdinalIgnoreCase))
+        if (Court != court)
         {
-            Name = name;
+            Court = court;
             isUpdated = true;
         }
 
-        if (!string.Equals(Description, description, StringComparison.OrdinalIgnoreCase))
+        if (amount.HasValue && Amount != amount.Value)
         {
-            Description = description;
+            Amount = amount.Value;
             isUpdated = true;
         }
 
-        if (price.HasValue && Price != price.Value)
+        if (discount.HasValue && Discount != discount.Value)
         {
-            Price = price.Value;
+            Discount = discount.Value;
             isUpdated = true;
         }
 
-        if (brandId.HasValue && brandId.Value != Guid.Empty && GroupId != brandId.Value)
+        if (duration.HasValue && duration != Duration)
         {
-            GroupId = brandId.Value;
+            Duration = duration.Value;
+            isUpdated = true;
+        }
+
+        if(weekday.HasValue && Weekday != weekday.Value)
+        {
+            Weekday = weekday.Value;
+            isUpdated = true;
+        }
+
+        if (!string.Equals(StartDate, startDate))
+        {
+            StartDate = startDate ?? StartDate;
+            isUpdated = true;
+        }
+
+        if(!string.Equals(EndDate, endDate))
+        {
+            EndDate = endDate ?? EndDate;
+            isUpdated = true;
+        }
+
+        if (!string.Equals(StartTime, startTime))
+        {
+            StartTime = startTime ?? StartTime;
+            isUpdated = true;
+        }
+
+        if (groupId.HasValue && groupId.Value != Guid.Empty && GroupId != groupId.Value)
+        {
+            GroupId = groupId.Value;
             isUpdated = true;
         }
 

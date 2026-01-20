@@ -13,7 +13,7 @@ public sealed class CreateGroupMemberHandler(
     public async Task<CreateGroupMemberResponse> Handle(CreateGroupMemberCommand request, CancellationToken cancellationToken)
     {
         ArgumentNullException.ThrowIfNull(request);
-        var customer = GroupMember.Create(request.GroupId, request.CustomerId, request.Price, request.Percentage, request.IsContact);
+        var customer = GroupMember.Create(request.GroupId, request.CustomerId, request.Amount, request.Discount, request.IsContact);
         await repository.AddAsync(customer, cancellationToken);
         logger.LogInformation("group member created {GroupMemberId}", customer.Id);
         return new CreateGroupMemberResponse(customer.Id);

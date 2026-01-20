@@ -9,6 +9,7 @@ public class GetCourtRentalSpecs : Specification<CourtRental, CourtRentalRespons
     {
         Query
             .Where(p => p.Id == id)
-            .Include(p => p.Group);
+            .Include(p => p.Group)
+            .Include(p => p.CourtRentalShares);
     }
 }

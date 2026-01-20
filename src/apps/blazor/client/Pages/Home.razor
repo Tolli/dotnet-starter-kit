@@ -5,7 +5,7 @@
     <MudGrid>
         <MudItem xs="12" sm="12" md="12">
             <div class="d-flex justify-center mt-4">
-                 <img src="tbr-logo.png" Style="height:250px" />
+                <img src="tbr-logo.png" Style="height:250px" />
             </div>
         </MudItem>
         <MudItem xs="12" sm="12" md="12">
@@ -13,11 +13,11 @@
         </MudItem>
 
         <MudItem xs="12" sm="12" md="12">
-            <MudText Align="Align.Center" Typo="Typo.h4">Vallarleiga - umsýsla</MudText>            
+            <MudText Align="Align.Center" Typo="Typo.h4">Vallarleiga - umsýsla</MudText>
         </MudItem>
 
         <MudItem xs="12" sm="12" md="12">
-             <MudText Align="Align.Center">Útgáfa 1.0</MudText>
+            <MudText Align="Align.Center">Útgáfa 1.0</MudText>
         </MudItem>
         <MudItem xs="12" sm="12" md="12">
             <MudExpansionPanels>
@@ -26,26 +26,26 @@
                         <MudListItem Text="Heimasíða TBR" Href="https://www.tbr.is" />
                         <MudListItem Text="Heimasíða Noona" Href="https://hq.noona.app/week" />
                     </MudList>
-                </MudExpansionPanel>                
+                </MudExpansionPanel>
                 <MudExpansionPanel Class="mud-table-outlined" Text="User Claims">
                     Application Claims of the currently logged in user
-                     <MudList T="string" Dense="true">
-                @if (Claims is not null)
-                {
-                    @foreach (var claim in Claims)
-                    {
-                        <MudListItem>
-                            <MudChip>
-                                @claim.Type
-                            </MudChip>
-                            @claim.Value
-                        </MudListItem>
-                    }
-                }
-            </MudList>
+                    <MudList T="string" Dense="true">
+                        @if (Claims is not null)
+                        {
+                            @foreach (var claim in Claims)
+                            {
+                                <MudListItem>
+                                    <MudChip>
+                                        @claim.Type
+                                    </MudChip>
+                                    @claim.Value
+                                </MudListItem>
+                            }
+                        }
+                    </MudList>
                 </MudExpansionPanel>
             </MudExpansionPanels>
-        </MudItem>        
+        </MudItem>
     </MudGrid>
 </MudContainer>
 

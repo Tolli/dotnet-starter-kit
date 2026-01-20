@@ -1,0 +1,145 @@
+# kustomization.yaml
+
+apiVersion: kustomize.config.k8s.io/v1beta1
+kind: Kustomization
+
+commonLabels:
+ grafana_dashboard: "1"
+ custom_dashboard: "1"
+
+configMapGenerator:
+
+# Sample dashboard
+# - name: grafana-k8s-pod-count
+#   # specify name of locally downloaded json
+#   files:
+#   - k8s-pod-count.json
+
+# MSSQL
+# - name: grafana-mssql
+#   files:
+#   - mssql.json
+
+# Cashflow Assistant
+# - name: cashflow-assistant-alerts-dev
+#   files:
+#   - CashflowAssistant-Alerts-Dev.json
+
+# - name: cashflowassistant-businessmetrics
+#   files:
+#   - CashflowAssistant-BusinessMetrics.json
+
+# - name: cashflowassistant-detectionsimulations
+#   files:
+#   - CashflowAssistant-DetectionSimulations.json
+
+# - name: cashflowassistant-faultsandjobprocessorinandoutmessages
+#   files:
+#   - CashflowAssistant-FaultsAndJobProcessorInAndOutMessages.json
+
+# - name: cashflowassistant-jaegeraggregations
+#   files:
+#   - CashflowAssistant-JaegerAggregations.json
+  
+# - name: cashflowassistant-patterndetection
+#   files:
+#   - CashflowAssistant-PatternDetection.json
+
+
+# Carbon Insight
+# - name: carboninsight-carbonawareness
+#   files:
+#   - CarbonInsight-CarbonAwareness.json
+
+# - name: carboninsight-carbonawarenesscalcclients
+#   files:
+#   - CarbonInsight-CarbonAwarenessCalcClients.json
+
+# Aggregation Hub
+# - name: aggregation-hub-processes
+#   files:
+#   - Aggregation-Hub-Processes.json
+
+# - name: aggregationhub-asp.net-core-controller-summary
+#   files:
+#   - AggregationHub-ASP.NET-Core-controller-summary.json
+
+# - name: aggregationhub-prometheus-net
+#   files:
+#   - AggregationHub-prometheus-net.json
+
+# - name: cluster-health-dashboard
+#   files:
+#   - cluster-health.json
+# - name: kubernetes-capacity-planning-dashboard
+#   files:
+#   - kubernetes-capacity-planning.json
+- name: nginx-ingress-dashboard
+  files:
+  - nginx-ingress.json
+# - name: waf-blocked-requests-dashboard
+#   files:
+#   - waf-blocked-requests.json
+# - name: rabbitmq-overview-dashboard
+#   files:
+#   - rabbitmq-overview.json
+# - name: namespace-workload-dashboard
+#   files:
+#   - namespace-workload.json
+
+- name: docker-desktop-k8s
+  files:
+  - docker-desktop-k8s.json
+
+- name: mssql-server
+  files:
+  - mssql-server.json
+
+- name: meniga-batches
+  files:
+  - meniga-batches.json
+
+- name: kube-state-metrics
+  files:
+  - kube-state-metrics.json
+
+# - name: node-exporter-full
+#   files:
+#   - node-exporter-full.json
+
+# - name: nbg-shared
+#   files:
+#   - nbg-shared.json  
+
+- name: kubernetes-cluster
+  files:
+  - kubernetes-cluster.json
+
+- name: tempo-operational
+  files:
+  - tempo-operational.json
+
+- name: tempo-reads
+  files:
+  - tempo-reads.json
+
+- name: tempo-resources
+  files:
+  - tempo-resources.json
+
+- name: tempo-rollout-progress
+  files:
+  - tempo-rollout-progress.json
+
+- name: tempo-tenants.json
+  files:
+  - tempo-tenants.json
+
+- name: asp-net-core
+  files:
+  - asp-net-core.json
+
+- name: asp-net
+
+generatorOptions:
+  disableNameSuffixHash: true

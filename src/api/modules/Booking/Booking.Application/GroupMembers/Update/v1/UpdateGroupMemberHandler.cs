@@ -16,7 +16,7 @@ public sealed class UpdateGroupMemberHandler(
         ArgumentNullException.ThrowIfNull(request);
         var groupmember = await repository.GetByIdAsync(request.Id, cancellationToken);
         _ = groupmember ?? throw new GroupMemberNotFoundException(request.Id);
-        var updatedGroupMember = groupmember.Update(request.GroupId, request.CustomerId, request.Price, request.Percentage, request.IsContact);
+        var updatedGroupMember = groupmember.Update(request.GroupId, request.CustomerId, request.Amount, request.Discount, request.IsContact);
         await repository.UpdateAsync(updatedGroupMember, cancellationToken);
         logger.LogInformation("groupmember with id : {GroupMemberId} updated.", groupmember.Id);
         return new UpdateGroupMemberResponse(groupmember.Id);

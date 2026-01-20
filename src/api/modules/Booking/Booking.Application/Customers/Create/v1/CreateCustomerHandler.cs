@@ -13,7 +13,7 @@ public sealed class CreateCustomerHandler(
     public async Task<CreateCustomerResponse> Handle(CreateCustomerCommand request, CancellationToken cancellationToken)
     {
         ArgumentNullException.ThrowIfNull(request);
-        var customer = Customer.Create(request.Name!, request.Description, request.Price, request.GroupId);
+        var customer = Customer.Create(request.Name!, request.ClubNumber, request.Ssn, request.Address, request.Notes, request.Email, request.PhoneNumber, request.PostalCode);
         await repository.AddAsync(customer, cancellationToken);
         logger.LogInformation("customer created {CustomerId}", customer.Id);
         return new CreateCustomerResponse(customer.Id);

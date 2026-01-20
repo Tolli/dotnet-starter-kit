@@ -1,0 +1,42 @@
+broker:
+  replicaCount: 0
+controller:
+  controllerOnly: false
+  persistence:
+    enabled: true
+    size: 10Gi
+    # storageclass: default
+  replicaCount: 1
+  startupProbe:
+    failureThreshold: 30
+    periodSeconds: 10
+extraConfig: |
+  allow.everyone.if.no.acl.found=true
+  authorizer.class.name=org.apache.kafka.metadata.authorizer.StandardAuthorizer
+  super.users=User:admin;User:controller_user;User:inter_broker_user
+  delete.topic.enable=true
+  # This should match the number of controller replicas
+  offsets.topic.replication.factor=1
+  # This is the default and AFAICT the number of controller replicas does not affect it
+  transaction.state.log.replication.factor=1
+kraft:
+  enabled: true
+metrics:
+  kafka:
+    enabled: false
+    enableServiceLinks: false
+  serviceMonitor:
+    enabled: false
+rbac:
+  create: false
+sasl:
+  client:
+    ## Add Kafka client users here
+    ## If this list is modified then make sure to update client-passwords key in kafka-sasl-passwords Secret
+    users:
+      - admin
+      - MENIGA-CORE
+      - MENIGA-INSIGHTS-FACTORY
+      - MENIGA-CASHFLOW-ASSISTANT
+      - MENIGA-SMART-MONEY-RULES
+  existingSecret: kafka-sasl-passwords

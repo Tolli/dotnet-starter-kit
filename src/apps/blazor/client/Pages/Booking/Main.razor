@@ -1,0 +1,173 @@
+﻿@page "/booking/Main"
+
+@inject IDialogService DialogService
+
+
+@* <MudAutocomplete T="CourtRentalResponse"
+                 SearchFunc="Search"
+                 ToStringFunc="@(courtRental => courtRental is null ? null : $"{courtRental.Weekday}")" /> *@
+@* <MudTextField @bind-Value="SearchValue" Immediate="true"
+              Placeholder="@("Leita")" Adornment="Adornment.Start"
+              AdornmentIcon="@Icons.Material.Filled.Search" IconSize="Size.Medium"
+              Style="flex:none!important;margin:0px!important" TextChanged="OnSearchStringChanged">
+</MudTextField> *@
+
+@* <EntityTable @ref="_table" TEntity="CourtRentalResponse" TId="Guid" TRequest="CourtRentalViewModel" Context="@Context">
+    <ExtraActions>
+    </ExtraActions>
+    <AdvancedSearchContent>
+        <!-- Add any advanced search content here if needed -->
+    </AdvancedSearchContent>
+
+    <EditFormContent>
+        @if (!Context.AddEditModal.IsCreate)
+        {
+            <MudItem xs="12" md="6">
+                <MudTextField Value="context.Id" Underline=false ReadOnly Label="CourtRental Id" />
+            </MudItem>
+        }
+        <MudItem xs="12" md="6">
+            <MudTextField Label="Court" For="@(() => context.Court)" @bind-Value="context.Court" />
+        </MudItem>
+        <MudItem xs="12" md="6">
+            <MudTextField Label="Weekday" For="@(() => context.Weekday)" @bind-Value="context.Weekday" />
+        </MudItem>
+        <MudItem xs="12" md="6">
+            <MudTimePicker Label="Time" Editable="true" @bind-Time="context.StartTimeEditor" />
+        </MudItem>
+        <MudItem xs="12" md="6">
+            <MudDatePicker Label="Start Date" DateFormat="dddd, MMM dd, yyyy" @bind-Date="context.StartDate" />
+        </MudItem>
+        <MudItem xs="12" md="6">
+            <MudDatePicker Label="End Date" DateFormat="dddd, MMM dd, yyyy" @bind-Date="context.EndDate" />
+        </MudItem>
+        <MudItem xs="12" md="6">
+            <MudTextField Label="Amount" For="@(() => context.Amount)" @bind-Value="context.Amount" />
+        </MudItem>
+        <MudItem xs="12" md="6">
+            <MudTextField Label="Discount" For="@(() => context.Discount)" @bind-Value="context.Discount" />
+        </MudItem>
+        <MudItem xs="12" md="6">
+            <MudTextField Label="Duration" For="@(() => context.Duration)" @bind-Value="context.Duration" />
+        </MudItem>
+        <MudItem xs="12" md="12">
+            <MudItem>
+                <div>
+                    @if (!Context.AddEditModal.IsCreate)
+                    {
+                        <MudButton HtmlTag="label" Variant="Variant.Filled" Color="Color.Info" Size="Size.Small" Target="_blank"
+                                   StartIcon="@Icons.Material.Filled.RemoveRedEye" Style="margin-left: 5px;">
+                            View
+                        </MudButton>
+
+                        <MudButton HtmlTag="label" Variant="Variant.Filled" Color="Color.Error" Size="Size.Small"
+                                   StartIcon="@Icons.Material.Filled.Delete" Style="margin-left: 5px;">
+                            Delete
+                        </MudButton>
+                    }
+                </div>
+            </MudItem>
+        </MudItem>
+    </EditFormContent>
+
+</EntityTable> *@
+
+<MudGrid Class="d-flex flex-grow-1 gap-4 mt-2" Justify="Justify.FlexStart">
+    <MudItem Class="flex-none d-flex pa-4" width="60px">
+        <MudPaper Height="100px" Width="60px">
+            <MudText Class="mud-secondary-text bold">Dummy</MudText>
+        </MudPaper>
+    </MudItem>
+    <MudItem Class="flex-none d-flex pa-4" width="60px">
+        @{
+            foreach (var courtRental in _results)
+            {
+                <MudPaper Height="100px" Width="60px">
+                    <MudText Class="mud-secondary-text bold">@courtRental.Weekday</MudText>
+                </MudPaper>
+            }
+        }
+        
+    </MudItem>
+</MudGrid>
+
+<MudGrid Class="d-flex flex-grow-1 gap-4 mt-2" Justify="Justify.FlexStart">
+    <MudItem Class="flex-none d-flex pa-4" width="60px">
+        <MudPaper Height="100px" Width="60px">
+            <MudText Class="mud-secondary-text bold">Tími</MudText>
+        </MudPaper>
+    </MudItem>
+    <MudItem Class="flex-auto d-flex pa-4" height="20px" width="20%">
+        <MudPaper Width="100%">
+            <MudText>Völlur 1</MudText>
+        </MudPaper>
+    </MudItem>
+    <MudItem Class="flex-auto d-flex pa-4" height="20px" width="20%">
+        <MudPaper Width="100%">
+            <MudText>Völlur 2</MudText>
+        </MudPaper>
+    </MudItem>
+    <MudItem Class="flex-auto d-flex pa-4" height="20px" width="20%">
+        <MudPaper Width="100%">
+            <MudText>Völlur 3</MudText>
+        </MudPaper>
+    </MudItem>
+    <MudItem Class="flex-auto d-flex pa-4" height="20px" width="20%">
+        <MudPaper Width="100%">
+            <MudText>Völlur 4</MudText>
+        </MudPaper>
+    </MudItem>
+    <MudItem Class="flex-auto d-flex pa-4" height="20px" width="20%">
+        <MudPaper Width="100%">
+            <MudText>Völlur 5</MudText>
+        </MudPaper>
+    </MudItem>
+</MudGrid>
+<MudGrid Class="d-flex flex-grow-1 gap-4 mt-2" Justify="Justify.FlexStart">
+    <MudItem Class="flex-none d-flex pa-4" width="60px">
+        <MudPaper Height="100px" Width="60px">
+            <MudText Class="mud-secondary-text">09.10</MudText>
+        </MudPaper>
+    </MudItem>
+    <MudItem Class="flex-auto d-flex pa-4" height="100px" width="20%">
+        <MudPaper Width="100%">
+            <MudText>Þórhallur</MudText>
+            <MudText>Hrund</MudText>
+            <MudText>Úlfur</MudText>
+            <MudText>Íris</MudText>
+        </MudPaper>
+    </MudItem>
+    <MudItem Class="flex-auto d-flex pa-4" height="100px" width="20%">
+        <MudPaper Width="100%">
+            <MudText>Ekkert</MudText>
+        </MudPaper>
+    </MudItem>
+    <MudItem Class="flex-auto d-flex pa-4" height="100px" width="20%">
+        <MudPaper Width="100%">
+            <MudText>Ekkert</MudText>
+        </MudPaper>
+    </MudItem>
+    <MudItem Class="flex-auto d-flex pa-4" height="100px" width="20%">
+        <MudPaper Width="100%">
+            <MudText>Ekkert</MudText>
+        </MudPaper>
+    </MudItem>
+    <MudItem Class="flex-auto d-flex pa-4" height="100px" width="20%">
+        <MudPaper Width="100%">
+            <MudText>Ekkert</MudText>
+        </MudPaper>
+    </MudItem>
+</MudGrid>
+
+<MudDatePicker Color="Color.Secondary" Label="Start Date" DateFormat="dddd, MMM dd, yyyy" @bind-Date="StartDate" />
+<MudTimePicker Label="Time" Editable="true" @bind-Time="StartTime" />
+<MudSelect T="string?" Label="Customer" @bind-Value="CustomerId">
+    @foreach (var customer in _customers)
+    {
+        <MudSelectItem T="string?" Value="customer.Id">@customer.Name</MudSelectItem>
+    }
+</MudSelect>
+
+<MudButton @onclick="SendEvent" Variant="Variant.Filled" Color="Color.Primary">
+    Create event
+</MudButton>

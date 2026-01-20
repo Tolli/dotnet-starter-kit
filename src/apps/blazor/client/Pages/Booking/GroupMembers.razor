@@ -1,0 +1,114 @@
+﻿@page "/booking/groups/{Id}/members"
+@using FSH.Starter.Shared.Authorization
+
+<PageHeader Title="@_title" Header="@_title" SubHeader="@_description" />
+
+@if (!_loaded)
+{
+    <MudProgressCircular Color="Color.Primary" Indeterminate="true" />
+}
+else
+{
+    <MudTable Hover="true" Outlined Items="_groupMembersList">
+        <ToolBarContent>
+            <div class="justify-center mud-text-align-center">
+                <MudButton Variant="Variant.Filled" DropShadow="false" Color="Color.Info" Class="ml-auto" StartIcon="@Icons.Material.Filled.ArrowBack" Href="/booking/groups">
+                    Back
+                </MudButton>
+                @* @if (_canEditUsers)
+                {
+                    <MudButton Variant="Variant.Filled" DropShadow="false" Color="Color.Primary" Class="ml-auto" OnClick="SaveAsync" StartIcon="@Icons.Material.Filled.Save"
+                        ButtonType="ButtonType.Submit" Style="margin-left: 5px!important;">
+                        Update
+                    </MudButton>
+                } *@
+            </div>
+            <MudSpacer />
+            @if (_canSearchRoles)
+            {
+                <MudTextField @bind-Value="_searchString" Immediate="true" FullWidth=false
+                    Placeholder="Search For Members" Adornment="Adornment.End"
+                    AdornmentIcon="@Icons.Material.Filled.Search" IconSize="Size.Medium" Class="mt-0 mb-3">
+                </MudTextField>
+            }
+        </ToolBarContent>
+        <HeaderContent>
+            <MudTh>
+                <MudTableSortLabel SortBy="new Func<GroupMemberResponse, object?>(x => x.Customer.Name)">Name
+                </MudTableSortLabel>
+            </MudTh>
+            <MudTh>
+                <MudTableSortLabel SortBy="new Func<GroupMemberResponse, object?>(x => x.Customer.ClubNumber)">
+                    ClubNumber
+                </MudTableSortLabel>
+            </MudTh>
+            <MudTh>
+                <MudTableSortLabel SortBy="new Func<GroupMemberResponse, object>(x => x.Amount)">
+                    Amount
+                </MudTableSortLabel>
+            </MudTh>
+        </HeaderContent>
+        <RowTemplate>
+            <MudTd DataLabel="Member Name">
+                <MudHighlighter Text="@context.Customer.Name" HighlightedText="@_searchString" />
+            </MudTd>
+            <MudTd DataLabel="Description">
+                <MudHighlighter Text="@context.Customer.ClubNumber" HighlightedText="@_searchString" />
+            </MudTd>
+            <MudTd DataLabel="Status">
+                <MudText @bind-Value="@context.Amount" Color="Color.Secondary">
+                </MudText>
+            </MudTd>
+        </RowTemplate>
+        <PagerContent>
+            <TablePager />
+        </PagerContent>
+    </MudTable>
+}
+
+@code {
+    [Parameter]
+    public string? Id { get; set; }
+    [CascadingParameter]
+    protected Task<AuthenticationState> AuthState { get; set; } = default!;
+    [Inject]
+    protected IAuthorizationService AuthService { get; set; } = default!;
+    [Inject]
+    protected IApiClient UsersClient { get; set; } = default!;
+
+    private List<GroupMemberResponse> _groupMembersList = default!;
+
+    private string _title = string.Empty;
+    private string _description = string.Empty;
+
+    private string _searchString = string.Empty;
+
+    private bool _canEditUsers;
+    private bool _canSearchRoles;
+    private bool _loaded;
+
+    protected override async Task OnInitializedAsync()
+    {
+       var state = await AuthState;
+
+       _canEditUsers = await AuthService.HasPermissionAsync(state.User, FshActions.Update, FshResources.Groups);
+       _canSearchRoles = await AuthService.HasPermissionAsync(state.User, FshActions.View, FshResources.GroupMembers);
+
+       if (await ApiHelper.ExecuteCallGuardedAsync(
+               () => UsersClient.GetGroupEndpointAsync("1",new Guid(Id!)), Toast, Navigation)
+           is GroupResponse group)
+       {
+           _title = $"{group.Name} - Members";
+           _description = string.Format("Manage members of {0}", group.Name);
+
+           if (await ApiHelper.ExecuteCallGuardedAsync(
+                   () => UsersClient.GetGroupMembersByGroupIdEndpointAsync("1", new Guid(Id!), new GetGroupMembersByGroupIdCommand() { GroupId = new Guid(Id)}), Toast, Navigation)
+               is GroupMemberResponsePagedList response)
+           {
+               _groupMembersList = response.Items.ToList();
+           }
+       }
+
+       _loaded = true;
+    }
+    }

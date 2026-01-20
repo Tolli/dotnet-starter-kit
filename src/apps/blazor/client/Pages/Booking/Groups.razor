@@ -3,7 +3,10 @@
 <PageHeader Title="Groups" Header="Groups" SubHeader="Manage your Groups." />
 
 <EntityTable @ref="_table" TEntity="GroupResponse" TId="Guid" TRequest="GroupViewModel" Context="@Context">
-
+    <ExtraActions>
+        <MudMenuItem OnClick="(() => ManageMembers(context.Id))">Manage Members</MudMenuItem>
+        <MudMenuItem OnClick="(() => ManageCourtRentals(context.Id))">Manage Rentals</MudMenuItem>
+    </ExtraActions>
     <AdvancedSearchContent>
         <!-- Add any advanced search content here if needed -->
     </AdvancedSearchContent>

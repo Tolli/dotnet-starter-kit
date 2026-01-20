@@ -1,0 +1,5 @@
+config:
+# publish data to loki
+  clients:
+    - url: http://loki-gateway.meniga-getting-started-monitoring.svc.cluster.local/loki/api/v1/push
+      tenant_id: 1

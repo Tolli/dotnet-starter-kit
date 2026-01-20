@@ -1,0 +1,32 @@
+env:
+- name: AUTH_TYPE
+  value: DISABLED
+- name: DYNAMIC_CONFIG_ENABLED
+  value: "false"
+- name: MANAGEMENT_HEALTH_LDAP_ENABLED
+  value: "false"
+- name: KAFKA_CLUSTERS_0_NAME
+  value: kafka
+- name: KAFKA_CLUSTERS_0_BOOTSTRAPSERVERS
+  valueFrom:
+    secretKeyRef:
+      key: core.kafka.host
+      name: core-kafka
+- name: KAFKA_CLUSTERS_0_READONLY
+  value: "false"
+- name: KAFKA_CLUSTERS_0_PROPERTIES_SASL_MECHANISM
+  value: PLAIN
+- name: KAFKA_CLUSTERS_0_PROPERTIES_SECURITY_PROTOCOL
+  value: SASL_PLAINTEXT
+- name: KAFKA_CLUSTERS_0_PROPERTIES_SASL_JAAS_CONFIG
+  valueFrom:
+    secretKeyRef:
+      key: config
+      name: kafka-ui-sasl-jaas-config
+ingress:
+  enabled: true
+  host: kafkaui.k8s.tbr.localhost
+  ingressClassName: nginx # assuming nginx ingress controller
+  path: /
+networkPolicy:
+  enabled: false

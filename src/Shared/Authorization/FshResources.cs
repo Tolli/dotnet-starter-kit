@@ -11,8 +11,12 @@ public static class FshResources
     public const string Products = nameof(Products);
     public const string Brands = nameof(Brands);
     public const string Groups = nameof(Groups);
+    public const string GroupMembers = nameof(GroupMembers);
     public const string Customers = nameof(Customers);
     public const string CourtRentals = nameof(CourtRentals);
+    public const string CourtRentalShares = nameof(CourtRentalShares);
+    public const string Receipts = nameof(Receipts);
     public const string Todos = nameof(Todos);
     public const string AuditTrails = nameof(AuditTrails);
+    public const string ExternalSystems = nameof(ExternalSystems);
 }

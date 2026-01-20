@@ -1,6 +1,11 @@
-﻿using FSH.Starter.Blazor.Infrastructure.Preferences;
+﻿using FSH.Starter.Blazor.Client.Components.EntityTable;
+using FSH.Starter.Blazor.Client.Pages.Booking;
+using FSH.Starter.Blazor.Infrastructure.Api;
+using FSH.Starter.Blazor.Infrastructure.NoonaApi;
+using FSH.Starter.Blazor.Infrastructure.Preferences;
 using Microsoft.AspNetCore.Components;
 using MudBlazor;
+using Mapster;
 
 namespace FSH.Starter.Blazor.Client.Layout;
 
@@ -12,11 +17,13 @@ public partial class MainLayout
     public EventCallback<bool> OnDarkModeToggle { get; set; }
     [Parameter]
     public EventCallback<bool> OnRightToLeftToggle { get; set; }
+    [Inject]
+    protected IApiClient _client { get; set; } = default!;
 
     private bool _drawerOpen;
     private bool _isDarkMode;
-
-    protected override async Task OnInitializedAsync()
+    
+    protected override async System.Threading.Tasks.Task OnInitializedAsync()
     {
         if (await ClientPreferences.GetPreference() is ClientPreference preferences)
         {
@@ -25,13 +32,13 @@ public partial class MainLayout
         }
     }
 
-    public async Task ToggleDarkMode()
+    public async System.Threading.Tasks.Task ToggleDarkMode()
     {
         _isDarkMode = !_isDarkMode;
         await OnDarkModeToggle.InvokeAsync(_isDarkMode);
     }
 
-    private async Task DrawerToggle()
+    private async System.Threading.Tasks.Task DrawerToggle()
     {
         _drawerOpen = await ClientPreferences.ToggleDrawerAsync();
     }

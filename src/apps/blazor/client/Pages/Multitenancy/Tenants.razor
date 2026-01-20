@@ -18,6 +18,10 @@
                 Label="Connection String" />
         </MudItem>
         <MudItem xs="12" md="6">
+            <MudTextField T="string" For="@(() => context.ExternalIdentifier)" HelperText="External System Identifier." @bind-Value="context.ExternalIdentifier"
+                          Label="External Identifier (Noona)" />
+        </MudItem>
+        <MudItem xs="12" md="6">
             <MudTextField T="string" For="@(() => context.AdminEmail)" @bind-Value="context.AdminEmail"
                 Label="Admin Email" />
         </MudItem>
@@ -70,6 +74,21 @@
                                             <td>
                                                 <MudItem>
                                                     <MudChip T="string" Label="true" Color="Color.Primary">@context.ConnectionString?.Trim()</MudChip>
+                                                </MudItem>
+                                            </td>
+                                        }
+                                    </tr>
+                                    <tr class="mud-table-row">
+                                        @if (string.IsNullOrEmpty(context.ExternalIdentifier?.Trim()))
+                                        {
+                                            <MudChip T="string" Label="true" Color="Color.Secondary">No external system connection</MudChip>
+                                        }
+                                        else
+                                        {
+                                            <td>External Identifier (Noona)</td>
+                                            <td>
+                                                <MudItem>
+                                                    <MudChip T="string" Label="true" Color="Color.Primary">@context.ExternalIdentifier?.Trim()</MudChip>
                                                 </MudItem>
                                             </td>
                                         }

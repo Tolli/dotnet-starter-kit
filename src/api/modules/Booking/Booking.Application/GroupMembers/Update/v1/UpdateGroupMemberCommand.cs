@@ -6,6 +6,6 @@ public sealed record UpdateGroupMemberCommand(
     Guid Id,
     Guid GroupId,
     Guid CustomerId,
-    decimal Price,
-    decimal Percentage,
+    decimal Amount,
+    decimal Discount,
     bool IsContact) : IRequest<UpdateGroupMemberResponse>;

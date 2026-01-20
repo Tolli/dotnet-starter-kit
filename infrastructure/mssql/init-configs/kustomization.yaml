@@ -1,0 +1,12 @@
+generatorOptions:
+  disableNameSuffixHash: true
+
+configMapGenerator:
+- name: app-databases
+  envs:
+  - ./app-databases.env
+- 
+secretGenerator:
+- name: app-sql-logins
+  envs:
+  - ./app-sql-login.env

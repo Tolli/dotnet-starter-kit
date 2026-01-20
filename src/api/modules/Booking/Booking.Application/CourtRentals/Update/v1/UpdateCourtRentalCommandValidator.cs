@@ -5,7 +5,6 @@ public class UpdateCourtRentalCommandValidator : AbstractValidator<UpdateCourtRe
 {
     public UpdateCourtRentalCommandValidator()
     {
-        RuleFor(p => p.Name).NotEmpty().MinimumLength(2).MaximumLength(75);
-        RuleFor(p => p.Price).GreaterThan(0);
+        RuleFor(p => p.Amount).GreaterThan(0);
     }
 }

@@ -48,6 +48,7 @@ namespace FSH.Starter.WebApi.Migrations.MSSQL.Todo
                         .HasColumnType("uniqueidentifier");
 
                     b.Property<string>("Note")
+                        .IsRequired()
                         .HasMaxLength(1000)
                         .HasColumnType("nvarchar(1000)");
 
@@ -57,6 +58,7 @@ namespace FSH.Starter.WebApi.Migrations.MSSQL.Todo
                         .HasColumnType("nvarchar(64)");
 
                     b.Property<string>("Title")
+                        .IsRequired()
                         .HasMaxLength(100)
                         .HasColumnType("nvarchar(100)");
 

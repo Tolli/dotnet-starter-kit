@@ -1,0 +1,14 @@
+apiVersion: rabbitmq.com/v1beta1
+kind: RabbitmqCluster
+metadata:
+  name: rmq
+spec:
+  replicas: 1
+  rabbitmq:
+    additionalPlugins:
+      - rabbitmq_management
+    additionalConfig: |
+      default_user=meniga
+      default_pass=rootAdmin321
+  service:
+    type: LoadBalancer

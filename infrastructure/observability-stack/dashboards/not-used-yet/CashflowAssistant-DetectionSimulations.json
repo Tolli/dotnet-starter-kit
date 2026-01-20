@@ -1,0 +1,846 @@
+{
+  "annotations": {
+    "list": [
+      {
+        "builtIn": 1,
+        "datasource": "-- Grafana --",
+        "enable": true,
+        "hide": true,
+        "iconColor": "rgba(0, 211, 255, 1)",
+        "name": "Annotations & Alerts",
+        "type": "dashboard"
+      }
+    ]
+  },
+  "editable": true,
+  "gnetId": null,
+  "graphTooltip": 0,
+  "iteration": 1596010952368,
+  "links": [],
+  "panels": [
+    {
+      "datasource": null,
+      "fieldConfig": {
+        "defaults": {
+          "custom": {
+            "align": null
+          },
+          "mappings": [],
+          "thresholds": {
+            "mode": "absolute",
+            "steps": [
+              {
+                "color": "green",
+                "value": null
+              },
+              {
+                "color": "red",
+                "value": 80
+              }
+            ]
+          }
+        },
+        "overrides": []
+      },
+      "gridPos": {
+        "h": 7,
+        "w": 24,
+        "x": 0,
+        "y": 0
+      },
+      "id": 11,
+      "options": {
+        "showHeader": true
+      },
+      "pluginVersion": "7.1.1",
+      "targets": [
+        {
+          "groupBy": [
+            {
+              "params": [
+                "1h"
+              ],
+              "type": "time"
+            },
+            {
+              "params": [
+                "CorrelationId"
+              ],
+              "type": "tag"
+            },
+            {
+              "params": [
+                "none"
+              ],
+              "type": "fill"
+            }
+          ],
+          "measurement": "PatternDetectionSimulation",
+          "orderByTime": "ASC",
+          "policy": "default",
+          "query": "SELECT\n sum(\"Patterns.All.Count\") AS \"TotalDetected\", \n sum(\"Patterns.Accepted.Count\") AS \"Accepted\",\n sum(\"Patterns.Suggested.Count\") AS \"Suggested\",\n mean(\"Patterns.All.ConfidenceScore.Avg\") As \"AvgConfidenceScore\",\n mean(\"Patterns.Accepted.ConfidenceScore.Avg\") AS \"AcceptedAvgConfidenceScore\",\n mean(\"Patterns.Suggested.ConfidenceScore.Avg\") AS \"SuggestedAvgConfidenceScore\" FROM \"PatternDetectionSimulation\"\n WHERE (\"CorrelationId\" =~ /^$CorrelationId$/ OR \"CorrelationId\" =~ /^$SecondCorrelationId$/) AND $timeFilter GROUP BY time(1h), \"CorrelationId\" fill(none)",
+          "rawQuery": true,
+          "refId": "A",
+          "resultFormat": "table",
+          "select": [
+            [
+              {
+                "params": [
+                  "PatternsCount"
+                ],
+                "type": "field"
+              },
+              {
+                "params": [],
+                "type": "sum"
+              }
+            ]
+          ],
+          "tags": [
+            {
+              "key": "CorrelationId",
+              "operator": "=~",
+              "value": "/^$CorrelationId$/"
+            },
+            {
+              "condition": "OR",
+              "key": "CorrelationId",
+              "operator": "=~",
+              "value": "/^$SecondCorrelationId$/"
+            }
+          ]
+        }
+      ],
+      "timeFrom": null,
+      "timeShift": null,
+      "title": "Statistics",
+      "type": "table"
+    },
+    {
+      "aliasColors": {},
+      "bars": false,
+      "dashLength": 10,
+      "dashes": false,
+      "datasource": "AppMetrics",
+      "fieldConfig": {
+        "defaults": {
+          "custom": {},
+          "links": []
+        },
+        "overrides": []
+      },
+      "fill": 1,
+      "fillGradient": 0,
+      "gridPos": {
+        "h": 11,
+        "w": 24,
+        "x": 0,
+        "y": 7
+      },
+      "hiddenSeries": false,
+      "id": 2,
+      "interval": "",
+      "legend": {
+        "alignAsTable": true,
+        "avg": false,
+        "current": false,
+        "max": false,
+        "min": false,
+        "rightSide": false,
+        "show": true,
+        "total": false,
+        "values": false
+      },
+      "lines": true,
+      "linewidth": 1,
+      "nullPointMode": "null",
+      "percentage": false,
+      "pluginVersion": "7.1.1",
+      "pointradius": 2,
+      "points": false,
+      "renderer": "flot",
+      "seriesOverrides": [
+        {
+          "alias": "Avg confidence score [19913dfb-245e-4bfc-8a18-7430df21fc62]",
+          "yaxis": 2
+        }
+      ],
+      "spaceLength": 10,
+      "stack": false,
+      "steppedLine": false,
+      "targets": [
+        {
+          "alias": "Detected patterns [$tag_CorrelationId][$tag_Algorithm]",
+          "groupBy": [
+            {
+              "params": [
+                "$interval"
+              ],
+              "type": "time"
+            },
+            {
+              "params": [
+                "CorrelationId"
+              ],
+              "type": "tag"
+            },
+            {
+              "params": [
+                "Algorithm"
+              ],
+              "type": "tag"
+            }
+          ],
+          "hide": true,
+          "measurement": "PatternDetectionSimulation",
+          "orderByTime": "ASC",
+          "policy": "default",
+          "query": "SELECT sum(\"PatternsCount\") FROM \"PatternDetectionSimulation\" WHERE (\"CorrelationId\" = '$CorrelationId') AND $timeFilter GROUP BY time($interval), \"CorrelationId\", \"Algorithm\"",
+          "rawQuery": true,
+          "refId": "A",
+          "resultFormat": "time_series",
+          "select": [
+            [
+              {
+                "params": [
+                  "PatternsCount"
+                ],
+                "type": "field"
+              },
+              {
+                "params": [],
+                "type": "sum"
+              }
+            ]
+          ],
+          "tags": [
+            {
+              "key": "CorrelationId",
+              "operator": "=~",
+              "value": "/^$CorrelationId$/"
+            },
+            {
+              "condition": "OR",
+              "key": "CorrelationId",
+              "operator": "=",
+              "value": "ALL"
+            }
+          ]
+        },
+        {
+          "alias": "Avg confidence score [$tag_CorrelationId][$tag_Algorithm]",
+          "groupBy": [
+            {
+              "params": [
+                "$interval"
+              ],
+              "type": "time"
+            },
+            {
+              "params": [
+                "CorrelationId"
+              ],
+              "type": "tag"
+            },
+            {
+              "params": [
+                "Algorithm"
+              ],
+              "type": "tag"
+            }
+          ],
+          "hide": true,
+          "measurement": "PatternDetectionSimulation",
+          "orderByTime": "ASC",
+          "policy": "default",
+          "query": "SELECT mean(\"AvgConfidenceScore\") FROM \"PatternDetectionSimulation\" WHERE (\"CorrelationId\" = '$CorrelationId') AND $timeFilter GROUP BY time($interval), \"CorrelationId\", \"Algorithm\"",
+          "rawQuery": true,
+          "refId": "B",
+          "resultFormat": "time_series",
+          "select": [
+            [
+              {
+                "params": [
+                  "AvgConfidenceScore"
+                ],
+                "type": "field"
+              },
+              {
+                "params": [],
+                "type": "mean"
+              }
+            ]
+          ],
+          "tags": [
+            {
+              "key": "CorrelationId",
+              "operator": "=~",
+              "value": "/^$CorrelationId$/"
+            },
+            {
+              "condition": "OR",
+              "key": "CorrelationId",
+              "operator": "=",
+              "value": "ALL"
+            }
+          ]
+        },
+        {
+          "alias": "Processing time [$tag_CorrelationId][$tag_Algorithm]",
+          "groupBy": [
+            {
+              "params": [
+                "$interval"
+              ],
+              "type": "time"
+            },
+            {
+              "params": [
+                "CorrelationId"
+              ],
+              "type": "tag"
+            },
+            {
+              "params": [
+                "Algorithm"
+              ],
+              "type": "tag"
+            }
+          ],
+          "hide": false,
+          "measurement": "SimulatePatternDetectionCommandConsumer.Consume.Time",
+          "orderByTime": "ASC",
+          "policy": "default",
+          "query": "SELECT mean(\"value\") FROM \"SimulatePatternDetectionCommandConsumer.Consume.Time\" WHERE (\"CorrelationId\" = '$CorrelationId') AND $timeFilter GROUP BY time($interval), \"CorrelationId\", \"Algorithm\"",
+          "rawQuery": true,
+          "refId": "C",
+          "resultFormat": "time_series",
+          "select": [
+            [
+              {
+                "params": [
+                  "value"
+                ],
+                "type": "field"
+              },
+              {
+                "params": [],
+                "type": "mean"
+              }
+            ]
+          ],
+          "tags": [
+            {
+              "key": "CorrelationId",
+              "operator": "=~",
+              "value": "/^$CorrelationId$/"
+            },
+            {
+              "condition": "OR",
+              "key": "CorrelationId",
+              "operator": "=",
+              "value": "ALL"
+            }
+          ]
+        },
+        {
+          "alias": "Detected patterns [$tag_CorrelationId][$tag_Algorithm]",
+          "groupBy": [
+            {
+              "params": [
+                "$interval"
+              ],
+              "type": "time"
+            },
+            {
+              "params": [
+                "CorrelationId"
+              ],
+              "type": "tag"
+            },
+            {
+              "params": [
+                "Algorithm"
+              ],
+              "type": "tag"
+            }
+          ],
+          "hide": true,
+          "measurement": "PatternDetectionSimulation",
+          "orderByTime": "ASC",
+          "policy": "default",
+          "query": "SELECT sum(\"PatternsCount\") FROM \"PatternDetectionSimulation\" WHERE (\"CorrelationId\" = '$SecondCorrelationId') AND $timeFilter GROUP BY time($interval), \"CorrelationId\", \"Algorithm\"",
+          "rawQuery": true,
+          "refId": "D",
+          "resultFormat": "time_series",
+          "select": [
+            [
+              {
+                "params": [
+                  "PatternsCount"
+                ],
+                "type": "field"
+              },
+              {
+                "params": [],
+                "type": "sum"
+              }
+            ]
+          ],
+          "tags": [
+            {
+              "key": "CorrelationId",
+              "operator": "=~",
+              "value": "/^$CorrelationId$/"
+            },
+            {
+              "condition": "OR",
+              "key": "CorrelationId",
+              "operator": "=",
+              "value": "ALL"
+            }
+          ]
+        },
+        {
+          "alias": "Processing time [$tag_CorrelationId][$tag_Algorithm]",
+          "groupBy": [
+            {
+              "params": [
+                "$interval"
+              ],
+              "type": "time"
+            },
+            {
+              "params": [
+                "CorrelationId"
+              ],
+              "type": "tag"
+            },
+            {
+              "params": [
+                "Algorithm"
+              ],
+              "type": "tag"
+            }
+          ],
+          "hide": false,
+          "measurement": "SimulatePatternDetectionCommandConsumer.Consume.Time",
+          "orderByTime": "ASC",
+          "policy": "default",
+          "query": "SELECT mean(\"value\") FROM \"SimulatePatternDetectionCommandConsumer.Consume.Time\" WHERE (\"CorrelationId\" = '$SecondCorrelationId') AND $timeFilter GROUP BY time($interval), \"CorrelationId\", \"Algorithm\"",
+          "rawQuery": true,
+          "refId": "E",
+          "resultFormat": "time_series",
+          "select": [
+            [
+              {
+                "params": [
+                  "value"
+                ],
+                "type": "field"
+              },
+              {
+                "params": [],
+                "type": "mean"
+              }
+            ]
+          ],
+          "tags": [
+            {
+              "key": "CorrelationId",
+              "operator": "=~",
+              "value": "/^$CorrelationId$/"
+            },
+            {
+              "condition": "OR",
+              "key": "CorrelationId",
+              "operator": "=",
+              "value": "ALL"
+            }
+          ]
+        },
+        {
+          "alias": "Avg confidence score [$tag_CorrelationId][$tag_Algorithm]",
+          "groupBy": [
+            {
+              "params": [
+                "$interval"
+              ],
+              "type": "time"
+            },
+            {
+              "params": [
+                "CorrelationId"
+              ],
+              "type": "tag"
+            },
+            {
+              "params": [
+                "Algorithm"
+              ],
+              "type": "tag"
+            }
+          ],
+          "hide": true,
+          "measurement": "PatternDetectionSimulation",
+          "orderByTime": "ASC",
+          "policy": "default",
+          "query": "SELECT mean(\"AvgConfidenceScore\") FROM \"PatternDetectionSimulation\" WHERE (\"CorrelationId\" = '$SecondCorrelationId') AND $timeFilter GROUP BY time($interval), \"CorrelationId\", \"Algorithm\"",
+          "rawQuery": true,
+          "refId": "F",
+          "resultFormat": "time_series",
+          "select": [
+            [
+              {
+                "params": [
+                  "AvgConfidenceScore"
+                ],
+                "type": "field"
+              },
+              {
+                "params": [],
+                "type": "mean"
+              }
+            ]
+          ],
+          "tags": [
+            {
+              "key": "CorrelationId",
+              "operator": "=~",
+              "value": "/^$CorrelationId$/"
+            },
+            {
+              "condition": "OR",
+              "key": "CorrelationId",
+              "operator": "=",
+              "value": "ALL"
+            }
+          ]
+        }
+      ],
+      "thresholds": [],
+      "timeFrom": null,
+      "timeRegions": [],
+      "timeShift": null,
+      "title": "Processing time",
+      "tooltip": {
+        "shared": true,
+        "sort": 0,
+        "value_type": "individual"
+      },
+      "type": "graph",
+      "xaxis": {
+        "buckets": null,
+        "mode": "time",
+        "name": null,
+        "show": true,
+        "values": []
+      },
+      "yaxes": [
+        {
+          "format": "short",
+          "label": null,
+          "logBase": 1,
+          "max": null,
+          "min": null,
+          "show": true
+        },
+        {
+          "format": "short",
+          "label": null,
+          "logBase": 1,
+          "max": null,
+          "min": null,
+          "show": true
+        }
+      ],
+      "yaxis": {
+        "align": false,
+        "alignLevel": null
+      }
+    },
+    {
+      "cacheTimeout": null,
+      "columns": [],
+      "datasource": "AppMetrics",
+      "fieldConfig": {
+        "defaults": {
+          "custom": {
+            "align": null
+          },
+          "mappings": [],
+          "thresholds": {
+            "mode": "absolute",
+            "steps": [
+              {
+                "color": "green",
+                "value": null
+              },
+              {
+                "color": "red",
+                "value": 80
+              }
+            ]
+          }
+        },
+        "overrides": []
+      },
+      "fontSize": "100%",
+      "gridPos": {
+        "h": 5,
+        "w": 24,
+        "x": 0,
+        "y": 18
+      },
+      "id": 9,
+      "links": [],
+      "options": {
+        "showHeader": true
+      },
+      "pageSize": null,
+      "pluginVersion": "7.1.1",
+      "scroll": true,
+      "showHeader": true,
+      "sort": {
+        "col": 0,
+        "desc": true
+      },
+      "styles": [
+        {
+          "alias": "Time",
+          "dateFormat": "YYYY-MM-DD HH:mm:ss",
+          "pattern": "Time",
+          "type": "date"
+        },
+        {
+          "alias": "",
+          "colorMode": null,
+          "colors": [
+            "rgba(245, 54, 54, 0.9)",
+            "rgba(237, 129, 40, 0.89)",
+            "rgba(50, 172, 45, 0.97)"
+          ],
+          "decimals": 2,
+          "pattern": "/.*/",
+          "thresholds": [],
+          "type": "number",
+          "unit": "short"
+        }
+      ],
+      "targets": [
+        {
+          "groupBy": [
+            {
+              "params": [
+                "1h"
+              ],
+              "type": "time"
+            },
+            {
+              "params": [
+                "CorrelationId"
+              ],
+              "type": "tag"
+            },
+            {
+              "params": [
+                "none"
+              ],
+              "type": "fill"
+            }
+          ],
+          "measurement": "PatternDetectionSimulation",
+          "orderByTime": "ASC",
+          "policy": "default",
+          "refId": "A",
+          "resultFormat": "table",
+          "select": [
+            [
+              {
+                "params": [
+                  "RelativeStDevCritera"
+                ],
+                "type": "field"
+              },
+              {
+                "params": [],
+                "type": "first"
+              },
+              {
+                "params": [
+                  "RelativeStDevCritera"
+                ],
+                "type": "alias"
+              }
+            ],
+            [
+              {
+                "params": [
+                  "LookbackMonths"
+                ],
+                "type": "field"
+              },
+              {
+                "params": [],
+                "type": "first"
+              },
+              {
+                "params": [
+                  "LookbackMonths"
+                ],
+                "type": "alias"
+              }
+            ],
+            [
+              {
+                "params": [
+                  "MerchantIdPatternDetectionEnabled"
+                ],
+                "type": "field"
+              },
+              {
+                "params": [],
+                "type": "first"
+              },
+              {
+                "params": [
+                  "MerchantIdPatternDetectionEnabled"
+                ],
+                "type": "alias"
+              }
+            ],
+            [
+              {
+                "params": [
+                  "EnableFuzzyPatternMatchingAndReconciliation"
+                ],
+                "type": "field"
+              },
+              {
+                "params": [],
+                "type": "first"
+              },
+              {
+                "params": [
+                  "FuzzyAlgorithm"
+                ],
+                "type": "alias"
+              }
+            ],
+            [
+              {
+                "params": [
+                  "Today"
+                ],
+                "type": "field"
+              },
+              {
+                "params": [],
+                "type": "first"
+              },
+              {
+                "params": [
+                  "Today"
+                ],
+                "type": "alias"
+              }
+            ]
+          ],
+          "tags": [
+            {
+              "key": "CorrelationId",
+              "operator": "=~",
+              "value": "/^$CorrelationId$/"
+            },
+            {
+              "condition": "OR",
+              "key": "CorrelationId",
+              "operator": "=~",
+              "value": "/^$SecondCorrelationId$/"
+            }
+          ]
+        }
+      ],
+      "timeFrom": null,
+      "timeShift": null,
+      "title": "Pattern detection parameters",
+      "transform": "timeseries_to_rows",
+      "type": "table"
+    }
+  ],
+  "refresh": false,
+  "schemaVersion": 26,
+  "style": "dark",
+  "tags": [
+    "cashflowassistant"
+  ],
+  "templating": {
+    "list": [
+      {
+        "allValue": null,
+        "current": {},
+        "datasource": "AppMetrics",
+        "definition": "SELECT Distinct(\"CorrelationId\")  from (select \"CorrelationId\" from \"PatternDetectionSimulation\" WHERE time > NOW()-14d)",
+        "hide": 0,
+        "includeAll": false,
+        "label": null,
+        "multi": false,
+        "name": "CorrelationId",
+        "options": [],
+        "query": "SELECT Distinct(\"CorrelationId\")  from (select \"CorrelationId\" from \"PatternDetectionSimulation\" WHERE time > NOW()-14d)",
+        "refresh": 1,
+        "regex": "",
+        "skipUrlSync": false,
+        "sort": 1,
+        "tagValuesQuery": "",
+        "tags": [],
+        "tagsQuery": "",
+        "type": "query",
+        "useTags": false
+      },
+      {
+        "allValue": null,
+        "current": {},
+        "datasource": "AppMetrics",
+        "definition": "SELECT Distinct(\"CorrelationId\")  from (select \"CorrelationId\" from \"PatternDetectionSimulation\" WHERE time > NOW()-14d)",
+        "hide": 0,
+        "includeAll": false,
+        "label": null,
+        "multi": false,
+        "name": "SecondCorrelationId",
+        "options": [],
+        "query": "SELECT Distinct(\"CorrelationId\")  from (select \"CorrelationId\" from \"PatternDetectionSimulation\" WHERE time > NOW()-14d)",
+        "refresh": 1,
+        "regex": "",
+        "skipUrlSync": false,
+        "sort": 1,
+        "tagValuesQuery": "",
+        "tags": [],
+        "tagsQuery": "",
+        "type": "query",
+        "useTags": false
+      }
+    ]
+  },
+  "time": {
+    "from": "now-6h",
+    "to": "now"
+  },
+  "timepicker": {
+    "refresh_intervals": [
+      "10s",
+      "30s",
+      "1m",
+      "5m",
+      "15m",
+      "30m",
+      "1h",
+      "2h",
+      "1d"
+    ]
+  },
+  "timezone": "",
+  "title": "Detection Simulations",
+  "uid": "f4gpxh7Gz",
+  "version": 7
+}

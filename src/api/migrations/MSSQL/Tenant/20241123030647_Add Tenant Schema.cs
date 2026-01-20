@@ -23,6 +23,7 @@ namespace FSH.Starter.WebApi.Migrations.MSSQL.Tenant
                     Identifier = table.Column<string>(type: "nvarchar(450)", nullable: false),
                     Name = table.Column<string>(type: "nvarchar(max)", nullable: false),
                     ConnectionString = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    ExternalIdentifier = table.Column<string>(type: "nvarchar(max)", nullable: false),
                     AdminEmail = table.Column<string>(type: "nvarchar(max)", nullable: false),
                     IsActive = table.Column<bool>(type: "bit", nullable: false),
                     ValidUpto = table.Column<DateTime>(type: "datetime2", nullable: false),

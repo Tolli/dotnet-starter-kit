@@ -10,8 +10,8 @@ internal sealed class CourtRentalConfiguration : IEntityTypeConfiguration<CourtR
     {
         builder.IsMultiTenant();
         builder.HasKey(x => x.Id);
-        builder.Property(x => x.Name).HasMaxLength(100);
-        builder.Property(x => x.Description).HasMaxLength(1000);
-        builder.HasOne(x => x.Group).WithMany(g => g.CourtRentals).HasForeignKey(x => x.GroupId).OnDelete(DeleteBehavior.SetNull);
+        builder.Property(d => d.Weekday).HasConversion<string>();
+        builder.HasOne(x => x.Group).WithMany(g => g.CourtRentals).HasForeignKey(x => x.GroupId).OnDelete(DeleteBehavior.Cascade);
+        builder.HasIndex(x => new { x.Weekday, x.StartTime, x.Court, x.StartDate, x.EndDate });
     }
 }

@@ -16,7 +16,7 @@ public sealed class UpdateCourtRentalHandler(
         ArgumentNullException.ThrowIfNull(request);
         var courtrental = await repository.GetByIdAsync(request.Id, cancellationToken);
         _ = courtrental ?? throw new CourtRentalNotFoundException(request.Id);
-        var updatedCourtRental = courtrental.Update(request.Name, request.Description, request.Price, request.GroupId);
+        var updatedCourtRental = courtrental.Update(request.StartDate, request.StartTime, request.EndDate, !string.IsNullOrEmpty(request.Weekday) ? Enum.Parse<DayOfWeek>(request.Weekday) : null, request.Amount, request.Discount, request.Duration, request.Court, request.GroupId);
         await repository.UpdateAsync(updatedCourtRental, cancellationToken);
         logger.LogInformation("courtrental with id : {CourtRentalId} updated.", courtrental.Id);
         return new UpdateCourtRentalResponse(courtrental.Id);

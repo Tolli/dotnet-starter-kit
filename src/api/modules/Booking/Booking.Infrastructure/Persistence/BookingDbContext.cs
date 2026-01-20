@@ -19,9 +19,12 @@ public sealed class BookingDbContext : FshDbContext
 
     public DbSet<Customer> Customers { get; set; } = null!;
     public DbSet<CourtRental> CourtRentals { get; set; } = null!;
-    public DbSet<Group> Groups { get; set; } = null!;
 
+    public DbSet<CourtRentalShare> CourtRentalShares { get; set; } = null!;
+    public DbSet<CourtRentalSession> CourtRentalSessions { get; set; } = null!;
+    public DbSet<Group> Groups { get; set; } = null!;
     public DbSet<GroupMember> GroupMembers { get; set; } = null!;
+    public DbSet<Receipt> Receipts { get; set; } = null!;
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {
         ArgumentNullException.ThrowIfNull(modelBuilder);

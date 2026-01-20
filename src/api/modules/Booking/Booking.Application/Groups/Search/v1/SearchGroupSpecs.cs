@@ -13,6 +13,6 @@ public class SearchGroupSpecs : EntitiesByPaginationFilterSpec<Group, GroupRespo
             .Include(p => p.Members)
             .Include(p => p.CourtRentals)
             .OrderBy(c => c.Name, !command.HasOrderBy())
-            .Where(p => p.Members.Any(m => m.Customer.Id == command.ContactId!.Value), command.ContactId.HasValue)
-            .Where(b => b.Name.Contains(command.Keyword), !string.IsNullOrEmpty(command.Keyword));
+            .Where(p => p.Members != null && p.Members.Any(m => m.Customer.Id == command.ContactId!.Value), command.ContactId.HasValue)
+            .Where(b => b.Name.Contains(command.Keyword ?? ""), !string.IsNullOrEmpty(command.Keyword));
 }

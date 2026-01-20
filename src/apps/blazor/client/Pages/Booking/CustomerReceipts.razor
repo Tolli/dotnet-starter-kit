@@ -1,0 +1,227 @@
+﻿@page "/booking/courtrental/{Id}/members"
+@using FSH.Starter.Shared.Authorization
+
+<PageHeader Title="@_title" Header="@_title" SubHeader="@_description" />
+
+@if (!_loaded)
+{
+    <MudProgressCircular Color="Color.Primary" Indeterminate="true" />
+}
+else
+{
+    <MudTable Hover="true" Outlined Items="_customerReceiptsList">
+        <ToolBarContent>
+            <div class="justify-center mud-text-align-center">
+                <MudButton Variant="Variant.Filled" DropShadow="false" Color="Color.Info" Class="ml-auto" StartIcon="@Icons.Material.Filled.ArrowBack" Href="/booking/courtrentalsearch">
+                    Back
+                </MudButton>
+                @if (_canEditUsers)
+                {
+                    <MudButton Variant="Variant.Filled" DropShadow="false" Color="Color.Primary" Class="ml-auto" OnClick="AddNew" StartIcon="@Icons.Material.Filled.Create"
+                               ButtonType="ButtonType.Submit" Style="margin-left: 5px!important;">
+                        Add new
+                    </MudButton>
+                    <MudButton Variant="Variant.Filled" DropShadow="false" Color="Color.Primary" Class="ml-auto" OnClick="SaveAsync" StartIcon="@Icons.Material.Filled.Save"
+                        ButtonType="ButtonType.Submit" Style="margin-left: 5px!important;">
+                        Update
+                    </MudButton>
+                }
+            </div>
+            <MudSpacer />
+            @if (_canSearchRoles)
+            {
+                <MudTextField @bind-Value="_searchString" Immediate="true" FullWidth=false
+                    Placeholder="Search For Members" Adornment="Adornment.End"
+                    AdornmentIcon="@Icons.Material.Filled.Search" IconSize="Size.Medium" Class="mt-0 mb-3">
+                </MudTextField>
+            }
+        </ToolBarContent>
+        <HeaderContent>
+            <MudTh>
+                <MudTableSortLabel SortBy="new Func<ReceiptResponse, object?>(x => x.Customer.Name)">Name
+                </MudTableSortLabel>
+            </MudTh>
+            <MudTh>
+                <MudTableSortLabel SortBy="new Func<ReceiptResponse, object?>(x => x.Customer.ClubNumber)">
+                    ClubNumber
+                </MudTableSortLabel>
+            </MudTh>
+            <MudTh>
+                <MudTableSortLabel SortBy="new Func<ReceiptResponse, object>(x => x.AmountTotal)">
+                    Amount Total
+                </MudTableSortLabel>
+            </MudTh>
+            <MudTh>
+                <MudTableSortLabel SortBy="new Func<ReceiptResponse, object>(x => x.AmountPaid)">
+                    Amount Paid
+                </MudTableSortLabel>
+            </MudTh>
+            <MudTh>
+                Actions
+            </MudTh>
+        </HeaderContent>
+        <RowTemplate>
+            <MudTd DataLabel="Member Name">
+                @{if(context.Customer.Id == null)
+                  {
+                      <MudAutocomplete T="CustomerResponse"
+                                       Label="Select Customer"
+                                       SearchFunc="SearchCustomer"
+                                         ToStringFunc="@(customer => customer is null ? null : $"{customer.Name} ({customer.Ssn})")"
+                                       @bind-Value="context.Customer" />
+                  }
+                  else
+                  {
+                            <MudHighlighter Text="@context.Customer.Name" HighlightedText="@_searchString" />
+                  }
+                }                
+            </MudTd>
+            <MudTd DataLabel="Description">
+                <MudHighlighter Text="@context.Customer.ClubNumber" HighlightedText="@_searchString" />
+            </MudTd>
+            <MudTd DataLabel="AmountTotal">
+                <MudTextField @bind-Value="@context.AmountTotal"></MudTextField>
+            </MudTd>
+            <MudTd DataLabel="AmountPaid">
+                <MudTextField @bind-Value="@context.AmountPaid"></MudTextField>
+            </MudTd>
+            <MudTd DataLabel="Actions">
+                <MudButton Variant="Variant.Filled" DropShadow="false" Color="Color.Primary" Class="ml-auto" OnClick="(() => DeleteItem(context))" StartIcon="@Icons.Material.Filled.Delete"
+                           ButtonType="ButtonType.Submit" Style="margin-left: 5px!important;">
+                    Delete
+                </MudButton>
+            </MudTd>
+        </RowTemplate>
+        <PagerContent>
+            <TablePager />
+        </PagerContent>
+    </MudTable>
+}
+
+@code {
+    [Parameter]
+    public string? Id { get; set; }
+    [CascadingParameter]
+    protected Task<AuthenticationState> AuthState { get; set; } = default!;
+    [Inject]
+    protected IAuthorizationService AuthService { get; set; } = default!;
+    [Inject]
+    protected IApiClient UsersClient { get; set; } = default!;
+
+    private List<ReceiptResponse> _customerReceiptsList = default!;
+
+    private string _title = string.Empty;
+    private string _description = string.Empty;
+
+    private string _searchString = string.Empty;
+
+    private bool _canEditUsers;
+    private bool _canSearchRoles;
+    private bool _loaded;
+
+    protected override async Task OnInitializedAsync()
+    {
+        var state = await AuthState;
+
+        _canEditUsers = await AuthService.HasPermissionAsync(state.User, FshActions.Update, FshResources.CourtRentals);
+        _canSearchRoles = await AuthService.HasPermissionAsync(state.User, FshActions.View, FshResources.CourtRentals);
+
+        if (await ApiHelper.ExecuteCallGuardedAsync(
+                () => UsersClient.GetCourtRentalEndpointAsync("1",new Guid(Id!)), Toast, Navigation)
+            is CourtRentalResponse courtRental)
+        {
+            _title = $"{courtRental.Id} - Members";
+            _description = string.Format("Manage members of {0}", courtRental.Id);
+
+            if (await ApiHelper.ExecuteCallGuardedAsync(
+                    () => UsersClient.GetCourtRentalSharesByCourtRentalIdEndpointAsync("1", new Guid(Id!), new GetCourtRentalSharesByCourtRentalIdCommand() { CourtRentalId = new Guid(Id)}), Toast, Navigation)
+                is ReceiptResponsePagedList response)
+            {
+                _customerReceiptsList = response.Items.ToList();
+            }
+        }
+
+        _loaded = true;
+    }
+
+    private async Task<IEnumerable<CustomerResponse>> SearchCustomer(string value, CancellationToken token)
+    {
+        var result = new List<CustomerResponse>();
+        if (string.IsNullOrEmpty(value) || value.Length < 3)
+            return result;
+        var request = new SearchCustomersCommand()
+        {
+            PageSize = 10,
+            Keyword = value
+        };
+        if (await ApiHelper.ExecuteCallGuardedAsync(
+                () => UsersClient.SearchCustomersEndpointAsync("1", request), Toast, Navigation)
+            is CustomerResponsePagedList response)
+        {
+            result = response.Items.ToList();
+        }
+        return result;
+    }
+
+    private async Task AddNew()
+    {
+        _customerReceiptsList.Add(new ReceiptResponse()
+        {
+            Customer = new CustomerResponse(),
+            AmountPaid = 0,
+            AmountTotal = 0
+        });
+    }
+
+    private async Task DeleteItem(ReceiptResponse courtRentalShare)
+    {
+        if(courtRentalShare.Id.HasValue)
+        {
+            await ApiHelper.ExecuteCallGuardedAsync(
+            () => UsersClient.DeleteCourtRentalShareEndpointAsync("1", courtRentalShare.Id.Value), Toast,
+            successMessage: "Deleted Share.");
+        }
+        _customerReceiptsList.Remove(courtRentalShare);
+    }
+
+    private async Task SaveAsync()
+    {
+        foreach(var courtRentalShare in _customerReceiptsList)
+        {
+            if(courtRentalShare.Id.HasValue)
+            {
+                var request = new UpdateCourtRentalShareCommand()
+                {
+                    Id = courtRentalShare.Id.Value,
+                    CourtRentalId = new Guid(Id),
+                    CustomerId = courtRentalShare.Customer.Id.Value,
+                    AmountPaid = courtRentalShare.AmountPaid,
+                    AmountTotal = courtRentalShare.AmountTotal
+                };
+
+                await ApiHelper.ExecuteCallGuardedAsync(
+                () => UsersClient.UpdateCourtRentalShareEndpointAsync("1", request.Id, request),
+                Toast,
+                successMessage: "Updated Share.");
+            }
+            else
+            {
+                var request = new CreateCourtRentalShareCommand()
+                {
+                    CourtRentalId = new Guid(Id),
+                    CustomerId = courtRentalShare.Customer.Id.Value,
+                    AmountPaid = courtRentalShare.AmountPaid,
+                    AmountTotal = courtRentalShare.AmountTotal
+                };
+
+                await ApiHelper.ExecuteCallGuardedAsync(
+                () => UsersClient.CreateCourtRentalShareEndpointAsync("1", request),
+                Toast,
+                successMessage: "Created Share.");
+            }
+        }
+
+        
+        Navigation.NavigateTo("/booking/courtrentalsearch");
+    }
+}

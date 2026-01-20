@@ -39,6 +39,10 @@ namespace FSH.Starter.WebApi.Migrations.PostgreSQL.Tenant
                         .IsRequired()
                         .HasColumnType("text");
 
+                    b.Property<string>("ExternalIdentifier")
+                        .IsRequired()
+                        .HasColumnType("text");
+
                     b.Property<string>("Identifier")
                         .IsRequired()
                         .HasColumnType("text");

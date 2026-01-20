@@ -10,12 +10,13 @@ public sealed class FshTenantInfo : IFshTenantInfo
     {
     }
 
-    public FshTenantInfo(string id, string name, string? connectionString, string adminEmail, string? issuer = null)
+    public FshTenantInfo(string id, string name, string? connectionString, string adminEmail, string? externalIdentifier, string? issuer = null)
     {
         Id = id;
         Identifier = id;
         Name = name;
         ConnectionString = connectionString ?? string.Empty;
+        ExternalIdentifier = externalIdentifier ?? string.Empty;
         AdminEmail = adminEmail;
         IsActive = true;
         Issuer = issuer;
@@ -28,6 +29,7 @@ public sealed class FshTenantInfo : IFshTenantInfo
 
     public string Name { get; set; } = default!;
     public string ConnectionString { get; set; } = default!;
+    public string ExternalIdentifier { get; set; } = default!;
 
     public string AdminEmail { get; set; } = default!;
     public bool IsActive { get; set; }
@@ -64,5 +66,6 @@ public sealed class FshTenantInfo : IFshTenantInfo
     string? ITenantInfo.Id { get => Id; set => Id = value ?? throw new InvalidOperationException("Id can't be null."); }
     string? ITenantInfo.Identifier { get => Identifier; set => Identifier = value ?? throw new InvalidOperationException("Identifier can't be null."); }
     string? ITenantInfo.Name { get => Name; set => Name = value ?? throw new InvalidOperationException("Name can't be null."); }
+    string? IFshTenantInfo.ExternalIdentifier { get => ExternalIdentifier; set => ExternalIdentifier = value ?? throw new InvalidOperationException("ExternalIdentifier can't be null."); }
     string? IFshTenantInfo.ConnectionString { get => ConnectionString; set => ConnectionString = value ?? throw new InvalidOperationException("ConnectionString can't be null."); }
 }

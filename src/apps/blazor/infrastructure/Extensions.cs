@@ -28,9 +28,8 @@ public static class Extensions
         });
         services.AddBlazoredLocalStorage();
         services.AddAuthentication(config);
-        services.AddTransient<IApiClient, ApiClient>();
-        services.AddTransient<INoonaApiClient, NoonaApiClient>();
-        services.AddHttpClient(ClientName, client =>
+        // services.AddTransient<IApiClient, ApiClient>();
+        services.AddHttpClient<IApiClient, ApiClient>(ClientName, client =>
         {
             client.DefaultRequestHeaders.AcceptLanguage.Clear();
             client.DefaultRequestHeaders.AcceptLanguage.ParseAdd(CultureInfo.DefaultThreadCurrentCulture?.TwoLetterISOLanguageName);
@@ -39,15 +38,18 @@ public static class Extensions
            .AddHttpMessageHandler<JwtAuthenticationHeaderHandler>()
            .Services
            .AddScoped(sp => sp.GetRequiredService<IHttpClientFactory>().CreateClient(ClientName));
-        services.AddHttpClient(NoonaClientName, client =>
+
+        services.AddHttpClient<INoonaApiClient, NoonaApiClient>(NoonaClientName, client =>
         {
             client.DefaultRequestHeaders.AcceptLanguage.Clear();
             client.DefaultRequestHeaders.AcceptLanguage.ParseAdd(CultureInfo.DefaultThreadCurrentCulture?.TwoLetterISOLanguageName);
-            client.BaseAddress = new Uri(config["ApiBaseUrl"]!);
+            client.BaseAddress = new Uri(config["NoonaApiBaseUrl"]!);
         })
-           .AddHttpMessageHandler<JwtAuthenticationHeaderHandler>()
+           .AddHttpMessageHandler<NoonaJwtAuthenticationHeaderHandler>()
            .Services
-           .AddScoped(sp => sp.GetRequiredService<IHttpClientFactory>().CreateClient(ClientName));
+           .AddScoped<NoonaJwtAuthenticationHeaderHandler>()
+           .AddScoped(sp => sp.GetRequiredService<IHttpClientFactory>().CreateClient(NoonaClientName));
+        // services.AddTransient<INoonaApiClient, NoonaApiClient>();
         services.AddTransient<IClientPreferenceManager, ClientPreferenceManager>();
         services.AddTransient<IPreference, ClientPreference>();
         services.AddNotifications();

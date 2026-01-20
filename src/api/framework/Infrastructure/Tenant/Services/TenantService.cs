@@ -48,7 +48,7 @@ public sealed class TenantService : ITenantService
             connectionString = string.Empty;
         }
 
-        FshTenantInfo tenant = new(request.Id, request.Name, connectionString, request.AdminEmail, request.Issuer);
+        FshTenantInfo tenant = new(request.Id, request.Name, connectionString, request.AdminEmail, request.ExternalIdentifier ?? string.Empty, request.Issuer);
         await _tenantStore.TryAddAsync(tenant).ConfigureAwait(false);
 
         await InitializeDatabase(tenant).ConfigureAwait(false);

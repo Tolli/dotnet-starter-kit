@@ -116,7 +116,8 @@ internal static class Extensions
                 TenantConstants.Root.Id,
                 TenantConstants.Root.Name,
                 string.Empty,
-                TenantConstants.Root.EmailAddress);
+                TenantConstants.Root.EmailAddress,
+                TenantConstants.Root.ExternalIdentifier);
 
             rootTenant.SetValidity(DateTime.UtcNow.AddYears(1));
             tenantDbContext.TenantInfo.Add(rootTenant);

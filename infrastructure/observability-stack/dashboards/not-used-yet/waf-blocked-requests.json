@@ -1,0 +1,390 @@
+{
+  "annotations": {
+    "list": [
+      {
+        "builtIn": 1,
+        "datasource": "-- Grafana --",
+        "enable": true,
+        "hide": true,
+        "iconColor": "rgba(0, 211, 255, 1)",
+        "name": "Annotations & Alerts",
+        "type": "dashboard"
+      }
+    ]
+  },
+  "editable": true,
+  "gnetId": null,
+  "graphTooltip": 0,
+  "id": 124,
+  "links": [],
+  "panels": [
+    {
+      "datasource": "Azure Monitor",
+      "fieldConfig": {
+        "defaults": {
+          "color": {
+            "mode": "thresholds"
+          },
+          "custom": {
+            "align": null,
+            "filterable": false
+          },
+          "mappings": [],
+          "thresholds": {
+            "mode": "absolute",
+            "steps": [
+              {
+                "color": "green",
+                "value": null
+              },
+              {
+                "color": "red",
+                "value": 80
+              }
+            ]
+          }
+        },
+        "overrides": [
+          {
+            "matcher": {
+              "id": "byName",
+              "options": "AttackDetails_s"
+            },
+            "properties": [
+              {
+                "id": "custom.width",
+                "value": 213
+              }
+            ]
+          },
+          {
+            "matcher": {
+              "id": "byName",
+              "options": "Action_s"
+            },
+            "properties": [
+              {
+                "id": "custom.width",
+                "value": 100
+              }
+            ]
+          },
+          {
+            "matcher": {
+              "id": "byName",
+              "options": "TimeGenerated"
+            },
+            "properties": [
+              {
+                "id": "custom.width",
+                "value": 193
+              }
+            ]
+          },
+          {
+            "matcher": {
+              "id": "byName",
+              "options": "URL_s"
+            },
+            "properties": [
+              {
+                "id": "custom.width",
+                "value": 337
+              }
+            ]
+          },
+          {
+            "matcher": {
+              "id": "byName",
+              "options": "QueryString_s"
+            },
+            "properties": [
+              {
+                "id": "custom.width",
+                "value": 84
+              }
+            ]
+          },
+          {
+            "matcher": {
+              "id": "byName",
+              "options": "Method_s"
+            },
+            "properties": [
+              {
+                "id": "custom.width",
+                "value": 72
+              }
+            ]
+          },
+          {
+            "matcher": {
+              "id": "byName",
+              "options": "ClientIP_s"
+            },
+            "properties": [
+              {
+                "id": "custom.width",
+                "value": 144
+              }
+            ]
+          },
+          {
+            "matcher": {
+              "id": "byName",
+              "options": "AttackGroup_s"
+            },
+            "properties": [
+              {
+                "id": "custom.width",
+                "value": 127
+              }
+            ]
+          },
+          {
+            "matcher": {
+              "id": "byName",
+              "options": "EventName_s"
+            },
+            "properties": [
+              {
+                "id": "custom.width",
+                "value": 279
+              }
+            ]
+          }
+        ]
+      },
+      "gridPos": {
+        "h": 23,
+        "w": 24,
+        "x": 0,
+        "y": 0
+      },
+      "id": 2,
+      "options": {
+        "showHeader": true,
+        "sortBy": []
+      },
+      "pluginVersion": "7.4.2",
+      "targets": [
+        {
+          "appInsights": {
+            "dimension": [],
+            "metricName": "select",
+            "timeGrain": "auto"
+          },
+          "azureLogAnalytics": {
+            "query": "barracuda_CL\n| where Action_s == \"DENY\" or Action_s == \"BLOCK\"\n| where $__timeFilter(TimeGenerated)\r",
+            "resultFormat": "table",
+            "workspace": "ed4c2717-6ae6-4f07-8d87-e6311e404f25"
+          },
+          "azureMonitor": {
+            "aggOptions": [],
+            "dimensionFilter": "*",
+            "dimensionFilters": [],
+            "metricDefinition": "select",
+            "metricName": "select",
+            "metricNamespace": "select",
+            "resourceGroup": "select",
+            "resourceName": "select",
+            "timeGrain": "auto",
+            "timeGrains": [],
+            "top": "10"
+          },
+          "insightsAnalytics": {
+            "query": "",
+            "resultFormat": "time_series"
+          },
+          "queryType": "Azure Log Analytics",
+          "refId": "A",
+          "subscription": "d80ea739-e6db-46ea-b139-8528e2ce48ff"
+        }
+      ],
+      "title": "Blocked WAF REQUESTS",
+      "transformations": [
+        {
+          "id": "organize",
+          "options": {
+            "excludeByName": {
+              "AdminName_s": true,
+              "AdminRole_s": true,
+              "AppId_s": true,
+              "AttackGroup_s": false,
+              "AuthenticatedUser_s": true,
+              "BytesReceived_d": true,
+              "BytesSent_d": true,
+              "CacheHit_d": true,
+              "CertificateUser_s": true,
+              "ChangeType_s": true,
+              "ClientIP_s": false,
+              "ClientPort_d": true,
+              "ClientType_s": true,
+              "CommandName_s": true,
+              "Computer": true,
+              "Cookie_s": true,
+              "CustomHeader1_s": true,
+              "CustomHeader2_s": true,
+              "CustomHeader3_s": true,
+              "DeviceReceiptTime_s": true,
+              "DeviceVersion_s": true,
+              "EventID_d": true,
+              "EventMessage_s": true,
+              "EventName_s": false,
+              "FollowUpAction_s": true,
+              "HTTPStatus_s": true,
+              "HostIP_s": true,
+              "LogType_s": true,
+              "LoginID_s": true,
+              "LoginIP_s": true,
+              "LoginPort_d": true,
+              "MG": true,
+              "ManagementGroupName": true,
+              "Message": true,
+              "NewValue_s": true,
+              "ObjectName_s": true,
+              "ObjectType_s": true,
+              "OldValue_s": true,
+              "Product_s": true,
+              "ProfileMatched_s": true,
+              "Protected_s": true,
+              "ProtocolVersion_s": true,
+              "Protocol_s": true,
+              "ProxyIP_s": true,
+              "ProxyPort_d": true,
+              "QueryString_s": false,
+              "RawData": true,
+              "ResponseType_s": true,
+              "RuleID_s": true,
+              "RuleType_s": true,
+              "ServerIP_s": true,
+              "ServerPort_d": true,
+              "ServerTime_d": true,
+              "ServiceIP_s": true,
+              "ServicePort_d": true,
+              "SessionID_s": true,
+              "Severity_s": true,
+              "SignatureId_s": true,
+              "SourceSystem": true,
+              "TenantId": true,
+              "TimeTaken_d": true,
+              "TransactionID_d": true,
+              "Type": true,
+              "UnitName_s": true,
+              "Variable_s": true,
+              "Vendor_s": true,
+              "WAF_Host_s": true,
+              "WAF_Serial_s": true,
+              "WFMatched_s": true,
+              "_ResourceId": true,
+              "cef_version_d": true,
+              "host_s": true,
+              "ident_s": true,
+              "syslog_s": true
+            },
+            "indexByName": {
+              "Action_s": 5,
+              "AdminName_s": 13,
+              "AdminRole_s": 22,
+              "AppId_s": 75,
+              "AttackDetails_s": 79,
+              "AttackGroup_s": 27,
+              "AuthenticatedUser_s": 41,
+              "BytesReceived_d": 42,
+              "BytesSent_d": 43,
+              "CacheHit_d": 65,
+              "CertificateUser_s": 44,
+              "ChangeType_s": 17,
+              "ClientIP_s": 45,
+              "ClientPort_d": 46,
+              "ClientType_s": 59,
+              "CommandName_s": 14,
+              "Computer": 8,
+              "Cookie_s": 47,
+              "CustomHeader1_s": 70,
+              "CustomHeader2_s": 71,
+              "CustomHeader3_s": 72,
+              "DeviceReceiptTime_s": 56,
+              "DeviceVersion_s": 36,
+              "EventID_d": 29,
+              "EventMessage_s": 28,
+              "EventName_s": 26,
+              "FollowUpAction_s": 24,
+              "HTTPStatus_s": 49,
+              "HostIP_s": 76,
+              "LogType_s": 39,
+              "LoginID_s": 50,
+              "LoginIP_s": 15,
+              "LoginPort_d": 16,
+              "MG": 2,
+              "ManagementGroupName": 3,
+              "Message": 32,
+              "Method_s": 51,
+              "NewValue_s": 19,
+              "ObjectName_s": 11,
+              "ObjectType_s": 12,
+              "OldValue_s": 20,
+              "Product_s": 35,
+              "ProfileMatched_s": 62,
+              "Protected_s": 60,
+              "ProtocolVersion_s": 69,
+              "Protocol_s": 52,
+              "ProxyIP_s": 61,
+              "ProxyPort_d": 66,
+              "QueryString_s": 53,
+              "RawData": 9,
+              "Referer_s": 7,
+              "ResponseType_s": 73,
+              "RuleID_s": 23,
+              "RuleType_s": 25,
+              "ServerIP_s": 54,
+              "ServerPort_d": 55,
+              "ServerTime_d": 67,
+              "ServiceIP_s": 40,
+              "ServicePort_d": 64,
+              "SessionID_s": 74,
+              "Severity_s": 38,
+              "SignatureId_s": 37,
+              "SourceSystem": 1,
+              "TenantId": 0,
+              "TimeGenerated": 4,
+              "TimeTaken_d": 68,
+              "TransactionID_d": 18,
+              "Type": 78,
+              "URL_s": 6,
+              "UnitName_s": 58,
+              "UserAgent_s": 57,
+              "Variable_s": 21,
+              "Vendor_s": 34,
+              "WAF_Host_s": 48,
+              "WAF_Serial_s": 77,
+              "WFMatched_s": 63,
+              "_ResourceId": 80,
+              "cef_version_d": 33,
+              "host_s": 30,
+              "ident_s": 31,
+              "syslog_s": 10
+            },
+            "renameByName": {}
+          }
+        }
+      ],
+      "type": "table"
+    }
+  ],
+  "schemaVersion": 27,
+  "style": "dark",
+  "tags": [],
+  "templating": {
+    "list": []
+  },
+  "time": {
+    "from": "now-6h",
+    "to": "now"
+  },
+  "timepicker": {},
+  "timezone": "",
+  "title": "WAF BLOCKED REQUESTS",
+  "uid": "",
+  "version": 1
+}

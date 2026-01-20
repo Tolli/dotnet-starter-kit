@@ -11,6 +11,6 @@ public class SearchGroupMemberSpecs : EntitiesByPaginationFilterSpec<GroupMember
         : base(command) =>
         Query
             .OrderBy(c => c.Customer.Name, !command.HasOrderBy())
-            .Where(p => p.Price >= command.MinimumRate!.Value, command.MinimumRate.HasValue)
-            .Where(p => p.Price <= command.MaximumRate!.Value, command.MaximumRate.HasValue);
+            .Where(p => p.Amount >= command.MinimumRate!.Value, command.MinimumRate.HasValue)
+            .Where(p => p.Amount <= command.MaximumRate!.Value, command.MaximumRate.HasValue);
 }

@@ -6,6 +6,5 @@ public class CreateCustomerCommandValidator : AbstractValidator<CreateCustomerCo
     public CreateCustomerCommandValidator()
     {
         RuleFor(p => p.Name).NotEmpty().MinimumLength(2).MaximumLength(75);
-        RuleFor(p => p.Price).GreaterThan(0);
     }
 }

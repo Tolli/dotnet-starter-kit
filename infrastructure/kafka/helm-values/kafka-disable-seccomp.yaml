@@ -1,0 +1,3 @@
+controller:
+  podSecurityContext:
+    seccompProfile: null # Does not work in OC

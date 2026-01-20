@@ -1,0 +1,89 @@
+deploymentMode: SingleBinary
+loki:
+  commonConfig:
+    replication_factor: 1
+  storage:
+    type: 'filesystem'
+  schemaConfig:
+    configs:
+    - from: "2024-01-01"
+      store: tsdb
+      index:
+        prefix: loki_index_
+        period: 24h
+      object_store: filesystem # we're storing on filesystem so there's no real persistence here.
+      schema: v13
+gateway:
+  ingress:
+      # -- Specifies whether an ingress for the gateway should be created
+      enabled: false
+      # -- Ingress Class Name. MAY be required for Kubernetes versions >= 1.18
+      ingressClassName: "nginx"
+      # -- Annotations for the gateway ingress
+      annotations: {}
+      # -- Labels for the gateway ingress
+      labels: {}
+      # -- Hosts configuration for the gateway ingress, passed through the `tpl` function to allow templating
+      hosts:
+        - host: gateway.loki.k8s.tbr.localhost
+          paths:
+            - path: /
+              # -- pathType (e.g. ImplementationSpecific, Prefix, .. etc.) might also be required by some Ingress Controllers
+              pathType: Prefix
+      # -- TLS configuration for the gateway ingress. Hosts passed through the `tpl` function to allow templating
+      tls: []
+singleBinary:
+  replicas: 1
+  resources:
+    requests:
+      cpu: 100m
+      memory: 128Mi
+    limits:
+      cpu: 100m
+      memory: 128Mi
+chunksCache:
+  resources:
+    requests:
+      cpu: 100m
+      memory: 128Mi
+    limits:
+      cpu: 100m
+      memory: 256Mi
+
+resultsCache:
+  resources:
+    requests:
+      cpu: 100m
+      memory: 128Mi
+    limits:
+      cpu: 100m
+      memory: 256Mi
+
+
+# Zero out replica counts of other deployment modes
+
+backend:
+  replicas: 0
+read:
+  replicas: 0
+write:
+  replicas: 0
+
+ingester:
+  replicas: 0
+querier:
+  replicas: 0
+queryFrontend:
+  replicas: 0
+queryScheduler:
+  replicas: 0
+distributor:
+  replicas: 0
+compactor:
+  replicas: 0
+indexGateway:
+  replicas: 0
+bloomCompactor:
+  replicas: 0
+bloomGateway:
+  replicas: 0

@@ -1,0 +1,142 @@
+﻿@page "/booking/groups/{Id}/rentals"
+@using FSH.Starter.Shared.Authorization
+
+<PageHeader Title="@_title" Header="@_title" SubHeader="@_description" />
+
+@if (!_loaded)
+{
+    <MudProgressCircular Color="Color.Primary" Indeterminate="true" />
+}
+else
+{
+    <MudTable Hover="true" Outlined Items="_courtRentalsList">
+        <ToolBarContent>
+            <div class="justify-center mud-text-align-center">
+                <MudButton Variant="Variant.Filled" DropShadow="false" Color="Color.Info" Class="ml-auto" StartIcon="@Icons.Material.Filled.ArrowBack" Href="/booking/groups">
+                    Back
+                </MudButton>
+                @* @if (_canEditUsers)
+                {
+                    <MudButton Variant="Variant.Filled" DropShadow="false" Color="Color.Primary" Class="ml-auto" OnClick="SaveAsync" StartIcon="@Icons.Material.Filled.Save"
+                        ButtonType="ButtonType.Submit" Style="margin-left: 5px!important;">
+                        Update
+                    </MudButton>
+                } *@
+            </div>
+            <MudSpacer />
+            @if (_canSearchRoles)
+            {
+                <MudTextField @bind-Value="_searchString" Immediate="true" FullWidth=false
+                    Placeholder="Search For Members" Adornment="Adornment.End"
+                    AdornmentIcon="@Icons.Material.Filled.Search" IconSize="Size.Medium" Class="mt-0 mb-3">
+                </MudTextField>
+            }
+        </ToolBarContent>
+        <HeaderContent>
+            <MudTh>
+                <MudTableSortLabel SortBy="new Func<CourtRentalResponse, object?>(x => x.Court)">Name
+                </MudTableSortLabel>
+            </MudTh>
+            <MudTh>
+                <MudTableSortLabel SortBy="new Func<CourtRentalResponse, object?>(x => x.Weekday)">
+                    Weekday
+                </MudTableSortLabel>
+            </MudTh>
+            <MudTh>
+                <MudTableSortLabel SortBy="new Func<CourtRentalResponse, object?>(x => x.StartTime)">
+                    StartTime
+                </MudTableSortLabel>
+            </MudTh>
+            <MudTh>
+                <MudTableSortLabel SortBy="new Func<CourtRentalResponse, object>(x => x.Amount)">
+                    Amount
+                </MudTableSortLabel>
+            </MudTh>
+        </HeaderContent>
+        <RowTemplate>
+            <MudTd DataLabel="Court">
+                <MudHighlighter Text="@context.Court.ToString()" HighlightedText="@_searchString" />
+            </MudTd>
+            <MudTd DataLabel="WeekDay">
+                <MudHighlighter Text="@context.Weekday" HighlightedText="@_searchString" />
+            </MudTd>
+            <MudTd DataLabel="StartTime">
+                <MudHighlighter Text="@context.StartTime" HighlightedText="@_searchString" />
+            </MudTd>
+            <MudTd DataLabel="StartDate">
+                <MudText @bind-Value="@context.StartDate">
+                    @context.StartDate
+                </MudText>
+            </MudTd>
+            <MudTd DataLabel="EndDate">
+                <MudText @bind-Value="@context.EndDate">
+                    @context.EndDate
+                </MudText>
+            </MudTd>
+            <MudTd DataLabel="Duration">
+                <MudText @bind-Value="@context.Duration">
+                    @context.Duration
+                </MudText>
+            </MudTd>
+            <MudTd DataLabel="Amount">
+                <MudText @bind-Value="@context.Amount" Color="Color.Secondary">@context.Amount
+                </MudText>
+            </MudTd>
+            <MudTd DataLabel="Amount">
+                <MudText @bind-Value="@context.Discount" Color="Color.Secondary">
+                    @context.Discount
+                </MudText>
+            </MudTd>
+        </RowTemplate>
+        <PagerContent>
+            <TablePager />
+        </PagerContent>
+    </MudTable>
+}
+
+@code {
+    [Parameter]
+    public string Id { get; set; }
+    [CascadingParameter]
+    protected Task<AuthenticationState> AuthState { get; set; } = default!;
+    [Inject]
+    protected IAuthorizationService AuthService { get; set; } = default!;
+    [Inject]
+    protected IApiClient UsersClient { get; set; } = default!;
+
+    private List<CourtRentalResponse> _courtRentalsList = default!;
+
+    private string _title = string.Empty;
+    private string _description = string.Empty;
+
+    private string _searchString = string.Empty;
+
+    private bool _canEditUsers;
+    private bool _canSearchRoles;
+    private bool _loaded;
+
+    protected override async Task OnInitializedAsync()
+    {
+       var state = await AuthState;
+
+       _canEditUsers = await AuthService.HasPermissionAsync(state.User, FshActions.Update, FshResources.Groups);
+       _canSearchRoles = await AuthService.HasPermissionAsync(state.User, FshActions.View, FshResources.CourtRentals);
+
+       if (await ApiHelper.ExecuteCallGuardedAsync(
+               () => UsersClient.GetGroupEndpointAsync("1",new Guid(Id!)), Toast, Navigation)
+           is GroupResponse group)
+       {
+           _title = $"{group.Name} - Members";
+           _description = string.Format("Manage members of {0}", group.Name);
+
+           if (await ApiHelper.ExecuteCallGuardedAsync(
+                   () => UsersClient.GetCourtRentalsByGroupIdEndpointAsync("1", new Guid(Id!), new GetCourtRentalsByGroupIdCommand() { GroupId = new Guid(Id)}), Toast, Navigation)
+               is CourtRentalResponsePagedList response)
+           {
+               _courtRentalsList = response.Items.ToList();
+           }
+       }
+
+       _loaded = true;
+    }
+    }

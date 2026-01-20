@@ -1,0 +1,23 @@
+commonLabels:
+  app: mssql
+
+generatorOptions:
+  disableNameSuffixHash: true
+
+resources:
+- sql.yaml
+
+secretGenerator:
+- name: mssql-logins
+  envs:
+  - ../init-configs/app-sql-login.env
+  - ../init-configs/mssql.env
+
+configMapGenerator:
+- name: mssql-entrypoint
+  files:
+  - entrypoint.sh=./scripts/entrypoint.sh
+
+- name: mssql-databases
+  envs:
+  - ../init-configs/app-databases.env

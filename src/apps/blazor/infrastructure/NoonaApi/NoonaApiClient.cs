@@ -6303,6 +6303,29 @@ namespace FSH.Starter.Blazor.Infrastructure.NoonaApi
         System.Threading.Tasks.Task<FiscalizationStatusUpdateResponse> UpdateCompanyFiscalizationStatusAsync(string company_id, FiscalizationStatusUpdateRequest body, System.Threading.CancellationToken cancellationToken);
 
         /// <summary>
+        /// Migrate Portugal company from InvoiceXpress to AT provider
+        /// </summary>
+        /// <remarks>
+        /// Migrates Portugal company from InvoiceXpress to AT provider
+        /// </remarks>
+        /// <param name="company_id">Company ID</param>
+        /// <returns>Migration initiated successfully</returns>
+        /// <exception cref="ApiException">A server side error occurred.</exception>
+        System.Threading.Tasks.Task<FiscalizationOnboarding> MigratePortugalCompanyToATProviderAsync(string company_id);
+
+        /// <param name="cancellationToken">A cancellation token that can be used by other objects or threads to receive notice of cancellation.</param>
+        /// <summary>
+        /// Migrate Portugal company from InvoiceXpress to AT provider
+        /// </summary>
+        /// <remarks>
+        /// Migrates Portugal company from InvoiceXpress to AT provider
+        /// </remarks>
+        /// <param name="company_id">Company ID</param>
+        /// <returns>Migration initiated successfully</returns>
+        /// <exception cref="ApiException">A server side error occurred.</exception>
+        System.Threading.Tasks.Task<FiscalizationOnboarding> MigratePortugalCompanyToATProviderAsync(string company_id, System.Threading.CancellationToken cancellationToken);
+
+        /// <summary>
         /// Download fiscalization report
         /// </summary>
         /// <remarks>
@@ -8470,6 +8493,77 @@ namespace FSH.Starter.Blazor.Infrastructure.NoonaApi
         /// <returns>Memo deleted</returns>
         /// <exception cref="ApiException">A server side error occurred.</exception>
         System.Threading.Tasks.Task DeleteMemoAsync(string memo_id, System.Collections.Generic.IEnumerable<string>? select, System.Collections.Generic.IEnumerable<string>? expand, System.Threading.CancellationToken cancellationToken);
+
+        /// <summary>
+        /// List company goals
+        /// </summary>
+        /// <remarks>
+        /// Lists all goal instances for a company. Each goal includes its tasks.
+        /// <br/>Use the filter parameter to retrieve only active goals.
+        /// </remarks>
+        /// <param name="select">[Field Selector](https://api.noona.is/docs/working-with-the-apis/select)</param>
+        /// <param name="expand">[Expandable attributes](https://api.noona.is/docs/working-with-the-apis/expandable_attributes)</param>
+        /// <returns>Company goals</returns>
+        /// <exception cref="ApiException">A server side error occurred.</exception>
+        System.Threading.Tasks.Task<System.Collections.Generic.ICollection<Goal>> ListGoalInstancesAsync(string company_id, object? filter, System.Collections.Generic.IEnumerable<string>? select, System.Collections.Generic.IEnumerable<string>? expand);
+
+        /// <param name="cancellationToken">A cancellation token that can be used by other objects or threads to receive notice of cancellation.</param>
+        /// <summary>
+        /// List company goals
+        /// </summary>
+        /// <remarks>
+        /// Lists all goal instances for a company. Each goal includes its tasks.
+        /// <br/>Use the filter parameter to retrieve only active goals.
+        /// </remarks>
+        /// <param name="select">[Field Selector](https://api.noona.is/docs/working-with-the-apis/select)</param>
+        /// <param name="expand">[Expandable attributes](https://api.noona.is/docs/working-with-the-apis/expandable_attributes)</param>
+        /// <returns>Company goals</returns>
+        /// <exception cref="ApiException">A server side error occurred.</exception>
+        System.Threading.Tasks.Task<System.Collections.Generic.ICollection<Goal>> ListGoalInstancesAsync(string company_id, object? filter, System.Collections.Generic.IEnumerable<string>? select, System.Collections.Generic.IEnumerable<string>? expand, System.Threading.CancellationToken cancellationToken);
+
+        /// <summary>
+        /// Set a goal as active
+        /// </summary>
+        /// <remarks>
+        /// Sets the specified goal as the active goal for the company.
+        /// <br/>Any previously active goal will be marked as inactive.
+        /// </remarks>
+        /// <returns>Activated goal with tasks</returns>
+        /// <exception cref="ApiException">A server side error occurred.</exception>
+        System.Threading.Tasks.Task<Goal> ActivateGoalAsync(string goal_id, ActivateGoalRequest body);
+
+        /// <param name="cancellationToken">A cancellation token that can be used by other objects or threads to receive notice of cancellation.</param>
+        /// <summary>
+        /// Set a goal as active
+        /// </summary>
+        /// <remarks>
+        /// Sets the specified goal as the active goal for the company.
+        /// <br/>Any previously active goal will be marked as inactive.
+        /// </remarks>
+        /// <returns>Activated goal with tasks</returns>
+        /// <exception cref="ApiException">A server side error occurred.</exception>
+        System.Threading.Tasks.Task<Goal> ActivateGoalAsync(string goal_id, ActivateGoalRequest body, System.Threading.CancellationToken cancellationToken);
+
+        /// <summary>
+        /// Update a task
+        /// </summary>
+        /// <remarks>
+        /// Updates a task instance. Currently supports marking tasks as complete.
+        /// </remarks>
+        /// <returns>Task updated successfully</returns>
+        /// <exception cref="ApiException">A server side error occurred.</exception>
+        System.Threading.Tasks.Task<Task> UpdateTaskAsync(string task_id, UpdateTaskRequest body);
+
+        /// <param name="cancellationToken">A cancellation token that can be used by other objects or threads to receive notice of cancellation.</param>
+        /// <summary>
+        /// Update a task
+        /// </summary>
+        /// <remarks>
+        /// Updates a task instance. Currently supports marking tasks as complete.
+        /// </remarks>
+        /// <returns>Task updated successfully</returns>
+        /// <exception cref="ApiException">A server side error occurred.</exception>
+        System.Threading.Tasks.Task<Task> UpdateTaskAsync(string task_id, UpdateTaskRequest body, System.Threading.CancellationToken cancellationToken);
 
         /// <param name="sort">[Sorting](https://api.noona.is/docs/working-with-the-apis/sorting)</param>
         /// <param name="select">[Field Selector](https://api.noona.is/docs/working-with-the-apis/select)</param>
@@ -31592,6 +31686,30 @@ namespace FSH.Starter.Blazor.Infrastructure.NoonaApi
                             return objectResponse_.Object;
                         }
                         else
+                        if (status_ == 400)
+                        {
+                            string responseText_ = ( response_.Content == null ) ? string.Empty : await ReadAsStringAsync(response_.Content, cancellationToken).ConfigureAwait(false);
+                            throw new ApiException("Provided request body is malformed", status_, responseText_, headers_, null);
+                        }
+                        else
+                        if (status_ == 401)
+                        {
+                            string responseText_ = ( response_.Content == null ) ? string.Empty : await ReadAsStringAsync(response_.Content, cancellationToken).ConfigureAwait(false);
+                            throw new ApiException("API key is missing or invalid. See Authentication documentation for more information.", status_, responseText_, headers_, null);
+                        }
+                        else
+                        if (status_ == 403)
+                        {
+                            string responseText_ = ( response_.Content == null ) ? string.Empty : await ReadAsStringAsync(response_.Content, cancellationToken).ConfigureAwait(false);
+                            throw new ApiException("Operation not permitted", status_, responseText_, headers_, null);
+                        }
+                        else
+                        if (status_ == 404)
+                        {
+                            string responseText_ = ( response_.Content == null ) ? string.Empty : await ReadAsStringAsync(response_.Content, cancellationToken).ConfigureAwait(false);
+                            throw new ApiException("Requested resource not found", status_, responseText_, headers_, null);
+                        }
+                        else
                         {
                             var responseData_ = response_.Content == null ? null : await ReadAsStringAsync(response_.Content, cancellationToken).ConfigureAwait(false);
                             throw new ApiException("The HTTP status code of the response was not expected (" + status_ + ").", status_, responseData_, headers_, null);
@@ -37471,6 +37589,134 @@ namespace FSH.Starter.Blazor.Infrastructure.NoonaApi
                         if (status_ == 200)
                         {
                             var objectResponse_ = await ReadObjectResponseAsync<FiscalizationStatusUpdateResponse>(response_, headers_, cancellationToken).ConfigureAwait(false);
+                            if (objectResponse_.Object == null)
+                            {
+                                throw new ApiException("Response was null which was not expected.", status_, objectResponse_.Text, headers_, null);
+                            }
+                            return objectResponse_.Object;
+                        }
+                        else
+                        if (status_ == 400)
+                        {
+                            string responseText_ = ( response_.Content == null ) ? string.Empty : await ReadAsStringAsync(response_.Content, cancellationToken).ConfigureAwait(false);
+                            throw new ApiException("Provided request body is malformed", status_, responseText_, headers_, null);
+                        }
+                        else
+                        if (status_ == 401)
+                        {
+                            string responseText_ = ( response_.Content == null ) ? string.Empty : await ReadAsStringAsync(response_.Content, cancellationToken).ConfigureAwait(false);
+                            throw new ApiException("API key is missing or invalid. See Authentication documentation for more information.", status_, responseText_, headers_, null);
+                        }
+                        else
+                        if (status_ == 403)
+                        {
+                            string responseText_ = ( response_.Content == null ) ? string.Empty : await ReadAsStringAsync(response_.Content, cancellationToken).ConfigureAwait(false);
+                            throw new ApiException("Operation not permitted", status_, responseText_, headers_, null);
+                        }
+                        else
+                        if (status_ == 404)
+                        {
+                            string responseText_ = ( response_.Content == null ) ? string.Empty : await ReadAsStringAsync(response_.Content, cancellationToken).ConfigureAwait(false);
+                            throw new ApiException("Requested resource not found", status_, responseText_, headers_, null);
+                        }
+                        else
+                        if (status_ == 500)
+                        {
+                            string responseText_ = ( response_.Content == null ) ? string.Empty : await ReadAsStringAsync(response_.Content, cancellationToken).ConfigureAwait(false);
+                            throw new ApiException("Internal server error", status_, responseText_, headers_, null);
+                        }
+                        else
+                        {
+                            var responseData_ = response_.Content == null ? null : await ReadAsStringAsync(response_.Content, cancellationToken).ConfigureAwait(false);
+                            throw new ApiException("The HTTP status code of the response was not expected (" + status_ + ").", status_, responseData_, headers_, null);
+                        }
+                    }
+                    finally
+                    {
+                        if (disposeResponse_)
+                            response_.Dispose();
+                    }
+                }
+            }
+            finally
+            {
+                if (disposeClient_)
+                    client_.Dispose();
+            }
+        }
+
+        /// <summary>
+        /// Migrate Portugal company from InvoiceXpress to AT provider
+        /// </summary>
+        /// <remarks>
+        /// Migrates Portugal company from InvoiceXpress to AT provider
+        /// </remarks>
+        /// <param name="company_id">Company ID</param>
+        /// <returns>Migration initiated successfully</returns>
+        /// <exception cref="ApiException">A server side error occurred.</exception>
+        public virtual System.Threading.Tasks.Task<FiscalizationOnboarding> MigratePortugalCompanyToATProviderAsync(string company_id)
+        {
+            return MigratePortugalCompanyToATProviderAsync(company_id, System.Threading.CancellationToken.None);
+        }
+
+        /// <param name="cancellationToken">A cancellation token that can be used by other objects or threads to receive notice of cancellation.</param>
+        /// <summary>
+        /// Migrate Portugal company from InvoiceXpress to AT provider
+        /// </summary>
+        /// <remarks>
+        /// Migrates Portugal company from InvoiceXpress to AT provider
+        /// </remarks>
+        /// <param name="company_id">Company ID</param>
+        /// <returns>Migration initiated successfully</returns>
+        /// <exception cref="ApiException">A server side error occurred.</exception>
+        public virtual async System.Threading.Tasks.Task<FiscalizationOnboarding> MigratePortugalCompanyToATProviderAsync(string company_id, System.Threading.CancellationToken cancellationToken)
+        {
+            if (company_id == null)
+                throw new System.ArgumentNullException("company_id");
+
+            var client_ = _httpClient;
+            var disposeClient_ = false;
+            try
+            {
+                using (var request_ = new System.Net.Http.HttpRequestMessage())
+                {
+                    request_.Content = new System.Net.Http.StringContent(string.Empty, System.Text.Encoding.UTF8, "application/json");
+                    request_.Method = new System.Net.Http.HttpMethod("POST");
+                    request_.Headers.Accept.Add(System.Net.Http.Headers.MediaTypeWithQualityHeaderValue.Parse("application/json"));
+
+                    var urlBuilder_ = new System.Text.StringBuilder();
+                
+                    // Operation Path: "v1/hq/fiscalizations/companies/{company_id}/portugal/migrate_provider"
+                    urlBuilder_.Append("v1/hq/fiscalizations/companies/");
+                    urlBuilder_.Append(System.Uri.EscapeDataString(ConvertToString(company_id, System.Globalization.CultureInfo.InvariantCulture)));
+                    urlBuilder_.Append("/portugal/migrate_provider");
+
+                    PrepareRequest(client_, request_, urlBuilder_);
+
+                    var url_ = urlBuilder_.ToString();
+                    request_.RequestUri = new System.Uri(url_, System.UriKind.RelativeOrAbsolute);
+
+                    PrepareRequest(client_, request_, url_);
+
+                    var response_ = await client_.SendAsync(request_, System.Net.Http.HttpCompletionOption.ResponseHeadersRead, cancellationToken).ConfigureAwait(false);
+                    var disposeResponse_ = true;
+                    try
+                    {
+                        var headers_ = new System.Collections.Generic.Dictionary<string, System.Collections.Generic.IEnumerable<string>>();
+                        foreach (var item_ in response_.Headers)
+                            headers_[item_.Key] = item_.Value;
+                        if (response_.Content != null && response_.Content.Headers != null)
+                        {
+                            foreach (var item_ in response_.Content.Headers)
+                                headers_[item_.Key] = item_.Value;
+                        }
+
+                        ProcessResponse(client_, response_);
+
+                        var status_ = (int)response_.StatusCode;
+                        if (status_ == 200)
+                        {
+                            var objectResponse_ = await ReadObjectResponseAsync<FiscalizationOnboarding>(response_, headers_, cancellationToken).ConfigureAwait(false);
                             if (objectResponse_.Object == null)
                             {
                                 throw new ApiException("Response was null which was not expected.", status_, objectResponse_.Text, headers_, null);
@@ -46959,6 +47205,392 @@ namespace FSH.Starter.Blazor.Infrastructure.NoonaApi
             }
         }
 
+        /// <summary>
+        /// List company goals
+        /// </summary>
+        /// <remarks>
+        /// Lists all goal instances for a company. Each goal includes its tasks.
+        /// <br/>Use the filter parameter to retrieve only active goals.
+        /// </remarks>
+        /// <param name="select">[Field Selector](https://api.noona.is/docs/working-with-the-apis/select)</param>
+        /// <param name="expand">[Expandable attributes](https://api.noona.is/docs/working-with-the-apis/expandable_attributes)</param>
+        /// <returns>Company goals</returns>
+        /// <exception cref="ApiException">A server side error occurred.</exception>
+        public virtual System.Threading.Tasks.Task<System.Collections.Generic.ICollection<Goal>> ListGoalInstancesAsync(string company_id, object? filter, System.Collections.Generic.IEnumerable<string>? select, System.Collections.Generic.IEnumerable<string>? expand)
+        {
+            return ListGoalInstancesAsync(company_id, filter, select, expand, System.Threading.CancellationToken.None);
+        }
+
+        /// <param name="cancellationToken">A cancellation token that can be used by other objects or threads to receive notice of cancellation.</param>
+        /// <summary>
+        /// List company goals
+        /// </summary>
+        /// <remarks>
+        /// Lists all goal instances for a company. Each goal includes its tasks.
+        /// <br/>Use the filter parameter to retrieve only active goals.
+        /// </remarks>
+        /// <param name="select">[Field Selector](https://api.noona.is/docs/working-with-the-apis/select)</param>
+        /// <param name="expand">[Expandable attributes](https://api.noona.is/docs/working-with-the-apis/expandable_attributes)</param>
+        /// <returns>Company goals</returns>
+        /// <exception cref="ApiException">A server side error occurred.</exception>
+        public virtual async System.Threading.Tasks.Task<System.Collections.Generic.ICollection<Goal>> ListGoalInstancesAsync(string company_id, object? filter, System.Collections.Generic.IEnumerable<string>? select, System.Collections.Generic.IEnumerable<string>? expand, System.Threading.CancellationToken cancellationToken)
+        {
+            if (company_id == null)
+                throw new System.ArgumentNullException("company_id");
+
+            var client_ = _httpClient;
+            var disposeClient_ = false;
+            try
+            {
+                using (var request_ = new System.Net.Http.HttpRequestMessage())
+                {
+                    request_.Method = new System.Net.Http.HttpMethod("GET");
+                    request_.Headers.Accept.Add(System.Net.Http.Headers.MediaTypeWithQualityHeaderValue.Parse("application/json"));
+
+                    var urlBuilder_ = new System.Text.StringBuilder();
+                
+                    // Operation Path: "v1/hq/companies/{company_id}/goals"
+                    urlBuilder_.Append("v1/hq/companies/");
+                    urlBuilder_.Append(System.Uri.EscapeDataString(ConvertToString(company_id, System.Globalization.CultureInfo.InvariantCulture)));
+                    urlBuilder_.Append("/goals");
+                    urlBuilder_.Append('?');
+                    if (filter != null)
+                    {
+                        urlBuilder_.Append(System.Uri.EscapeDataString("filter")).Append('=').Append(System.Uri.EscapeDataString(ConvertToString(filter, System.Globalization.CultureInfo.InvariantCulture))).Append('&');
+                    }
+                    if (select != null)
+                    {
+                            foreach (var item_ in select) { urlBuilder_.Append(System.Uri.EscapeDataString("select")).Append('=').Append(System.Uri.EscapeDataString(ConvertToString(item_, System.Globalization.CultureInfo.InvariantCulture))).Append('&'); }
+                    }
+                    if (expand != null)
+                    {
+                            foreach (var item_ in expand) { urlBuilder_.Append(System.Uri.EscapeDataString("expand")).Append('=').Append(System.Uri.EscapeDataString(ConvertToString(item_, System.Globalization.CultureInfo.InvariantCulture))).Append('&'); }
+                    }
+                    urlBuilder_.Length--;
+
+                    PrepareRequest(client_, request_, urlBuilder_);
+
+                    var url_ = urlBuilder_.ToString();
+                    request_.RequestUri = new System.Uri(url_, System.UriKind.RelativeOrAbsolute);
+
+                    PrepareRequest(client_, request_, url_);
+
+                    var response_ = await client_.SendAsync(request_, System.Net.Http.HttpCompletionOption.ResponseHeadersRead, cancellationToken).ConfigureAwait(false);
+                    var disposeResponse_ = true;
+                    try
+                    {
+                        var headers_ = new System.Collections.Generic.Dictionary<string, System.Collections.Generic.IEnumerable<string>>();
+                        foreach (var item_ in response_.Headers)
+                            headers_[item_.Key] = item_.Value;
+                        if (response_.Content != null && response_.Content.Headers != null)
+                        {
+                            foreach (var item_ in response_.Content.Headers)
+                                headers_[item_.Key] = item_.Value;
+                        }
+
+                        ProcessResponse(client_, response_);
+
+                        var status_ = (int)response_.StatusCode;
+                        if (status_ == 200)
+                        {
+                            var objectResponse_ = await ReadObjectResponseAsync<System.Collections.Generic.ICollection<Goal>>(response_, headers_, cancellationToken).ConfigureAwait(false);
+                            if (objectResponse_.Object == null)
+                            {
+                                throw new ApiException("Response was null which was not expected.", status_, objectResponse_.Text, headers_, null);
+                            }
+                            return objectResponse_.Object;
+                        }
+                        else
+                        if (status_ == 401)
+                        {
+                            string responseText_ = ( response_.Content == null ) ? string.Empty : await ReadAsStringAsync(response_.Content, cancellationToken).ConfigureAwait(false);
+                            throw new ApiException("API key is missing or invalid. See Authentication documentation for more information.", status_, responseText_, headers_, null);
+                        }
+                        else
+                        if (status_ == 404)
+                        {
+                            string responseText_ = ( response_.Content == null ) ? string.Empty : await ReadAsStringAsync(response_.Content, cancellationToken).ConfigureAwait(false);
+                            throw new ApiException("Requested resource not found", status_, responseText_, headers_, null);
+                        }
+                        else
+                        if (status_ == 500)
+                        {
+                            string responseText_ = ( response_.Content == null ) ? string.Empty : await ReadAsStringAsync(response_.Content, cancellationToken).ConfigureAwait(false);
+                            throw new ApiException("Internal server error", status_, responseText_, headers_, null);
+                        }
+                        else
+                        {
+                            var responseData_ = response_.Content == null ? null : await ReadAsStringAsync(response_.Content, cancellationToken).ConfigureAwait(false);
+                            throw new ApiException("The HTTP status code of the response was not expected (" + status_ + ").", status_, responseData_, headers_, null);
+                        }
+                    }
+                    finally
+                    {
+                        if (disposeResponse_)
+                            response_.Dispose();
+                    }
+                }
+            }
+            finally
+            {
+                if (disposeClient_)
+                    client_.Dispose();
+            }
+        }
+
+        /// <summary>
+        /// Set a goal as active
+        /// </summary>
+        /// <remarks>
+        /// Sets the specified goal as the active goal for the company.
+        /// <br/>Any previously active goal will be marked as inactive.
+        /// </remarks>
+        /// <returns>Activated goal with tasks</returns>
+        /// <exception cref="ApiException">A server side error occurred.</exception>
+        public virtual System.Threading.Tasks.Task<Goal> ActivateGoalAsync(string goal_id, ActivateGoalRequest body)
+        {
+            return ActivateGoalAsync(goal_id, body, System.Threading.CancellationToken.None);
+        }
+
+        /// <param name="cancellationToken">A cancellation token that can be used by other objects or threads to receive notice of cancellation.</param>
+        /// <summary>
+        /// Set a goal as active
+        /// </summary>
+        /// <remarks>
+        /// Sets the specified goal as the active goal for the company.
+        /// <br/>Any previously active goal will be marked as inactive.
+        /// </remarks>
+        /// <returns>Activated goal with tasks</returns>
+        /// <exception cref="ApiException">A server side error occurred.</exception>
+        public virtual async System.Threading.Tasks.Task<Goal> ActivateGoalAsync(string goal_id, ActivateGoalRequest body, System.Threading.CancellationToken cancellationToken)
+        {
+            if (goal_id == null)
+                throw new System.ArgumentNullException("goal_id");
+
+            if (body == null)
+                throw new System.ArgumentNullException("body");
+
+            var client_ = _httpClient;
+            var disposeClient_ = false;
+            try
+            {
+                using (var request_ = new System.Net.Http.HttpRequestMessage())
+                {
+                    var json_ = System.Text.Json.JsonSerializer.SerializeToUtf8Bytes(body, JsonSerializerSettings);
+                    var content_ = new System.Net.Http.ByteArrayContent(json_);
+                    content_.Headers.ContentType = System.Net.Http.Headers.MediaTypeHeaderValue.Parse("application/json");
+                    request_.Content = content_;
+                    request_.Method = new System.Net.Http.HttpMethod("POST");
+                    request_.Headers.Accept.Add(System.Net.Http.Headers.MediaTypeWithQualityHeaderValue.Parse("application/json"));
+
+                    var urlBuilder_ = new System.Text.StringBuilder();
+                
+                    // Operation Path: "v1/hq/goals/{goal_id}/activate"
+                    urlBuilder_.Append("v1/hq/goals/");
+                    urlBuilder_.Append(System.Uri.EscapeDataString(ConvertToString(goal_id, System.Globalization.CultureInfo.InvariantCulture)));
+                    urlBuilder_.Append("/activate");
+
+                    PrepareRequest(client_, request_, urlBuilder_);
+
+                    var url_ = urlBuilder_.ToString();
+                    request_.RequestUri = new System.Uri(url_, System.UriKind.RelativeOrAbsolute);
+
+                    PrepareRequest(client_, request_, url_);
+
+                    var response_ = await client_.SendAsync(request_, System.Net.Http.HttpCompletionOption.ResponseHeadersRead, cancellationToken).ConfigureAwait(false);
+                    var disposeResponse_ = true;
+                    try
+                    {
+                        var headers_ = new System.Collections.Generic.Dictionary<string, System.Collections.Generic.IEnumerable<string>>();
+                        foreach (var item_ in response_.Headers)
+                            headers_[item_.Key] = item_.Value;
+                        if (response_.Content != null && response_.Content.Headers != null)
+                        {
+                            foreach (var item_ in response_.Content.Headers)
+                                headers_[item_.Key] = item_.Value;
+                        }
+
+                        ProcessResponse(client_, response_);
+
+                        var status_ = (int)response_.StatusCode;
+                        if (status_ == 200)
+                        {
+                            var objectResponse_ = await ReadObjectResponseAsync<Goal>(response_, headers_, cancellationToken).ConfigureAwait(false);
+                            if (objectResponse_.Object == null)
+                            {
+                                throw new ApiException("Response was null which was not expected.", status_, objectResponse_.Text, headers_, null);
+                            }
+                            return objectResponse_.Object;
+                        }
+                        else
+                        if (status_ == 400)
+                        {
+                            string responseText_ = ( response_.Content == null ) ? string.Empty : await ReadAsStringAsync(response_.Content, cancellationToken).ConfigureAwait(false);
+                            throw new ApiException("Provided request body is malformed", status_, responseText_, headers_, null);
+                        }
+                        else
+                        if (status_ == 401)
+                        {
+                            string responseText_ = ( response_.Content == null ) ? string.Empty : await ReadAsStringAsync(response_.Content, cancellationToken).ConfigureAwait(false);
+                            throw new ApiException("API key is missing or invalid. See Authentication documentation for more information.", status_, responseText_, headers_, null);
+                        }
+                        else
+                        if (status_ == 404)
+                        {
+                            string responseText_ = ( response_.Content == null ) ? string.Empty : await ReadAsStringAsync(response_.Content, cancellationToken).ConfigureAwait(false);
+                            throw new ApiException("Requested resource not found", status_, responseText_, headers_, null);
+                        }
+                        else
+                        if (status_ == 500)
+                        {
+                            string responseText_ = ( response_.Content == null ) ? string.Empty : await ReadAsStringAsync(response_.Content, cancellationToken).ConfigureAwait(false);
+                            throw new ApiException("Internal server error", status_, responseText_, headers_, null);
+                        }
+                        else
+                        {
+                            var responseData_ = response_.Content == null ? null : await ReadAsStringAsync(response_.Content, cancellationToken).ConfigureAwait(false);
+                            throw new ApiException("The HTTP status code of the response was not expected (" + status_ + ").", status_, responseData_, headers_, null);
+                        }
+                    }
+                    finally
+                    {
+                        if (disposeResponse_)
+                            response_.Dispose();
+                    }
+                }
+            }
+            finally
+            {
+                if (disposeClient_)
+                    client_.Dispose();
+            }
+        }
+
+        /// <summary>
+        /// Update a task
+        /// </summary>
+        /// <remarks>
+        /// Updates a task instance. Currently supports marking tasks as complete.
+        /// </remarks>
+        /// <returns>Task updated successfully</returns>
+        /// <exception cref="ApiException">A server side error occurred.</exception>
+        public virtual System.Threading.Tasks.Task<Task> UpdateTaskAsync(string task_id, UpdateTaskRequest body)
+        {
+            return UpdateTaskAsync(task_id, body, System.Threading.CancellationToken.None);
+        }
+
+        /// <param name="cancellationToken">A cancellation token that can be used by other objects or threads to receive notice of cancellation.</param>
+        /// <summary>
+        /// Update a task
+        /// </summary>
+        /// <remarks>
+        /// Updates a task instance. Currently supports marking tasks as complete.
+        /// </remarks>
+        /// <returns>Task updated successfully</returns>
+        /// <exception cref="ApiException">A server side error occurred.</exception>
+        public virtual async System.Threading.Tasks.Task<Task> UpdateTaskAsync(string task_id, UpdateTaskRequest body, System.Threading.CancellationToken cancellationToken)
+        {
+            if (task_id == null)
+                throw new System.ArgumentNullException("task_id");
+
+            if (body == null)
+                throw new System.ArgumentNullException("body");
+
+            var client_ = _httpClient;
+            var disposeClient_ = false;
+            try
+            {
+                using (var request_ = new System.Net.Http.HttpRequestMessage())
+                {
+                    var json_ = System.Text.Json.JsonSerializer.SerializeToUtf8Bytes(body, JsonSerializerSettings);
+                    var content_ = new System.Net.Http.ByteArrayContent(json_);
+                    content_.Headers.ContentType = System.Net.Http.Headers.MediaTypeHeaderValue.Parse("application/json");
+                    request_.Content = content_;
+                    request_.Method = new System.Net.Http.HttpMethod("POST");
+                    request_.Headers.Accept.Add(System.Net.Http.Headers.MediaTypeWithQualityHeaderValue.Parse("application/json"));
+
+                    var urlBuilder_ = new System.Text.StringBuilder();
+                
+                    // Operation Path: "v1/hq/tasks/{task_id}"
+                    urlBuilder_.Append("v1/hq/tasks/");
+                    urlBuilder_.Append(System.Uri.EscapeDataString(ConvertToString(task_id, System.Globalization.CultureInfo.InvariantCulture)));
+
+                    PrepareRequest(client_, request_, urlBuilder_);
+
+                    var url_ = urlBuilder_.ToString();
+                    request_.RequestUri = new System.Uri(url_, System.UriKind.RelativeOrAbsolute);
+
+                    PrepareRequest(client_, request_, url_);
+
+                    var response_ = await client_.SendAsync(request_, System.Net.Http.HttpCompletionOption.ResponseHeadersRead, cancellationToken).ConfigureAwait(false);
+                    var disposeResponse_ = true;
+                    try
+                    {
+                        var headers_ = new System.Collections.Generic.Dictionary<string, System.Collections.Generic.IEnumerable<string>>();
+                        foreach (var item_ in response_.Headers)
+                            headers_[item_.Key] = item_.Value;
+                        if (response_.Content != null && response_.Content.Headers != null)
+                        {
+                            foreach (var item_ in response_.Content.Headers)
+                                headers_[item_.Key] = item_.Value;
+                        }
+
+                        ProcessResponse(client_, response_);
+
+                        var status_ = (int)response_.StatusCode;
+                        if (status_ == 200)
+                        {
+                            var objectResponse_ = await ReadObjectResponseAsync<Task>(response_, headers_, cancellationToken).ConfigureAwait(false);
+                            if (objectResponse_.Object == null)
+                            {
+                                throw new ApiException("Response was null which was not expected.", status_, objectResponse_.Text, headers_, null);
+                            }
+                            return objectResponse_.Object;
+                        }
+                        else
+                        if (status_ == 400)
+                        {
+                            string responseText_ = ( response_.Content == null ) ? string.Empty : await ReadAsStringAsync(response_.Content, cancellationToken).ConfigureAwait(false);
+                            throw new ApiException("Provided request body is malformed", status_, responseText_, headers_, null);
+                        }
+                        else
+                        if (status_ == 401)
+                        {
+                            string responseText_ = ( response_.Content == null ) ? string.Empty : await ReadAsStringAsync(response_.Content, cancellationToken).ConfigureAwait(false);
+                            throw new ApiException("API key is missing or invalid. See Authentication documentation for more information.", status_, responseText_, headers_, null);
+                        }
+                        else
+                        if (status_ == 404)
+                        {
+                            string responseText_ = ( response_.Content == null ) ? string.Empty : await ReadAsStringAsync(response_.Content, cancellationToken).ConfigureAwait(false);
+                            throw new ApiException("Requested resource not found", status_, responseText_, headers_, null);
+                        }
+                        else
+                        if (status_ == 500)
+                        {
+                            string responseText_ = ( response_.Content == null ) ? string.Empty : await ReadAsStringAsync(response_.Content, cancellationToken).ConfigureAwait(false);
+                            throw new ApiException("Internal server error", status_, responseText_, headers_, null);
+                        }
+                        else
+                        {
+                            var responseData_ = response_.Content == null ? null : await ReadAsStringAsync(response_.Content, cancellationToken).ConfigureAwait(false);
+                            throw new ApiException("The HTTP status code of the response was not expected (" + status_ + ").", status_, responseData_, headers_, null);
+                        }
+                    }
+                    finally
+                    {
+                        if (disposeResponse_)
+                            response_.Dispose();
+                    }
+                }
+            }
+            finally
+            {
+                if (disposeClient_)
+                    client_.Dispose();
+            }
+        }
+
         /// <param name="sort">[Sorting](https://api.noona.is/docs/working-with-the-apis/sorting)</param>
         /// <param name="select">[Field Selector](https://api.noona.is/docs/working-with-the-apis/select)</param>
         /// <param name="expand">[Expandable attributes](https://api.noona.is/docs/working-with-the-apis/expandable_attributes)</param>
@@ -50738,7 +51370,7 @@ namespace FSH.Starter.Blazor.Infrastructure.NoonaApi
         /// The ID of the report
         /// </summary>
         [System.Text.Json.Serialization.JsonPropertyName("id")]
-        public string Id { get; set; } = default!;
+        public string? Id { get; set; } = default!;
 
         /// <summary>
         /// The base64 encoded data of the report
@@ -50751,19 +51383,19 @@ namespace FSH.Starter.Blazor.Infrastructure.NoonaApi
         /// The header data of the report
         /// </summary>
         [System.Text.Json.Serialization.JsonPropertyName("headerData")]
-        public string HeaderData { get; set; } = default!;
+        public string? HeaderData { get; set; } = default!;
 
         /// <summary>
         /// Optional customer identifier
         /// </summary>
         [System.Text.Json.Serialization.JsonPropertyName("customer")]
-        public string Customer { get; set; } = default!;
+        public string? Customer { get; set; } = default!;
 
         /// <summary>
         /// Optional transaction identifier
         /// </summary>
         [System.Text.Json.Serialization.JsonPropertyName("transactionId")]
-        public string TransactionId { get; set; } = default!;
+        public string? TransactionId { get; set; } = default!;
 
         private System.Collections.Generic.IDictionary<string, object>? _additionalProperties;
 
@@ -50804,51 +51436,51 @@ namespace FSH.Starter.Blazor.Infrastructure.NoonaApi
 
         [System.Text.Json.Serialization.JsonPropertyName("status")]
         [System.Text.Json.Serialization.JsonConverter(typeof(System.Text.Json.Serialization.JsonStringEnumConverter<VerificationStatus>))]
-        public VerificationStatus Status { get; set; } = default!;
+        public VerificationStatus? Status { get; set; } = default!;
 
         /// <summary>
         /// URL to the verification document
         /// </summary>
         [System.Text.Json.Serialization.JsonPropertyName("file")]
-        public string File { get; set; } = default!;
+        public string? File { get; set; } = default!;
 
         /// <summary>
         /// The type of certification
         /// </summary>
         [System.Text.Json.Serialization.JsonPropertyName("certification_type")]
         [System.Text.Json.Serialization.JsonConverter(typeof(System.Text.Json.Serialization.JsonStringEnumConverter<VerificationCertification_type>))]
-        public VerificationCertification_type Certification_type { get; set; } = default!;
+        public VerificationCertification_type? Certification_type { get; set; } = default!;
 
         /// <summary>
         /// The certification level (if applicable)
         /// </summary>
         [System.Text.Json.Serialization.JsonPropertyName("certification_level")]
         [System.Text.Json.Serialization.JsonConverter(typeof(System.Text.Json.Serialization.JsonStringEnumConverter<VerificationCertification_level>))]
-        public VerificationCertification_level Certification_level { get; set; } = default!;
+        public VerificationCertification_level? Certification_level { get; set; } = default!;
 
         /// <summary>
         /// When the verification was submitted
         /// </summary>
         [System.Text.Json.Serialization.JsonPropertyName("submitted_at")]
-        public System.DateTime Submitted_at { get; set; } = default!;
+        public System.DateTime? Submitted_at { get; set; } = default!;
 
         /// <summary>
         /// When the verification was approved
         /// </summary>
         [System.Text.Json.Serialization.JsonPropertyName("approved_at")]
-        public System.DateTime Approved_at { get; set; } = default!;
+        public System.DateTime? Approved_at { get; set; } = default!;
 
         /// <summary>
         /// When the verification was rejected
         /// </summary>
         [System.Text.Json.Serialization.JsonPropertyName("rejected_at")]
-        public System.DateTime Rejected_at { get; set; } = default!;
+        public System.DateTime? Rejected_at { get; set; } = default!;
 
         /// <summary>
         /// Reason for rejection
         /// </summary>
         [System.Text.Json.Serialization.JsonPropertyName("rejected_reason")]
-        public string Rejected_reason { get; set; } = default!;
+        public string? Rejected_reason { get; set; } = default!;
 
         private System.Collections.Generic.IDictionary<string, object>? _additionalProperties;
 
@@ -50869,25 +51501,25 @@ namespace FSH.Starter.Blazor.Infrastructure.NoonaApi
         /// The ID of the user
         /// </summary>
         [System.Text.Json.Serialization.JsonPropertyName("user_id")]
-        public string User_id { get; set; } = default!;
+        public string? User_id { get; set; } = default!;
 
         /// <summary>
         /// The email of the user
         /// </summary>
         [System.Text.Json.Serialization.JsonPropertyName("email")]
-        public string Email { get; set; } = default!;
+        public string? Email { get; set; } = default!;
 
         /// <summary>
         /// The name of the user
         /// </summary>
         [System.Text.Json.Serialization.JsonPropertyName("name")]
-        public string Name { get; set; } = default!;
+        public string? Name { get; set; } = default!;
 
         [System.Text.Json.Serialization.JsonPropertyName("image")]
-        public Image Image { get; set; } = default!;
+        public Image? Image { get; set; } = default!;
 
         [System.Text.Json.Serialization.JsonPropertyName("verification")]
-        public Verification Verification { get; set; } = default!;
+        public Verification? Verification { get; set; } = default!;
 
         private System.Collections.Generic.IDictionary<string, object>? _additionalProperties;
 
@@ -50952,7 +51584,7 @@ namespace FSH.Starter.Blazor.Infrastructure.NoonaApi
         /// Reason for rejection (required when status is 'rejected')
         /// </summary>
         [System.Text.Json.Serialization.JsonPropertyName("rejected_reason")]
-        public string Rejected_reason { get; set; } = default!;
+        public string? Rejected_reason { get; set; } = default!;
 
         private System.Collections.Generic.IDictionary<string, object>? _additionalProperties;
 
@@ -50974,7 +51606,7 @@ namespace FSH.Starter.Blazor.Infrastructure.NoonaApi
         /// </summary>
         [System.Text.Json.Serialization.JsonPropertyName("status")]
         // TODO(system.text.json): Add string enum item converter
-        public System.Collections.Generic.ICollection<VerificationStatus> Status { get; set; } = default!;
+        public System.Collections.Generic.ICollection<VerificationStatus>? Status { get; set; } = default!;
 
         private System.Collections.Generic.IDictionary<string, object>? _additionalProperties;
 
@@ -50998,13 +51630,13 @@ namespace FSH.Starter.Blazor.Infrastructure.NoonaApi
     {
 
         [System.Text.Json.Serialization.JsonPropertyName("country_code")]
-        public string Country_code { get; set; } = default!;
+        public string? Country_code { get; set; } = default!;
 
         [System.Text.Json.Serialization.JsonPropertyName("currency")]
-        public string Currency { get; set; } = default!;
+        public string? Currency { get; set; } = default!;
 
         [System.Text.Json.Serialization.JsonPropertyName("prices")]
-        public System.Collections.Generic.ICollection<Price> Prices { get; set; } = default!;
+        public System.Collections.Generic.ICollection<Price>? Prices { get; set; } = default!;
 
         private System.Collections.Generic.IDictionary<string, object>? _additionalProperties;
 
@@ -51022,13 +51654,13 @@ namespace FSH.Starter.Blazor.Infrastructure.NoonaApi
     {
 
         [System.Text.Json.Serialization.JsonPropertyName("title")]
-        public string Title { get; set; } = default!;
+        public string? Title { get; set; } = default!;
 
         [System.Text.Json.Serialization.JsonPropertyName("trial_units")]
-        public int Trial_units { get; set; } = default!;
+        public int? Trial_units { get; set; } = default!;
 
         [System.Text.Json.Serialization.JsonPropertyName("amount")]
-        public double Amount { get; set; } = default!;
+        public double? Amount { get; set; } = default!;
 
         private System.Collections.Generic.IDictionary<string, object>? _additionalProperties;
 
@@ -51046,19 +51678,19 @@ namespace FSH.Starter.Blazor.Infrastructure.NoonaApi
     {
 
         [System.Text.Json.Serialization.JsonPropertyName("currency")]
-        public string Currency { get; set; } = default!;
+        public string? Currency { get; set; } = default!;
 
         /// <summary>
         /// Price per month
         /// </summary>
         [System.Text.Json.Serialization.JsonPropertyName("amount")]
-        public double Amount { get; set; } = default!;
+        public double? Amount { get; set; } = default!;
 
         /// <summary>
         /// Price per sms
         /// </summary>
         [System.Text.Json.Serialization.JsonPropertyName("sms")]
-        public double Sms { get; set; } = default!;
+        public double? Sms { get; set; } = default!;
 
         private System.Collections.Generic.IDictionary<string, object>? _additionalProperties;
 
@@ -51082,16 +51714,16 @@ namespace FSH.Starter.Blazor.Infrastructure.NoonaApi
     {
 
         [System.Text.Json.Serialization.JsonPropertyName("id")]
-        public string Id { get; set; } = default!;
+        public string? Id { get; set; } = default!;
 
         [System.Text.Json.Serialization.JsonPropertyName("name")]
-        public string Name { get; set; } = default!;
+        public string? Name { get; set; } = default!;
 
         [System.Text.Json.Serialization.JsonPropertyName("token")]
-        public string Token1 { get; set; } = default!;
+        public string? Token1 { get; set; } = default!;
 
         [System.Text.Json.Serialization.JsonPropertyName("created_at")]
-        public System.DateTime Created_at { get; set; } = default!;
+        public System.DateTime? Created_at { get; set; } = default!;
 
         private System.Collections.Generic.IDictionary<string, object>? _additionalProperties;
 
@@ -51118,7 +51750,7 @@ namespace FSH.Starter.Blazor.Infrastructure.NoonaApi
         public PushTokenPlatform Platform { get; set; } = default!;
 
         [System.Text.Json.Serialization.JsonPropertyName("created_at")]
-        public System.DateTime Created_at { get; set; } = default!;
+        public System.DateTime? Created_at { get; set; } = default!;
 
         private System.Collections.Generic.IDictionary<string, object>? _additionalProperties;
 
@@ -51136,7 +51768,7 @@ namespace FSH.Starter.Blazor.Infrastructure.NoonaApi
     {
 
         [System.Text.Json.Serialization.JsonPropertyName("token")]
-        public string Token { get; set; } = default!;
+        public string? Token { get; set; } = default!;
 
         private System.Collections.Generic.IDictionary<string, object>? _additionalProperties;
 
@@ -51160,7 +51792,7 @@ namespace FSH.Starter.Blazor.Infrastructure.NoonaApi
         /// ID of the company this user invite will belong to
         /// </summary>
         [System.Text.Json.Serialization.JsonPropertyName("company_id")]
-        public string Company_id { get; set; } = default!;
+        public string? Company_id { get; set; } = default!;
 
         private System.Collections.Generic.IDictionary<string, object>? _additionalProperties;
 
@@ -51184,19 +51816,19 @@ namespace FSH.Starter.Blazor.Infrastructure.NoonaApi
         /// Unique identifier for the user invite
         /// </summary>
         [System.Text.Json.Serialization.JsonPropertyName("id")]
-        public string Id { get; set; } = default!;
+        public string? Id { get; set; } = default!;
 
         /// <summary>
         /// ID of the company this user invite belongs to
         /// </summary>
         [System.Text.Json.Serialization.JsonPropertyName("company_id")]
-        public string Company_id { get; set; } = default!;
+        public string? Company_id { get; set; } = default!;
 
         /// <summary>
         /// ID of the employee who created this user invite
         /// </summary>
         [System.Text.Json.Serialization.JsonPropertyName("employee_id")]
-        public string Employee_id { get; set; } = default!;
+        public string? Employee_id { get; set; } = default!;
 
         /// <summary>
         /// ID of the specific user who can consume this invite (empty for general invites)
@@ -51208,13 +51840,13 @@ namespace FSH.Starter.Blazor.Infrastructure.NoonaApi
         /// Unique token for the user invite
         /// </summary>
         [System.Text.Json.Serialization.JsonPropertyName("token")]
-        public string Token { get; set; } = default!;
+        public string? Token { get; set; } = default!;
 
         /// <summary>
         /// When the user invite expires
         /// </summary>
         [System.Text.Json.Serialization.JsonPropertyName("expires_at")]
-        public System.DateTime Expires_at { get; set; } = default!;
+        public System.DateTime? Expires_at { get; set; } = default!;
 
         /// <summary>
         /// When the user invite was used (null if not used)
@@ -51226,31 +51858,31 @@ namespace FSH.Starter.Blazor.Infrastructure.NoonaApi
         /// When the user invite was created
         /// </summary>
         [System.Text.Json.Serialization.JsonPropertyName("created_at")]
-        public System.DateTime Created_at { get; set; } = default!;
+        public System.DateTime? Created_at { get; set; } = default!;
 
         /// <summary>
         /// When the user invite was last updated
         /// </summary>
         [System.Text.Json.Serialization.JsonPropertyName("updated_at")]
-        public System.DateTime Updated_at { get; set; } = default!;
+        public System.DateTime? Updated_at { get; set; } = default!;
 
         /// <summary>
         /// Whether the user invite has expired
         /// </summary>
         [System.Text.Json.Serialization.JsonPropertyName("is_expired")]
-        public bool Is_expired { get; set; } = default!;
+        public bool? Is_expired { get; set; } = default!;
 
         /// <summary>
         /// Whether the user invite has been used
         /// </summary>
         [System.Text.Json.Serialization.JsonPropertyName("is_used")]
-        public bool Is_used { get; set; } = default!;
+        public bool? Is_used { get; set; } = default!;
 
         /// <summary>
         /// Whether the user invite is still valid (not expired, used, or deleted)
         /// </summary>
         [System.Text.Json.Serialization.JsonPropertyName("is_valid")]
-        public bool Is_valid { get; set; } = default!;
+        public bool? Is_valid { get; set; } = default!;
 
         private System.Collections.Generic.IDictionary<string, object>? _additionalProperties;
 
@@ -51294,7 +51926,7 @@ namespace FSH.Starter.Blazor.Infrastructure.NoonaApi
         /// Name of the user who created this user invite
         /// </summary>
         [System.Text.Json.Serialization.JsonPropertyName("invited_by")]
-        public string Invited_by { get; set; } = default!;
+        public string? Invited_by { get; set; } = default!;
 
         /// <summary>
         /// Whether the user invite is still valid (not expired, used, or deleted)
@@ -51398,7 +52030,7 @@ namespace FSH.Starter.Blazor.Infrastructure.NoonaApi
     {
 
         [System.Text.Json.Serialization.JsonPropertyName("redirect_url")]
-        public string Redirect_url { get; set; } = default!;
+        public string? Redirect_url { get; set; } = default!;
 
         private System.Collections.Generic.IDictionary<string, object>? _additionalProperties;
 
@@ -51416,10 +52048,10 @@ namespace FSH.Starter.Blazor.Infrastructure.NoonaApi
     {
 
         [System.Text.Json.Serialization.JsonPropertyName("name")]
-        public string Name { get; set; } = default!;
+        public string? Name { get; set; } = default!;
 
         [System.Text.Json.Serialization.JsonPropertyName("email_verified")]
-        public bool Email_verified { get; set; } = default!;
+        public bool? Email_verified { get; set; } = default!;
 
         private System.Collections.Generic.IDictionary<string, object>? _additionalProperties;
 
@@ -51448,7 +52080,7 @@ namespace FSH.Starter.Blazor.Infrastructure.NoonaApi
         /// <br/>
         /// </summary>
         [System.Text.Json.Serialization.JsonPropertyName("include_deleted")]
-        public bool Include_deleted { get; set; } = false;
+        public bool? Include_deleted { get; set; } = false;
 
         private System.Collections.Generic.IDictionary<string, object>? _additionalProperties;
 
@@ -51480,22 +52112,22 @@ namespace FSH.Starter.Blazor.Infrastructure.NoonaApi
         public string Company_id { get; set; } = default!;
 
         [System.Text.Json.Serialization.JsonPropertyName("name")]
-        public string Name { get; set; } = default!;
+        public string? Name { get; set; } = default!;
 
         [System.Text.Json.Serialization.JsonPropertyName("role_id")]
-        public string Role_id { get; set; } = default!;
+        public string? Role_id { get; set; } = default!;
 
         /// <summary>
         /// Whether the employee is visible on the calendar
         /// </summary>
         [System.Text.Json.Serialization.JsonPropertyName("available_for_bookings")]
-        public bool Available_for_bookings { get; set; } = default!;
+        public bool? Available_for_bookings { get; set; } = default!;
 
         [System.Text.Json.Serialization.JsonPropertyName("marketplace")]
-        public EmployeeMarketplaceSettings Marketplace { get; set; } = default!;
+        public EmployeeMarketplaceSettings? Marketplace { get; set; } = default!;
 
         [System.Text.Json.Serialization.JsonPropertyName("notifications")]
-        public EmployeeNotificationSettings Notifications { get; set; } = default!;
+        public EmployeeNotificationSettings? Notifications { get; set; } = default!;
 
         private System.Collections.Generic.IDictionary<string, object>? _additionalProperties;
 
@@ -51513,7 +52145,7 @@ namespace FSH.Starter.Blazor.Infrastructure.NoonaApi
     {
 
         [System.Text.Json.Serialization.JsonPropertyName("id")]
-        public string Id { get; set; } = default!;
+        public string? Id { get; set; } = default!;
 
         /// <summary>
         /// An ID that can be used to reference the event type in an external system.
@@ -51521,108 +52153,108 @@ namespace FSH.Starter.Blazor.Infrastructure.NoonaApi
         /// <br/>
         /// </summary>
         [System.Text.Json.Serialization.JsonPropertyName("reference_id")]
-        public string Reference_id { get; set; } = default!;
+        public string? Reference_id { get; set; } = default!;
 
         /// <summary>
         /// Use `company` instead
         /// </summary>
         [System.Text.Json.Serialization.JsonPropertyName("company_id")]
         [System.Obsolete]
-        public string Company_id { get; set; } = default!;
+        public string? Company_id { get; set; } = default!;
 
         [System.Text.Json.Serialization.JsonPropertyName("company")]
-        public string Company { get; set; } = default!;
+        public string? Company { get; set; } = default!;
 
         [System.Text.Json.Serialization.JsonPropertyName("name")]
-        public string Name { get; set; } = default!;
+        public string? Name { get; set; } = default!;
 
         [System.Text.Json.Serialization.JsonPropertyName("description")]
-        public string Description { get; set; } = default!;
+        public string? Description { get; set; } = default!;
 
         [System.Text.Json.Serialization.JsonPropertyName("description_translations")]
-        public TranslationMap Description_translations { get; set; } = default!;
+        public TranslationMap? Description_translations { get; set; } = default!;
 
         [System.Text.Json.Serialization.JsonPropertyName("image")]
-        public Image Image { get; set; } = default!;
+        public Image? Image { get; set; } = default!;
 
         [System.Text.Json.Serialization.JsonPropertyName("email")]
-        public string Email { get; set; } = default!;
+        public string? Email { get; set; } = default!;
 
         [System.Text.Json.Serialization.JsonPropertyName("email_verified")]
-        public bool Email_verified { get; set; } = default!;
+        public bool? Email_verified { get; set; } = default!;
 
         [System.Text.Json.Serialization.JsonPropertyName("has_password")]
-        public bool Has_password { get; set; } = default!;
+        public bool? Has_password { get; set; } = default!;
 
         [System.Text.Json.Serialization.JsonPropertyName("phone_country_code")]
-        public string Phone_country_code { get; set; } = default!;
+        public string? Phone_country_code { get; set; } = default!;
 
         [System.Text.Json.Serialization.JsonPropertyName("phone_number")]
-        public string Phone_number { get; set; } = default!;
+        public string? Phone_number { get; set; } = default!;
 
         /// <summary>
         /// The order of the employee in the list of employees on the marketplace.
         /// </summary>
         [System.Text.Json.Serialization.JsonPropertyName("order")]
-        public int Order { get; set; } = default!;
+        public int? Order { get; set; } = default!;
 
         [System.Text.Json.Serialization.JsonPropertyName("marketplace")]
-        public EmployeeMarketplaceSettings Marketplace { get; set; } = default!;
+        public EmployeeMarketplaceSettings? Marketplace { get; set; } = default!;
 
         [System.Text.Json.Serialization.JsonPropertyName("notifications")]
-        public EmployeeNotificationSettings Notifications { get; set; } = default!;
+        public EmployeeNotificationSettings? Notifications { get; set; } = default!;
 
         [System.Text.Json.Serialization.JsonPropertyName("sms")]
-        public EmployeeSMSSettings Sms { get; set; } = default!;
+        public EmployeeSMSSettings? Sms { get; set; } = default!;
 
         [System.Text.Json.Serialization.JsonPropertyName("event_type_preferences")]
-        public EventTypePreferences Event_type_preferences { get; set; } = default!;
+        public EventTypePreferences? Event_type_preferences { get; set; } = default!;
 
         [System.Text.Json.Serialization.JsonPropertyName("role")]
-        public string Role { get; set; } = default!;
+        public string? Role { get; set; } = default!;
 
         /// <summary>
         /// Whether the employee is pending owner approval
         /// </summary>
         [System.Text.Json.Serialization.JsonPropertyName("pending_owner_approval")]
-        public bool Pending_owner_approval { get; set; } = default!;
+        public bool? Pending_owner_approval { get; set; } = default!;
 
         /// <summary>
         /// Whether the employee is visible on the calendar
         /// </summary>
         [System.Text.Json.Serialization.JsonPropertyName("available_for_bookings")]
-        public bool Available_for_bookings { get; set; } = default!;
+        public bool? Available_for_bookings { get; set; } = default!;
 
         [System.Text.Json.Serialization.JsonPropertyName("settlement_account")]
-        public string Settlement_account { get; set; } = default!;
+        public string? Settlement_account { get; set; } = default!;
 
         /// <summary>
         /// Use teya.connected instead
         /// </summary>
         [System.Text.Json.Serialization.JsonPropertyName("connected_to_teya")]
         [System.Obsolete]
-        public bool Connected_to_teya { get; set; } = default!;
+        public bool? Connected_to_teya { get; set; } = default!;
 
         [System.Text.Json.Serialization.JsonPropertyName("adyen")]
-        public AdyenConnection Adyen { get; set; } = default!;
+        public AdyenConnection? Adyen { get; set; } = default!;
 
         [System.Text.Json.Serialization.JsonPropertyName("teya")]
-        public TeyaConnection Teya { get; set; } = default!;
+        public TeyaConnection? Teya { get; set; } = default!;
 
         [System.Text.Json.Serialization.JsonPropertyName("commissions")]
-        public EmployeeCommissions Commissions { get; set; } = default!;
+        public EmployeeCommissions? Commissions { get; set; } = default!;
 
         [System.Text.Json.Serialization.JsonPropertyName("disabled_at")]
-        public System.DateTime Disabled_at { get; set; } = default!;
+        public System.DateTime? Disabled_at { get; set; } = default!;
 
         [System.Text.Json.Serialization.JsonPropertyName("deleted_at")]
-        public System.DateTime Deleted_at { get; set; } = default!;
+        public System.DateTime? Deleted_at { get; set; } = default!;
 
         [System.Text.Json.Serialization.JsonPropertyName("created_at")]
-        public System.DateTime Created_at { get; set; } = default!;
+        public System.DateTime? Created_at { get; set; } = default!;
 
         [System.Text.Json.Serialization.JsonPropertyName("updated_at")]
-        public System.DateTime Updated_at { get; set; } = default!;
+        public System.DateTime? Updated_at { get; set; } = default!;
 
         private System.Collections.Generic.IDictionary<string, object>? _additionalProperties;
 
@@ -51640,10 +52272,10 @@ namespace FSH.Starter.Blazor.Infrastructure.NoonaApi
     {
 
         [System.Text.Json.Serialization.JsonPropertyName("pos")]
-        public EmployeeCommissionsPOS Pos { get; set; } = default!;
+        public EmployeeCommissionsPOS? Pos { get; set; } = default!;
 
         [System.Text.Json.Serialization.JsonPropertyName("calendar")]
-        public EmployeeCommissionsCalendar Calendar { get; set; } = default!;
+        public EmployeeCommissionsCalendar? Calendar { get; set; } = default!;
 
         private System.Collections.Generic.IDictionary<string, object>? _additionalProperties;
 
@@ -51661,13 +52293,13 @@ namespace FSH.Starter.Blazor.Infrastructure.NoonaApi
     {
 
         [System.Text.Json.Serialization.JsonPropertyName("products")]
-        public CommissionConfig Products { get; set; } = default!;
+        public CommissionConfig? Products { get; set; } = default!;
 
         [System.Text.Json.Serialization.JsonPropertyName("services")]
-        public CommissionConfig Services { get; set; } = default!;
+        public CommissionConfig? Services { get; set; } = default!;
 
         [System.Text.Json.Serialization.JsonPropertyName("vouchers")]
-        public CommissionConfig Vouchers { get; set; } = default!;
+        public CommissionConfig? Vouchers { get; set; } = default!;
 
         private System.Collections.Generic.IDictionary<string, object>? _additionalProperties;
 
@@ -51685,7 +52317,7 @@ namespace FSH.Starter.Blazor.Infrastructure.NoonaApi
     {
 
         [System.Text.Json.Serialization.JsonPropertyName("bookings")]
-        public CommissionConfig Bookings { get; set; } = default!;
+        public CommissionConfig? Bookings { get; set; } = default!;
 
         private System.Collections.Generic.IDictionary<string, object>? _additionalProperties;
 
@@ -51733,34 +52365,34 @@ namespace FSH.Starter.Blazor.Infrastructure.NoonaApi
         /// Whether the employee is enabled on the marketplace
         /// </summary>
         [System.Text.Json.Serialization.JsonPropertyName("enabled")]
-        public bool Enabled { get; set; } = default!;
+        public bool? Enabled { get; set; } = default!;
 
         [System.Text.Json.Serialization.JsonPropertyName("booking_interval")]
-        public BookingInterval Booking_interval { get; set; } = default!;
+        public BookingInterval? Booking_interval { get; set; } = default!;
 
         /// <summary>
         /// Whether the employee should be prioritized in random selection on the marketplace
         /// </summary>
         [System.Text.Json.Serialization.JsonPropertyName("prioritized")]
-        public bool Prioritized { get; set; } = default!;
+        public bool? Prioritized { get; set; } = default!;
 
         /// <summary>
         /// Whether the employee should be able to receive bookings without confirmation
         /// </summary>
         [System.Text.Json.Serialization.JsonPropertyName("allow_booking_without_confirmation")]
-        public bool Allow_booking_without_confirmation { get; set; } = default!;
+        public bool? Allow_booking_without_confirmation { get; set; } = default!;
 
         /// <summary>
         /// Whether the employee should be excluded from randomization pool on the marketplace
         /// </summary>
         [System.Text.Json.Serialization.JsonPropertyName("exclude_from_randomization_pool")]
-        public bool Exclude_from_randomization_pool { get; set; } = default!;
+        public bool? Exclude_from_randomization_pool { get; set; } = default!;
 
         /// <summary>
         /// Controls whether new customers can book this employee online. If set to true, customers will need to have a previous booking with the employee to be able to book online.
         /// </summary>
         [System.Text.Json.Serialization.JsonPropertyName("exclude_new_customers")]
-        public bool Exclude_new_customers { get; set; } = default!;
+        public bool? Exclude_new_customers { get; set; } = default!;
 
         /// <summary>
         /// Whether the employee can receive pre-payments
@@ -51769,7 +52401,7 @@ namespace FSH.Starter.Blazor.Infrastructure.NoonaApi
         /// <br/>
         /// </summary>
         [System.Text.Json.Serialization.JsonPropertyName("pre_payments_enabled")]
-        public bool Pre_payments_enabled { get; set; } = default!;
+        public bool? Pre_payments_enabled { get; set; } = default!;
 
         /// <summary>
         /// Whether the employee is allowed to receive their own settlements.
@@ -51778,7 +52410,7 @@ namespace FSH.Starter.Blazor.Infrastructure.NoonaApi
         /// <br/>
         /// </summary>
         [System.Text.Json.Serialization.JsonPropertyName("own_settlements_allowed")]
-        public bool Own_settlements_allowed { get; set; } = default!;
+        public bool? Own_settlements_allowed { get; set; } = default!;
 
         /// <summary>
         /// Whether the employee prefers to receive their own settlements.
@@ -51787,7 +52419,7 @@ namespace FSH.Starter.Blazor.Infrastructure.NoonaApi
         /// <br/>
         /// </summary>
         [System.Text.Json.Serialization.JsonPropertyName("own_settlements_preferred")]
-        public bool Own_settlements_preferred { get; set; } = default!;
+        public bool? Own_settlements_preferred { get; set; } = default!;
 
         /// <summary>
         /// Whether the employee is receiving their own settlements.
@@ -51796,7 +52428,7 @@ namespace FSH.Starter.Blazor.Infrastructure.NoonaApi
         /// <br/>
         /// </summary>
         [System.Text.Json.Serialization.JsonPropertyName("own_settlements")]
-        public bool Own_settlements { get; set; } = default!;
+        public bool? Own_settlements { get; set; } = default!;
 
         private System.Collections.Generic.IDictionary<string, object>? _additionalProperties;
 
@@ -51818,37 +52450,37 @@ namespace FSH.Starter.Blazor.Infrastructure.NoonaApi
         /// </summary>
         [System.Text.Json.Serialization.JsonPropertyName("booking_email")]
         [System.Obsolete]
-        public bool Booking_email { get; set; } = default!;
+        public bool? Booking_email { get; set; } = default!;
 
         /// <summary>
         /// Notification preferences for customer-initiated bookings
         /// </summary>
         [System.Text.Json.Serialization.JsonPropertyName("online_bookings")]
-        public OnlineBookingNotifications Online_bookings { get; set; } = default!;
+        public OnlineBookingNotifications? Online_bookings { get; set; } = default!;
 
         /// <summary>
         /// Notification preferences for staff-initiated bookings
         /// </summary>
         [System.Text.Json.Serialization.JsonPropertyName("staff_bookings")]
-        public StaffBookingNotifications Staff_bookings { get; set; } = default!;
+        public StaffBookingNotifications? Staff_bookings { get; set; } = default!;
 
         /// <summary>
         /// Notification preferences for payment events
         /// </summary>
         [System.Text.Json.Serialization.JsonPropertyName("payments")]
-        public PaymentNotifications Payments { get; set; } = default!;
+        public PaymentNotifications? Payments { get; set; } = default!;
 
         /// <summary>
         /// Notification preferences for waitlist events
         /// </summary>
         [System.Text.Json.Serialization.JsonPropertyName("waitlist")]
-        public WaitlistNotifications Waitlist { get; set; } = default!;
+        public WaitlistNotifications? Waitlist { get; set; } = default!;
 
         /// <summary>
         /// Notification preferences for booking offer events
         /// </summary>
         [System.Text.Json.Serialization.JsonPropertyName("booking_offers")]
-        public BookingOfferNotifications Booking_offers { get; set; } = default!;
+        public BookingOfferNotifications? Booking_offers { get; set; } = default!;
 
         private System.Collections.Generic.IDictionary<string, object>? _additionalProperties;
 
@@ -51872,25 +52504,25 @@ namespace FSH.Starter.Blazor.Infrastructure.NoonaApi
         /// Notifications for new appointments created by customers
         /// </summary>
         [System.Text.Json.Serialization.JsonPropertyName("new_appointments")]
-        public NotificationChannelSettings New_appointments { get; set; } = default!;
+        public NotificationChannelSettings? New_appointments { get; set; } = default!;
 
         /// <summary>
         /// Notifications for appointments rescheduled by customers
         /// </summary>
         [System.Text.Json.Serialization.JsonPropertyName("reschedules")]
-        public NotificationChannelSettings Reschedules { get; set; } = default!;
+        public NotificationChannelSettings? Reschedules { get; set; } = default!;
 
         /// <summary>
         /// Notifications for appointments cancelled by customers
         /// </summary>
         [System.Text.Json.Serialization.JsonPropertyName("cancellations")]
-        public NotificationChannelSettings Cancellations { get; set; } = default!;
+        public NotificationChannelSettings? Cancellations { get; set; } = default!;
 
         /// <summary>
         /// Notifications for resource-only appointments created by customers
         /// </summary>
         [System.Text.Json.Serialization.JsonPropertyName("resource_only")]
-        public NotificationChannelSettings Resource_only { get; set; } = default!;
+        public NotificationChannelSettings? Resource_only { get; set; } = default!;
 
         private System.Collections.Generic.IDictionary<string, object>? _additionalProperties;
 
@@ -51914,25 +52546,25 @@ namespace FSH.Starter.Blazor.Infrastructure.NoonaApi
         /// Notifications for new appointments created by other staff
         /// </summary>
         [System.Text.Json.Serialization.JsonPropertyName("new_appointments")]
-        public NotificationChannelSettings New_appointments { get; set; } = default!;
+        public NotificationChannelSettings? New_appointments { get; set; } = default!;
 
         /// <summary>
         /// Notifications for appointments rescheduled by other staff
         /// </summary>
         [System.Text.Json.Serialization.JsonPropertyName("reschedules")]
-        public NotificationChannelSettings Reschedules { get; set; } = default!;
+        public NotificationChannelSettings? Reschedules { get; set; } = default!;
 
         /// <summary>
         /// Notifications for appointments cancelled by other staff
         /// </summary>
         [System.Text.Json.Serialization.JsonPropertyName("cancellations")]
-        public NotificationChannelSettings Cancellations { get; set; } = default!;
+        public NotificationChannelSettings? Cancellations { get; set; } = default!;
 
         /// <summary>
         /// Notifications for resource-only appointments created by other staff
         /// </summary>
         [System.Text.Json.Serialization.JsonPropertyName("resource_only")]
-        public NotificationChannelSettings Resource_only { get; set; } = default!;
+        public NotificationChannelSettings? Resource_only { get; set; } = default!;
 
         private System.Collections.Generic.IDictionary<string, object>? _additionalProperties;
 
@@ -51956,13 +52588,13 @@ namespace FSH.Starter.Blazor.Infrastructure.NoonaApi
         /// Notifications for successful payment settlements
         /// </summary>
         [System.Text.Json.Serialization.JsonPropertyName("successful_settlements")]
-        public NotificationChannelSettings Successful_settlements { get; set; } = default!;
+        public NotificationChannelSettings? Successful_settlements { get; set; } = default!;
 
         /// <summary>
         /// Notifications for failed payment settlements
         /// </summary>
         [System.Text.Json.Serialization.JsonPropertyName("failed_settlements")]
-        public NotificationChannelSettings Failed_settlements { get; set; } = default!;
+        public NotificationChannelSettings? Failed_settlements { get; set; } = default!;
 
         private System.Collections.Generic.IDictionary<string, object>? _additionalProperties;
 
@@ -51986,7 +52618,7 @@ namespace FSH.Starter.Blazor.Infrastructure.NoonaApi
         /// Notifications for new waitlist requests from online bookings
         /// </summary>
         [System.Text.Json.Serialization.JsonPropertyName("new_requests")]
-        public NotificationChannelSettings New_requests { get; set; } = default!;
+        public NotificationChannelSettings? New_requests { get; set; } = default!;
 
         private System.Collections.Generic.IDictionary<string, object>? _additionalProperties;
 
@@ -52010,13 +52642,13 @@ namespace FSH.Starter.Blazor.Infrastructure.NoonaApi
         /// Notifications when a booking offer is approved
         /// </summary>
         [System.Text.Json.Serialization.JsonPropertyName("approved")]
-        public NotificationChannelSettings Approved { get; set; } = default!;
+        public NotificationChannelSettings? Approved { get; set; } = default!;
 
         /// <summary>
         /// Notifications when a booking offer is declined
         /// </summary>
         [System.Text.Json.Serialization.JsonPropertyName("declined")]
-        public NotificationChannelSettings Declined { get; set; } = default!;
+        public NotificationChannelSettings? Declined { get; set; } = default!;
 
         private System.Collections.Generic.IDictionary<string, object>? _additionalProperties;
 
@@ -52034,22 +52666,16 @@ namespace FSH.Starter.Blazor.Infrastructure.NoonaApi
     {
 
         /// <summary>
-        /// Whether to receive notifications in HQ
+        /// Whether to receive notifications in the app (includes in-app and push notifications)
         /// </summary>
-        [System.Text.Json.Serialization.JsonPropertyName("hq")]
-        public bool Hq { get; set; } = default!;
+        [System.Text.Json.Serialization.JsonPropertyName("app")]
+        public bool? App { get; set; } = default!;
 
         /// <summary>
         /// Whether to receive email notifications
         /// </summary>
         [System.Text.Json.Serialization.JsonPropertyName("email")]
-        public bool Email { get; set; } = default!;
-
-        /// <summary>
-        /// Whether to receive push notifications on mobile
-        /// </summary>
-        [System.Text.Json.Serialization.JsonPropertyName("push")]
-        public bool Push { get; set; } = default!;
+        public bool? Email { get; set; } = default!;
 
         private System.Collections.Generic.IDictionary<string, object>? _additionalProperties;
 
@@ -52070,16 +52696,16 @@ namespace FSH.Starter.Blazor.Infrastructure.NoonaApi
         /// The sender name for SMS messages
         /// </summary>
         [System.Text.Json.Serialization.JsonPropertyName("from")]
-        public string From { get; set; } = default!;
+        public string? From { get; set; } = default!;
 
         /// <summary>
         /// Custom text for SMS messages
         /// </summary>
         [System.Text.Json.Serialization.JsonPropertyName("custom_text")]
-        public string Custom_text { get; set; } = default!;
+        public string? Custom_text { get; set; } = default!;
 
         [System.Text.Json.Serialization.JsonPropertyName("custom_text_translations")]
-        public TranslationMap Custom_text_translations { get; set; } = default!;
+        public TranslationMap? Custom_text_translations { get; set; } = default!;
 
         private System.Collections.Generic.IDictionary<string, object>? _additionalProperties;
 
@@ -52169,22 +52795,22 @@ namespace FSH.Starter.Blazor.Infrastructure.NoonaApi
     {
 
         [System.Text.Json.Serialization.JsonPropertyName("id")]
-        public string Id { get; set; } = default!;
+        public string? Id { get; set; } = default!;
 
         [System.Text.Json.Serialization.JsonPropertyName("title")]
-        public string Title { get; set; } = default!;
+        public string? Title { get; set; } = default!;
 
         [System.Text.Json.Serialization.JsonPropertyName("readable_id")]
-        public string Readable_id { get; set; } = default!;
+        public string? Readable_id { get; set; } = default!;
 
         /// <summary>
         /// Defines the order among sibling permission groups
         /// </summary>
         [System.Text.Json.Serialization.JsonPropertyName("order")]
-        public int Order { get; set; } = default!;
+        public int? Order { get; set; } = default!;
 
         [System.Text.Json.Serialization.JsonPropertyName("permissions")]
-        public System.Collections.Generic.ICollection<PermissionMetadata> Permissions { get; set; } = default!;
+        public System.Collections.Generic.ICollection<PermissionMetadata>? Permissions { get; set; } = default!;
 
         private System.Collections.Generic.IDictionary<string, object>? _additionalProperties;
 
@@ -52202,27 +52828,27 @@ namespace FSH.Starter.Blazor.Infrastructure.NoonaApi
     {
 
         [System.Text.Json.Serialization.JsonPropertyName("id")]
-        public string Id { get; set; } = default!;
+        public string? Id { get; set; } = default!;
 
         [System.Text.Json.Serialization.JsonPropertyName("title")]
-        public string Title { get; set; } = default!;
+        public string? Title { get; set; } = default!;
 
         [System.Text.Json.Serialization.JsonPropertyName("readable_id")]
         [System.Text.Json.Serialization.JsonConverter(typeof(System.Text.Json.Serialization.JsonStringEnumConverter<Permission>))]
-        public Permission Readable_id { get; set; } = default!;
+        public Permission? Readable_id { get; set; } = default!;
 
         /// <summary>
         /// Defines the order among sibling permissions
         /// </summary>
         [System.Text.Json.Serialization.JsonPropertyName("order")]
-        public int Order { get; set; } = default!;
+        public int? Order { get; set; } = default!;
 
         /// <summary>
         /// List of permission IDs that are prerequisites for this permission
         /// </summary>
         [System.Text.Json.Serialization.JsonPropertyName("requirements")]
         // TODO(system.text.json): Add string enum item converter
-        public System.Collections.Generic.ICollection<Permission> Requirements { get; set; } = default!;
+        public System.Collections.Generic.ICollection<Permission>? Requirements { get; set; } = default!;
 
         private System.Collections.Generic.IDictionary<string, object>? _additionalProperties;
 
@@ -52240,17 +52866,17 @@ namespace FSH.Starter.Blazor.Infrastructure.NoonaApi
     {
 
         [System.Text.Json.Serialization.JsonPropertyName("id")]
-        public string Id { get; set; } = default!;
+        public string? Id { get; set; } = default!;
 
         [System.Text.Json.Serialization.JsonPropertyName("title")]
-        public string Title { get; set; } = default!;
+        public string? Title { get; set; } = default!;
 
         [System.Text.Json.Serialization.JsonPropertyName("readable_id")]
         [System.Text.Json.Serialization.JsonConverter(typeof(System.Text.Json.Serialization.JsonStringEnumConverter<NotificationCategory>))]
-        public NotificationCategory Readable_id { get; set; } = default!;
+        public NotificationCategory? Readable_id { get; set; } = default!;
 
         [System.Text.Json.Serialization.JsonPropertyName("subcategories")]
-        public System.Collections.Generic.ICollection<NotificationSubcategoryMetadata> Subcategories { get; set; } = default!;
+        public System.Collections.Generic.ICollection<NotificationSubcategoryMetadata>? Subcategories { get; set; } = default!;
 
         private System.Collections.Generic.IDictionary<string, object>? _additionalProperties;
 
@@ -52268,17 +52894,17 @@ namespace FSH.Starter.Blazor.Infrastructure.NoonaApi
     {
 
         [System.Text.Json.Serialization.JsonPropertyName("id")]
-        public string Id { get; set; } = default!;
+        public string? Id { get; set; } = default!;
 
         [System.Text.Json.Serialization.JsonPropertyName("title")]
-        public string Title { get; set; } = default!;
+        public string? Title { get; set; } = default!;
 
         [System.Text.Json.Serialization.JsonPropertyName("readable_id")]
         [System.Text.Json.Serialization.JsonConverter(typeof(System.Text.Json.Serialization.JsonStringEnumConverter<NotificationSubcategory>))]
-        public NotificationSubcategory Readable_id { get; set; } = default!;
+        public NotificationSubcategory? Readable_id { get; set; } = default!;
 
         [System.Text.Json.Serialization.JsonPropertyName("channels")]
-        public System.Collections.Generic.ICollection<NotificationChannelMetadata> Channels { get; set; } = default!;
+        public System.Collections.Generic.ICollection<NotificationChannelMetadata>? Channels { get; set; } = default!;
 
         private System.Collections.Generic.IDictionary<string, object>? _additionalProperties;
 
@@ -52296,14 +52922,20 @@ namespace FSH.Starter.Blazor.Infrastructure.NoonaApi
     {
 
         [System.Text.Json.Serialization.JsonPropertyName("id")]
-        public string Id { get; set; } = default!;
+        public string? Id { get; set; } = default!;
 
         [System.Text.Json.Serialization.JsonPropertyName("title")]
-        public string Title { get; set; } = default!;
+        public string? Title { get; set; } = default!;
 
         [System.Text.Json.Serialization.JsonPropertyName("readable_id")]
         [System.Text.Json.Serialization.JsonConverter(typeof(System.Text.Json.Serialization.JsonStringEnumConverter<NotificationChannel>))]
-        public NotificationChannel Readable_id { get; set; } = default!;
+        public NotificationChannel? Readable_id { get; set; } = default!;
+
+        /// <summary>
+        /// Whether this channel is locked for this notification type
+        /// </summary>
+        [System.Text.Json.Serialization.JsonPropertyName("locked")]
+        public bool? Locked { get; set; } = default!;
 
         private System.Collections.Generic.IDictionary<string, object>? _additionalProperties;
 
@@ -52374,14 +53006,11 @@ namespace FSH.Starter.Blazor.Infrastructure.NoonaApi
     public enum NotificationChannel
     {
 
-        [System.Text.Json.Serialization.JsonStringEnumMemberName(@"hq")]
-        Hq = 0,
+        [System.Text.Json.Serialization.JsonStringEnumMemberName(@"app")]
+        App = 0,
 
         [System.Text.Json.Serialization.JsonStringEnumMemberName(@"email")]
         Email = 1,
-
-        [System.Text.Json.Serialization.JsonStringEnumMemberName(@"push")]
-        Push = 2,
 
     }
 
@@ -52525,21 +53154,21 @@ namespace FSH.Starter.Blazor.Infrastructure.NoonaApi
     {
 
         [System.Text.Json.Serialization.JsonPropertyName("id")]
-        public string Id { get; set; } = default!;
+        public string? Id { get; set; } = default!;
 
         [System.Text.Json.Serialization.JsonPropertyName("company_id")]
-        public string Company_id { get; set; } = default!;
+        public string? Company_id { get; set; } = default!;
 
         [System.Text.Json.Serialization.JsonPropertyName("title")]
-        public string Title { get; set; } = default!;
+        public string? Title { get; set; } = default!;
 
         [System.Text.Json.Serialization.JsonPropertyName("type")]
         [System.Text.Json.Serialization.JsonConverter(typeof(System.Text.Json.Serialization.JsonStringEnumConverter<RoleInputType>))]
-        public RoleInputType Type { get; set; } = default!;
+        public RoleInputType? Type { get; set; } = default!;
 
         [System.Text.Json.Serialization.JsonPropertyName("permissions")]
         // TODO(system.text.json): Add string enum item converter
-        public System.Collections.Generic.ICollection<Permission> Permissions { get; set; } = default!;
+        public System.Collections.Generic.ICollection<Permission>? Permissions { get; set; } = default!;
 
         private System.Collections.Generic.IDictionary<string, object>? _additionalProperties;
 
@@ -52557,18 +53186,18 @@ namespace FSH.Starter.Blazor.Infrastructure.NoonaApi
     {
 
         [System.Text.Json.Serialization.JsonPropertyName("id")]
-        public string Id { get; set; } = default!;
+        public string? Id { get; set; } = default!;
 
         [System.Text.Json.Serialization.JsonPropertyName("title")]
-        public string Title { get; set; } = default!;
+        public string? Title { get; set; } = default!;
 
         [System.Text.Json.Serialization.JsonPropertyName("type")]
         [System.Text.Json.Serialization.JsonConverter(typeof(System.Text.Json.Serialization.JsonStringEnumConverter<RoleType>))]
-        public RoleType Type { get; set; } = default!;
+        public RoleType? Type { get; set; } = default!;
 
         [System.Text.Json.Serialization.JsonPropertyName("permissions")]
         // TODO(system.text.json): Add string enum item converter
-        public System.Collections.Generic.ICollection<Permission> Permissions { get; set; } = default!;
+        public System.Collections.Generic.ICollection<Permission>? Permissions { get; set; } = default!;
 
         private System.Collections.Generic.IDictionary<string, object>? _additionalProperties;
 
@@ -52622,7 +53251,7 @@ namespace FSH.Starter.Blazor.Infrastructure.NoonaApi
         /// Used to control how a product group is ordered with respect to siblings.
         /// </summary>
         [System.Text.Json.Serialization.JsonPropertyName("order")]
-        public int Order { get; set; } = default!;
+        public int? Order { get; set; } = default!;
 
     }
 
@@ -52634,7 +53263,7 @@ namespace FSH.Starter.Blazor.Infrastructure.NoonaApi
     {
 
         [System.Text.Json.Serialization.JsonPropertyName("barcode")]
-        public string Barcode { get; set; } = default!;
+        public string? Barcode { get; set; } = default!;
 
         private System.Collections.Generic.IDictionary<string, object>? _additionalProperties;
 
@@ -52667,25 +53296,25 @@ namespace FSH.Starter.Blazor.Infrastructure.NoonaApi
     {
 
         [System.Text.Json.Serialization.JsonPropertyName("id")]
-        public string Id { get; set; } = default!;
+        public string? Id { get; set; } = default!;
 
         [System.Text.Json.Serialization.JsonPropertyName("company")]
-        public string Company { get; set; } = default!;
+        public string? Company { get; set; } = default!;
 
         [System.Text.Json.Serialization.JsonPropertyName("title")]
-        public string Title { get; set; } = default!;
+        public string? Title { get; set; } = default!;
 
         [System.Text.Json.Serialization.JsonPropertyName("description")]
-        public string Description { get; set; } = default!;
+        public string? Description { get; set; } = default!;
 
         [System.Text.Json.Serialization.JsonPropertyName("amount")]
-        public double Amount { get; set; } = 0D;
+        public double? Amount { get; set; } = 0D;
 
         [System.Text.Json.Serialization.JsonPropertyName("sku")]
-        public string Sku { get; set; } = default!;
+        public string? Sku { get; set; } = default!;
 
         [System.Text.Json.Serialization.JsonPropertyName("stock_level")]
-        public int Stock_level { get; set; } = default!;
+        public int? Stock_level { get; set; } = default!;
 
         /// <summary>
         /// The cost of the product from a wholesaler.
@@ -52694,43 +53323,43 @@ namespace FSH.Starter.Blazor.Infrastructure.NoonaApi
         /// <br/>
         /// </summary>
         [System.Text.Json.Serialization.JsonPropertyName("cost")]
-        public int Cost { get; set; } = default!;
+        public int? Cost { get; set; } = default!;
 
         [System.Text.Json.Serialization.JsonPropertyName("barcode")]
-        public string Barcode { get; set; } = default!;
+        public string? Barcode { get; set; } = default!;
 
         /// <summary>
         /// List of product group ids product belongs to.
         /// </summary>
         [System.Text.Json.Serialization.JsonPropertyName("product_groups")]
-        public System.Collections.Generic.ICollection<string> Product_groups { get; set; } = default!;
+        public System.Collections.Generic.ICollection<string>? Product_groups { get; set; } = default!;
 
         [System.Text.Json.Serialization.JsonPropertyName("image")]
-        public ProductImage Image { get; set; } = default!;
+        public ProductImage? Image { get; set; } = default!;
 
         /// <summary>
         /// Id of VAT to use for product
         /// </summary>
         [System.Text.Json.Serialization.JsonPropertyName("vat_id")]
-        public string Vat_id { get; set; } = default!;
+        public string? Vat_id { get; set; } = default!;
 
         /// <summary>
         /// VAT exemption reason when having a VAT amount of 0%
         /// </summary>
         [System.Text.Json.Serialization.JsonPropertyName("tax_exemption_reason")]
-        public string Tax_exemption_reason { get; set; } = default!;
+        public string? Tax_exemption_reason { get; set; } = default!;
 
         /// <summary>
         /// Set during import of products, usually an identifier from an external system.
         /// </summary>
         [System.Text.Json.Serialization.JsonPropertyName("import_reference_id")]
-        public string Import_reference_id { get; set; } = default!;
+        public string? Import_reference_id { get; set; } = default!;
 
         [System.Text.Json.Serialization.JsonPropertyName("created_at")]
-        public int Created_at { get; set; } = default!;
+        public int? Created_at { get; set; } = default!;
 
         [System.Text.Json.Serialization.JsonPropertyName("updated_at")]
-        public int Updated_at { get; set; } = default!;
+        public int? Updated_at { get; set; } = default!;
 
         private System.Collections.Generic.IDictionary<string, object>? _additionalProperties;
 
@@ -52751,7 +53380,7 @@ namespace FSH.Starter.Blazor.Infrastructure.NoonaApi
         /// Link to product image
         /// </summary>
         [System.Text.Json.Serialization.JsonPropertyName("thumb")]
-        public string Thumb { get; set; } = default!;
+        public string? Thumb { get; set; } = default!;
 
         private System.Collections.Generic.IDictionary<string, object>? _additionalProperties;
 
@@ -52775,43 +53404,43 @@ namespace FSH.Starter.Blazor.Infrastructure.NoonaApi
     {
 
         [System.Text.Json.Serialization.JsonPropertyName("id")]
-        public string Id { get; set; } = default!;
+        public string? Id { get; set; } = default!;
 
         [System.Text.Json.Serialization.JsonPropertyName("company")]
-        public string Company { get; set; } = default!;
+        public string? Company { get; set; } = default!;
 
         [System.Text.Json.Serialization.JsonPropertyName("title")]
-        public string Title { get; set; } = default!;
+        public string? Title { get; set; } = default!;
 
         [System.Text.Json.Serialization.JsonPropertyName("description")]
-        public string Description { get; set; } = default!;
+        public string? Description { get; set; } = default!;
 
         [System.Text.Json.Serialization.JsonPropertyName("color")]
-        public string Color { get; set; } = default!;
+        public string? Color { get; set; } = default!;
 
         [System.Text.Json.Serialization.JsonPropertyName("parent_group_id")]
-        public string Parent_group_id { get; set; } = default!;
+        public string? Parent_group_id { get; set; } = default!;
 
         /// <summary>
         /// Used to control how a product group is ordered with respect to siblings.
         /// </summary>
         [System.Text.Json.Serialization.JsonPropertyName("order")]
-        public int Order { get; set; } = default!;
+        public int? Order { get; set; } = default!;
 
         /// <summary>
         /// If true the product group is a special, uneditable, group that contains all products that have not been added to user created product groups.
         /// </summary>
         [System.Text.Json.Serialization.JsonPropertyName("is_default_group")]
-        public bool Is_default_group { get; set; } = default!;
+        public bool? Is_default_group { get; set; } = default!;
 
         [System.Text.Json.Serialization.JsonPropertyName("group_products")]
-        public System.Collections.Generic.ICollection<GroupProduct> Group_products { get; set; } = default!;
+        public System.Collections.Generic.ICollection<GroupProduct>? Group_products { get; set; } = default!;
 
         [System.Text.Json.Serialization.JsonPropertyName("created_at")]
-        public int Created_at { get; set; } = default!;
+        public int? Created_at { get; set; } = default!;
 
         [System.Text.Json.Serialization.JsonPropertyName("updated_at")]
-        public int Updated_at { get; set; } = default!;
+        public int? Updated_at { get; set; } = default!;
 
         private System.Collections.Generic.IDictionary<string, object>? _additionalProperties;
 
@@ -52835,10 +53464,10 @@ namespace FSH.Starter.Blazor.Infrastructure.NoonaApi
     {
 
         [System.Text.Json.Serialization.JsonPropertyName("group_products")]
-        public System.Collections.Generic.ICollection<OrderedProduct> Group_products { get; set; } = default!;
+        public System.Collections.Generic.ICollection<OrderedProduct>? Group_products { get; set; } = default!;
 
         [System.Text.Json.Serialization.JsonPropertyName("group_product_groups")]
-        public System.Collections.Generic.ICollection<ProductGroupExpanded> Group_product_groups { get; set; } = default!;
+        public System.Collections.Generic.ICollection<ProductGroupExpanded>? Group_product_groups { get; set; } = default!;
 
     }
 
@@ -52881,13 +53510,13 @@ namespace FSH.Starter.Blazor.Infrastructure.NoonaApi
     {
 
         [System.Text.Json.Serialization.JsonPropertyName("id")]
-        public string Id { get; set; } = default!;
+        public string? Id { get; set; } = default!;
 
         /// <summary>
         /// Used to control order in list hierarchy.
         /// </summary>
         [System.Text.Json.Serialization.JsonPropertyName("order")]
-        public int Order { get; set; } = default!;
+        public int? Order { get; set; } = default!;
 
         private System.Collections.Generic.IDictionary<string, object>? _additionalProperties;
 
@@ -52911,25 +53540,25 @@ namespace FSH.Starter.Blazor.Infrastructure.NoonaApi
     {
 
         [System.Text.Json.Serialization.JsonPropertyName("id")]
-        public string Id { get; set; } = default!;
+        public string? Id { get; set; } = default!;
 
         [System.Text.Json.Serialization.JsonPropertyName("transactions")]
-        public System.Collections.Generic.ICollection<string> Transactions { get; set; } = default!;
+        public System.Collections.Generic.ICollection<string>? Transactions { get; set; } = default!;
 
         [System.Text.Json.Serialization.JsonPropertyName("events")]
-        public System.Collections.Generic.ICollection<string> Events { get; set; } = default!;
+        public System.Collections.Generic.ICollection<string>? Events { get; set; } = default!;
 
         [System.Text.Json.Serialization.JsonPropertyName("company")]
-        public string Company { get; set; } = default!;
+        public string? Company { get; set; } = default!;
 
         [System.Text.Json.Serialization.JsonPropertyName("customer")]
-        public string Customer { get; set; } = default!;
+        public string? Customer { get; set; } = default!;
 
         [System.Text.Json.Serialization.JsonPropertyName("created_at")]
-        public System.DateTime Created_at { get; set; } = default!;
+        public System.DateTime? Created_at { get; set; } = default!;
 
         [System.Text.Json.Serialization.JsonPropertyName("updated_at")]
-        public System.DateTime Updated_at { get; set; } = default!;
+        public System.DateTime? Updated_at { get; set; } = default!;
 
         private System.Collections.Generic.IDictionary<string, object>? _additionalProperties;
 
@@ -52968,73 +53597,73 @@ namespace FSH.Starter.Blazor.Infrastructure.NoonaApi
     {
 
         [System.Text.Json.Serialization.JsonPropertyName("id")]
-        public string Id { get; set; } = default!;
+        public string? Id { get; set; } = default!;
 
         [System.Text.Json.Serialization.JsonPropertyName("company")]
-        public string Company { get; set; } = default!;
+        public string? Company { get; set; } = default!;
 
         [System.Text.Json.Serialization.JsonPropertyName("sale")]
-        public string Sale { get; set; } = default!;
+        public string? Sale { get; set; } = default!;
 
         [System.Text.Json.Serialization.JsonPropertyName("subtransactions")]
-        public System.Collections.Generic.ICollection<string> Subtransactions { get; set; } = default!;
+        public System.Collections.Generic.ICollection<string>? Subtransactions { get; set; } = default!;
 
         [System.Text.Json.Serialization.JsonPropertyName("employees")]
-        public System.Collections.Generic.ICollection<string> Employees { get; set; } = default!;
+        public System.Collections.Generic.ICollection<string>? Employees { get; set; } = default!;
 
         [System.Text.Json.Serialization.JsonPropertyName("line_items")]
-        public ExpandableLineItems Line_items { get; set; } = default!;
+        public ExpandableLineItems? Line_items { get; set; } = default!;
 
         /// <summary>
         /// References refunds for this transaction.
         /// </summary>
         [System.Text.Json.Serialization.JsonPropertyName("refunds")]
-        public System.Collections.Generic.ICollection<string> Refunds { get; set; } = default!;
+        public System.Collections.Generic.ICollection<string>? Refunds { get; set; } = default!;
 
         /// <summary>
         /// References the original transaction that was refunded.
         /// </summary>
         [System.Text.Json.Serialization.JsonPropertyName("refund_origin")]
-        public string Refund_origin { get; set; } = default!;
+        public string? Refund_origin { get; set; } = default!;
 
         [System.Text.Json.Serialization.JsonPropertyName("invoice_number")]
-        public long Invoice_number { get; set; } = default!;
+        public long? Invoice_number { get; set; } = default!;
 
         [System.Text.Json.Serialization.JsonPropertyName("note")]
-        public string Note { get; set; } = default!;
+        public string? Note { get; set; } = default!;
 
         [System.Text.Json.Serialization.JsonPropertyName("issuer")]
-        public Issuer Issuer { get; set; } = default!;
+        public Issuer? Issuer { get; set; } = default!;
 
         [System.Text.Json.Serialization.JsonPropertyName("fiscalization")]
-        public string Fiscalization { get; set; } = default!;
+        public string? Fiscalization { get; set; } = default!;
 
         [System.Text.Json.Serialization.JsonPropertyName("currency")]
-        public string Currency { get; set; } = default!;
+        public string? Currency { get; set; } = default!;
 
         /// <summary>
         /// Total amount with VAT
         /// </summary>
         [System.Text.Json.Serialization.JsonPropertyName("total_amount")]
-        public double Total_amount { get; set; } = default!;
+        public double? Total_amount { get; set; } = default!;
 
         /// <summary>
         /// Total amount without VAT
         /// </summary>
         [System.Text.Json.Serialization.JsonPropertyName("total_amount_without_vat")]
-        public double Total_amount_without_vat { get; set; } = default!;
+        public double? Total_amount_without_vat { get; set; } = default!;
 
         /// <summary>
         /// Total VAT amount
         /// </summary>
         [System.Text.Json.Serialization.JsonPropertyName("vat_amount")]
-        public double Vat_amount { get; set; } = default!;
+        public double? Vat_amount { get; set; } = default!;
 
         /// <summary>
         /// Total amount due
         /// </summary>
         [System.Text.Json.Serialization.JsonPropertyName("due_amount")]
-        public double Due_amount { get; set; } = default!;
+        public double? Due_amount { get; set; } = default!;
 
         /// <summary>
         /// Amount paid on marketplace during booking.
@@ -53045,7 +53674,7 @@ namespace FSH.Starter.Blazor.Infrastructure.NoonaApi
         /// <br/>
         /// </summary>
         [System.Text.Json.Serialization.JsonPropertyName("paid_on_marketplace_amount")]
-        public double Paid_on_marketplace_amount { get; set; } = default!;
+        public double? Paid_on_marketplace_amount { get; set; } = default!;
 
         /// <summary>
         /// The origin of the transaction.
@@ -53056,45 +53685,45 @@ namespace FSH.Starter.Blazor.Infrastructure.NoonaApi
         /// </summary>
         [System.Text.Json.Serialization.JsonPropertyName("origin")]
         [System.Text.Json.Serialization.JsonConverter(typeof(System.Text.Json.Serialization.JsonStringEnumConverter<TransactionOrigin>))]
-        public TransactionOrigin Origin { get; set; } = default!;
+        public TransactionOrigin? Origin { get; set; } = default!;
 
         /// <summary>
         /// The VAT exemption reason when the VAT amount is equal to 0
         /// </summary>
         [System.Text.Json.Serialization.JsonPropertyName("tax_exemption_reason")]
-        public string Tax_exemption_reason { get; set; } = default!;
+        public string? Tax_exemption_reason { get; set; } = default!;
 
         [System.Text.Json.Serialization.JsonPropertyName("type")]
         [System.Text.Json.Serialization.JsonConverter(typeof(System.Text.Json.Serialization.JsonStringEnumConverter<TransactionType>))]
-        public TransactionType Type { get; set; } = default!;
+        public TransactionType? Type { get; set; } = default!;
 
         [System.Text.Json.Serialization.JsonPropertyName("status")]
         [System.Text.Json.Serialization.JsonConverter(typeof(System.Text.Json.Serialization.JsonStringEnumConverter<TransactionStatus>))]
-        public TransactionStatus Status { get; set; } = default!;
+        public TransactionStatus? Status { get; set; } = default!;
 
         [System.Text.Json.Serialization.JsonPropertyName("drafted_at")]
-        public System.DateTime Drafted_at { get; set; } = default!;
+        public System.DateTime? Drafted_at { get; set; } = default!;
 
         [System.Text.Json.Serialization.JsonPropertyName("completed_at")]
-        public System.DateTime Completed_at { get; set; } = default!;
+        public System.DateTime? Completed_at { get; set; } = default!;
 
         [System.Text.Json.Serialization.JsonPropertyName("created_at")]
-        public System.DateTime Created_at { get; set; } = default!;
+        public System.DateTime? Created_at { get; set; } = default!;
 
         [System.Text.Json.Serialization.JsonPropertyName("updated_at")]
-        public System.DateTime Updated_at { get; set; } = default!;
+        public System.DateTime? Updated_at { get; set; } = default!;
 
         /// <summary>
         /// Only supported to unset this field. That is done by providing the value as "zero date" (0001-01-01T00:00:00Z)
         /// </summary>
         [System.Text.Json.Serialization.JsonPropertyName("voided_at")]
-        public System.DateTime Voided_at { get; set; } = default!;
+        public System.DateTime? Voided_at { get; set; } = default!;
 
         /// <summary>
         /// Invopop fiscalization header data (UUID, stamps, invoice ID)
         /// </summary>
         [System.Text.Json.Serialization.JsonPropertyName("invopop_header")]
-        public InvopopHeader Invopop_header { get; set; } = default!;
+        public InvopopHeader? Invopop_header { get; set; } = default!;
 
         private System.Collections.Generic.IDictionary<string, object>? _additionalProperties;
 
@@ -53118,34 +53747,34 @@ namespace FSH.Starter.Blazor.Infrastructure.NoonaApi
         /// Filter by specific transaction IDs
         /// </summary>
         [System.Text.Json.Serialization.JsonPropertyName("ids")]
-        public System.Collections.Generic.ICollection<string> Ids { get; set; } = default!;
+        public System.Collections.Generic.ICollection<string>? Ids { get; set; } = default!;
 
         /// <summary>
         /// Filter by sale ID
         /// </summary>
         [System.Text.Json.Serialization.JsonPropertyName("sale")]
-        public string Sale { get; set; } = default!;
+        public string? Sale { get; set; } = default!;
 
         /// <summary>
         /// Filter by customer IDs
         /// </summary>
         [System.Text.Json.Serialization.JsonPropertyName("customers")]
-        public System.Collections.Generic.ICollection<string> Customers { get; set; } = default!;
+        public System.Collections.Generic.ICollection<string>? Customers { get; set; } = default!;
 
         [System.Text.Json.Serialization.JsonPropertyName("issuers")]
-        public System.Collections.Generic.ICollection<string> Issuers { get; set; } = default!;
+        public System.Collections.Generic.ICollection<string>? Issuers { get; set; } = default!;
 
         [System.Text.Json.Serialization.JsonPropertyName("employees")]
-        public System.Collections.Generic.ICollection<string> Employees { get; set; } = default!;
+        public System.Collections.Generic.ICollection<string>? Employees { get; set; } = default!;
 
         [System.Text.Json.Serialization.JsonPropertyName("created_at")]
-        public DateFilter Created_at { get; set; } = default!;
+        public DateFilter? Created_at { get; set; } = default!;
 
         [System.Text.Json.Serialization.JsonPropertyName("subtransaction_created_at")]
-        public DateFilter Subtransaction_created_at { get; set; } = default!;
+        public DateFilter? Subtransaction_created_at { get; set; } = default!;
 
         [System.Text.Json.Serialization.JsonPropertyName("completed_at")]
-        public DateFilter Completed_at { get; set; } = default!;
+        public DateFilter? Completed_at { get; set; } = default!;
 
         private System.Collections.Generic.IDictionary<string, object>? _additionalProperties;
 
@@ -53175,7 +53804,7 @@ namespace FSH.Starter.Blazor.Infrastructure.NoonaApi
         /// </summary>
         [System.Text.Json.Serialization.JsonPropertyName("refund")]
         [System.Text.Json.Serialization.JsonConverter(typeof(System.Text.Json.Serialization.JsonStringEnumConverter<TransactionCreationBehaviorRefund>))]
-        public TransactionCreationBehaviorRefund Refund { get; set; } = FSH.Starter.Blazor.Infrastructure.NoonaApi.TransactionCreationBehaviorRefund.Full_refund;
+        public TransactionCreationBehaviorRefund? Refund { get; set; } = FSH.Starter.Blazor.Infrastructure.NoonaApi.TransactionCreationBehaviorRefund.Full_refund;
 
         private System.Collections.Generic.IDictionary<string, object>? _additionalProperties;
 
@@ -53199,7 +53828,7 @@ namespace FSH.Starter.Blazor.Infrastructure.NoonaApi
         /// Only return Issuers that can be attached to a terminal, from the calling user's perspective.
         /// </summary>
         [System.Text.Json.Serialization.JsonPropertyName("terminal_attachable")]
-        public bool Terminal_attachable { get; set; } = false;
+        public bool? Terminal_attachable { get; set; } = false;
 
         private System.Collections.Generic.IDictionary<string, object>? _additionalProperties;
 
@@ -53226,38 +53855,38 @@ namespace FSH.Starter.Blazor.Infrastructure.NoonaApi
         /// ID of company or employee
         /// </summary>
         [System.Text.Json.Serialization.JsonPropertyName("id")]
-        public string Id { get; set; } = default!;
+        public string? Id { get; set; } = default!;
 
         [System.Text.Json.Serialization.JsonPropertyName("type")]
         [System.Text.Json.Serialization.JsonConverter(typeof(System.Text.Json.Serialization.JsonStringEnumConverter<IssuerType>))]
-        public IssuerType Type { get; set; } = default!;
+        public IssuerType? Type { get; set; } = default!;
 
         [System.Text.Json.Serialization.JsonPropertyName("name")]
-        public string Name { get; set; } = default!;
+        public string? Name { get; set; } = default!;
 
         /// <summary>
         /// Business Identification Number
         /// </summary>
         [System.Text.Json.Serialization.JsonPropertyName("bin")]
-        public string Bin { get; set; } = default!;
+        public string? Bin { get; set; } = default!;
 
         [System.Text.Json.Serialization.JsonPropertyName("legal_address")]
-        public string Legal_address { get; set; } = default!;
+        public string? Legal_address { get; set; } = default!;
 
         /// <summary>
         /// Extra information to include on invoices.
         /// </summary>
         [System.Text.Json.Serialization.JsonPropertyName("extra_invoice_info")]
-        public string Extra_invoice_info { get; set; } = default!;
+        public string? Extra_invoice_info { get; set; } = default!;
 
         /// <summary>
         /// VAT Identification Number
         /// </summary>
         [System.Text.Json.Serialization.JsonPropertyName("vat_id")]
-        public string Vat_id { get; set; } = default!;
+        public string? Vat_id { get; set; } = default!;
 
         [System.Text.Json.Serialization.JsonPropertyName("other")]
-        public string Other { get; set; } = default!;
+        public string? Other { get; set; } = default!;
 
         private System.Collections.Generic.IDictionary<string, object>? _additionalProperties;
 
@@ -53299,81 +53928,81 @@ namespace FSH.Starter.Blazor.Infrastructure.NoonaApi
     {
 
         [System.Text.Json.Serialization.JsonPropertyName("id")]
-        public string Id { get; set; } = default!;
+        public string? Id { get; set; } = default!;
 
         [System.Text.Json.Serialization.JsonPropertyName("type")]
         [System.Text.Json.Serialization.JsonConverter(typeof(System.Text.Json.Serialization.JsonStringEnumConverter<LineItemType>))]
-        public LineItemType Type { get; set; } = default!;
+        public LineItemType? Type { get; set; } = default!;
 
         [System.Text.Json.Serialization.JsonPropertyName("transaction")]
-        public string Transaction { get; set; } = default!;
+        public string? Transaction { get; set; } = default!;
 
         [System.Text.Json.Serialization.JsonPropertyName("company")]
-        public string Company { get; set; } = default!;
+        public string? Company { get; set; } = default!;
 
         [System.Text.Json.Serialization.JsonPropertyName("title")]
-        public string Title { get; set; } = default!;
+        public string? Title { get; set; } = default!;
 
         [System.Text.Json.Serialization.JsonPropertyName("quantity")]
-        public int Quantity { get; set; } = default!;
+        public int? Quantity { get; set; } = default!;
 
         [System.Text.Json.Serialization.JsonPropertyName("unit_price")]
-        public UnitPrice Unit_price { get; set; } = default!;
+        public UnitPrice? Unit_price { get; set; } = default!;
 
         /// <summary>
         /// Discount percentage
         /// </summary>
         [System.Text.Json.Serialization.JsonPropertyName("discount")]
         [System.ComponentModel.DataAnnotations.Range(0D, 100D)]
-        public double Discount { get; set; } = default!;
+        public double? Discount { get; set; } = default!;
 
         /// <summary>
         /// The VAT ratio
         /// </summary>
         [System.Text.Json.Serialization.JsonPropertyName("vat_amount")]
-        public double Vat_amount { get; set; } = default!;
+        public double? Vat_amount { get; set; } = default!;
 
         /// <summary>
         /// The VAT exemption reason when the VAT amount is equal to 0
         /// </summary>
         [System.Text.Json.Serialization.JsonPropertyName("tax_exemption_reason")]
-        public string Tax_exemption_reason { get; set; } = default!;
+        public string? Tax_exemption_reason { get; set; } = default!;
 
         /// <summary>
         /// True if the item was returned. Quantity and all amounts are positive for returning items.
         /// </summary>
         [System.Text.Json.Serialization.JsonPropertyName("is_returning")]
-        public bool Is_returning { get; set; } = default!;
+        public bool? Is_returning { get; set; } = default!;
 
         [System.Text.Json.Serialization.JsonPropertyName("employee")]
-        public string Employee { get; set; } = default!;
+        public string? Employee { get; set; } = default!;
 
         [System.Text.Json.Serialization.JsonPropertyName("product")]
-        public string Product { get; set; } = default!;
+        public string? Product { get; set; } = default!;
 
         [System.Text.Json.Serialization.JsonPropertyName("event_type")]
-        public string Event_type { get; set; } = default!;
+        public string? Event_type { get; set; } = default!;
 
         [System.Text.Json.Serialization.JsonPropertyName("voucher_template")]
-        public string Voucher_template { get; set; } = default!;
+        public string? Voucher_template { get; set; } = default!;
 
         [System.Text.Json.Serialization.JsonPropertyName("voucher")]
-        public LineItemVoucher Voucher { get; set; } = default!;
+        public LineItemVoucher? Voucher { get; set; } = default!;
 
         [System.Text.Json.Serialization.JsonPropertyName("claim")]
-        public string Claim { get; set; } = default!;
+        public string? Claim { get; set; } = default!;
 
         [System.Text.Json.Serialization.JsonPropertyName("event")]
-        public string Event { get; set; } = default!;
+        public string? Event { get; set; } = default!;
 
         [System.Text.Json.Serialization.JsonPropertyName("variation_id")]
-        public string Variation_id { get; set; } = default!;
+        public string? Variation_id { get; set; } = default!;
 
         /// <summary>
         /// ID of the employee that booked the service on the appointment linked to the transaction. This is used to calculate commissions for the employee that booked the service.
         /// </summary>
         [System.Text.Json.Serialization.JsonPropertyName("booked_by")]
-        public string Booked_by { get; set; } = default!;
+        public string? Booked_by { get; set; } = default!;
 
         private System.Collections.Generic.IDictionary<string, object>? _additionalProperties;
 
@@ -53403,19 +54032,19 @@ namespace FSH.Starter.Blazor.Infrastructure.NoonaApi
     {
 
         [System.Text.Json.Serialization.JsonPropertyName("id")]
-        public string Id { get; set; } = default!;
+        public string? Id { get; set; } = default!;
 
         [System.Text.Json.Serialization.JsonPropertyName("voucher")]
-        public string Voucher { get; set; } = default!;
+        public string? Voucher { get; set; } = default!;
 
         /// <summary>
         /// 6 uppercase letters / numbers
         /// </summary>
         [System.Text.Json.Serialization.JsonPropertyName("code")]
-        public string Code { get; set; } = default!;
+        public string? Code { get; set; } = default!;
 
         [System.Text.Json.Serialization.JsonPropertyName("data")]
-        public Data Data { get; set; } = default!;
+        public Data? Data { get; set; } = default!;
 
         private System.Collections.Generic.IDictionary<string, object>? _additionalProperties;
 
@@ -53453,7 +54082,7 @@ namespace FSH.Starter.Blazor.Infrastructure.NoonaApi
         public LineItemVoucherDataAmountType Type { get; set; } = default!;
 
         [System.Text.Json.Serialization.JsonPropertyName("amount")]
-        public double Amount { get; set; } = default!;
+        public double? Amount { get; set; } = default!;
 
         private System.Collections.Generic.IDictionary<string, object>? _additionalProperties;
 
@@ -53471,22 +54100,22 @@ namespace FSH.Starter.Blazor.Infrastructure.NoonaApi
     {
 
         [System.Text.Json.Serialization.JsonPropertyName("id")]
-        public string Id { get; set; } = default!;
+        public string? Id { get; set; } = default!;
 
         [System.Text.Json.Serialization.JsonPropertyName("currency")]
-        public string Currency { get; set; } = default!;
+        public string? Currency { get; set; } = default!;
 
         [System.Text.Json.Serialization.JsonPropertyName("amount")]
-        public double Amount { get; set; } = default!;
+        public double? Amount { get; set; } = default!;
 
         [System.Text.Json.Serialization.JsonPropertyName("original_amount")]
-        public double Original_amount { get; set; } = default!;
+        public double? Original_amount { get; set; } = default!;
 
         /// <summary>
         /// Discount percentage
         /// </summary>
         [System.Text.Json.Serialization.JsonPropertyName("discount")]
-        public double Discount { get; set; } = default!;
+        public double? Discount { get; set; } = default!;
 
         private System.Collections.Generic.IDictionary<string, object>? _additionalProperties;
 
@@ -53510,46 +54139,46 @@ namespace FSH.Starter.Blazor.Infrastructure.NoonaApi
     {
 
         [System.Text.Json.Serialization.JsonPropertyName("id")]
-        public string Id { get; set; } = default!;
+        public string? Id { get; set; } = default!;
 
         [System.Text.Json.Serialization.JsonPropertyName("amount")]
-        public double Amount { get; set; } = default!;
+        public double? Amount { get; set; } = default!;
 
         [System.Text.Json.Serialization.JsonPropertyName("currency")]
-        public string Currency { get; set; } = default!;
+        public string? Currency { get; set; } = default!;
 
         [System.Text.Json.Serialization.JsonPropertyName("state")]
         [System.Text.Json.Serialization.JsonConverter(typeof(System.Text.Json.Serialization.JsonStringEnumConverter<SubtransactionState>))]
-        public SubtransactionState State { get; set; } = default!;
+        public SubtransactionState? State { get; set; } = default!;
 
         [System.Text.Json.Serialization.JsonPropertyName("failure_state")]
         [System.Text.Json.Serialization.JsonConverter(typeof(System.Text.Json.Serialization.JsonStringEnumConverter<SubtransactionFailure_state>))]
-        public SubtransactionFailure_state Failure_state { get; set; } = default!;
+        public SubtransactionFailure_state? Failure_state { get; set; } = default!;
 
         [System.Text.Json.Serialization.JsonPropertyName("origin")]
         [System.Text.Json.Serialization.JsonConverter(typeof(System.Text.Json.Serialization.JsonStringEnumConverter<SubtransactionOrigin>))]
-        public SubtransactionOrigin Origin { get; set; } = default!;
+        public SubtransactionOrigin? Origin { get; set; } = default!;
 
         [System.Text.Json.Serialization.JsonPropertyName("payment_method_id")]
-        public string Payment_method_id { get; set; } = default!;
+        public string? Payment_method_id { get; set; } = default!;
 
         [System.Text.Json.Serialization.JsonPropertyName("payment_method_instance_id")]
-        public string Payment_method_instance_id { get; set; } = default!;
+        public string? Payment_method_instance_id { get; set; } = default!;
 
         [System.Text.Json.Serialization.JsonPropertyName("data")]
-        public Data2 Data { get; set; } = default!;
+        public Data2? Data { get; set; } = default!;
 
         [System.Text.Json.Serialization.JsonPropertyName("transaction_id")]
-        public string Transaction_id { get; set; } = default!;
+        public string? Transaction_id { get; set; } = default!;
 
         [System.Text.Json.Serialization.JsonPropertyName("note")]
-        public string Note { get; set; } = default!;
+        public string? Note { get; set; } = default!;
 
         [System.Text.Json.Serialization.JsonPropertyName("created_at")]
-        public System.DateTime Created_at { get; set; } = default!;
+        public System.DateTime? Created_at { get; set; } = default!;
 
         [System.Text.Json.Serialization.JsonPropertyName("updated_at")]
-        public System.DateTime Updated_at { get; set; } = default!;
+        public System.DateTime? Updated_at { get; set; } = default!;
 
         private System.Collections.Generic.IDictionary<string, object>? _additionalProperties;
 
@@ -53635,10 +54264,10 @@ namespace FSH.Starter.Blazor.Infrastructure.NoonaApi
         public SubtransactionDataPaylinkType Type { get; set; } = default!;
 
         [System.Text.Json.Serialization.JsonPropertyName("paylink_payment_id")]
-        public string Paylink_payment_id { get; set; } = default!;
+        public string? Paylink_payment_id { get; set; } = default!;
 
         [System.Text.Json.Serialization.JsonPropertyName("paylink_payment_group_id")]
-        public string Paylink_payment_group_id { get; set; } = default!;
+        public string? Paylink_payment_group_id { get; set; } = default!;
 
         [System.Text.Json.Serialization.JsonPropertyName("phone_country_code")]
         [System.ComponentModel.DataAnnotations.Required(AllowEmptyStrings = true)]
@@ -53650,7 +54279,7 @@ namespace FSH.Starter.Blazor.Infrastructure.NoonaApi
 
         [System.Text.Json.Serialization.JsonPropertyName("channel")]
         [System.Text.Json.Serialization.JsonConverter(typeof(System.Text.Json.Serialization.JsonStringEnumConverter<SubtransactionDataPaylinkChannel>))]
-        public SubtransactionDataPaylinkChannel Channel { get; set; } = default!;
+        public SubtransactionDataPaylinkChannel? Channel { get; set; } = default!;
 
         private System.Collections.Generic.IDictionary<string, object>? _additionalProperties;
 
@@ -53679,7 +54308,7 @@ namespace FSH.Starter.Blazor.Infrastructure.NoonaApi
         /// </summary>
         [System.Text.Json.Serialization.JsonPropertyName("type")]
         [System.Text.Json.Serialization.JsonConverter(typeof(System.Text.Json.Serialization.JsonStringEnumConverter<CustomerDeletionBehaviorType>))]
-        public CustomerDeletionBehaviorType Type { get; set; } = FSH.Starter.Blazor.Infrastructure.NoonaApi.CustomerDeletionBehaviorType.Soft;
+        public CustomerDeletionBehaviorType? Type { get; set; } = FSH.Starter.Blazor.Infrastructure.NoonaApi.CustomerDeletionBehaviorType.Soft;
 
         private System.Collections.Generic.IDictionary<string, object>? _additionalProperties;
 
@@ -53709,7 +54338,7 @@ namespace FSH.Starter.Blazor.Infrastructure.NoonaApi
         /// </summary>
         [System.Text.Json.Serialization.JsonPropertyName("type")]
         [System.Text.Json.Serialization.JsonConverter(typeof(System.Text.Json.Serialization.JsonStringEnumConverter<SubtransactionCreationBehaviorType>))]
-        public SubtransactionCreationBehaviorType Type { get; set; } = FSH.Starter.Blazor.Infrastructure.NoonaApi.SubtransactionCreationBehaviorType.Single;
+        public SubtransactionCreationBehaviorType? Type { get; set; } = FSH.Starter.Blazor.Infrastructure.NoonaApi.SubtransactionCreationBehaviorType.Single;
 
         private System.Collections.Generic.IDictionary<string, object>? _additionalProperties;
 
@@ -53744,7 +54373,7 @@ namespace FSH.Starter.Blazor.Infrastructure.NoonaApi
         public int Order { get; set; } = default!;
 
         [System.Text.Json.Serialization.JsonPropertyName("icon_name")]
-        public string Icon_name { get; set; } = default!;
+        public string? Icon_name { get; set; } = default!;
 
         [System.Text.Json.Serialization.JsonPropertyName("readable_id")]
         [System.ComponentModel.DataAnnotations.Required(AllowEmptyStrings = true)]
@@ -53755,13 +54384,13 @@ namespace FSH.Starter.Blazor.Infrastructure.NoonaApi
         public string Locale_key { get; set; } = default!;
 
         [System.Text.Json.Serialization.JsonPropertyName("use_terminal")]
-        public bool Use_terminal { get; set; } = default!;
+        public bool? Use_terminal { get; set; } = default!;
 
         /// <summary>
         /// If true the payment method is hidden from the POS
         /// </summary>
         [System.Text.Json.Serialization.JsonPropertyName("hidden")]
-        public bool Hidden { get; set; } = default!;
+        public bool? Hidden { get; set; } = default!;
 
         private System.Collections.Generic.IDictionary<string, object>? _additionalProperties;
 
@@ -53779,7 +54408,7 @@ namespace FSH.Starter.Blazor.Infrastructure.NoonaApi
     {
 
         [System.Text.Json.Serialization.JsonPropertyName("available_on_marketplace")]
-        public bool Available_on_marketplace { get; set; } = default!;
+        public bool? Available_on_marketplace { get; set; } = default!;
 
         /// <summary>
         /// Used when constructing the marketplace url for the enterprise.
@@ -53790,19 +54419,19 @@ namespace FSH.Starter.Blazor.Infrastructure.NoonaApi
         [System.Text.Json.Serialization.JsonPropertyName("url_name")]
         [System.ComponentModel.DataAnnotations.StringLength(30, MinimumLength = 3)]
         [System.ComponentModel.DataAnnotations.RegularExpression(@"^[a-z0-9-_]+$")]
-        public string Url_name { get; set; } = default!;
+        public string? Url_name { get; set; } = default!;
 
         /// <summary>
         /// Controls whether customers can make appointments without authentication
         /// </summary>
         [System.Text.Json.Serialization.JsonPropertyName("allows_booking_without_auth")]
-        public bool Allows_booking_without_auth { get; set; } = default!;
+        public bool? Allows_booking_without_auth { get; set; } = default!;
 
         [System.Text.Json.Serialization.JsonPropertyName("marketplace")]
-        public EnterpriseConnectionsMarketplace Marketplace { get; set; } = default!;
+        public EnterpriseConnectionsMarketplace? Marketplace { get; set; } = default!;
 
         [System.Text.Json.Serialization.JsonPropertyName("vouchers")]
-        public EnterpriseConnectionsVouchers Vouchers { get; set; } = default!;
+        public EnterpriseConnectionsVouchers? Vouchers { get; set; } = default!;
 
         private System.Collections.Generic.IDictionary<string, object>? _additionalProperties;
 
@@ -53820,7 +54449,7 @@ namespace FSH.Starter.Blazor.Infrastructure.NoonaApi
     {
 
         [System.Text.Json.Serialization.JsonPropertyName("enable_vouchers")]
-        public bool Enable_vouchers { get; set; } = default!;
+        public bool? Enable_vouchers { get; set; } = default!;
 
         private System.Collections.Generic.IDictionary<string, object>? _additionalProperties;
 
@@ -53843,10 +54472,10 @@ namespace FSH.Starter.Blazor.Infrastructure.NoonaApi
         /// </summary>
         [System.Text.Json.Serialization.JsonPropertyName("enabled")]
         [System.Obsolete]
-        public bool Enabled { get; set; } = default!;
+        public bool? Enabled { get; set; } = default!;
 
         [System.Text.Json.Serialization.JsonPropertyName("settlement_account_id")]
-        public string Settlement_account_id { get; set; } = default!;
+        public string? Settlement_account_id { get; set; } = default!;
 
         private System.Collections.Generic.IDictionary<string, object>? _additionalProperties;
 
@@ -53864,13 +54493,13 @@ namespace FSH.Starter.Blazor.Infrastructure.NoonaApi
     {
 
         [System.Text.Json.Serialization.JsonPropertyName("name")]
-        public string Name { get; set; } = default!;
+        public string? Name { get; set; } = default!;
 
         [System.Text.Json.Serialization.JsonPropertyName("image")]
-        public Image Image { get; set; } = default!;
+        public Image? Image { get; set; } = default!;
 
         [System.Text.Json.Serialization.JsonPropertyName("cover_images")]
-        public Images Cover_images { get; set; } = default!;
+        public Images? Cover_images { get; set; } = default!;
 
         private System.Collections.Generic.IDictionary<string, object>? _additionalProperties;
 
@@ -53894,19 +54523,19 @@ namespace FSH.Starter.Blazor.Infrastructure.NoonaApi
     {
 
         [System.Text.Json.Serialization.JsonPropertyName("id")]
-        public string Id { get; set; } = default!;
+        public string? Id { get; set; } = default!;
 
         /// <summary>
         /// An array of companies belonging to enterprise.
         /// </summary>
         [System.Text.Json.Serialization.JsonPropertyName("companies")]
-        public System.Collections.Generic.ICollection<string> Companies { get; set; } = default!;
+        public System.Collections.Generic.ICollection<string>? Companies { get; set; } = default!;
 
         [System.Text.Json.Serialization.JsonPropertyName("connections")]
-        public EnterpriseConnections Connections { get; set; } = default!;
+        public EnterpriseConnections? Connections { get; set; } = default!;
 
         [System.Text.Json.Serialization.JsonPropertyName("profile")]
-        public EnterpriseProfile Profile { get; set; } = default!;
+        public EnterpriseProfile? Profile { get; set; } = default!;
 
         private System.Collections.Generic.IDictionary<string, object>? _additionalProperties;
 
@@ -53927,7 +54556,7 @@ namespace FSH.Starter.Blazor.Infrastructure.NoonaApi
         /// Number of notifications deleted
         /// </summary>
         [System.Text.Json.Serialization.JsonPropertyName("count")]
-        public int Count { get; set; } = default!;
+        public int? Count { get; set; } = default!;
 
         private System.Collections.Generic.IDictionary<string, object>? _additionalProperties;
 
@@ -53951,26 +54580,26 @@ namespace FSH.Starter.Blazor.Infrastructure.NoonaApi
     {
 
         [System.Text.Json.Serialization.JsonPropertyName("id")]
-        public string Id { get; set; } = default!;
+        public string? Id { get; set; } = default!;
 
         [System.Text.Json.Serialization.JsonPropertyName("created_at")]
-        public System.DateTime Created_at { get; set; } = default!;
+        public System.DateTime? Created_at { get; set; } = default!;
 
         [System.Text.Json.Serialization.JsonPropertyName("type")]
         [System.Text.Json.Serialization.JsonConverter(typeof(System.Text.Json.Serialization.JsonStringEnumConverter<PushNotificationType>))]
-        public PushNotificationType Type { get; set; } = default!;
+        public PushNotificationType? Type { get; set; } = default!;
 
         [System.Text.Json.Serialization.JsonPropertyName("event")]
-        public string Event { get; set; } = default!;
+        public string? Event { get; set; } = default!;
 
         [System.Text.Json.Serialization.JsonPropertyName("company")]
-        public string Company { get; set; } = default!;
+        public string? Company { get; set; } = default!;
 
         [System.Text.Json.Serialization.JsonPropertyName("customer")]
-        public string Customer { get; set; } = default!;
+        public string? Customer { get; set; } = default!;
 
         [System.Text.Json.Serialization.JsonPropertyName("data")]
-        public PushNotificationData Data { get; set; } = default!;
+        public PushNotificationData? Data { get; set; } = default!;
 
         private System.Collections.Generic.IDictionary<string, object>? _additionalProperties;
 
@@ -53988,13 +54617,13 @@ namespace FSH.Starter.Blazor.Infrastructure.NoonaApi
     {
 
         [System.Text.Json.Serialization.JsonPropertyName("title")]
-        public string Title { get; set; } = default!;
+        public string? Title { get; set; } = default!;
 
         [System.Text.Json.Serialization.JsonPropertyName("topic")]
-        public string Topic { get; set; } = default!;
+        public string? Topic { get; set; } = default!;
 
         [System.Text.Json.Serialization.JsonPropertyName("body")]
-        public string Body { get; set; } = default!;
+        public string? Body { get; set; } = default!;
 
         private System.Collections.Generic.IDictionary<string, object>? _additionalProperties;
 
@@ -54064,52 +54693,17 @@ namespace FSH.Starter.Blazor.Infrastructure.NoonaApi
     {
 
         [System.Text.Json.Serialization.JsonPropertyName("icon")]
-        public string Icon { get; set; } = default!;
+        public string? Icon { get; set; } = default!;
 
         [System.Text.Json.Serialization.JsonPropertyName("icon_text")]
-        public string Icon_text { get; set; } = default!;
+        public string? Icon_text { get; set; } = default!;
 
         [System.Text.Json.Serialization.JsonPropertyName("icon_color")]
-        public string Icon_color { get; set; } = default!;
+        public string? Icon_color { get; set; } = default!;
 
         [System.Text.Json.Serialization.JsonPropertyName("icon_variant")]
         [System.Text.Json.Serialization.JsonConverter(typeof(System.Text.Json.Serialization.JsonStringEnumConverter<NotificationIconIcon_variant>))]
-        public NotificationIconIcon_variant Icon_variant { get; set; } = default!;
-
-        private System.Collections.Generic.IDictionary<string, object>? _additionalProperties;
-
-        [System.Text.Json.Serialization.JsonExtensionData]
-        public System.Collections.Generic.IDictionary<string, object> AdditionalProperties
-        {
-            get { return _additionalProperties ?? (_additionalProperties = new System.Collections.Generic.Dictionary<string, object>()); }
-            set { _additionalProperties = value; }
-        }
-
-    }
-
-    [System.CodeDom.Compiler.GeneratedCode("NJsonSchema", "14.6.1.0 (NJsonSchema v11.5.1.0 (Newtonsoft.Json v13.0.0.0))")]
-    public partial class NotificationSurvey
-    {
-
-        [System.Text.Json.Serialization.JsonPropertyName("id")]
-        public string Id { get; set; } = default!;
-
-        [System.Text.Json.Serialization.JsonPropertyName("type")]
-        [System.ComponentModel.DataAnnotations.Required(AllowEmptyStrings = true)]
-        [System.Text.Json.Serialization.JsonConverter(typeof(System.Text.Json.Serialization.JsonStringEnumConverter<NotificationSurveyType>))]
-        public NotificationSurveyType Type { get; set; } = default!;
-
-        [System.Text.Json.Serialization.JsonPropertyName("employee")]
-        public string Employee { get; set; } = default!;
-
-        [System.Text.Json.Serialization.JsonPropertyName("priority")]
-        public int Priority { get; set; } = default!;
-
-        [System.Text.Json.Serialization.JsonPropertyName("created_at")]
-        public System.DateTime Created_at { get; set; } = default!;
-
-        [System.Text.Json.Serialization.JsonPropertyName("updated_at")]
-        public System.DateTime Updated_at { get; set; } = default!;
+        public NotificationIconIcon_variant? Icon_variant { get; set; } = default!;
 
         private System.Collections.Generic.IDictionary<string, object>? _additionalProperties;
 
@@ -54127,7 +54721,7 @@ namespace FSH.Starter.Blazor.Infrastructure.NoonaApi
     {
 
         [System.Text.Json.Serialization.JsonPropertyName("id")]
-        public string Id { get; set; } = default!;
+        public string? Id { get; set; } = default!;
 
         [System.Text.Json.Serialization.JsonPropertyName("type")]
         [System.ComponentModel.DataAnnotations.Required(AllowEmptyStrings = true)]
@@ -54135,32 +54729,32 @@ namespace FSH.Starter.Blazor.Infrastructure.NoonaApi
         public NotificationGenericType Type { get; set; } = default!;
 
         [System.Text.Json.Serialization.JsonPropertyName("employee")]
-        public string Employee { get; set; } = default!;
+        public string? Employee { get; set; } = default!;
 
         [System.Text.Json.Serialization.JsonPropertyName("title")]
         [System.ComponentModel.DataAnnotations.Required(AllowEmptyStrings = true)]
         public string Title { get; set; } = default!;
 
         [System.Text.Json.Serialization.JsonPropertyName("message")]
-        public string Message { get; set; } = default!;
+        public string? Message { get; set; } = default!;
 
         /// <summary>
         /// A valid URL path for HQ which is redirected to when the notification is clicked
         /// </summary>
         [System.Text.Json.Serialization.JsonPropertyName("url")]
-        public string Url { get; set; } = default!;
+        public string? Url { get; set; } = default!;
 
         [System.Text.Json.Serialization.JsonPropertyName("icon")]
-        public NotificationIcon Icon { get; set; } = default!;
+        public NotificationIcon? Icon { get; set; } = default!;
 
         [System.Text.Json.Serialization.JsonPropertyName("priority")]
-        public int Priority { get; set; } = default!;
+        public int? Priority { get; set; } = default!;
 
         [System.Text.Json.Serialization.JsonPropertyName("created_at")]
-        public System.DateTime Created_at { get; set; } = default!;
+        public System.DateTime? Created_at { get; set; } = default!;
 
         [System.Text.Json.Serialization.JsonPropertyName("updated_at")]
-        public System.DateTime Updated_at { get; set; } = default!;
+        public System.DateTime? Updated_at { get; set; } = default!;
 
         private System.Collections.Generic.IDictionary<string, object>? _additionalProperties;
 
@@ -54178,7 +54772,7 @@ namespace FSH.Starter.Blazor.Infrastructure.NoonaApi
     {
 
         [System.Text.Json.Serialization.JsonPropertyName("id")]
-        public string Id { get; set; } = default!;
+        public string? Id { get; set; } = default!;
 
         [System.Text.Json.Serialization.JsonPropertyName("type")]
         [System.ComponentModel.DataAnnotations.Required(AllowEmptyStrings = true)]
@@ -54191,113 +54785,113 @@ namespace FSH.Starter.Blazor.Infrastructure.NoonaApi
         public NotificationEventStatus Status { get; set; } = default!;
 
         [System.Text.Json.Serialization.JsonPropertyName("company")]
-        public string Company { get; set; } = default!;
+        public string? Company { get; set; } = default!;
 
         [System.Text.Json.Serialization.JsonPropertyName("customer")]
-        public string Customer { get; set; } = default!;
+        public string? Customer { get; set; } = default!;
 
         [System.Text.Json.Serialization.JsonPropertyName("customer_name")]
-        public string Customer_name { get; set; } = default!;
+        public string? Customer_name { get; set; } = default!;
 
         [System.Text.Json.Serialization.JsonPropertyName("employee")]
-        public string Employee { get; set; } = default!;
+        public string? Employee { get; set; } = default!;
 
         [System.Text.Json.Serialization.JsonPropertyName("employee_name")]
-        public string Employee_name { get; set; } = default!;
+        public string? Employee_name { get; set; } = default!;
 
         [System.Text.Json.Serialization.JsonPropertyName("space")]
-        public string Space { get; set; } = default!;
+        public string? Space { get; set; } = default!;
 
         [System.Text.Json.Serialization.JsonPropertyName("space_name")]
-        public string Space_name { get; set; } = default!;
+        public string? Space_name { get; set; } = default!;
 
         /// <summary>
         /// The resources that are booked for the event
         /// </summary>
         [System.Text.Json.Serialization.JsonPropertyName("resources")]
-        public System.Collections.Generic.ICollection<string> Resources { get; set; } = default!;
+        public System.Collections.Generic.ICollection<string>? Resources { get; set; } = default!;
 
         /// <summary>
         /// The names of the resources that are booked for the event
         /// </summary>
         [System.Text.Json.Serialization.JsonPropertyName("resource_names")]
-        public System.Collections.Generic.ICollection<string> Resource_names { get; set; } = default!;
+        public System.Collections.Generic.ICollection<string>? Resource_names { get; set; } = default!;
 
         /// <summary>
         /// The event which the notification is for.
         /// </summary>
         [System.Text.Json.Serialization.JsonPropertyName("event")]
-        public string Event { get; set; } = default!;
+        public string? Event { get; set; } = default!;
 
         /// <summary>
         /// The names of the event types
         /// </summary>
         [System.Text.Json.Serialization.JsonPropertyName("event_type_names")]
-        public System.Collections.Generic.ICollection<string> Event_type_names { get; set; } = default!;
+        public System.Collections.Generic.ICollection<string>? Event_type_names { get; set; } = default!;
 
         /// <summary>
         /// Start time of event
         /// </summary>
         [System.Text.Json.Serialization.JsonPropertyName("starts_at")]
-        public System.DateTime Starts_at { get; set; } = default!;
+        public System.DateTime? Starts_at { get; set; } = default!;
 
         /// <summary>
         /// Duration of event in minutes
         /// </summary>
         [System.Text.Json.Serialization.JsonPropertyName("duration")]
-        public int Duration { get; set; } = default!;
+        public int? Duration { get; set; } = default!;
 
         /// <summary>
         /// The original date and time of the event
         /// </summary>
         [System.Text.Json.Serialization.JsonPropertyName("rescheduled_from")]
-        public System.DateTime Rescheduled_from { get; set; } = default!;
+        public System.DateTime? Rescheduled_from { get; set; } = default!;
 
         /// <summary>
         /// True if the customer is new
         /// </summary>
         [System.Text.Json.Serialization.JsonPropertyName("new_customer")]
-        public bool New_customer { get; set; } = default!;
+        public bool? New_customer { get; set; } = default!;
 
         /// <summary>
         /// A comment that the customer included during a marketplace booking.
         /// </summary>
         [System.Text.Json.Serialization.JsonPropertyName("customer_comment")]
-        public string Customer_comment { get; set; } = default!;
+        public string? Customer_comment { get; set; } = default!;
 
         /// <summary>
         /// Provided by customers when they decline through the marketplace.
         /// </summary>
         [System.Text.Json.Serialization.JsonPropertyName("cancel_reason")]
-        public string Cancel_reason { get; set; } = default!;
+        public string? Cancel_reason { get; set; } = default!;
 
         /// <summary>
         /// The amount of the payment if the event has a payment associated with it.
         /// </summary>
         [System.Text.Json.Serialization.JsonPropertyName("payment_amount")]
-        public double Payment_amount { get; set; } = default!;
+        public double? Payment_amount { get; set; } = default!;
 
         /// <summary>
         /// The currency of the payment if the event has a payment associated with it.
         /// </summary>
         [System.Text.Json.Serialization.JsonPropertyName("payment_currency")]
-        public string Payment_currency { get; set; } = default!;
+        public string? Payment_currency { get; set; } = default!;
 
         [System.Text.Json.Serialization.JsonPropertyName("payment_status")]
         [System.Text.Json.Serialization.JsonConverter(typeof(System.Text.Json.Serialization.JsonStringEnumConverter<PaymentStatus>))]
-        public PaymentStatus Payment_status { get; set; } = default!;
+        public PaymentStatus? Payment_status { get; set; } = default!;
 
         /// <summary>
         /// Number of guests for the event.
         /// </summary>
         [System.Text.Json.Serialization.JsonPropertyName("number_of_guests")]
-        public int Number_of_guests { get; set; } = default!;
+        public int? Number_of_guests { get; set; } = default!;
 
         [System.Text.Json.Serialization.JsonPropertyName("created_at")]
-        public System.DateTime Created_at { get; set; } = default!;
+        public System.DateTime? Created_at { get; set; } = default!;
 
         [System.Text.Json.Serialization.JsonPropertyName("updated_at")]
-        public System.DateTime Updated_at { get; set; } = default!;
+        public System.DateTime? Updated_at { get; set; } = default!;
 
         private System.Collections.Generic.IDictionary<string, object>? _additionalProperties;
 
@@ -54328,43 +54922,43 @@ namespace FSH.Starter.Blazor.Infrastructure.NoonaApi
         /// </summary>
         [System.Text.Json.Serialization.JsonPropertyName("status")]
         [System.Text.Json.Serialization.JsonConverter(typeof(System.Text.Json.Serialization.JsonStringEnumConverter<NotificationWaitlistEntryStatus>))]
-        public NotificationWaitlistEntryStatus Status { get; set; } = default!;
+        public NotificationWaitlistEntryStatus? Status { get; set; } = default!;
 
         [System.Text.Json.Serialization.JsonPropertyName("waitlist_entry")]
-        public string Waitlist_entry { get; set; } = default!;
+        public string? Waitlist_entry { get; set; } = default!;
 
         [System.Text.Json.Serialization.JsonPropertyName("company")]
-        public string Company { get; set; } = default!;
+        public string? Company { get; set; } = default!;
 
         [System.Text.Json.Serialization.JsonPropertyName("customer")]
-        public string Customer { get; set; } = default!;
+        public string? Customer { get; set; } = default!;
 
         [System.Text.Json.Serialization.JsonPropertyName("customer_name")]
-        public string Customer_name { get; set; } = default!;
+        public string? Customer_name { get; set; } = default!;
 
         [System.Text.Json.Serialization.JsonPropertyName("employee")]
-        public string Employee { get; set; } = default!;
+        public string? Employee { get; set; } = default!;
 
         [System.Text.Json.Serialization.JsonPropertyName("employee_name")]
-        public string Employee_name { get; set; } = default!;
+        public string? Employee_name { get; set; } = default!;
 
         /// <summary>
         /// The names of the event types
         /// </summary>
         [System.Text.Json.Serialization.JsonPropertyName("event_type_names")]
-        public System.Collections.Generic.ICollection<string> Event_type_names { get; set; } = default!;
+        public System.Collections.Generic.ICollection<string>? Event_type_names { get; set; } = default!;
 
         /// <summary>
         /// The time when the waitlist entry expires
         /// </summary>
         [System.Text.Json.Serialization.JsonPropertyName("expires_at")]
-        public System.DateTime Expires_at { get; set; } = default!;
+        public System.DateTime? Expires_at { get; set; } = default!;
 
         [System.Text.Json.Serialization.JsonPropertyName("created_at")]
-        public System.DateTime Created_at { get; set; } = default!;
+        public System.DateTime? Created_at { get; set; } = default!;
 
         [System.Text.Json.Serialization.JsonPropertyName("updated_at")]
-        public System.DateTime Updated_at { get; set; } = default!;
+        public System.DateTime? Updated_at { get; set; } = default!;
 
         private System.Collections.Generic.IDictionary<string, object>? _additionalProperties;
 
@@ -54395,52 +54989,52 @@ namespace FSH.Starter.Blazor.Infrastructure.NoonaApi
         /// </summary>
         [System.Text.Json.Serialization.JsonPropertyName("status")]
         [System.Text.Json.Serialization.JsonConverter(typeof(System.Text.Json.Serialization.JsonStringEnumConverter<NotificationBookingOfferStatus>))]
-        public NotificationBookingOfferStatus Status { get; set; } = default!;
+        public NotificationBookingOfferStatus? Status { get; set; } = default!;
 
         /// <summary>
         /// The booking offer ID
         /// </summary>
         [System.Text.Json.Serialization.JsonPropertyName("booking_offer")]
-        public string Booking_offer { get; set; } = default!;
+        public string? Booking_offer { get; set; } = default!;
 
         /// <summary>
         /// The event ID
         /// </summary>
         [System.Text.Json.Serialization.JsonPropertyName("event")]
-        public string Event { get; set; } = default!;
+        public string? Event { get; set; } = default!;
 
         [System.Text.Json.Serialization.JsonPropertyName("company")]
-        public string Company { get; set; } = default!;
+        public string? Company { get; set; } = default!;
 
         [System.Text.Json.Serialization.JsonPropertyName("customer")]
-        public string Customer { get; set; } = default!;
+        public string? Customer { get; set; } = default!;
 
         [System.Text.Json.Serialization.JsonPropertyName("customer_name")]
-        public string Customer_name { get; set; } = default!;
+        public string? Customer_name { get; set; } = default!;
 
         [System.Text.Json.Serialization.JsonPropertyName("employee")]
-        public string Employee { get; set; } = default!;
+        public string? Employee { get; set; } = default!;
 
         [System.Text.Json.Serialization.JsonPropertyName("employee_name")]
-        public string Employee_name { get; set; } = default!;
+        public string? Employee_name { get; set; } = default!;
 
         /// <summary>
         /// The names of the event types
         /// </summary>
         [System.Text.Json.Serialization.JsonPropertyName("event_type_names")]
-        public System.Collections.Generic.ICollection<string> Event_type_names { get; set; } = default!;
+        public System.Collections.Generic.ICollection<string>? Event_type_names { get; set; } = default!;
 
         /// <summary>
         /// When the booking offer appointment starts
         /// </summary>
         [System.Text.Json.Serialization.JsonPropertyName("starts_at")]
-        public System.DateTime Starts_at { get; set; } = default!;
+        public System.DateTime? Starts_at { get; set; } = default!;
 
         [System.Text.Json.Serialization.JsonPropertyName("created_at")]
-        public System.DateTime Created_at { get; set; } = default!;
+        public System.DateTime? Created_at { get; set; } = default!;
 
         [System.Text.Json.Serialization.JsonPropertyName("updated_at")]
-        public System.DateTime Updated_at { get; set; } = default!;
+        public System.DateTime? Updated_at { get; set; } = default!;
 
         private System.Collections.Generic.IDictionary<string, object>? _additionalProperties;
 
@@ -54464,38 +55058,38 @@ namespace FSH.Starter.Blazor.Infrastructure.NoonaApi
     {
 
         [System.Text.Json.Serialization.JsonPropertyName("id")]
-        public string Id { get; set; } = default!;
+        public string? Id { get; set; } = default!;
 
         [System.Text.Json.Serialization.JsonPropertyName("readable_identifier")]
-        public string Readable_identifier { get; set; } = default!;
+        public string? Readable_identifier { get; set; } = default!;
 
         [System.Text.Json.Serialization.JsonPropertyName("brand")]
-        public string Brand { get; set; } = default!;
+        public string? Brand { get; set; } = default!;
 
         [System.Text.Json.Serialization.JsonPropertyName("model")]
-        public string Model { get; set; } = default!;
+        public string? Model { get; set; } = default!;
 
         [System.Text.Json.Serialization.JsonPropertyName("provider")]
         [System.Text.Json.Serialization.JsonConverter(typeof(System.Text.Json.Serialization.JsonStringEnumConverter<TerminalProvider>))]
-        public TerminalProvider Provider { get; set; } = default!;
+        public TerminalProvider? Provider { get; set; } = default!;
 
         [System.Text.Json.Serialization.JsonPropertyName("serial")]
-        public string Serial { get; set; } = default!;
+        public string? Serial { get; set; } = default!;
 
         [System.Text.Json.Serialization.JsonPropertyName("issuer")]
-        public string Issuer { get; set; } = default!;
+        public string? Issuer { get; set; } = default!;
 
         [System.Text.Json.Serialization.JsonPropertyName("description")]
-        public string Description { get; set; } = default!;
+        public string? Description { get; set; } = default!;
 
         /// <summary>
         /// Whether this terminal is the default terminal to use for sales.
         /// </summary>
         [System.Text.Json.Serialization.JsonPropertyName("default")]
-        public bool Default { get; set; } = default!;
+        public bool? Default { get; set; } = default!;
 
         [System.Text.Json.Serialization.JsonPropertyName("created_at")]
-        public double Created_at { get; set; } = default!;
+        public double? Created_at { get; set; } = default!;
 
         private System.Collections.Generic.IDictionary<string, object>? _additionalProperties;
 
@@ -54531,7 +55125,7 @@ namespace FSH.Starter.Blazor.Infrastructure.NoonaApi
     {
 
         [System.Text.Json.Serialization.JsonPropertyName("id")]
-        public string Id { get; set; } = default!;
+        public string? Id { get; set; } = default!;
 
         /// <summary>
         /// An ID that can be used to reference the company in an external system.
@@ -54539,115 +55133,115 @@ namespace FSH.Starter.Blazor.Infrastructure.NoonaApi
         /// <br/>
         /// </summary>
         [System.Text.Json.Serialization.JsonPropertyName("reference_id")]
-        public string Reference_id { get; set; } = default!;
+        public string? Reference_id { get; set; } = default!;
 
         [System.Text.Json.Serialization.JsonPropertyName("vertical")]
         [System.Text.Json.Serialization.JsonConverter(typeof(System.Text.Json.Serialization.JsonStringEnumConverter<CompanyVertical>))]
-        public CompanyVertical Vertical { get; set; } = default!;
+        public CompanyVertical? Vertical { get; set; } = default!;
 
         [System.Text.Json.Serialization.JsonPropertyName("enterprise")]
-        public string Enterprise { get; set; } = default!;
+        public string? Enterprise { get; set; } = default!;
 
         /// <summary>
         /// The order/position of this company within its enterprise. Used for custom sorting of companies.
         /// </summary>
         [System.Text.Json.Serialization.JsonPropertyName("enterprise_order")]
-        public int Enterprise_order { get; set; } = default!;
+        public int? Enterprise_order { get; set; } = default!;
 
         [System.Text.Json.Serialization.JsonPropertyName("name")]
-        public string Name { get; set; } = default!;
+        public string? Name { get; set; } = default!;
 
         /// <summary>
         /// Deprecated, use profile.phone_country_code instead
         /// </summary>
         [System.Text.Json.Serialization.JsonPropertyName("phone_country_code")]
         [System.Obsolete]
-        public string Phone_country_code { get; set; } = default!;
+        public string? Phone_country_code { get; set; } = default!;
 
         /// <summary>
         /// Deprecated, use profile.phone_number instead
         /// </summary>
         [System.Text.Json.Serialization.JsonPropertyName("phone_number")]
         [System.Obsolete]
-        public string Phone_number { get; set; } = default!;
+        public string? Phone_number { get; set; } = default!;
 
         [System.Text.Json.Serialization.JsonPropertyName("profile")]
-        public CompanyProfile Profile { get; set; } = default!;
+        public CompanyProfile? Profile { get; set; } = default!;
 
         [System.Text.Json.Serialization.JsonPropertyName("marketplace")]
-        public CompanyMarketplace Marketplace { get; set; } = default!;
+        public CompanyMarketplace? Marketplace { get; set; } = default!;
 
         [System.Text.Json.Serialization.JsonPropertyName("messaging")]
-        public CompanyMessaging Messaging { get; set; } = default!;
+        public CompanyMessaging? Messaging { get; set; } = default!;
 
         [System.Text.Json.Serialization.JsonPropertyName("location")]
-        public Location Location { get; set; } = default!;
+        public Location? Location { get; set; } = default!;
 
         [System.Text.Json.Serialization.JsonPropertyName("currency")]
-        public CompanyDefaultCurrency Currency { get; set; } = default!;
+        public CompanyDefaultCurrency? Currency { get; set; } = default!;
 
         [System.Text.Json.Serialization.JsonPropertyName("locale")]
-        public Locale Locale { get; set; } = default!;
+        public Locale? Locale { get; set; } = default!;
 
         [System.Text.Json.Serialization.JsonPropertyName("checkin")]
-        public CompanyCheckin Checkin { get; set; } = default!;
+        public CompanyCheckin? Checkin { get; set; } = default!;
 
         [System.Text.Json.Serialization.JsonPropertyName("payments")]
-        public PaymentSettings Payments { get; set; } = default!;
+        public PaymentSettings? Payments { get; set; } = default!;
 
         [System.Text.Json.Serialization.JsonPropertyName("payment_fees")]
-        public PaymentFees Payment_fees { get; set; } = default!;
+        public PaymentFees? Payment_fees { get; set; } = default!;
 
         [System.Text.Json.Serialization.JsonPropertyName("vouchers")]
-        public VoucherSettings Vouchers { get; set; } = default!;
+        public VoucherSettings? Vouchers { get; set; } = default!;
 
         [System.Text.Json.Serialization.JsonPropertyName("pos")]
-        public CompanyPOSSettings Pos { get; set; } = default!;
+        public CompanyPOSSettings? Pos { get; set; } = default!;
 
         [System.Text.Json.Serialization.JsonPropertyName("adyen")]
-        public AdyenConnection Adyen { get; set; } = default!;
+        public AdyenConnection? Adyen { get; set; } = default!;
 
         [System.Text.Json.Serialization.JsonPropertyName("teya")]
-        public TeyaConnection Teya { get; set; } = default!;
+        public TeyaConnection? Teya { get; set; } = default!;
 
         [System.Text.Json.Serialization.JsonPropertyName("google_analytics")]
-        public GoogleAnalyticsConnection Google_analytics { get; set; } = default!;
+        public GoogleAnalyticsConnection? Google_analytics { get; set; } = default!;
 
         [System.Text.Json.Serialization.JsonPropertyName("claims")]
-        public ClaimsConnection Claims { get; set; } = default!;
+        public ClaimsConnection? Claims { get; set; } = default!;
 
         [System.Text.Json.Serialization.JsonPropertyName("signup")]
-        public CompanySignup Signup { get; set; } = default!;
+        public CompanySignup? Signup { get; set; } = default!;
 
         [System.Text.Json.Serialization.JsonPropertyName("subscriptions")]
-        public PowerupSubscriptions Subscriptions { get; set; } = default!;
+        public PowerupSubscriptions? Subscriptions { get; set; } = default!;
 
         [System.Text.Json.Serialization.JsonPropertyName("billing_status")]
-        public CompanyBillingStatus Billing_status { get; set; } = default!;
+        public CompanyBillingStatus? Billing_status { get; set; } = default!;
 
         [System.Text.Json.Serialization.JsonPropertyName("locked_sections")]
-        public LockedSections Locked_sections { get; set; } = default!;
+        public LockedSections? Locked_sections { get; set; } = default!;
 
         [System.Text.Json.Serialization.JsonPropertyName("visible_fields")]
-        public RequiredFields Visible_fields { get; set; } = default!;
+        public RequiredFields? Visible_fields { get; set; } = default!;
 
         /// <summary>
         /// Whether the company has secretary services linked to it
         /// </summary>
         [System.Text.Json.Serialization.JsonPropertyName("has_secretary")]
-        public bool Has_secretary { get; set; } = default!;
+        public bool? Has_secretary { get; set; } = default!;
 
         [System.Text.Json.Serialization.JsonPropertyName("invite_link_token")]
-        public string Invite_link_token { get; set; } = default!;
+        public string? Invite_link_token { get; set; } = default!;
 
         [System.Text.Json.Serialization.JsonPropertyName("last_active_at")]
-        public System.DateTime Last_active_at { get; set; } = default!;
+        public System.DateTime? Last_active_at { get; set; } = default!;
 
         [System.Text.Json.Serialization.JsonPropertyName("created_at")]
-        public System.DateTime Created_at { get; set; } = default!;
+        public System.DateTime? Created_at { get; set; } = default!;
 
         [System.Text.Json.Serialization.JsonPropertyName("updated_at")]
-        public System.DateTime Updated_at { get; set; } = default!;
+        public System.DateTime? Updated_at { get; set; } = default!;
 
         private System.Collections.Generic.IDictionary<string, object>? _additionalProperties;
 
@@ -54690,13 +55284,13 @@ namespace FSH.Starter.Blazor.Infrastructure.NoonaApi
         public CompanyVertical Vertical { get; set; } = default!;
 
         [System.Text.Json.Serialization.JsonPropertyName("phone_country_code")]
-        public string Phone_country_code { get; set; } = default!;
+        public string? Phone_country_code { get; set; } = default!;
 
         [System.Text.Json.Serialization.JsonPropertyName("phone_number")]
-        public string Phone_number { get; set; } = default!;
+        public string? Phone_number { get; set; } = default!;
 
         [System.Text.Json.Serialization.JsonPropertyName("last_active")]
-        public System.DateTime Last_active { get; set; } = default!;
+        public System.DateTime? Last_active { get; set; } = default!;
 
         [System.Text.Json.Serialization.JsonPropertyName("created_at")]
         [System.ComponentModel.DataAnnotations.Required(AllowEmptyStrings = true)]
@@ -54707,7 +55301,7 @@ namespace FSH.Starter.Blazor.Infrastructure.NoonaApi
         public System.DateTime Updated_at { get; set; } = default!;
 
         [System.Text.Json.Serialization.JsonPropertyName("deleted_at")]
-        public System.DateTime Deleted_at { get; set; } = default!;
+        public System.DateTime? Deleted_at { get; set; } = default!;
 
         private System.Collections.Generic.IDictionary<string, object>? _additionalProperties;
 
@@ -54725,16 +55319,16 @@ namespace FSH.Starter.Blazor.Infrastructure.NoonaApi
     {
 
         [System.Text.Json.Serialization.JsonPropertyName("secretary_id")]
-        public string Secretary_id { get; set; } = default!;
+        public string? Secretary_id { get; set; } = default!;
 
         [System.Text.Json.Serialization.JsonPropertyName("country")]
-        public Country Country { get; set; } = default!;
+        public Country? Country { get; set; } = default!;
 
         [System.Text.Json.Serialization.JsonPropertyName("subscriptions")]
-        public PowerupSubscriptions Subscriptions { get; set; } = default!;
+        public PowerupSubscriptions? Subscriptions { get; set; } = default!;
 
         [System.Text.Json.Serialization.JsonPropertyName("users")]
-        public AdminCompanyDetailsUsers Users { get; set; } = default!;
+        public AdminCompanyDetailsUsers? Users { get; set; } = default!;
 
     }
 
@@ -54749,16 +55343,16 @@ namespace FSH.Starter.Blazor.Infrastructure.NoonaApi
     {
 
         [System.Text.Json.Serialization.JsonPropertyName("id")]
-        public string Id { get; set; } = default!;
+        public string? Id { get; set; } = default!;
 
         [System.Text.Json.Serialization.JsonPropertyName("active_company_id")]
-        public string Active_company_id { get; set; } = default!;
+        public string? Active_company_id { get; set; } = default!;
 
         [System.Text.Json.Serialization.JsonPropertyName("name")]
-        public string Name { get; set; } = default!;
+        public string? Name { get; set; } = default!;
 
         [System.Text.Json.Serialization.JsonPropertyName("role")]
-        public string Role { get; set; } = default!;
+        public string? Role { get; set; } = default!;
 
         private System.Collections.Generic.IDictionary<string, object>? _additionalProperties;
 
@@ -54815,16 +55409,16 @@ namespace FSH.Starter.Blazor.Infrastructure.NoonaApi
         public string Id { get; set; } = default!;
 
         [System.Text.Json.Serialization.JsonPropertyName("email")]
-        public string Email { get; set; } = default!;
+        public string? Email { get; set; } = default!;
 
         [System.Text.Json.Serialization.JsonPropertyName("name")]
-        public string Name { get; set; } = default!;
+        public string? Name { get; set; } = default!;
 
         [System.Text.Json.Serialization.JsonPropertyName("companies")]
-        public AdminCompanies Companies { get; set; } = default!;
+        public AdminCompanies? Companies { get; set; } = default!;
 
         [System.Text.Json.Serialization.JsonPropertyName("created_at")]
-        public System.DateTime Created_at { get; set; } = default!;
+        public System.DateTime? Created_at { get; set; } = default!;
 
         private System.Collections.Generic.IDictionary<string, object>? _additionalProperties;
 
@@ -54859,25 +55453,25 @@ namespace FSH.Starter.Blazor.Infrastructure.NoonaApi
         /// Whether to move past events associated with the user
         /// </summary>
         [System.Text.Json.Serialization.JsonPropertyName("move_past_events")]
-        public bool Move_past_events { get; set; } = false;
+        public bool? Move_past_events { get; set; } = false;
 
         /// <summary>
         /// Whether to move future events associated with the user
         /// </summary>
         [System.Text.Json.Serialization.JsonPropertyName("move_future_events")]
-        public bool Move_future_events { get; set; } = false;
+        public bool? Move_future_events { get; set; } = false;
 
         /// <summary>
         /// Whether to move free time blocks associated with the user
         /// </summary>
         [System.Text.Json.Serialization.JsonPropertyName("move_free_times")]
-        public bool Move_free_times { get; set; } = false;
+        public bool? Move_free_times { get; set; } = false;
 
         /// <summary>
         /// Whether to move customer relationships associated with the user
         /// </summary>
         [System.Text.Json.Serialization.JsonPropertyName("move_customers")]
-        public bool Move_customers { get; set; } = false;
+        public bool? Move_customers { get; set; } = false;
 
         private System.Collections.Generic.IDictionary<string, object>? _additionalProperties;
 
@@ -55053,7 +55647,7 @@ namespace FSH.Starter.Blazor.Infrastructure.NoonaApi
 
         [System.Text.Json.Serialization.JsonPropertyName("size")]
         [System.Text.Json.Serialization.JsonConverter(typeof(System.Text.Json.Serialization.JsonStringEnumConverter<CompanySize>))]
-        public CompanySize Size { get; set; } = default!;
+        public CompanySize? Size { get; set; } = default!;
 
         [System.Text.Json.Serialization.JsonPropertyName("vertical")]
         [System.ComponentModel.DataAnnotations.Required(AllowEmptyStrings = true)]
@@ -55065,29 +55659,29 @@ namespace FSH.Starter.Blazor.Infrastructure.NoonaApi
         public LocationCreate Location { get; set; } = new LocationCreate();
 
         [System.Text.Json.Serialization.JsonPropertyName("phone_country_code")]
-        public string Phone_country_code { get; set; } = default!;
+        public string? Phone_country_code { get; set; } = default!;
 
         [System.Text.Json.Serialization.JsonPropertyName("phone_number")]
-        public string Phone_number { get; set; } = default!;
+        public string? Phone_number { get; set; } = default!;
 
         [System.Text.Json.Serialization.JsonPropertyName("profile_image")]
-        public Image Profile_image { get; set; } = default!;
+        public Image? Profile_image { get; set; } = default!;
 
         /// <summary>
         /// Selected event type category Ids for service companies
         /// </summary>
         [System.Text.Json.Serialization.JsonPropertyName("event_type_category_group_ids")]
-        public System.Collections.Generic.ICollection<string> Event_type_category_group_ids { get; set; } = default!;
+        public System.Collections.Generic.ICollection<string>? Event_type_category_group_ids { get; set; } = default!;
 
         [System.Text.Json.Serialization.JsonPropertyName("referer")]
-        public Referer Referer { get; set; } = default!;
+        public Referer? Referer { get; set; } = default!;
 
         /// <summary>
         /// What the user needs help with
         /// </summary>
         [System.Text.Json.Serialization.JsonPropertyName("signup_goal")]
         // TODO(system.text.json): Add string enum item converter
-        public System.Collections.Generic.ICollection<SignupGoalOption> Signup_goal { get; set; } = default!;
+        public System.Collections.Generic.ICollection<SignupGoalOption>? Signup_goal { get; set; } = default!;
 
         private System.Collections.Generic.IDictionary<string, object>? _additionalProperties;
 
@@ -55111,19 +55705,19 @@ namespace FSH.Starter.Blazor.Infrastructure.NoonaApi
         /// How the user heard about Noona
         /// </summary>
         [System.Text.Json.Serialization.JsonPropertyName("type")]
-        public string Type { get; set; } = default!;
+        public string? Type { get; set; } = default!;
 
         /// <summary>
         /// Additional details about the referer
         /// </summary>
         [System.Text.Json.Serialization.JsonPropertyName("detail")]
-        public string Detail { get; set; } = default!;
+        public string? Detail { get; set; } = default!;
 
         /// <summary>
         /// Affiliate link if applicable
         /// </summary>
         [System.Text.Json.Serialization.JsonPropertyName("affiliate_link")]
-        public string Affiliate_link { get; set; } = default!;
+        public string? Affiliate_link { get; set; } = default!;
 
         private System.Collections.Generic.IDictionary<string, object>? _additionalProperties;
 
@@ -55162,10 +55756,10 @@ namespace FSH.Starter.Blazor.Infrastructure.NoonaApi
     {
 
         [System.Text.Json.Serialization.JsonPropertyName("vertical")]
-        public object Vertical { get; set; } = default!;
+        public object? Vertical { get; set; } = default!;
 
         [System.Text.Json.Serialization.JsonPropertyName("currency")]
-        public object Currency { get; set; } = default!;
+        public object? Currency { get; set; } = default!;
 
     }
 
@@ -55174,16 +55768,16 @@ namespace FSH.Starter.Blazor.Infrastructure.NoonaApi
     {
 
         [System.Text.Json.Serialization.JsonPropertyName("vertical")]
-        public object Vertical { get; set; } = default!;
+        public object? Vertical { get; set; } = default!;
 
         [System.Text.Json.Serialization.JsonPropertyName("currency")]
-        public object Currency { get; set; } = default!;
+        public object? Currency { get; set; } = default!;
 
         /// <summary>
         /// Whether no-show claims are enabled for this company. When true, activates no-show subscription and requires SSN in marketplace. When false, deactivates no-show claims functionality. Only admins can modify this field.
         /// </summary>
         [System.Text.Json.Serialization.JsonPropertyName("noshow_claims_enabled")]
-        public bool Noshow_claims_enabled { get; set; } = default!;
+        public bool? Noshow_claims_enabled { get; set; } = default!;
 
     }
 
@@ -55195,7 +55789,7 @@ namespace FSH.Starter.Blazor.Infrastructure.NoonaApi
         /// Whether no-show claims are enabled for this company. When true, activates no-show subscription and requires SSN in marketplace. When false, deactivates no-show claims functionality. Only admins can modify this field.
         /// </summary>
         [System.Text.Json.Serialization.JsonPropertyName("noshow_claims_enabled")]
-        public bool Noshow_claims_enabled { get; set; } = default!;
+        public bool? Noshow_claims_enabled { get; set; } = default!;
 
         private System.Collections.Generic.IDictionary<string, object>? _additionalProperties;
 
@@ -55213,10 +55807,10 @@ namespace FSH.Starter.Blazor.Infrastructure.NoonaApi
     {
 
         [System.Text.Json.Serialization.JsonPropertyName("vertical")]
-        public object Vertical { get; set; } = default!;
+        public object? Vertical { get; set; } = default!;
 
         [System.Text.Json.Serialization.JsonPropertyName("currency")]
-        public object Currency { get; set; } = default!;
+        public object? Currency { get; set; } = default!;
 
         private System.Collections.Generic.IDictionary<string, object>? _additionalProperties;
 
@@ -55244,17 +55838,17 @@ namespace FSH.Starter.Blazor.Infrastructure.NoonaApi
     {
 
         [System.Text.Json.Serialization.JsonPropertyName("onboarded_at")]
-        public System.DateTime Onboarded_at { get; set; } = default!;
+        public System.DateTime? Onboarded_at { get; set; } = default!;
 
         [System.Text.Json.Serialization.JsonPropertyName("onboarding_status")]
         [System.Text.Json.Serialization.JsonConverter(typeof(System.Text.Json.Serialization.JsonStringEnumConverter<AdyenOnboardingStatus>))]
-        public AdyenOnboardingStatus Onboarding_status { get; set; } = default!;
+        public AdyenOnboardingStatus? Onboarding_status { get; set; } = default!;
 
         /// <summary>
         /// Adyen transfer instrument is required for payouts to work
         /// </summary>
         [System.Text.Json.Serialization.JsonPropertyName("has_transfer_instrument")]
-        public bool Has_transfer_instrument { get; set; } = default!;
+        public bool? Has_transfer_instrument { get; set; } = default!;
 
         private System.Collections.Generic.IDictionary<string, object>? _additionalProperties;
 
@@ -55275,13 +55869,13 @@ namespace FSH.Starter.Blazor.Infrastructure.NoonaApi
         /// True if the user has an active oAuth connection to Teya
         /// </summary>
         [System.Text.Json.Serialization.JsonPropertyName("connected")]
-        public bool Connected { get; set; } = default!;
+        public bool? Connected { get; set; } = default!;
 
         /// <summary>
         /// True if the user has a token for Teya direct
         /// </summary>
         [System.Text.Json.Serialization.JsonPropertyName("has_token")]
-        public bool Has_token { get; set; } = default!;
+        public bool? Has_token { get; set; } = default!;
 
         private System.Collections.Generic.IDictionary<string, object>? _additionalProperties;
 
@@ -55302,7 +55896,7 @@ namespace FSH.Starter.Blazor.Infrastructure.NoonaApi
         /// The ID of the claimant for the company.
         /// </summary>
         [System.Text.Json.Serialization.JsonPropertyName("claimant_id")]
-        public string Claimant_id { get; set; } = default!;
+        public string? Claimant_id { get; set; } = default!;
 
         private System.Collections.Generic.IDictionary<string, object>? _additionalProperties;
 
@@ -55323,13 +55917,13 @@ namespace FSH.Starter.Blazor.Infrastructure.NoonaApi
         /// The Google Analytics Measurement ID for the company.
         /// </summary>
         [System.Text.Json.Serialization.JsonPropertyName("measurement_id")]
-        public string Measurement_id { get; set; } = default!;
+        public string? Measurement_id { get; set; } = default!;
 
         /// <summary>
         /// The Google Analytics API secret for the company.
         /// </summary>
         [System.Text.Json.Serialization.JsonPropertyName("api_secret")]
-        public string Api_secret { get; set; } = default!;
+        public string? Api_secret { get; set; } = default!;
 
         private System.Collections.Generic.IDictionary<string, object>? _additionalProperties;
 
@@ -55347,7 +55941,7 @@ namespace FSH.Starter.Blazor.Infrastructure.NoonaApi
     {
 
         [System.Text.Json.Serialization.JsonPropertyName("success_message")]
-        public string Success_message { get; set; } = default!;
+        public string? Success_message { get; set; } = default!;
 
         private System.Collections.Generic.IDictionary<string, object>? _additionalProperties;
 
@@ -55370,13 +55964,13 @@ namespace FSH.Starter.Blazor.Infrastructure.NoonaApi
         /// <br/>
         /// </summary>
         [System.Text.Json.Serialization.JsonPropertyName("onboarded_at")]
-        public System.DateTime Onboarded_at { get; set; } = default!;
+        public System.DateTime? Onboarded_at { get; set; } = default!;
 
         /// <summary>
         /// Whether the company is enabled on the marketplace. If true, the company will appear in search results, category listings etc. `visible` must be true for this to have any effect.
         /// </summary>
         [System.Text.Json.Serialization.JsonPropertyName("enabled")]
-        public bool Enabled { get; set; } = default!;
+        public bool? Enabled { get; set; } = default!;
 
         /// <summary>
         /// Whether the company is visible through the marketplace API.
@@ -55391,7 +55985,7 @@ namespace FSH.Starter.Blazor.Infrastructure.NoonaApi
         /// <br/>
         /// </summary>
         [System.Text.Json.Serialization.JsonPropertyName("visible")]
-        public bool Visible { get; set; } = default!;
+        public bool? Visible { get; set; } = default!;
 
         /// <summary>
         /// Used when constructing the marketplace url for the company.
@@ -55402,7 +55996,7 @@ namespace FSH.Starter.Blazor.Infrastructure.NoonaApi
         [System.Text.Json.Serialization.JsonPropertyName("url_name")]
         [System.ComponentModel.DataAnnotations.StringLength(30, MinimumLength = 3)]
         [System.ComponentModel.DataAnnotations.RegularExpression(@"^[a-z0-9-_]+$")]
-        public string Url_name { get; set; } = default!;
+        public string? Url_name { get; set; } = default!;
 
         /// <summary>
         /// Indicates if the company should receive email notifications upon booking confirmation. Notifications are sent to the company's primary email address.
@@ -55411,16 +56005,16 @@ namespace FSH.Starter.Blazor.Infrastructure.NoonaApi
         /// <br/>
         /// </summary>
         [System.Text.Json.Serialization.JsonPropertyName("email_notification")]
-        public bool Email_notification { get; set; } = default!;
+        public bool? Email_notification { get; set; } = default!;
 
         [System.Text.Json.Serialization.JsonPropertyName("allow_booking_without_confirmation")]
-        public bool Allow_booking_without_confirmation { get; set; } = default!;
+        public bool? Allow_booking_without_confirmation { get; set; } = default!;
 
         [System.Text.Json.Serialization.JsonPropertyName("allow_booking_over_cancelled_events")]
-        public bool Allow_booking_over_cancelled_events { get; set; } = default!;
+        public bool? Allow_booking_over_cancelled_events { get; set; } = default!;
 
         [System.Text.Json.Serialization.JsonPropertyName("allow_booking_multiple_services")]
-        public bool Allow_booking_multiple_services { get; set; } = default!;
+        public bool? Allow_booking_multiple_services { get; set; } = default!;
 
         /// <summary>
         /// Indicates if the company should be able to receive waitlist entries from the marketplace.
@@ -55429,22 +56023,22 @@ namespace FSH.Starter.Blazor.Infrastructure.NoonaApi
         /// <br/>
         /// </summary>
         [System.Text.Json.Serialization.JsonPropertyName("waitlist_enabled")]
-        public bool Waitlist_enabled { get; set; } = default!;
+        public bool? Waitlist_enabled { get; set; } = default!;
 
         /// <summary>
         /// The number of minutes before a booking offer expires
         /// </summary>
         [System.Text.Json.Serialization.JsonPropertyName("booking_offer_expiry_minutes")]
-        public int Booking_offer_expiry_minutes { get; set; } = default!;
+        public int? Booking_offer_expiry_minutes { get; set; } = default!;
 
         /// <summary>
         /// The custom message to be sent with booking offers
         /// </summary>
         [System.Text.Json.Serialization.JsonPropertyName("booking_offer_message")]
-        public string Booking_offer_message { get; set; } = default!;
+        public string? Booking_offer_message { get; set; } = default!;
 
         [System.Text.Json.Serialization.JsonPropertyName("booking_offer_message_translations")]
-        public TranslationMap Booking_offer_message_translations { get; set; } = default!;
+        public TranslationMap? Booking_offer_message_translations { get; set; } = default!;
 
         private System.Collections.Generic.IDictionary<string, object>? _additionalProperties;
 
@@ -55462,148 +56056,148 @@ namespace FSH.Starter.Blazor.Infrastructure.NoonaApi
     {
 
         [System.Text.Json.Serialization.JsonPropertyName("store_name")]
-        public string Store_name { get; set; } = default!;
+        public string? Store_name { get; set; } = default!;
 
         [System.Text.Json.Serialization.JsonPropertyName("description")]
-        public string Description { get; set; } = default!;
+        public string? Description { get; set; } = default!;
 
         [System.Text.Json.Serialization.JsonPropertyName("description_translations")]
-        public TranslationMap Description_translations { get; set; } = default!;
+        public TranslationMap? Description_translations { get; set; } = default!;
 
         /// <summary>
         /// The number of favorites/likes on the company.
         /// </summary>
         [System.Text.Json.Serialization.JsonPropertyName("favorites")]
-        public int Favorites { get; set; } = default!;
+        public int? Favorites { get; set; } = default!;
 
         [System.Text.Json.Serialization.JsonPropertyName("image")]
-        public Image Image { get; set; } = default!;
+        public Image? Image { get; set; } = default!;
 
         /// <summary>
         /// The marketplace images displayed on a companies profile
         /// </summary>
         [System.Text.Json.Serialization.JsonPropertyName("cover_images")]
-        public System.Collections.Generic.ICollection<Image> Cover_images { get; set; } = default!;
+        public System.Collections.Generic.ICollection<Image>? Cover_images { get; set; } = default!;
 
         [System.Text.Json.Serialization.JsonPropertyName("phone_country_code")]
-        public string Phone_country_code { get; set; } = default!;
+        public string? Phone_country_code { get; set; } = default!;
 
         [System.Text.Json.Serialization.JsonPropertyName("phone_number")]
-        public string Phone_number { get; set; } = default!;
+        public string? Phone_number { get; set; } = default!;
 
         [System.Text.Json.Serialization.JsonPropertyName("contact_email")]
-        public string Contact_email { get; set; } = default!;
+        public string? Contact_email { get; set; } = default!;
 
         [System.Text.Json.Serialization.JsonPropertyName("max_bookable_future_days")]
-        public int Max_bookable_future_days { get; set; } = default!;
+        public int? Max_bookable_future_days { get; set; } = default!;
 
         [System.Text.Json.Serialization.JsonPropertyName("min_booking_notice_minutes")]
-        public int Min_booking_notice_minutes { get; set; } = default!;
+        public int? Min_booking_notice_minutes { get; set; } = default!;
 
         [System.Text.Json.Serialization.JsonPropertyName("client_reschedule_disabled")]
-        public bool Client_reschedule_disabled { get; set; } = default!;
+        public bool? Client_reschedule_disabled { get; set; } = default!;
 
         [System.Text.Json.Serialization.JsonPropertyName("min_reschedule_notice_hours")]
-        public int Min_reschedule_notice_hours { get; set; } = default!;
+        public int? Min_reschedule_notice_hours { get; set; } = default!;
 
         [System.Text.Json.Serialization.JsonPropertyName("client_cancel_disabled")]
-        public bool Client_cancel_disabled { get; set; } = default!;
+        public bool? Client_cancel_disabled { get; set; } = default!;
 
         [System.Text.Json.Serialization.JsonPropertyName("min_cancel_notice_hours")]
-        public int Min_cancel_notice_hours { get; set; } = default!;
+        public int? Min_cancel_notice_hours { get; set; } = default!;
 
         [System.Text.Json.Serialization.JsonPropertyName("booking_interval")]
-        public BookingInterval Booking_interval { get; set; } = default!;
+        public BookingInterval? Booking_interval { get; set; } = default!;
 
         [System.Text.Json.Serialization.JsonPropertyName("service_buffer")]
-        public int Service_buffer { get; set; } = default!;
+        public int? Service_buffer { get; set; } = default!;
 
         [System.Text.Json.Serialization.JsonPropertyName("min_guests_per_booking")]
-        public int Min_guests_per_booking { get; set; } = default!;
+        public int? Min_guests_per_booking { get; set; } = default!;
 
         [System.Text.Json.Serialization.JsonPropertyName("max_guests_per_booking")]
-        public int Max_guests_per_booking { get; set; } = default!;
+        public int? Max_guests_per_booking { get; set; } = default!;
 
         [System.Text.Json.Serialization.JsonPropertyName("max_guests_per_interval")]
-        public int Max_guests_per_interval { get; set; } = default!;
+        public int? Max_guests_per_interval { get; set; } = default!;
 
         [System.Text.Json.Serialization.JsonPropertyName("max_same_time_arrival")]
-        public int Max_same_time_arrival { get; set; } = default!;
+        public int? Max_same_time_arrival { get; set; } = default!;
 
         /// <summary>
         /// Whether the company prefers 12 hour time format.
         /// </summary>
         [System.Text.Json.Serialization.JsonPropertyName("prefer_12_hours")]
-        public bool Prefer_12_hours { get; set; } = default!;
+        public bool? Prefer_12_hours { get; set; } = default!;
 
         [System.Text.Json.Serialization.JsonPropertyName("required_fields")]
-        public RequiredFields Required_fields { get; set; } = default!;
+        public RequiredFields? Required_fields { get; set; } = default!;
 
         /// <summary>
         /// DEPRECATED: Use required_fields.license_plate instead. This field will be removed in a future version.
         /// </summary>
         [System.Text.Json.Serialization.JsonPropertyName("license_plate")]
         [System.Obsolete]
-        public bool License_plate { get; set; } = default!;
+        public bool? License_plate { get; set; } = default!;
 
         [System.Text.Json.Serialization.JsonPropertyName("web_auth_opt_out")]
-        public bool Web_auth_opt_out { get; set; } = default!;
+        public bool? Web_auth_opt_out { get; set; } = default!;
 
         /// <summary>
         /// The message that is shown to the customer when they try to book more guests than the maximum allowed.
         /// <br/>
         /// </summary>
         [System.Text.Json.Serialization.JsonPropertyName("exceed_max_guests_message")]
-        public string Exceed_max_guests_message { get; set; } = default!;
+        public string? Exceed_max_guests_message { get; set; } = default!;
 
         [System.Text.Json.Serialization.JsonPropertyName("booking_success_message")]
-        public string Booking_success_message { get; set; } = default!;
+        public string? Booking_success_message { get; set; } = default!;
 
         [System.Text.Json.Serialization.JsonPropertyName("booking_success_message_translations")]
-        public TranslationMap Booking_success_message_translations { get; set; } = default!;
+        public TranslationMap? Booking_success_message_translations { get; set; } = default!;
 
         [System.Text.Json.Serialization.JsonPropertyName("booking_redirect_url")]
-        public string Booking_redirect_url { get; set; } = default!;
+        public string? Booking_redirect_url { get; set; } = default!;
 
         [System.Text.Json.Serialization.JsonPropertyName("company_types")]
-        public System.Collections.Generic.ICollection<string> Company_types { get; set; } = default!;
+        public System.Collections.Generic.ICollection<string>? Company_types { get; set; } = default!;
 
         [System.Text.Json.Serialization.JsonPropertyName("cuisines")]
-        public Categories Cuisines { get; set; } = default!;
+        public Categories? Cuisines { get; set; } = default!;
 
         [System.Text.Json.Serialization.JsonPropertyName("dietaries")]
-        public Categories Dietaries { get; set; } = default!;
+        public Categories? Dietaries { get; set; } = default!;
 
         [System.Text.Json.Serialization.JsonPropertyName("ambiences")]
-        public Categories Ambiences { get; set; } = default!;
+        public Categories? Ambiences { get; set; } = default!;
 
         [System.Text.Json.Serialization.JsonPropertyName("opening_hours")]
-        public OpeningHours Opening_hours { get; set; } = default!;
+        public OpeningHours? Opening_hours { get; set; } = default!;
 
         /// <summary>
         /// Controls at what hour in the day the calendar starts to be bookable. Can be restriced with blocked times.
         /// </summary>
         [System.Text.Json.Serialization.JsonPropertyName("store_opens_at")]
-        public int Store_opens_at { get; set; } = default!;
+        public int? Store_opens_at { get; set; } = default!;
 
         /// <summary>
         /// Controls at what hour in the day the calendar stops to be bookable. Can be restriced with blocked times.
         /// </summary>
         [System.Text.Json.Serialization.JsonPropertyName("store_closes_at")]
-        public int Store_closes_at { get; set; } = default!;
+        public int? Store_closes_at { get; set; } = default!;
 
         /// <summary>
         /// Whether the company has unconfirmed or confirmed opening hours.
         /// </summary>
         [System.Text.Json.Serialization.JsonPropertyName("unconfirmed_opening_hours")]
-        public bool Unconfirmed_opening_hours { get; set; } = default!;
+        public bool? Unconfirmed_opening_hours { get; set; } = default!;
 
         /// <summary>
         /// The price category of the company.
         /// </summary>
         [System.Text.Json.Serialization.JsonPropertyName("price_category")]
         [System.ComponentModel.DataAnnotations.Range(1, 4)]
-        public int Price_category { get; set; } = default!;
+        public int? Price_category { get; set; } = default!;
 
         private System.Collections.Generic.IDictionary<string, object>? _additionalProperties;
 
@@ -55658,32 +56252,32 @@ namespace FSH.Starter.Blazor.Infrastructure.NoonaApi
     {
 
         [System.Text.Json.Serialization.JsonPropertyName("custom_reminder")]
-        public string Custom_reminder { get; set; } = default!;
+        public string? Custom_reminder { get; set; } = default!;
 
         [System.Text.Json.Serialization.JsonPropertyName("custom_reminder_translations")]
-        public TranslationMap Custom_reminder_translations { get; set; } = default!;
+        public TranslationMap? Custom_reminder_translations { get; set; } = default!;
 
         /// <summary>
         /// Whether to enable SMS reminders for the company.
         /// </summary>
         [System.Text.Json.Serialization.JsonPropertyName("enable_reminders")]
-        public bool Enable_reminders { get; set; } = default!;
+        public bool? Enable_reminders { get; set; } = default!;
 
         /// <summary>
         /// The SMS sender name
         /// </summary>
         [System.Text.Json.Serialization.JsonPropertyName("sender_name")]
-        public string Sender_name { get; set; } = default!;
+        public string? Sender_name { get; set; } = default!;
 
         [System.Text.Json.Serialization.JsonPropertyName("send_sms_from_employee")]
-        public bool Send_sms_from_employee { get; set; } = default!;
+        public bool? Send_sms_from_employee { get; set; } = default!;
 
         /// <summary>
         /// Whether the company wants to show the booking end time/duration in booking confirmation messages and reminders.
         /// <br/>
         /// </summary>
         [System.Text.Json.Serialization.JsonPropertyName("show_booking_ends_at")]
-        public bool Show_booking_ends_at { get; set; } = false;
+        public bool? Show_booking_ends_at { get; set; } = false;
 
         private System.Collections.Generic.IDictionary<string, object>? _additionalProperties;
 
@@ -55715,13 +56309,13 @@ namespace FSH.Starter.Blazor.Infrastructure.NoonaApi
     {
 
         [System.Text.Json.Serialization.JsonPropertyName("opens_at")]
-        public string Opens_at { get; set; } = default!;
+        public string? Opens_at { get; set; } = default!;
 
         [System.Text.Json.Serialization.JsonPropertyName("closes_at")]
-        public string Closes_at { get; set; } = default!;
+        public string? Closes_at { get; set; } = default!;
 
         [System.Text.Json.Serialization.JsonPropertyName("is_closed")]
-        public bool Is_closed { get; set; } = default!;
+        public bool? Is_closed { get; set; } = default!;
 
         private System.Collections.Generic.IDictionary<string, object>? _additionalProperties;
 
@@ -55745,19 +56339,19 @@ namespace FSH.Starter.Blazor.Infrastructure.NoonaApi
         /// Whether kennitala/SSN field is configured
         /// </summary>
         [System.Text.Json.Serialization.JsonPropertyName("kennitala")]
-        public bool Kennitala { get; set; } = default!;
+        public bool? Kennitala { get; set; } = default!;
 
         /// <summary>
         /// Whether email field is configured
         /// </summary>
         [System.Text.Json.Serialization.JsonPropertyName("email")]
-        public bool Email { get; set; } = default!;
+        public bool? Email { get; set; } = default!;
 
         /// <summary>
         /// Whether license plate field is configured
         /// </summary>
         [System.Text.Json.Serialization.JsonPropertyName("license_plate")]
-        public bool License_plate { get; set; } = default!;
+        public bool? License_plate { get; set; } = default!;
 
         private System.Collections.Generic.IDictionary<string, object>? _additionalProperties;
 
@@ -55775,10 +56369,10 @@ namespace FSH.Starter.Blazor.Infrastructure.NoonaApi
     {
 
         [System.Text.Json.Serialization.JsonPropertyName("ui_language")]
-        public string Ui_language { get; set; } = default!;
+        public string? Ui_language { get; set; } = default!;
 
         [System.Text.Json.Serialization.JsonPropertyName("messaging_language")]
-        public string Messaging_language { get; set; } = default!;
+        public string? Messaging_language { get; set; } = default!;
 
         private System.Collections.Generic.IDictionary<string, object>? _additionalProperties;
 
@@ -55796,22 +56390,22 @@ namespace FSH.Starter.Blazor.Infrastructure.NoonaApi
     {
 
         [System.Text.Json.Serialization.JsonPropertyName("reports")]
-        public bool Reports { get; set; } = default!;
+        public bool? Reports { get; set; } = default!;
 
         [System.Text.Json.Serialization.JsonPropertyName("transactions")]
-        public bool Transactions { get; set; } = default!;
+        public bool? Transactions { get; set; } = default!;
 
         [System.Text.Json.Serialization.JsonPropertyName("dashboard")]
-        public bool Dashboard { get; set; } = default!;
+        public bool? Dashboard { get; set; } = default!;
 
         [System.Text.Json.Serialization.JsonPropertyName("pin_expiry_time")]
-        public int Pin_expiry_time { get; set; } = default!;
+        public int? Pin_expiry_time { get; set; } = default!;
 
         [System.Text.Json.Serialization.JsonPropertyName("pin")]
-        public string Pin { get; set; } = default!;
+        public string? Pin { get; set; } = default!;
 
         [System.Text.Json.Serialization.JsonPropertyName("pin_hash")]
-        public string Pin_hash { get; set; } = default!;
+        public string? Pin_hash { get; set; } = default!;
 
         private System.Collections.Generic.IDictionary<string, object>? _additionalProperties;
 
@@ -55829,11 +56423,11 @@ namespace FSH.Starter.Blazor.Infrastructure.NoonaApi
     {
 
         [System.Text.Json.Serialization.JsonPropertyName("completed")]
-        public bool Completed { get; set; } = default!;
+        public bool? Completed { get; set; } = default!;
 
         [System.Text.Json.Serialization.JsonPropertyName("company_size")]
         [System.Text.Json.Serialization.JsonConverter(typeof(System.Text.Json.Serialization.JsonStringEnumConverter<CompanySize>))]
-        public CompanySize Company_size { get; set; } = default!;
+        public CompanySize? Company_size { get; set; } = default!;
 
         private System.Collections.Generic.IDictionary<string, object>? _additionalProperties;
 
@@ -55887,13 +56481,13 @@ namespace FSH.Starter.Blazor.Infrastructure.NoonaApi
     {
 
         [System.Text.Json.Serialization.JsonPropertyName("code")]
-        public string Code { get; set; } = default!;
+        public string? Code { get; set; } = default!;
 
         [System.Text.Json.Serialization.JsonPropertyName("name")]
-        public string Name { get; set; } = default!;
+        public string? Name { get; set; } = default!;
 
         [System.Text.Json.Serialization.JsonPropertyName("symbol")]
-        public string Symbol { get; set; } = default!;
+        public string? Symbol { get; set; } = default!;
 
         private System.Collections.Generic.IDictionary<string, object>? _additionalProperties;
 
@@ -55917,22 +56511,22 @@ namespace FSH.Starter.Blazor.Infrastructure.NoonaApi
     {
 
         [System.Text.Json.Serialization.JsonPropertyName("id")]
-        public string Id { get; set; } = default!;
+        public string? Id { get; set; } = default!;
 
         [System.Text.Json.Serialization.JsonPropertyName("company")]
-        public string Company { get; set; } = default!;
+        public string? Company { get; set; } = default!;
 
         [System.Text.Json.Serialization.JsonPropertyName("title")]
-        public string Title { get; set; } = default!;
+        public string? Title { get; set; } = default!;
 
         [System.Text.Json.Serialization.JsonPropertyName("description")]
-        public string Description { get; set; } = default!;
+        public string? Description { get; set; } = default!;
 
         [System.Text.Json.Serialization.JsonPropertyName("created_at")]
-        public System.DateTime Created_at { get; set; } = default!;
+        public System.DateTime? Created_at { get; set; } = default!;
 
         [System.Text.Json.Serialization.JsonPropertyName("updated_at")]
-        public System.DateTime Updated_at { get; set; } = default!;
+        public System.DateTime? Updated_at { get; set; } = default!;
 
         private System.Collections.Generic.IDictionary<string, object>? _additionalProperties;
 
@@ -55956,56 +56550,56 @@ namespace FSH.Starter.Blazor.Infrastructure.NoonaApi
     {
 
         [System.Text.Json.Serialization.JsonPropertyName("id")]
-        public string Id { get; set; } = default!;
+        public string? Id { get; set; } = default!;
 
         [System.Text.Json.Serialization.JsonPropertyName("name")]
-        public string Name { get; set; } = default!;
+        public string? Name { get; set; } = default!;
 
         [System.Text.Json.Serialization.JsonPropertyName("kennitala")]
-        public string Kennitala { get; set; } = default!;
+        public string? Kennitala { get; set; } = default!;
 
         [System.Text.Json.Serialization.JsonPropertyName("phone_number")]
-        public string Phone_number { get; set; } = default!;
+        public string? Phone_number { get; set; } = default!;
 
         [System.Text.Json.Serialization.JsonPropertyName("phone_country_code")]
-        public string Phone_country_code { get; set; } = default!;
+        public string? Phone_country_code { get; set; } = default!;
 
         [System.Text.Json.Serialization.JsonPropertyName("email")]
-        public string Email { get; set; } = default!;
+        public string? Email { get; set; } = default!;
 
         [System.Text.Json.Serialization.JsonPropertyName("license_plate")]
-        public string License_plate { get; set; } = default!;
+        public string? License_plate { get; set; } = default!;
 
         /// <summary>
         /// All different license plates that the customer has used.
         /// </summary>
         [System.Text.Json.Serialization.JsonPropertyName("license_plates")]
-        public System.Collections.Generic.ICollection<string> License_plates { get; set; } = default!;
+        public System.Collections.Generic.ICollection<string>? License_plates { get; set; } = default!;
 
         [System.Text.Json.Serialization.JsonPropertyName("company_id")]
         [System.Obsolete]
-        public string Company_id { get; set; } = default!;
+        public string? Company_id { get; set; } = default!;
 
         /// <summary>
         /// ID of the company that the customer belongs to.
         /// </summary>
         [System.Text.Json.Serialization.JsonPropertyName("company")]
-        public string Company { get; set; } = default!;
+        public string? Company { get; set; } = default!;
 
         [System.Text.Json.Serialization.JsonPropertyName("event_count")]
-        public int Event_count { get; set; } = default!;
+        public int? Event_count { get; set; } = default!;
 
         [System.Text.Json.Serialization.JsonPropertyName("groups")]
-        public ExpandableCustomerGroups Groups { get; set; } = default!;
+        public ExpandableCustomerGroups? Groups { get; set; } = default!;
 
         [System.Text.Json.Serialization.JsonPropertyName("employee_ids")]
-        public System.Collections.Generic.ICollection<string> Employee_ids { get; set; } = default!;
+        public System.Collections.Generic.ICollection<string>? Employee_ids { get; set; } = default!;
 
         [System.Text.Json.Serialization.JsonPropertyName("previous_event")]
-        public string Previous_event { get; set; } = default!;
+        public string? Previous_event { get; set; } = default!;
 
         [System.Text.Json.Serialization.JsonPropertyName("next_event")]
-        public string Next_event { get; set; } = default!;
+        public string? Next_event { get; set; } = default!;
 
         /// <summary>
         /// This field can only be appended to. Any customer ids currently not in the duplicates array will be
@@ -56013,44 +56607,44 @@ namespace FSH.Starter.Blazor.Infrastructure.NoonaApi
         /// <br/>
         /// </summary>
         [System.Text.Json.Serialization.JsonPropertyName("duplicates")]
-        public ExpandableCustomers Duplicates { get; set; } = default!;
+        public ExpandableCustomers? Duplicates { get; set; } = default!;
 
         [System.Text.Json.Serialization.JsonPropertyName("duplicateStatus")]
         [System.Text.Json.Serialization.JsonConverter(typeof(System.Text.Json.Serialization.JsonStringEnumConverter<DuplicateStatus>))]
-        public DuplicateStatus DuplicateStatus { get; set; } = default!;
+        public DuplicateStatus? DuplicateStatus { get; set; } = default!;
 
         [System.Text.Json.Serialization.JsonPropertyName("notes")]
-        public string Notes { get; set; } = default!;
+        public string? Notes { get; set; } = default!;
 
         [System.Text.Json.Serialization.JsonPropertyName("update_origin")]
-        public string Update_origin { get; set; } = default!;
+        public string? Update_origin { get; set; } = default!;
 
         [System.Text.Json.Serialization.JsonPropertyName("updated_by")]
-        public string Updated_by { get; set; } = default!;
+        public string? Updated_by { get; set; } = default!;
 
         [System.Text.Json.Serialization.JsonPropertyName("last_employee")]
-        public string Last_employee { get; set; } = default!;
+        public string? Last_employee { get; set; } = default!;
 
         [System.Text.Json.Serialization.JsonPropertyName("last_event")]
-        public string Last_event { get; set; } = default!;
+        public string? Last_event { get; set; } = default!;
 
         [System.Text.Json.Serialization.JsonPropertyName("custom_properties")]
-        public CustomPropertyValues Custom_properties { get; set; } = default!;
+        public CustomPropertyValues? Custom_properties { get; set; } = default!;
 
         [System.Text.Json.Serialization.JsonPropertyName("attachments")]
-        public Attachments Attachments { get; set; } = default!;
+        public Attachments? Attachments { get; set; } = default!;
 
         [System.Text.Json.Serialization.JsonPropertyName("notices")]
-        public Notices Notices { get; set; } = default!;
+        public Notices? Notices { get; set; } = default!;
 
         [System.Text.Json.Serialization.JsonPropertyName("tags")]
-        public CustomerTags Tags { get; set; } = default!;
+        public CustomerTags? Tags { get; set; } = default!;
 
         [System.Text.Json.Serialization.JsonPropertyName("created_at")]
-        public System.DateTime Created_at { get; set; } = default!;
+        public System.DateTime? Created_at { get; set; } = default!;
 
         [System.Text.Json.Serialization.JsonPropertyName("updated_at")]
-        public System.DateTime Updated_at { get; set; } = default!;
+        public System.DateTime? Updated_at { get; set; } = default!;
 
         private System.Collections.Generic.IDictionary<string, object>? _additionalProperties;
 
@@ -56088,28 +56682,28 @@ namespace FSH.Starter.Blazor.Infrastructure.NoonaApi
     {
 
         [System.Text.Json.Serialization.JsonPropertyName("gluten_free")]
-        public bool Gluten_free { get; set; } = default!;
+        public bool? Gluten_free { get; set; } = default!;
 
         [System.Text.Json.Serialization.JsonPropertyName("lactose_intolerant")]
-        public bool Lactose_intolerant { get; set; } = default!;
+        public bool? Lactose_intolerant { get; set; } = default!;
 
         [System.Text.Json.Serialization.JsonPropertyName("severe_nut_allergy")]
-        public bool Severe_nut_allergy { get; set; } = default!;
+        public bool? Severe_nut_allergy { get; set; } = default!;
 
         [System.Text.Json.Serialization.JsonPropertyName("severe_shellfish_allergy")]
-        public bool Severe_shellfish_allergy { get; set; } = default!;
+        public bool? Severe_shellfish_allergy { get; set; } = default!;
 
         [System.Text.Json.Serialization.JsonPropertyName("vegan")]
-        public bool Vegan { get; set; } = default!;
+        public bool? Vegan { get; set; } = default!;
 
         [System.Text.Json.Serialization.JsonPropertyName("vegetarian")]
-        public bool Vegetarian { get; set; } = default!;
+        public bool? Vegetarian { get; set; } = default!;
 
         [System.Text.Json.Serialization.JsonPropertyName("vip")]
-        public bool Vip { get; set; } = default!;
+        public bool? Vip { get; set; } = default!;
 
         [System.Text.Json.Serialization.JsonPropertyName("wheelchair")]
-        public bool Wheelchair { get; set; } = default!;
+        public bool? Wheelchair { get; set; } = default!;
 
         private System.Collections.Generic.IDictionary<string, object>? _additionalProperties;
 
@@ -56127,7 +56721,7 @@ namespace FSH.Starter.Blazor.Infrastructure.NoonaApi
     {
 
         [System.Text.Json.Serialization.JsonPropertyName("birthday")]
-        public bool Birthday { get; set; } = default!;
+        public bool? Birthday { get; set; } = default!;
 
         private System.Collections.Generic.IDictionary<string, object>? _additionalProperties;
 
@@ -56207,75 +56801,75 @@ namespace FSH.Starter.Blazor.Infrastructure.NoonaApi
     {
 
         [System.Text.Json.Serialization.JsonPropertyName("id")]
-        public string Id { get; set; } = default!;
+        public string? Id { get; set; } = default!;
 
         /// <summary>
         /// Use `company` instead.
         /// </summary>
         [System.Text.Json.Serialization.JsonPropertyName("company_id")]
         [System.Obsolete]
-        public string Company_id { get; set; } = default!;
+        public string? Company_id { get; set; } = default!;
 
         [System.Text.Json.Serialization.JsonPropertyName("company")]
-        public string Company { get; set; } = default!;
+        public string? Company { get; set; } = default!;
 
         [System.Text.Json.Serialization.JsonPropertyName("type")]
         [System.Text.Json.Serialization.JsonConverter(typeof(System.Text.Json.Serialization.JsonStringEnumConverter<SpaceType>))]
-        public SpaceType Type { get; set; } = default!;
+        public SpaceType? Type { get; set; } = default!;
 
         [System.Text.Json.Serialization.JsonPropertyName("name")]
-        public string Name { get; set; } = default!;
+        public string? Name { get; set; } = default!;
 
         [System.Text.Json.Serialization.JsonPropertyName("description")]
-        public string Description { get; set; } = default!;
+        public string? Description { get; set; } = default!;
 
         [System.Text.Json.Serialization.JsonPropertyName("image")]
-        public Image Image { get; set; } = default!;
+        public Image? Image { get; set; } = default!;
 
         /// <summary>
         /// If true, space is visible on the marketplace.
         /// </summary>
         [System.Text.Json.Serialization.JsonPropertyName("marketplace")]
-        public bool Marketplace { get; set; } = default!;
+        public bool? Marketplace { get; set; } = default!;
 
         /// <summary>
         /// Whether the space is visible on the calendar
         /// </summary>
         [System.Text.Json.Serialization.JsonPropertyName("available_for_bookings")]
-        public bool Available_for_bookings { get; set; } = default!;
+        public bool? Available_for_bookings { get; set; } = default!;
 
         [System.Text.Json.Serialization.JsonPropertyName("booking_interval")]
-        public BookingInterval Booking_interval { get; set; } = default!;
+        public BookingInterval? Booking_interval { get; set; } = default!;
 
         /// <summary>
         /// The order of the space in the list of spaces on the marketplace.
         /// </summary>
         [System.Text.Json.Serialization.JsonPropertyName("order")]
-        public int Order { get; set; } = default!;
+        public int? Order { get; set; } = default!;
 
         /// <summary>
         /// The mininum capacity of the space, for example how many people can occupy a table at minimum.
         /// </summary>
         [System.Text.Json.Serialization.JsonPropertyName("min_capacity")]
-        public int Min_capacity { get; set; } = default!;
+        public int? Min_capacity { get; set; } = default!;
 
         /// <summary>
         /// The maximum capacity of the space, for example how many people can occupy a table at maximum.
         /// </summary>
         [System.Text.Json.Serialization.JsonPropertyName("max_capacity")]
-        public int Max_capacity { get; set; } = default!;
+        public int? Max_capacity { get; set; } = default!;
 
         [System.Text.Json.Serialization.JsonPropertyName("sub_resources")]
-        public System.Collections.Generic.ICollection<string> Sub_resources { get; set; } = default!;
+        public System.Collections.Generic.ICollection<string>? Sub_resources { get; set; } = default!;
 
         [System.Text.Json.Serialization.JsonPropertyName("event_type_preferences")]
-        public EventTypePreferences Event_type_preferences { get; set; } = default!;
+        public EventTypePreferences? Event_type_preferences { get; set; } = default!;
 
         [System.Text.Json.Serialization.JsonPropertyName("created_at")]
-        public System.DateTime Created_at { get; set; } = default!;
+        public System.DateTime? Created_at { get; set; } = default!;
 
         [System.Text.Json.Serialization.JsonPropertyName("updated_at")]
-        public System.DateTime Updated_at { get; set; } = default!;
+        public System.DateTime? Updated_at { get; set; } = default!;
 
         private System.Collections.Generic.IDictionary<string, object>? _additionalProperties;
 
@@ -56341,93 +56935,93 @@ namespace FSH.Starter.Blazor.Infrastructure.NoonaApi
     {
 
         [System.Text.Json.Serialization.JsonPropertyName("id")]
-        public string Id { get; set; } = default!;
+        public string? Id { get; set; } = default!;
 
         [System.Text.Json.Serialization.JsonPropertyName("company")]
-        public string Company { get; set; } = default!;
+        public string? Company { get; set; } = default!;
 
         [System.Text.Json.Serialization.JsonPropertyName("resource_group")]
-        public string Resource_group { get; set; } = default!;
+        public string? Resource_group { get; set; } = default!;
 
         [System.Text.Json.Serialization.JsonPropertyName("type")]
         [System.Text.Json.Serialization.JsonConverter(typeof(System.Text.Json.Serialization.JsonStringEnumConverter<ResourceType>))]
-        public ResourceType Type { get; set; } = default!;
+        public ResourceType? Type { get; set; } = default!;
 
         [System.Text.Json.Serialization.JsonPropertyName("name")]
-        public string Name { get; set; } = default!;
+        public string? Name { get; set; } = default!;
 
         [System.Text.Json.Serialization.JsonPropertyName("name_translations")]
-        public TranslationMap Name_translations { get; set; } = default!;
+        public TranslationMap? Name_translations { get; set; } = default!;
 
         [System.Text.Json.Serialization.JsonPropertyName("description")]
-        public string Description { get; set; } = default!;
+        public string? Description { get; set; } = default!;
 
         [System.Text.Json.Serialization.JsonPropertyName("description_translations")]
-        public TranslationMap Description_translations { get; set; } = default!;
+        public TranslationMap? Description_translations { get; set; } = default!;
 
         [System.Text.Json.Serialization.JsonPropertyName("priority")]
         [System.Text.Json.Serialization.JsonConverter(typeof(System.Text.Json.Serialization.JsonStringEnumConverter<ResourcePriority>))]
-        public ResourcePriority Priority { get; set; } = default!;
+        public ResourcePriority? Priority { get; set; } = default!;
 
         [System.Text.Json.Serialization.JsonPropertyName("image")]
-        public Image Image { get; set; } = default!;
+        public Image? Image { get; set; } = default!;
 
         /// <summary>
         /// The reference ID of the resource.
         /// </summary>
         [System.Text.Json.Serialization.JsonPropertyName("reference_id")]
-        public string Reference_id { get; set; } = default!;
+        public string? Reference_id { get; set; } = default!;
 
         /// <summary>
         /// If true, resource is visible on the marketplace.
         /// </summary>
         [System.Text.Json.Serialization.JsonPropertyName("marketplace")]
-        public bool Marketplace { get; set; } = default!;
+        public bool? Marketplace { get; set; } = default!;
 
         /// <summary>
         /// Whether the resource is visible on the calendar
         /// </summary>
         [System.Text.Json.Serialization.JsonPropertyName("available_for_bookings")]
-        public bool Available_for_bookings { get; set; } = default!;
+        public bool? Available_for_bookings { get; set; } = default!;
 
         [System.Text.Json.Serialization.JsonPropertyName("booking_interval")]
-        public BookingInterval Booking_interval { get; set; } = default!;
+        public BookingInterval? Booking_interval { get; set; } = default!;
 
         /// <summary>
         /// The order of the resource in the list of resources on the marketplace and in the HQ UI.
         /// </summary>
         [System.Text.Json.Serialization.JsonPropertyName("order")]
-        public int Order { get; set; } = default!;
+        public int? Order { get; set; } = default!;
 
         /// <summary>
         /// The mininum capacity of the resource, for example how many people can occupy a table at minimum.
         /// </summary>
         [System.Text.Json.Serialization.JsonPropertyName("min_capacity")]
-        public int Min_capacity { get; set; } = default!;
+        public int? Min_capacity { get; set; } = default!;
 
         /// <summary>
         /// The maximum capacity of the resource, for example how many people can occupy a table at maximum.
         /// </summary>
         [System.Text.Json.Serialization.JsonPropertyName("max_capacity")]
-        public int Max_capacity { get; set; } = default!;
+        public int? Max_capacity { get; set; } = default!;
 
         /// <summary>
         /// If true, multiple bookings per timeslot is allowed for this resource.
         /// </summary>
         [System.Text.Json.Serialization.JsonPropertyName("allow_overlapping_bookings")]
-        public bool Allow_overlapping_bookings { get; set; } = default!;
+        public bool? Allow_overlapping_bookings { get; set; } = default!;
 
         [System.Text.Json.Serialization.JsonPropertyName("sub_resources")]
-        public System.Collections.Generic.ICollection<string> Sub_resources { get; set; } = default!;
+        public System.Collections.Generic.ICollection<string>? Sub_resources { get; set; } = default!;
 
         [System.Text.Json.Serialization.JsonPropertyName("event_type_preferences")]
-        public EventTypePreferences Event_type_preferences { get; set; } = default!;
+        public EventTypePreferences? Event_type_preferences { get; set; } = default!;
 
         [System.Text.Json.Serialization.JsonPropertyName("created_at")]
-        public System.DateTime Created_at { get; set; } = default!;
+        public System.DateTime? Created_at { get; set; } = default!;
 
         [System.Text.Json.Serialization.JsonPropertyName("updated_at")]
-        public System.DateTime Updated_at { get; set; } = default!;
+        public System.DateTime? Updated_at { get; set; } = default!;
 
         private System.Collections.Generic.IDictionary<string, object>? _additionalProperties;
 
@@ -56482,7 +57076,7 @@ namespace FSH.Starter.Blazor.Infrastructure.NoonaApi
         /// </summary>
         [System.Text.Json.Serialization.JsonPropertyName("types")]
         // TODO(system.text.json): Add string enum item converter
-        public System.Collections.Generic.ICollection<SpaceType> Types { get; set; } = default!;
+        public System.Collections.Generic.ICollection<SpaceType>? Types { get; set; } = default!;
 
         private System.Collections.Generic.IDictionary<string, object>? _additionalProperties;
 
@@ -56507,7 +57101,7 @@ namespace FSH.Starter.Blazor.Infrastructure.NoonaApi
         /// </summary>
         [System.Text.Json.Serialization.JsonPropertyName("types")]
         // TODO(system.text.json): Add string enum item converter
-        public System.Collections.Generic.ICollection<ResourceType> Types { get; set; } = default!;
+        public System.Collections.Generic.ICollection<ResourceType>? Types { get; set; } = default!;
 
         private System.Collections.Generic.IDictionary<string, object>? _additionalProperties;
 
@@ -56525,25 +57119,25 @@ namespace FSH.Starter.Blazor.Infrastructure.NoonaApi
     {
 
         [System.Text.Json.Serialization.JsonPropertyName("id")]
-        public string Id { get; set; } = default!;
+        public string? Id { get; set; } = default!;
 
         [System.Text.Json.Serialization.JsonPropertyName("company")]
-        public string Company { get; set; } = default!;
+        public string? Company { get; set; } = default!;
 
         [System.Text.Json.Serialization.JsonPropertyName("resources")]
-        public ExpandableResources Resources { get; set; } = default!;
+        public ExpandableResources? Resources { get; set; } = default!;
 
         [System.Text.Json.Serialization.JsonPropertyName("title")]
-        public string Title { get; set; } = default!;
+        public string? Title { get; set; } = default!;
 
         [System.Text.Json.Serialization.JsonPropertyName("order")]
-        public int Order { get; set; } = default!;
+        public int? Order { get; set; } = default!;
 
         [System.Text.Json.Serialization.JsonPropertyName("created_at")]
-        public System.DateTime Created_at { get; set; } = default!;
+        public System.DateTime? Created_at { get; set; } = default!;
 
         [System.Text.Json.Serialization.JsonPropertyName("updated_at")]
-        public System.DateTime Updated_at { get; set; } = default!;
+        public System.DateTime? Updated_at { get; set; } = default!;
 
         private System.Collections.Generic.IDictionary<string, object>? _additionalProperties;
 
@@ -56583,7 +57177,7 @@ namespace FSH.Starter.Blazor.Infrastructure.NoonaApi
         public string Title { get; set; } = default!;
 
         [System.Text.Json.Serialization.JsonPropertyName("order")]
-        public int Order { get; set; } = default!;
+        public int? Order { get; set; } = default!;
 
         [System.Text.Json.Serialization.JsonPropertyName("created_at")]
         [System.ComponentModel.DataAnnotations.Required(AllowEmptyStrings = true)]
@@ -56625,7 +57219,7 @@ namespace FSH.Starter.Blazor.Infrastructure.NoonaApi
         public string Title { get; set; } = default!;
 
         [System.Text.Json.Serialization.JsonPropertyName("order")]
-        public int Order { get; set; } = default!;
+        public int? Order { get; set; } = default!;
 
         [System.Text.Json.Serialization.JsonPropertyName("created_at")]
         [System.ComponentModel.DataAnnotations.Required(AllowEmptyStrings = true)]
@@ -56685,13 +57279,13 @@ namespace FSH.Starter.Blazor.Infrastructure.NoonaApi
     {
 
         [System.Text.Json.Serialization.JsonPropertyName("company")]
-        public object Company { get; set; } = default!;
+        public object? Company { get; set; } = default!;
 
         [System.Text.Json.Serialization.JsonPropertyName("resources")]
-        public ExpandableResources Resources { get; set; } = default!;
+        public ExpandableResources? Resources { get; set; } = default!;
 
         [System.Text.Json.Serialization.JsonPropertyName("title")]
-        public string Title { get; set; } = default!;
+        public string? Title { get; set; } = default!;
 
     }
 
@@ -56700,13 +57294,13 @@ namespace FSH.Starter.Blazor.Infrastructure.NoonaApi
     {
 
         [System.Text.Json.Serialization.JsonPropertyName("company")]
-        public object Company { get; set; } = default!;
+        public object? Company { get; set; } = default!;
 
         [System.Text.Json.Serialization.JsonPropertyName("resources")]
-        public ExpandableResources Resources { get; set; } = default!;
+        public ExpandableResources? Resources { get; set; } = default!;
 
         [System.Text.Json.Serialization.JsonPropertyName("title")]
-        public string Title { get; set; } = default!;
+        public string? Title { get; set; } = default!;
 
         private System.Collections.Generic.IDictionary<string, object>? _additionalProperties;
 
@@ -56774,35 +57368,35 @@ namespace FSH.Starter.Blazor.Infrastructure.NoonaApi
     {
 
         [System.Text.Json.Serialization.JsonPropertyName("event_type")]
-        public string Event_type { get; set; } = default!;
+        public string? Event_type { get; set; } = default!;
 
         /// <summary>
         /// If true, resource can not service this event type.
         /// </summary>
         [System.Text.Json.Serialization.JsonPropertyName("skip")]
         [System.Obsolete]
-        public bool Skip { get; set; } = default!;
+        public bool? Skip { get; set; } = default!;
 
         /// <summary>
         /// If true, resource can not service this event type on the calendar.
         /// </summary>
         [System.Text.Json.Serialization.JsonPropertyName("skip_calendar")]
-        public bool Skip_calendar { get; set; } = false;
+        public bool? Skip_calendar { get; set; } = false;
 
         /// <summary>
         /// If true, resource can not service this event type on the marketplace.
         /// </summary>
         [System.Text.Json.Serialization.JsonPropertyName("skip_marketplace")]
-        public bool Skip_marketplace { get; set; } = false;
+        public bool? Skip_marketplace { get; set; } = false;
 
         /// <summary>
         /// If true, resource can set custom duration for this event type.
         /// </summary>
         [System.Text.Json.Serialization.JsonPropertyName("has_custom_duration")]
-        public bool Has_custom_duration { get; set; } = default!;
+        public bool? Has_custom_duration { get; set; } = default!;
 
         [System.Text.Json.Serialization.JsonPropertyName("custom_duration")]
-        public CustomDuration Custom_duration { get; set; } = default!;
+        public CustomDuration? Custom_duration { get; set; } = default!;
 
         private System.Collections.Generic.IDictionary<string, object>? _additionalProperties;
 
@@ -56820,16 +57414,16 @@ namespace FSH.Starter.Blazor.Infrastructure.NoonaApi
     {
 
         [System.Text.Json.Serialization.JsonPropertyName("duration")]
-        public int Duration { get; set; } = default!;
+        public int? Duration { get; set; } = default!;
 
         [System.Text.Json.Serialization.JsonPropertyName("before_pause")]
-        public int Before_pause { get; set; } = default!;
+        public int? Before_pause { get; set; } = default!;
 
         [System.Text.Json.Serialization.JsonPropertyName("pause")]
-        public int Pause { get; set; } = default!;
+        public int? Pause { get; set; } = default!;
 
         [System.Text.Json.Serialization.JsonPropertyName("after_pause")]
-        public int After_pause { get; set; } = default!;
+        public int? After_pause { get; set; } = default!;
 
         private System.Collections.Generic.IDictionary<string, object>? _additionalProperties;
 
@@ -56853,13 +57447,13 @@ namespace FSH.Starter.Blazor.Infrastructure.NoonaApi
     {
 
         [System.Text.Json.Serialization.JsonPropertyName("id")]
-        public string Id { get; set; } = default!;
+        public string? Id { get; set; } = default!;
 
         [System.Text.Json.Serialization.JsonPropertyName("name")]
-        public string Name { get; set; } = default!;
+        public string? Name { get; set; } = default!;
 
         [System.Text.Json.Serialization.JsonPropertyName("email")]
-        public string Email { get; set; } = default!;
+        public string? Email { get; set; } = default!;
 
         private System.Collections.Generic.IDictionary<string, object>? _additionalProperties;
 
@@ -56883,31 +57477,31 @@ namespace FSH.Starter.Blazor.Infrastructure.NoonaApi
     {
 
         [System.Text.Json.Serialization.JsonPropertyName("id")]
-        public string Id { get; set; } = default!;
+        public string? Id { get; set; } = default!;
 
         [System.Text.Json.Serialization.JsonPropertyName("name")]
-        public string Name { get; set; } = default!;
+        public string? Name { get; set; } = default!;
 
         [System.Text.Json.Serialization.JsonPropertyName("description")]
-        public string Description { get; set; } = default!;
+        public string? Description { get; set; } = default!;
 
         [System.Text.Json.Serialization.JsonPropertyName("ssn")]
-        public string Ssn { get; set; } = default!;
+        public string? Ssn { get; set; } = default!;
 
         [System.Text.Json.Serialization.JsonPropertyName("bank")]
-        public string Bank { get; set; } = default!;
+        public string? Bank { get; set; } = default!;
 
         [System.Text.Json.Serialization.JsonPropertyName("book")]
-        public string Book { get; set; } = default!;
+        public string? Book { get; set; } = default!;
 
         [System.Text.Json.Serialization.JsonPropertyName("account")]
-        public string Account { get; set; } = default!;
+        public string? Account { get; set; } = default!;
 
         [System.Text.Json.Serialization.JsonPropertyName("created_at")]
-        public System.DateTime Created_at { get; set; } = default!;
+        public System.DateTime? Created_at { get; set; } = default!;
 
         [System.Text.Json.Serialization.JsonPropertyName("updated_at")]
-        public System.DateTime Updated_at { get; set; } = default!;
+        public System.DateTime? Updated_at { get; set; } = default!;
 
         private System.Collections.Generic.IDictionary<string, object>? _additionalProperties;
 
@@ -56931,74 +57525,74 @@ namespace FSH.Starter.Blazor.Infrastructure.NoonaApi
     {
 
         [System.Text.Json.Serialization.JsonPropertyName("id")]
-        public string Id { get; set; } = default!;
+        public string? Id { get; set; } = default!;
 
         [System.Text.Json.Serialization.JsonPropertyName("currency")]
-        public string Currency { get; set; } = default!;
+        public string? Currency { get; set; } = default!;
 
         [System.Text.Json.Serialization.JsonPropertyName("amount")]
-        public double Amount { get; set; } = default!;
+        public double? Amount { get; set; } = default!;
 
         [System.Text.Json.Serialization.JsonPropertyName("data")]
-        public Data3 Data { get; set; } = default!;
+        public Data3? Data { get; set; } = default!;
 
         /// <summary>
         /// 6 uppercase letters / numbers
         /// </summary>
         [System.Text.Json.Serialization.JsonPropertyName("code")]
-        public string Code { get; set; } = default!;
+        public string? Code { get; set; } = default!;
 
         [System.Text.Json.Serialization.JsonPropertyName("color")]
-        public string Color { get; set; } = default!;
+        public string? Color { get; set; } = default!;
 
         [System.Text.Json.Serialization.JsonPropertyName("message")]
-        public string Message { get; set; } = default!;
+        public string? Message { get; set; } = default!;
 
         [System.Text.Json.Serialization.JsonPropertyName("status")]
         [System.Text.Json.Serialization.JsonConverter(typeof(System.Text.Json.Serialization.JsonStringEnumConverter<VoucherStatus>))]
-        public VoucherStatus Status { get; set; } = default!;
+        public VoucherStatus? Status { get; set; } = default!;
 
         [System.Text.Json.Serialization.JsonPropertyName("phone_country_code")]
-        public string Phone_country_code { get; set; } = default!;
+        public string? Phone_country_code { get; set; } = default!;
 
         /// <summary>
         /// If a phone number is provided, it receives news of the newly created voucher.
         /// </summary>
         [System.Text.Json.Serialization.JsonPropertyName("phone_number")]
-        public string Phone_number { get; set; } = default!;
+        public string? Phone_number { get; set; } = default!;
 
         /// <summary>
         /// If an email is provided, it receives news of the newly created voucher.
         /// </summary>
         [System.Text.Json.Serialization.JsonPropertyName("email")]
-        public string Email { get; set; } = default!;
+        public string? Email { get; set; } = default!;
 
         [System.Text.Json.Serialization.JsonPropertyName("marketplace_user")]
-        public string Marketplace_user { get; set; } = default!;
+        public string? Marketplace_user { get; set; } = default!;
 
         [System.Text.Json.Serialization.JsonPropertyName("customer")]
-        public string Customer { get; set; } = default!;
+        public string? Customer { get; set; } = default!;
 
         [System.Text.Json.Serialization.JsonPropertyName("company")]
-        public string Company { get; set; } = default!;
+        public string? Company { get; set; } = default!;
 
         [System.Text.Json.Serialization.JsonPropertyName("template")]
-        public string Template { get; set; } = default!;
+        public string? Template { get; set; } = default!;
 
         /// <summary>
         /// Vouchers expire after 4 years, or derived from the voucher template configuration.
         /// </summary>
         [System.Text.Json.Serialization.JsonPropertyName("expiration")]
-        public System.DateTime Expiration { get; set; } = default!;
+        public System.DateTime? Expiration { get; set; } = default!;
 
         [System.Text.Json.Serialization.JsonPropertyName("created_at")]
-        public System.DateTime Created_at { get; set; } = default!;
+        public System.DateTime? Created_at { get; set; } = default!;
 
         [System.Text.Json.Serialization.JsonPropertyName("updated_at")]
-        public System.DateTime Updated_at { get; set; } = default!;
+        public System.DateTime? Updated_at { get; set; } = default!;
 
         [System.Text.Json.Serialization.JsonPropertyName("deleted_at")]
-        public System.DateTime Deleted_at { get; set; } = default!;
+        public System.DateTime? Deleted_at { get; set; } = default!;
 
         private System.Collections.Generic.IDictionary<string, object>? _additionalProperties;
 
@@ -57036,19 +57630,19 @@ namespace FSH.Starter.Blazor.Infrastructure.NoonaApi
         public VoucherDataAmountType Type { get; set; } = default!;
 
         [System.Text.Json.Serialization.JsonPropertyName("amount_used")]
-        public double Amount_used { get; set; } = default!;
+        public double? Amount_used { get; set; } = default!;
 
         /// <summary>
         /// Point-in-time amount from the voucher template when voucher was created
         /// </summary>
         [System.Text.Json.Serialization.JsonPropertyName("voucher_template_amount")]
-        public double Voucher_template_amount { get; set; } = default!;
+        public double? Voucher_template_amount { get; set; } = default!;
 
         /// <summary>
         /// Point-in-time value from the voucher template when voucher was created
         /// </summary>
         [System.Text.Json.Serialization.JsonPropertyName("voucher_template_value")]
-        public double Voucher_template_value { get; set; } = default!;
+        public double? Voucher_template_value { get; set; } = default!;
 
         private System.Collections.Generic.IDictionary<string, object>? _additionalProperties;
 
@@ -57072,39 +57666,39 @@ namespace FSH.Starter.Blazor.Infrastructure.NoonaApi
         /// Filter by specific voucher IDs
         /// </summary>
         [System.Text.Json.Serialization.JsonPropertyName("ids")]
-        public System.Collections.Generic.ICollection<string> Ids { get; set; } = default!;
+        public System.Collections.Generic.ICollection<string>? Ids { get; set; } = default!;
 
         [System.Text.Json.Serialization.JsonPropertyName("marketplace_user")]
-        public string Marketplace_user { get; set; } = default!;
+        public string? Marketplace_user { get; set; } = default!;
 
         [System.Text.Json.Serialization.JsonPropertyName("status")]
         [System.Text.Json.Serialization.JsonConverter(typeof(System.Text.Json.Serialization.JsonStringEnumConverter<VoucherFilterStatus>))]
-        public VoucherFilterStatus Status { get; set; } = default!;
+        public VoucherFilterStatus? Status { get; set; } = default!;
 
         [System.Text.Json.Serialization.JsonPropertyName("type")]
         [System.Text.Json.Serialization.JsonConverter(typeof(System.Text.Json.Serialization.JsonStringEnumConverter<VoucherFilterType>))]
-        public VoucherFilterType Type { get; set; } = default!;
+        public VoucherFilterType? Type { get; set; } = default!;
 
         [System.Text.Json.Serialization.JsonPropertyName("customer")]
-        public string Customer { get; set; } = default!;
+        public string? Customer { get; set; } = default!;
 
         /// <summary>
         /// Regex match of code
         /// </summary>
         [System.Text.Json.Serialization.JsonPropertyName("code")]
-        public string Code { get; set; } = default!;
+        public string? Code { get; set; } = default!;
 
         [System.Text.Json.Serialization.JsonPropertyName("from")]
-        public System.DateTime From { get; set; } = default!;
+        public System.DateTime? From { get; set; } = default!;
 
         [System.Text.Json.Serialization.JsonPropertyName("to")]
-        public System.DateTime To { get; set; } = default!;
+        public System.DateTime? To { get; set; } = default!;
 
         [System.Text.Json.Serialization.JsonPropertyName("event_types")]
-        public System.Collections.Generic.ICollection<string> Event_types { get; set; } = default!;
+        public System.Collections.Generic.ICollection<string>? Event_types { get; set; } = default!;
 
         [System.Text.Json.Serialization.JsonPropertyName("companies")]
-        public System.Collections.Generic.ICollection<string> Companies { get; set; } = default!;
+        public System.Collections.Generic.ICollection<string>? Companies { get; set; } = default!;
 
         /// <summary>
         /// Whether to include deleted vouchers in the response.
@@ -57115,7 +57709,7 @@ namespace FSH.Starter.Blazor.Infrastructure.NoonaApi
         /// <br/>
         /// </summary>
         [System.Text.Json.Serialization.JsonPropertyName("include_deleted")]
-        public bool Include_deleted { get; set; } = false;
+        public bool? Include_deleted { get; set; } = false;
 
         private System.Collections.Generic.IDictionary<string, object>? _additionalProperties;
 
@@ -57139,81 +57733,81 @@ namespace FSH.Starter.Blazor.Infrastructure.NoonaApi
     {
 
         [System.Text.Json.Serialization.JsonPropertyName("id")]
-        public string Id { get; set; } = default!;
+        public string? Id { get; set; } = default!;
 
         [System.Text.Json.Serialization.JsonPropertyName("type")]
         [System.Text.Json.Serialization.JsonConverter(typeof(System.Text.Json.Serialization.JsonStringEnumConverter<VoucherTemplateType>))]
-        public VoucherTemplateType Type { get; set; } = default!;
+        public VoucherTemplateType? Type { get; set; } = default!;
 
         [System.Text.Json.Serialization.JsonPropertyName("title")]
-        public string Title { get; set; } = default!;
+        public string? Title { get; set; } = default!;
 
         [System.Text.Json.Serialization.JsonPropertyName("title_translations")]
-        public TranslationMap Title_translations { get; set; } = default!;
+        public TranslationMap? Title_translations { get; set; } = default!;
 
         [System.Text.Json.Serialization.JsonPropertyName("description")]
-        public string Description { get; set; } = default!;
+        public string? Description { get; set; } = default!;
 
         [System.Text.Json.Serialization.JsonPropertyName("description_translations")]
-        public TranslationMap Description_translations { get; set; } = default!;
+        public TranslationMap? Description_translations { get; set; } = default!;
 
         [System.Text.Json.Serialization.JsonPropertyName("marketplace_description")]
-        public string Marketplace_description { get; set; } = default!;
+        public string? Marketplace_description { get; set; } = default!;
 
         [System.Text.Json.Serialization.JsonPropertyName("marketplace_description_translations")]
-        public TranslationMap Marketplace_description_translations { get; set; } = default!;
+        public TranslationMap? Marketplace_description_translations { get; set; } = default!;
 
         [System.Text.Json.Serialization.JsonPropertyName("event_type")]
-        public string Event_type { get; set; } = default!;
+        public string? Event_type { get; set; } = default!;
 
         /// <summary>
         /// The ID of the event type variation that the value of the voucher should be calculated from.
         /// </summary>
         [System.Text.Json.Serialization.JsonPropertyName("variation_id")]
-        public string Variation_id { get; set; } = default!;
+        public string? Variation_id { get; set; } = default!;
 
         [System.Text.Json.Serialization.JsonPropertyName("company")]
-        public string Company { get; set; } = default!;
+        public string? Company { get; set; } = default!;
 
         /// <summary>
         /// The number of people this voucher is valid for.
         /// </summary>
         [System.Text.Json.Serialization.JsonPropertyName("number_of_guests")]
-        public int Number_of_guests { get; set; } = 1;
+        public int? Number_of_guests { get; set; } = 1;
 
         [System.Text.Json.Serialization.JsonPropertyName("currency")]
-        public string Currency { get; set; } = default!;
+        public string? Currency { get; set; } = default!;
 
         [System.Text.Json.Serialization.JsonPropertyName("amount")]
         [System.ComponentModel.DataAnnotations.Range(1D, double.MaxValue)]
-        public double Amount { get; set; } = default!;
+        public double? Amount { get; set; } = default!;
 
         [System.Text.Json.Serialization.JsonPropertyName("value")]
-        public double Value { get; set; } = default!;
+        public double? Value { get; set; } = default!;
 
         [System.Text.Json.Serialization.JsonPropertyName("sessions_total")]
-        public int Sessions_total { get; set; } = default!;
+        public int? Sessions_total { get; set; } = default!;
 
         /// <summary>
         /// If true, voucher is visible on the marketplace.
         /// </summary>
         [System.Text.Json.Serialization.JsonPropertyName("marketplace")]
-        public bool Marketplace { get; set; } = default!;
+        public bool? Marketplace { get; set; } = default!;
 
         [System.Text.Json.Serialization.JsonPropertyName("expiration_months_after_purchase")]
-        public int Expiration_months_after_purchase { get; set; } = 48;
+        public int? Expiration_months_after_purchase { get; set; } = 48;
 
         [System.Text.Json.Serialization.JsonPropertyName("images")]
-        public Images Images { get; set; } = default!;
+        public Images? Images { get; set; } = default!;
 
         [System.Text.Json.Serialization.JsonPropertyName("primary_color")]
-        public string Primary_color { get; set; } = default!;
+        public string? Primary_color { get; set; } = default!;
 
         [System.Text.Json.Serialization.JsonPropertyName("created_at")]
-        public System.DateTime Created_at { get; set; } = default!;
+        public System.DateTime? Created_at { get; set; } = default!;
 
         [System.Text.Json.Serialization.JsonPropertyName("updated_at")]
-        public System.DateTime Updated_at { get; set; } = default!;
+        public System.DateTime? Updated_at { get; set; } = default!;
 
         private System.Collections.Generic.IDictionary<string, object>? _additionalProperties;
 
@@ -57241,13 +57835,13 @@ namespace FSH.Starter.Blazor.Infrastructure.NoonaApi
         public string Id { get; set; } = default!;
 
         [System.Text.Json.Serialization.JsonPropertyName("event_type")]
-        public string Event_type { get; set; } = default!;
+        public string? Event_type { get; set; } = default!;
 
         /// <summary>
         /// The ID of the event type variation that the value of the voucher should be calculated from.
         /// </summary>
         [System.Text.Json.Serialization.JsonPropertyName("variation_id")]
-        public string Variation_id { get; set; } = default!;
+        public string? Variation_id { get; set; } = default!;
 
         [System.Text.Json.Serialization.JsonPropertyName("company")]
         [System.ComponentModel.DataAnnotations.Required(AllowEmptyStrings = true)]
@@ -57261,7 +57855,7 @@ namespace FSH.Starter.Blazor.Infrastructure.NoonaApi
         public double Amount { get; set; } = default!;
 
         [System.Text.Json.Serialization.JsonPropertyName("sessions_total")]
-        public int Sessions_total { get; set; } = default!;
+        public int? Sessions_total { get; set; } = default!;
 
         [System.Text.Json.Serialization.JsonPropertyName("created_at")]
         [System.ComponentModel.DataAnnotations.Required(AllowEmptyStrings = true)]
@@ -57285,13 +57879,13 @@ namespace FSH.Starter.Blazor.Infrastructure.NoonaApi
         public string Id { get; set; } = default!;
 
         [System.Text.Json.Serialization.JsonPropertyName("event_type")]
-        public string Event_type { get; set; } = default!;
+        public string? Event_type { get; set; } = default!;
 
         /// <summary>
         /// The ID of the event type variation that the value of the voucher should be calculated from.
         /// </summary>
         [System.Text.Json.Serialization.JsonPropertyName("variation_id")]
-        public string Variation_id { get; set; } = default!;
+        public string? Variation_id { get; set; } = default!;
 
         [System.Text.Json.Serialization.JsonPropertyName("company")]
         [System.ComponentModel.DataAnnotations.Required(AllowEmptyStrings = true)]
@@ -57305,7 +57899,7 @@ namespace FSH.Starter.Blazor.Infrastructure.NoonaApi
         public double Amount { get; set; } = default!;
 
         [System.Text.Json.Serialization.JsonPropertyName("sessions_total")]
-        public int Sessions_total { get; set; } = default!;
+        public int? Sessions_total { get; set; } = default!;
 
         [System.Text.Json.Serialization.JsonPropertyName("created_at")]
         [System.ComponentModel.DataAnnotations.Required(AllowEmptyStrings = true)]
@@ -57334,11 +57928,11 @@ namespace FSH.Starter.Blazor.Infrastructure.NoonaApi
     {
 
         [System.Text.Json.Serialization.JsonPropertyName("event_type")]
-        public string Event_type { get; set; } = default!;
+        public string? Event_type { get; set; } = default!;
 
         [System.Text.Json.Serialization.JsonPropertyName("type")]
         [System.Text.Json.Serialization.JsonConverter(typeof(System.Text.Json.Serialization.JsonStringEnumConverter<VoucherTemplateCreateOverridesType>))]
-        public VoucherTemplateCreateOverridesType Type { get; set; } = default!;
+        public VoucherTemplateCreateOverridesType? Type { get; set; } = default!;
 
         [System.Text.Json.Serialization.JsonPropertyName("company")]
         [System.ComponentModel.DataAnnotations.Required(AllowEmptyStrings = true)]
@@ -57352,10 +57946,10 @@ namespace FSH.Starter.Blazor.Infrastructure.NoonaApi
         public double Amount { get; set; } = default!;
 
         [System.Text.Json.Serialization.JsonPropertyName("sessions_total")]
-        public int Sessions_total { get; set; } = default!;
+        public int? Sessions_total { get; set; } = default!;
 
         [System.Text.Json.Serialization.JsonPropertyName("value")]
-        public double Value { get; set; } = default!;
+        public double? Value { get; set; } = default!;
 
         private System.Collections.Generic.IDictionary<string, object>? _additionalProperties;
 
@@ -57373,11 +57967,11 @@ namespace FSH.Starter.Blazor.Infrastructure.NoonaApi
     {
 
         [System.Text.Json.Serialization.JsonPropertyName("event_type")]
-        public string Event_type { get; set; } = default!;
+        public string? Event_type { get; set; } = default!;
 
         [System.Text.Json.Serialization.JsonPropertyName("type")]
         [System.Text.Json.Serialization.JsonConverter(typeof(System.Text.Json.Serialization.JsonStringEnumConverter<VoucherTemplateCreateOverridesType>))]
-        public VoucherTemplateCreateOverridesType Type { get; set; } = default!;
+        public VoucherTemplateCreateOverridesType? Type { get; set; } = default!;
 
         [System.Text.Json.Serialization.JsonPropertyName("company")]
         [System.ComponentModel.DataAnnotations.Required(AllowEmptyStrings = true)]
@@ -57391,10 +57985,10 @@ namespace FSH.Starter.Blazor.Infrastructure.NoonaApi
         public double Amount { get; set; } = default!;
 
         [System.Text.Json.Serialization.JsonPropertyName("sessions_total")]
-        public int Sessions_total { get; set; } = default!;
+        public int? Sessions_total { get; set; } = default!;
 
         [System.Text.Json.Serialization.JsonPropertyName("value")]
-        public double Value { get; set; } = default!;
+        public double? Value { get; set; } = default!;
 
     }
 
@@ -57403,16 +57997,16 @@ namespace FSH.Starter.Blazor.Infrastructure.NoonaApi
     {
 
         [System.Text.Json.Serialization.JsonPropertyName("event_type")]
-        public object Event_type { get; set; } = default!;
+        public object? Event_type { get; set; } = default!;
 
         [System.Text.Json.Serialization.JsonPropertyName("variation_id")]
-        public object Variation_id { get; set; } = default!;
+        public object? Variation_id { get; set; } = default!;
 
         [System.Text.Json.Serialization.JsonPropertyName("company")]
-        public object Company { get; set; } = default!;
+        public object? Company { get; set; } = default!;
 
         [System.Text.Json.Serialization.JsonPropertyName("currency")]
-        public object Currency { get; set; } = default!;
+        public object? Currency { get; set; } = default!;
 
         private System.Collections.Generic.IDictionary<string, object>? _additionalProperties;
 
@@ -57430,16 +58024,16 @@ namespace FSH.Starter.Blazor.Infrastructure.NoonaApi
     {
 
         [System.Text.Json.Serialization.JsonPropertyName("event_type")]
-        public object Event_type { get; set; } = default!;
+        public object? Event_type { get; set; } = default!;
 
         [System.Text.Json.Serialization.JsonPropertyName("variation_id")]
-        public object Variation_id { get; set; } = default!;
+        public object? Variation_id { get; set; } = default!;
 
         [System.Text.Json.Serialization.JsonPropertyName("company")]
-        public object Company { get; set; } = default!;
+        public object? Company { get; set; } = default!;
 
         [System.Text.Json.Serialization.JsonPropertyName("currency")]
-        public object Currency { get; set; } = default!;
+        public object? Currency { get; set; } = default!;
 
     }
 
@@ -57451,10 +58045,10 @@ namespace FSH.Starter.Blazor.Infrastructure.NoonaApi
     {
 
         [System.Text.Json.Serialization.JsonPropertyName("event_types")]
-        public System.Collections.Generic.ICollection<string> Event_types { get; set; } = default!;
+        public System.Collections.Generic.ICollection<string>? Event_types { get; set; } = default!;
 
         [System.Text.Json.Serialization.JsonPropertyName("companies")]
-        public System.Collections.Generic.ICollection<string> Companies { get; set; } = default!;
+        public System.Collections.Generic.ICollection<string>? Companies { get; set; } = default!;
 
         private System.Collections.Generic.IDictionary<string, object>? _additionalProperties;
 
@@ -57487,46 +58081,46 @@ namespace FSH.Starter.Blazor.Infrastructure.NoonaApi
     {
 
         [System.Text.Json.Serialization.JsonPropertyName("id")]
-        public string Id { get; set; } = default!;
+        public string? Id { get; set; } = default!;
 
         [System.Text.Json.Serialization.JsonPropertyName("transferred_to_enterprise")]
-        public bool Transferred_to_enterprise { get; set; } = default!;
+        public bool? Transferred_to_enterprise { get; set; } = default!;
 
         [System.Text.Json.Serialization.JsonPropertyName("transferred_to_enterprise_at")]
-        public System.DateTime Transferred_to_enterprise_at { get; set; } = default!;
+        public System.DateTime? Transferred_to_enterprise_at { get; set; } = default!;
 
         [System.Text.Json.Serialization.JsonPropertyName("line_items")]
-        public SettlementLineItems Line_items { get; set; } = default!;
+        public SettlementLineItems? Line_items { get; set; } = default!;
 
         [System.Text.Json.Serialization.JsonPropertyName("total")]
-        public double Total { get; set; } = default!;
+        public double? Total { get; set; } = default!;
 
         [System.Text.Json.Serialization.JsonPropertyName("fee")]
-        public double Fee { get; set; } = default!;
+        public double? Fee { get; set; } = default!;
 
         [System.Text.Json.Serialization.JsonPropertyName("net_total")]
-        public double Net_total { get; set; } = default!;
+        public double? Net_total { get; set; } = default!;
 
         /// <summary>
         /// The name of the settlement recipient.
         /// </summary>
         [System.Text.Json.Serialization.JsonPropertyName("settled_to")]
-        public string Settled_to { get; set; } = default!;
+        public string? Settled_to { get; set; } = default!;
 
         [System.Text.Json.Serialization.JsonPropertyName("settlement_account")]
-        public SettlementAccount Settlement_account { get; set; } = default!;
+        public SettlementAccount? Settlement_account { get; set; } = default!;
 
         [System.Text.Json.Serialization.JsonPropertyName("payments_from")]
-        public System.DateTime Payments_from { get; set; } = default!;
+        public System.DateTime? Payments_from { get; set; } = default!;
 
         [System.Text.Json.Serialization.JsonPropertyName("payments_to")]
-        public System.DateTime Payments_to { get; set; } = default!;
+        public System.DateTime? Payments_to { get; set; } = default!;
 
         [System.Text.Json.Serialization.JsonPropertyName("created_at")]
-        public System.DateTime Created_at { get; set; } = default!;
+        public System.DateTime? Created_at { get; set; } = default!;
 
         [System.Text.Json.Serialization.JsonPropertyName("updated_at")]
-        public System.DateTime Updated_at { get; set; } = default!;
+        public System.DateTime? Updated_at { get; set; } = default!;
 
         private System.Collections.Generic.IDictionary<string, object>? _additionalProperties;
 
@@ -57550,19 +58144,19 @@ namespace FSH.Starter.Blazor.Infrastructure.NoonaApi
     {
 
         [System.Text.Json.Serialization.JsonPropertyName("title")]
-        public string Title { get; set; } = default!;
+        public string? Title { get; set; } = default!;
 
         [System.Text.Json.Serialization.JsonPropertyName("quantity")]
-        public int Quantity { get; set; } = default!;
+        public int? Quantity { get; set; } = default!;
 
         [System.Text.Json.Serialization.JsonPropertyName("total")]
-        public double Total { get; set; } = default!;
+        public double? Total { get; set; } = default!;
 
         [System.Text.Json.Serialization.JsonPropertyName("fee")]
-        public double Fee { get; set; } = default!;
+        public double? Fee { get; set; } = default!;
 
         [System.Text.Json.Serialization.JsonPropertyName("net_total")]
-        public double Net_total { get; set; } = default!;
+        public double? Net_total { get; set; } = default!;
 
         private System.Collections.Generic.IDictionary<string, object>? _additionalProperties;
 
@@ -57583,10 +58177,10 @@ namespace FSH.Starter.Blazor.Infrastructure.NoonaApi
     {
 
         [System.Text.Json.Serialization.JsonPropertyName("from")]
-        public System.DateTime From { get; set; } = default!;
+        public System.DateTime? From { get; set; } = default!;
 
         [System.Text.Json.Serialization.JsonPropertyName("to")]
-        public System.DateTime To { get; set; } = default!;
+        public System.DateTime? To { get; set; } = default!;
 
         private System.Collections.Generic.IDictionary<string, object>? _additionalProperties;
 
@@ -57610,32 +58204,32 @@ namespace FSH.Starter.Blazor.Infrastructure.NoonaApi
     {
 
         [System.Text.Json.Serialization.JsonPropertyName("id")]
-        public string Id { get; set; } = default!;
+        public string? Id { get; set; } = default!;
 
         /// <summary>
         /// Reference from payment service provider
         /// </summary>
         [System.Text.Json.Serialization.JsonPropertyName("reference")]
-        public string Reference { get; set; } = default!;
+        public string? Reference { get; set; } = default!;
 
         [System.Text.Json.Serialization.JsonPropertyName("company")]
-        public string Company { get; set; } = default!;
+        public string? Company { get; set; } = default!;
 
         [System.Text.Json.Serialization.JsonPropertyName("marketplace_user")]
-        public string Marketplace_user { get; set; } = default!;
+        public string? Marketplace_user { get; set; } = default!;
 
         [System.Text.Json.Serialization.JsonPropertyName("customer")]
-        public string Customer { get; set; } = default!;
+        public string? Customer { get; set; } = default!;
 
         [System.Text.Json.Serialization.JsonPropertyName("employee")]
-        public string Employee { get; set; } = default!;
+        public string? Employee { get; set; } = default!;
 
         [System.Text.Json.Serialization.JsonPropertyName("event")]
-        public string Event { get; set; } = default!;
+        public string? Event { get; set; } = default!;
 
         [System.Text.Json.Serialization.JsonPropertyName("status")]
         [System.Text.Json.Serialization.JsonConverter(typeof(System.Text.Json.Serialization.JsonStringEnumConverter<PaymentStatus>))]
-        public PaymentStatus Status { get; set; } = default!;
+        public PaymentStatus? Status { get; set; } = default!;
 
         /// <summary>
         /// Indicates if the payment is refundable.
@@ -57644,21 +58238,21 @@ namespace FSH.Starter.Blazor.Infrastructure.NoonaApi
         /// <br/>
         /// </summary>
         [System.Text.Json.Serialization.JsonPropertyName("refundable")]
-        public bool Refundable { get; set; } = default!;
+        public bool? Refundable { get; set; } = default!;
 
         [System.Text.Json.Serialization.JsonPropertyName("reason")]
         [System.Text.Json.Serialization.JsonConverter(typeof(System.Text.Json.Serialization.JsonStringEnumConverter<PaymentReason>))]
-        public PaymentReason Reason { get; set; } = default!;
+        public PaymentReason? Reason { get; set; } = default!;
 
         [System.Text.Json.Serialization.JsonPropertyName("provider")]
         [System.Text.Json.Serialization.JsonConverter(typeof(System.Text.Json.Serialization.JsonStringEnumConverter<PaymentProvider>))]
-        public PaymentProvider Provider { get; set; } = default!;
+        public PaymentProvider? Provider { get; set; } = default!;
 
         [System.Text.Json.Serialization.JsonPropertyName("currency")]
-        public string Currency { get; set; } = default!;
+        public string? Currency { get; set; } = default!;
 
         [System.Text.Json.Serialization.JsonPropertyName("amount")]
-        public double Amount { get; set; } = default!;
+        public double? Amount { get; set; } = default!;
 
         /// <summary>
         /// Indicates if the payment is settled to the employee or the company.
@@ -57669,31 +58263,31 @@ namespace FSH.Starter.Blazor.Infrastructure.NoonaApi
         /// <br/>
         /// </summary>
         [System.Text.Json.Serialization.JsonPropertyName("settles_to_employee")]
-        public bool Settles_to_employee { get; set; } = default!;
+        public bool? Settles_to_employee { get; set; } = default!;
 
         /// <summary>
         /// The name of the settlement recipient.
         /// </summary>
         [System.Text.Json.Serialization.JsonPropertyName("settled_to")]
-        public string Settled_to { get; set; } = default!;
+        public string? Settled_to { get; set; } = default!;
 
         /// <summary>
         /// The ID of the settlement that this payment belongs to.
         /// </summary>
         [System.Text.Json.Serialization.JsonPropertyName("settlement")]
-        public string Settlement { get; set; } = default!;
+        public string? Settlement { get; set; } = default!;
 
         [System.Text.Json.Serialization.JsonPropertyName("refunded_at")]
-        public System.DateTime Refunded_at { get; set; } = default!;
+        public System.DateTime? Refunded_at { get; set; } = default!;
 
         [System.Text.Json.Serialization.JsonPropertyName("settled_at")]
-        public System.DateTime Settled_at { get; set; } = default!;
+        public System.DateTime? Settled_at { get; set; } = default!;
 
         [System.Text.Json.Serialization.JsonPropertyName("created_at")]
-        public System.DateTime Created_at { get; set; } = default!;
+        public System.DateTime? Created_at { get; set; } = default!;
 
         [System.Text.Json.Serialization.JsonPropertyName("updated_at")]
-        public System.DateTime Updated_at { get; set; } = default!;
+        public System.DateTime? Updated_at { get; set; } = default!;
 
         private System.Collections.Generic.IDictionary<string, object>? _additionalProperties;
 
@@ -57756,24 +58350,24 @@ namespace FSH.Starter.Blazor.Infrastructure.NoonaApi
     {
 
         [System.Text.Json.Serialization.JsonPropertyName("from")]
-        public System.DateTime From { get; set; } = default!;
+        public System.DateTime? From { get; set; } = default!;
 
         [System.Text.Json.Serialization.JsonPropertyName("to")]
-        public System.DateTime To { get; set; } = default!;
+        public System.DateTime? To { get; set; } = default!;
 
         [System.Text.Json.Serialization.JsonPropertyName("settled_at")]
-        public DateFilter Settled_at { get; set; } = default!;
+        public DateFilter? Settled_at { get; set; } = default!;
 
         /// <summary>
         /// Deprecated: Use ListPayments endpoint to get payments for a company
         /// </summary>
         [System.Text.Json.Serialization.JsonPropertyName("company")]
         [System.Obsolete]
-        public string Company { get; set; } = default!;
+        public string? Company { get; set; } = default!;
 
         [System.Text.Json.Serialization.JsonPropertyName("statuses")]
         // TODO(system.text.json): Add string enum item converter
-        public System.Collections.Generic.ICollection<PaymentStatus> Statuses { get; set; } = default!;
+        public System.Collections.Generic.ICollection<PaymentStatus>? Statuses { get; set; } = default!;
 
         private System.Collections.Generic.IDictionary<string, object>? _additionalProperties;
 
@@ -57794,10 +58388,10 @@ namespace FSH.Starter.Blazor.Infrastructure.NoonaApi
     {
 
         [System.Text.Json.Serialization.JsonPropertyName("event_id")]
-        public string Event_id { get; set; } = default!;
+        public string? Event_id { get; set; } = default!;
 
         [System.Text.Json.Serialization.JsonPropertyName("customer_id")]
-        public string Customer_id { get; set; } = default!;
+        public string? Customer_id { get; set; } = default!;
 
         private System.Collections.Generic.IDictionary<string, object>? _additionalProperties;
 
@@ -57824,25 +58418,25 @@ namespace FSH.Starter.Blazor.Infrastructure.NoonaApi
         /// The start time of the time slot
         /// </summary>
         [System.Text.Json.Serialization.JsonPropertyName("slot")]
-        public System.DateTime Slot { get; set; } = default!;
+        public System.DateTime? Slot { get; set; } = default!;
 
         /// <summary>
         /// The IDs of the employees that are available for this time slot
         /// </summary>
         [System.Text.Json.Serialization.JsonPropertyName("employeeIds")]
-        public System.Collections.Generic.ICollection<string> EmployeeIds { get; set; } = default!;
+        public System.Collections.Generic.ICollection<string>? EmployeeIds { get; set; } = default!;
 
         /// <summary>
         /// The IDs of the resources that are available for this time slot
         /// </summary>
         [System.Text.Json.Serialization.JsonPropertyName("resourceIds")]
-        public System.Collections.Generic.ICollection<string> ResourceIds { get; set; } = default!;
+        public System.Collections.Generic.ICollection<string>? ResourceIds { get; set; } = default!;
 
         /// <summary>
         /// Details of the resources and employees that are unavailable for this time slot, including the reason
         /// </summary>
         [System.Text.Json.Serialization.JsonPropertyName("unavailable_resources")]
-        public System.Collections.Generic.ICollection<UnavailableResource> Unavailable_resources { get; set; } = default!;
+        public System.Collections.Generic.ICollection<UnavailableResource>? Unavailable_resources { get; set; } = default!;
 
         private System.Collections.Generic.IDictionary<string, object>? _additionalProperties;
 
@@ -57863,7 +58457,7 @@ namespace FSH.Starter.Blazor.Infrastructure.NoonaApi
         /// The ID of the unavailable resource
         /// </summary>
         [System.Text.Json.Serialization.JsonPropertyName("resource")]
-        public string Resource { get; set; } = default!;
+        public string? Resource { get; set; } = default!;
 
         /// <summary>
         /// The reason why the resource is unavailable.
@@ -57882,7 +58476,7 @@ namespace FSH.Starter.Blazor.Infrastructure.NoonaApi
         /// </summary>
         [System.Text.Json.Serialization.JsonPropertyName("reason")]
         [System.Text.Json.Serialization.JsonConverter(typeof(System.Text.Json.Serialization.JsonStringEnumConverter<UnavailableResourceReason>))]
-        public UnavailableResourceReason Reason { get; set; } = default!;
+        public UnavailableResourceReason? Reason { get; set; } = default!;
 
         private System.Collections.Generic.IDictionary<string, object>? _additionalProperties;
 
@@ -57900,13 +58494,13 @@ namespace FSH.Starter.Blazor.Infrastructure.NoonaApi
     {
 
         [System.Text.Json.Serialization.JsonPropertyName("check_in_success_message")]
-        public string Check_in_success_message { get; set; } = default!;
+        public string? Check_in_success_message { get; set; } = default!;
 
         [System.Text.Json.Serialization.JsonPropertyName("sale_id")]
-        public string Sale_id { get; set; } = default!;
+        public string? Sale_id { get; set; } = default!;
 
         [System.Text.Json.Serialization.JsonPropertyName("transaction_id")]
-        public string Transaction_id { get; set; } = default!;
+        public string? Transaction_id { get; set; } = default!;
 
         /// <summary>
         /// The ID of the subtransaction tied to this self-checkin.
@@ -57915,7 +58509,7 @@ namespace FSH.Starter.Blazor.Infrastructure.NoonaApi
         /// <br/>
         /// </summary>
         [System.Text.Json.Serialization.JsonPropertyName("subtransaction_id")]
-        public string Subtransaction_id { get; set; } = default!;
+        public string? Subtransaction_id { get; set; } = default!;
 
     }
 
@@ -57930,10 +58524,10 @@ namespace FSH.Starter.Blazor.Infrastructure.NoonaApi
     {
 
         [System.Text.Json.Serialization.JsonPropertyName("date")]
-        public string Date { get; set; } = default!;
+        public string? Date { get; set; } = default!;
 
         [System.Text.Json.Serialization.JsonPropertyName("count")]
-        public int Count { get; set; } = default!;
+        public int? Count { get; set; } = default!;
 
         private System.Collections.Generic.IDictionary<string, object>? _additionalProperties;
 
@@ -57957,118 +58551,118 @@ namespace FSH.Starter.Blazor.Infrastructure.NoonaApi
     {
 
         [System.Text.Json.Serialization.JsonPropertyName("id")]
-        public string Id { get; set; } = default!;
+        public string? Id { get; set; } = default!;
 
         [System.Text.Json.Serialization.JsonPropertyName("recurring_event")]
-        public string Recurring_event { get; set; } = default!;
+        public string? Recurring_event { get; set; } = default!;
 
         [System.Text.Json.Serialization.JsonPropertyName("company")]
-        public string Company { get; set; } = default!;
+        public string? Company { get; set; } = default!;
 
         /// <summary>
         /// Deprecated, expand employee property instead
         /// </summary>
         [System.Text.Json.Serialization.JsonPropertyName("employee_name")]
         [System.Obsolete]
-        public string Employee_name { get; set; } = default!;
+        public string? Employee_name { get; set; } = default!;
 
         [System.Text.Json.Serialization.JsonPropertyName("employee")]
-        public string Employee { get; set; } = default!;
+        public string? Employee { get; set; } = default!;
 
         /// <summary>
         /// It is recommended to expand the customer property instead of using this property. However, in the case of deleted or walkin customers, this property can be used as fallback since the customer property will be null.
         /// </summary>
         [System.Text.Json.Serialization.JsonPropertyName("customer_name")]
-        public string Customer_name { get; set; } = default!;
+        public string? Customer_name { get; set; } = default!;
 
         /// <summary>
         /// This value is true if this is the first booking for this customer
         /// </summary>
         [System.Text.Json.Serialization.JsonPropertyName("new_customer")]
-        public bool New_customer { get; set; } = default!;
+        public bool? New_customer { get; set; } = default!;
 
         [System.Text.Json.Serialization.JsonPropertyName("customer")]
-        public string Customer { get; set; } = default!;
+        public string? Customer { get; set; } = default!;
 
         /// <summary>
         /// Number of guests for the event.
         /// </summary>
         [System.Text.Json.Serialization.JsonPropertyName("number_of_guests")]
-        public int Number_of_guests { get; set; } = default!;
+        public int? Number_of_guests { get; set; } = default!;
 
         /// <summary>
         /// Deprecated, expand resource property instead
         /// </summary>
         [System.Text.Json.Serialization.JsonPropertyName("space_name")]
         [System.Obsolete]
-        public string Space_name { get; set; } = default!;
+        public string? Space_name { get; set; } = default!;
 
         /// <summary>
         /// Use resource instead
         /// </summary>
         [System.Text.Json.Serialization.JsonPropertyName("space")]
-        public string Space { get; set; } = default!;
+        public string? Space { get; set; } = default!;
 
         [System.Text.Json.Serialization.JsonPropertyName("resources")]
-        public ExpandableResources Resources { get; set; } = default!;
+        public ExpandableResources? Resources { get; set; } = default!;
 
         /// <summary>
         /// License plate for the vehicle associated with this event
         /// </summary>
         [System.Text.Json.Serialization.JsonPropertyName("license_plate")]
-        public string License_plate { get; set; } = default!;
+        public string? License_plate { get; set; } = default!;
 
         /// <summary>
         /// Deprecated, use starts_at instead
         /// </summary>
         [System.Text.Json.Serialization.JsonPropertyName("event_date")]
         [System.Obsolete]
-        public string Event_date { get; set; } = default!;
+        public string? Event_date { get; set; } = default!;
 
         /// <summary>
         /// Deprecated, use starts_at instead
         /// </summary>
         [System.Text.Json.Serialization.JsonPropertyName("start_time")]
         [System.Obsolete]
-        public string Start_time { get; set; } = default!;
+        public string? Start_time { get; set; } = default!;
 
         /// <summary>
         /// Deprecated, use ends_at instead
         /// </summary>
         [System.Text.Json.Serialization.JsonPropertyName("end_time")]
         [System.Obsolete]
-        public string End_time { get; set; } = default!;
+        public string? End_time { get; set; } = default!;
 
         /// <summary>
         /// Start time of event
         /// </summary>
         [System.Text.Json.Serialization.JsonPropertyName("starts_at")]
-        public System.DateTime Starts_at { get; set; } = default!;
+        public System.DateTime? Starts_at { get; set; } = default!;
 
         /// <summary>
         /// End time of event
         /// </summary>
         [System.Text.Json.Serialization.JsonPropertyName("ends_at")]
-        public System.DateTime Ends_at { get; set; } = default!;
+        public System.DateTime? Ends_at { get; set; } = default!;
 
         [System.Text.Json.Serialization.JsonPropertyName("duration")]
-        public int Duration { get; set; } = default!;
+        public int? Duration { get; set; } = default!;
 
         [System.Text.Json.Serialization.JsonPropertyName("check_in_at")]
-        public int Check_in_at { get; set; } = default!;
+        public int? Check_in_at { get; set; } = default!;
 
         [System.Text.Json.Serialization.JsonPropertyName("check_in_origin")]
-        public string Check_in_origin { get; set; } = default!;
+        public string? Check_in_origin { get; set; } = default!;
 
         [System.Text.Json.Serialization.JsonPropertyName("event_types")]
-        public EventTypes Event_types { get; set; } = default!;
+        public EventTypes? Event_types { get; set; } = default!;
 
         [System.Text.Json.Serialization.JsonPropertyName("variation_selections")]
-        public VariationSelections Variation_selections { get; set; } = default!;
+        public VariationSelections? Variation_selections { get; set; } = default!;
 
         [System.Text.Json.Serialization.JsonPropertyName("invoice_status")]
         [System.Text.Json.Serialization.JsonConverter(typeof(System.Text.Json.Serialization.JsonStringEnumConverter<EventInvoiceStatus>))]
-        public EventInvoiceStatus Invoice_status { get; set; } = default!;
+        public EventInvoiceStatus? Invoice_status { get; set; } = default!;
 
         /// <summary>
         /// The status of the event.
@@ -58077,33 +58671,33 @@ namespace FSH.Starter.Blazor.Infrastructure.NoonaApi
         /// <br/>
         /// </summary>
         [System.Text.Json.Serialization.JsonPropertyName("status")]
-        public string Status { get; set; } = default!;
+        public string? Status { get; set; } = default!;
 
         [System.Text.Json.Serialization.JsonPropertyName("claim_status")]
         [System.Text.Json.Serialization.JsonConverter(typeof(System.Text.Json.Serialization.JsonStringEnumConverter<ClaimStatus>))]
-        public ClaimStatus Claim_status { get; set; } = default!;
+        public ClaimStatus? Claim_status { get; set; } = default!;
 
         [System.Text.Json.Serialization.JsonPropertyName("origin")]
         [System.Text.Json.Serialization.JsonConverter(typeof(System.Text.Json.Serialization.JsonStringEnumConverter<EventOrigin>))]
-        public EventOrigin Origin { get; set; } = default!;
+        public EventOrigin? Origin { get; set; } = default!;
 
         [System.Text.Json.Serialization.JsonPropertyName("booking_source")]
-        public BookingSource Booking_source { get; set; } = default!;
+        public BookingSource? Booking_source { get; set; } = default!;
 
         [System.Text.Json.Serialization.JsonPropertyName("booking_questions")]
-        public LegacyBookingQuestions Booking_questions { get; set; } = default!;
+        public LegacyBookingQuestions? Booking_questions { get; set; } = default!;
 
         [System.Text.Json.Serialization.JsonPropertyName("booking_question_answers")]
-        public BookingQuestionAnswers Booking_question_answers { get; set; } = default!;
+        public BookingQuestionAnswers? Booking_question_answers { get; set; } = default!;
 
         [System.Text.Json.Serialization.JsonPropertyName("comment")]
-        public string Comment { get; set; } = default!;
+        public string? Comment { get; set; } = default!;
 
         /// <summary>
         /// A comment that the customer included during a marketplace booking.
         /// </summary>
         [System.Text.Json.Serialization.JsonPropertyName("customer_comment")]
-        public string Customer_comment { get; set; } = default!;
+        public string? Customer_comment { get; set; } = default!;
 
         /// <summary>
         /// Event is unconfirmed if the employee has not yet confirmed the booking.
@@ -58111,37 +58705,37 @@ namespace FSH.Starter.Blazor.Infrastructure.NoonaApi
         /// <br/>
         /// </summary>
         [System.Text.Json.Serialization.JsonPropertyName("unconfirmed")]
-        public bool Unconfirmed { get; set; } = default!;
+        public bool? Unconfirmed { get; set; } = default!;
 
         /// <summary>
         /// A property that users can use to mark events as special. Has no affect on system behavior.
         /// </summary>
         [System.Text.Json.Serialization.JsonPropertyName("special")]
-        public bool Special { get; set; } = default!;
+        public bool? Special { get; set; } = default!;
 
         /// <summary>
         /// A property that users can use to pin events.
         /// </summary>
         [System.Text.Json.Serialization.JsonPropertyName("pinned")]
-        public bool Pinned { get; set; } = default!;
+        public bool? Pinned { get; set; } = default!;
 
         [System.Text.Json.Serialization.JsonPropertyName("tags")]
-        public EventTags Tags { get; set; } = default!;
+        public EventTags? Tags { get; set; } = default!;
 
         /// <summary>
         /// Provided by customers when they decline through the marketplace.
         /// </summary>
         [System.Text.Json.Serialization.JsonPropertyName("cancel_reason")]
-        public string Cancel_reason { get; set; } = default!;
+        public string? Cancel_reason { get; set; } = default!;
 
         [System.Text.Json.Serialization.JsonPropertyName("sale")]
-        public string Sale { get; set; } = default!;
+        public string? Sale { get; set; } = default!;
 
         [System.Text.Json.Serialization.JsonPropertyName("payment")]
-        public string Payment { get; set; } = default!;
+        public string? Payment { get; set; } = default!;
 
         [System.Text.Json.Serialization.JsonPropertyName("price")]
-        public CalculatedPrice Price { get; set; } = default!;
+        public CalculatedPrice? Price { get; set; } = default!;
 
         /// <summary>
         /// The amount of the no-show fee that is still outstanding.
@@ -58150,16 +58744,16 @@ namespace FSH.Starter.Blazor.Infrastructure.NoonaApi
         /// <br/>
         /// </summary>
         [System.Text.Json.Serialization.JsonPropertyName("outstanding_no_show_fee")]
-        public double Outstanding_no_show_fee { get; set; } = default!;
+        public double? Outstanding_no_show_fee { get; set; } = default!;
 
         [System.Text.Json.Serialization.JsonPropertyName("custom_properties")]
-        public CustomPropertyValues Custom_properties { get; set; } = default!;
+        public CustomPropertyValues? Custom_properties { get; set; } = default!;
 
         [System.Text.Json.Serialization.JsonPropertyName("notification_preferences")]
-        public NotificationPreferences Notification_preferences { get; set; } = default!;
+        public NotificationPreferences? Notification_preferences { get; set; } = default!;
 
         [System.Text.Json.Serialization.JsonPropertyName("attachments")]
-        public Attachments Attachments { get; set; } = default!;
+        public Attachments? Attachments { get; set; } = default!;
 
         /// <summary>
         /// The ID of the waitlist entry that this event is associated with.
@@ -58168,13 +58762,13 @@ namespace FSH.Starter.Blazor.Infrastructure.NoonaApi
         /// <br/>
         /// </summary>
         [System.Text.Json.Serialization.JsonPropertyName("waitlist_entry")]
-        public string Waitlist_entry { get; set; } = default!;
+        public string? Waitlist_entry { get; set; } = default!;
 
         [System.Text.Json.Serialization.JsonPropertyName("booking_offer")]
-        public string Booking_offer { get; set; } = default!;
+        public string? Booking_offer { get; set; } = default!;
 
         [System.Text.Json.Serialization.JsonPropertyName("rrule")]
-        public string Rrule { get; set; } = default!;
+        public string? Rrule { get; set; } = default!;
 
         /// <summary>
         /// The version of the event.
@@ -58185,39 +58779,39 @@ namespace FSH.Starter.Blazor.Infrastructure.NoonaApi
         /// <br/>
         /// </summary>
         [System.Text.Json.Serialization.JsonPropertyName("version")]
-        public int Version { get; set; } = default!;
+        public int? Version { get; set; } = default!;
 
         [System.Text.Json.Serialization.JsonPropertyName("created_by")]
-        public string Created_by { get; set; } = default!;
+        public string? Created_by { get; set; } = default!;
 
         [System.Text.Json.Serialization.JsonPropertyName("updated_by")]
-        public string Updated_by { get; set; } = default!;
+        public string? Updated_by { get; set; } = default!;
 
         [System.Text.Json.Serialization.JsonPropertyName("update_origin")]
         [System.Text.Json.Serialization.JsonConverter(typeof(System.Text.Json.Serialization.JsonStringEnumConverter<EventOrigin>))]
-        public EventOrigin Update_origin { get; set; } = default!;
+        public EventOrigin? Update_origin { get; set; } = default!;
 
         /// <summary>
         /// It is only possible to 'accept' and event once.
         /// <br/>
         /// </summary>
         [System.Text.Json.Serialization.JsonPropertyName("accepted_at")]
-        public System.DateTime Accepted_at { get; set; } = default!;
+        public System.DateTime? Accepted_at { get; set; } = default!;
 
         [System.Text.Json.Serialization.JsonPropertyName("declined_at")]
-        public System.DateTime Declined_at { get; set; } = default!;
+        public System.DateTime? Declined_at { get; set; } = default!;
 
         [System.Text.Json.Serialization.JsonPropertyName("created_at")]
-        public System.DateTime Created_at { get; set; } = default!;
+        public System.DateTime? Created_at { get; set; } = default!;
 
         [System.Text.Json.Serialization.JsonPropertyName("updated_at")]
-        public System.DateTime Updated_at { get; set; } = default!;
+        public System.DateTime? Updated_at { get; set; } = default!;
 
         [System.Text.Json.Serialization.JsonPropertyName("deleted_at")]
-        public System.DateTime Deleted_at { get; set; } = default!;
+        public System.DateTime? Deleted_at { get; set; } = default!;
 
         [System.Text.Json.Serialization.JsonPropertyName("rwg")]
-        public RwgConversionTracking Rwg { get; set; } = default!;
+        public RwgConversionTracking? Rwg { get; set; } = default!;
 
         private System.Collections.Generic.IDictionary<string, object>? _additionalProperties;
 
@@ -58248,19 +58842,19 @@ namespace FSH.Starter.Blazor.Infrastructure.NoonaApi
         /// The ID of the variation selected.
         /// </summary>
         [System.Text.Json.Serialization.JsonPropertyName("variation_id")]
-        public string Variation_id { get; set; } = default!;
+        public string? Variation_id { get; set; } = default!;
 
         /// <summary>
         /// The ID of the event type the variation belongs to.
         /// </summary>
         [System.Text.Json.Serialization.JsonPropertyName("event_type_id")]
-        public string Event_type_id { get; set; } = default!;
+        public string? Event_type_id { get; set; } = default!;
 
         /// <summary>
         /// The quantity of the variation selected.
         /// </summary>
         [System.Text.Json.Serialization.JsonPropertyName("quantity")]
-        public int Quantity { get; set; } = default!;
+        public int? Quantity { get; set; } = default!;
 
         private System.Collections.Generic.IDictionary<string, object>? _additionalProperties;
 
@@ -58390,15 +58984,15 @@ namespace FSH.Starter.Blazor.Infrastructure.NoonaApi
 
         [System.Text.Json.Serialization.JsonPropertyName("group")]
         [System.Text.Json.Serialization.JsonConverter(typeof(System.Text.Json.Serialization.JsonStringEnumConverter<BookingSourceGroup>))]
-        public BookingSourceGroup Group { get; set; } = default!;
+        public BookingSourceGroup? Group { get; set; } = default!;
 
         [System.Text.Json.Serialization.JsonPropertyName("channel")]
         [System.Text.Json.Serialization.JsonConverter(typeof(System.Text.Json.Serialization.JsonStringEnumConverter<BookingSourceChannel>))]
-        public BookingSourceChannel Channel { get; set; } = default!;
+        public BookingSourceChannel? Channel { get; set; } = default!;
 
         [System.Text.Json.Serialization.JsonPropertyName("funnel")]
         [System.Text.Json.Serialization.JsonConverter(typeof(System.Text.Json.Serialization.JsonStringEnumConverter<BookingSourceFunnel>))]
-        public BookingSourceFunnel Funnel { get; set; } = default!;
+        public BookingSourceFunnel? Funnel { get; set; } = default!;
 
         private System.Collections.Generic.IDictionary<string, object>? _additionalProperties;
 
@@ -58464,10 +59058,10 @@ namespace FSH.Starter.Blazor.Infrastructure.NoonaApi
     {
 
         [System.Text.Json.Serialization.JsonPropertyName("question")]
-        public string Question { get; set; } = default!;
+        public string? Question { get; set; } = default!;
 
         [System.Text.Json.Serialization.JsonPropertyName("answer")]
-        public string Answer { get; set; } = default!;
+        public string? Answer { get; set; } = default!;
 
         private System.Collections.Generic.IDictionary<string, object>? _additionalProperties;
 
@@ -58494,7 +59088,7 @@ namespace FSH.Starter.Blazor.Infrastructure.NoonaApi
         /// Unique identifier for the booking question.
         /// </summary>
         [System.Text.Json.Serialization.JsonPropertyName("id")]
-        public string Id { get; set; } = default!;
+        public string? Id { get; set; } = default!;
 
         /// <summary>
         /// The title of the booking question.
@@ -58504,16 +59098,16 @@ namespace FSH.Starter.Blazor.Infrastructure.NoonaApi
         public string Title { get; set; } = default!;
 
         [System.Text.Json.Serialization.JsonPropertyName("title_translations")]
-        public TranslationMap Title_translations { get; set; } = default!;
+        public TranslationMap? Title_translations { get; set; } = default!;
 
         /// <summary>
         /// Additional details about the question.
         /// </summary>
         [System.Text.Json.Serialization.JsonPropertyName("description")]
-        public string Description { get; set; } = default!;
+        public string? Description { get; set; } = default!;
 
         [System.Text.Json.Serialization.JsonPropertyName("description_translations")]
-        public TranslationMap Description_translations { get; set; } = default!;
+        public TranslationMap? Description_translations { get; set; } = default!;
 
         /// <summary>
         /// Indicates if an answer is required.
@@ -58526,7 +59120,7 @@ namespace FSH.Starter.Blazor.Infrastructure.NoonaApi
         /// </summary>
         [System.Text.Json.Serialization.JsonPropertyName("answer_type")]
         [System.Text.Json.Serialization.JsonConverter(typeof(System.Text.Json.Serialization.JsonStringEnumConverter<BookingQuestionAnswer_type>))]
-        public BookingQuestionAnswer_type Answer_type { get; set; } = default!;
+        public BookingQuestionAnswer_type? Answer_type { get; set; } = default!;
 
         private System.Collections.Generic.IDictionary<string, object>? _additionalProperties;
 
@@ -58553,7 +59147,7 @@ namespace FSH.Starter.Blazor.Infrastructure.NoonaApi
         /// The answer provided by the user.
         /// </summary>
         [System.Text.Json.Serialization.JsonPropertyName("answer")]
-        public string Answer { get; set; } = default!;
+        public string? Answer { get; set; } = default!;
 
     }
 
@@ -58565,7 +59159,7 @@ namespace FSH.Starter.Blazor.Infrastructure.NoonaApi
         /// The answer provided by the user.
         /// </summary>
         [System.Text.Json.Serialization.JsonPropertyName("answer")]
-        public string Answer { get; set; } = default!;
+        public string? Answer { get; set; } = default!;
 
         private System.Collections.Generic.IDictionary<string, object>? _additionalProperties;
 
@@ -58600,25 +59194,25 @@ namespace FSH.Starter.Blazor.Infrastructure.NoonaApi
         /// Filter events by employee IDs
         /// </summary>
         [System.Text.Json.Serialization.JsonPropertyName("employee_ids")]
-        public System.Collections.Generic.ICollection<string> Employee_ids { get; set; } = default!;
+        public System.Collections.Generic.ICollection<string>? Employee_ids { get; set; } = default!;
 
         /// <summary>
         /// Filter events by space/resource IDs
         /// </summary>
         [System.Text.Json.Serialization.JsonPropertyName("spaces")]
-        public System.Collections.Generic.ICollection<string> Spaces { get; set; } = default!;
+        public System.Collections.Generic.ICollection<string>? Spaces { get; set; } = default!;
 
         /// <summary>
         /// Filter events by event type ID
         /// </summary>
         [System.Text.Json.Serialization.JsonPropertyName("event_type_ids")]
-        public System.Collections.Generic.ICollection<string> Event_type_ids { get; set; } = default!;
+        public System.Collections.Generic.ICollection<string>? Event_type_ids { get; set; } = default!;
 
         /// <summary>
         /// Include deleted events in the count
         /// </summary>
         [System.Text.Json.Serialization.JsonPropertyName("include_deleted")]
-        public bool Include_deleted { get; set; } = false;
+        public bool? Include_deleted { get; set; } = false;
 
         private System.Collections.Generic.IDictionary<string, object>? _additionalProperties;
 
@@ -58643,25 +59237,25 @@ namespace FSH.Starter.Blazor.Infrastructure.NoonaApi
         /// </summary>
         [System.Text.Json.Serialization.JsonPropertyName("customer")]
         [System.Obsolete]
-        public string Customer { get; set; } = default!;
+        public string? Customer { get; set; } = default!;
 
         /// <summary>
         /// Filter by customer IDs
         /// </summary>
         [System.Text.Json.Serialization.JsonPropertyName("customers")]
-        public System.Collections.Generic.ICollection<string> Customers { get; set; } = default!;
+        public System.Collections.Generic.ICollection<string>? Customers { get; set; } = default!;
 
         /// <summary>
         /// Filter by phone number of customer
         /// </summary>
         [System.Text.Json.Serialization.JsonPropertyName("phone_number")]
-        public string Phone_number { get; set; } = default!;
+        public string? Phone_number { get; set; } = default!;
 
         /// <summary>
         /// Filter by phone country code of customer
         /// </summary>
         [System.Text.Json.Serialization.JsonPropertyName("phone_country_code")]
-        public string Phone_country_code { get; set; } = default!;
+        public string? Phone_country_code { get; set; } = default!;
 
         /// <summary>
         /// Only return events where starts_at is after this timestamp.
@@ -58670,7 +59264,7 @@ namespace FSH.Starter.Blazor.Infrastructure.NoonaApi
         /// <br/>
         /// </summary>
         [System.Text.Json.Serialization.JsonPropertyName("from")]
-        public System.DateTime From { get; set; } = default!;
+        public System.DateTime? From { get; set; } = default!;
 
         /// <summary>
         /// Only return events where starts_at is before this timestamp.
@@ -58679,7 +59273,7 @@ namespace FSH.Starter.Blazor.Infrastructure.NoonaApi
         /// <br/>
         /// </summary>
         [System.Text.Json.Serialization.JsonPropertyName("to")]
-        public System.DateTime To { get; set; } = default!;
+        public System.DateTime? To { get; set; } = default!;
 
         /// <summary>
         /// Only return events that overlap with this timestamp or later.
@@ -58688,7 +59282,7 @@ namespace FSH.Starter.Blazor.Infrastructure.NoonaApi
         /// <br/>
         /// </summary>
         [System.Text.Json.Serialization.JsonPropertyName("overlaps_from")]
-        public System.DateTime Overlaps_from { get; set; } = default!;
+        public System.DateTime? Overlaps_from { get; set; } = default!;
 
         /// <summary>
         /// Only return events that overlap with this timestamp or earlier.
@@ -58697,25 +59291,25 @@ namespace FSH.Starter.Blazor.Infrastructure.NoonaApi
         /// <br/>
         /// </summary>
         [System.Text.Json.Serialization.JsonPropertyName("overlaps_to")]
-        public System.DateTime Overlaps_to { get; set; } = default!;
+        public System.DateTime? Overlaps_to { get; set; } = default!;
 
         /// <summary>
         /// Exclude specific event IDs from response
         /// </summary>
         [System.Text.Json.Serialization.JsonPropertyName("exclude")]
-        public System.Collections.Generic.ICollection<string> Exclude { get; set; } = default!;
+        public System.Collections.Generic.ICollection<string>? Exclude { get; set; } = default!;
 
         /// <summary>
         /// Filter by specific event IDs
         /// </summary>
         [System.Text.Json.Serialization.JsonPropertyName("ids")]
-        public System.Collections.Generic.ICollection<string> Ids { get; set; } = default!;
+        public System.Collections.Generic.ICollection<string>? Ids { get; set; } = default!;
 
         /// <summary>
         /// Only return events where updated_at is after this timestamp.
         /// </summary>
         [System.Text.Json.Serialization.JsonPropertyName("updated_from")]
-        public System.DateTime Updated_from { get; set; } = default!;
+        public System.DateTime? Updated_from { get; set; } = default!;
 
         /// <summary>
         /// Whether to include deleted events in the response.
@@ -58726,11 +59320,11 @@ namespace FSH.Starter.Blazor.Infrastructure.NoonaApi
         /// <br/>
         /// </summary>
         [System.Text.Json.Serialization.JsonPropertyName("include_deleted")]
-        public bool Include_deleted { get; set; } = false;
+        public bool? Include_deleted { get; set; } = false;
 
         [System.Text.Json.Serialization.JsonPropertyName("origins")]
         // TODO(system.text.json): Add string enum item converter
-        public EventOrigins Origins { get; set; } = default!;
+        public EventOrigins? Origins { get; set; } = default!;
 
         /// <summary>
         /// The status of the event.
@@ -58739,71 +59333,71 @@ namespace FSH.Starter.Blazor.Infrastructure.NoonaApi
         /// <br/>
         /// </summary>
         [System.Text.Json.Serialization.JsonPropertyName("statuses")]
-        public System.Collections.Generic.ICollection<string> Statuses { get; set; } = default!;
+        public System.Collections.Generic.ICollection<string>? Statuses { get; set; } = default!;
 
         /// <summary>
         /// Filter by event type IDs
         /// </summary>
         [System.Text.Json.Serialization.JsonPropertyName("event_type_ids")]
-        public System.Collections.Generic.ICollection<string> Event_type_ids { get; set; } = default!;
+        public System.Collections.Generic.ICollection<string>? Event_type_ids { get; set; } = default!;
 
         /// <summary>
         /// Filter by custom property IDs
         /// </summary>
         [System.Text.Json.Serialization.JsonPropertyName("custom_property_ids")]
-        public System.Collections.Generic.ICollection<string> Custom_property_ids { get; set; } = default!;
+        public System.Collections.Generic.ICollection<string>? Custom_property_ids { get; set; } = default!;
 
         /// <summary>
         /// Filter by custom property values
         /// </summary>
         [System.Text.Json.Serialization.JsonPropertyName("custom_property_values")]
-        public System.Collections.Generic.ICollection<string> Custom_property_values { get; set; } = default!;
+        public System.Collections.Generic.ICollection<string>? Custom_property_values { get; set; } = default!;
 
         /// <summary>
         /// Filter by invoice status
         /// </summary>
         [System.Text.Json.Serialization.JsonPropertyName("invoice_statuses")]
         // TODO(system.text.json): Add string enum item converter
-        public System.Collections.Generic.ICollection<EventInvoiceStatus> Invoice_statuses { get; set; } = default!;
+        public System.Collections.Generic.ICollection<EventInvoiceStatus>? Invoice_statuses { get; set; } = default!;
 
         /// <summary>
         /// Filter by created_by ID
         /// </summary>
         [System.Text.Json.Serialization.JsonPropertyName("created_by")]
-        public System.Collections.Generic.ICollection<string> Created_by { get; set; } = default!;
+        public System.Collections.Generic.ICollection<string>? Created_by { get; set; } = default!;
 
         /// <summary>
         /// Filter by booking source groups
         /// </summary>
         [System.Text.Json.Serialization.JsonPropertyName("groups")]
         // TODO(system.text.json): Add string enum item converter
-        public System.Collections.Generic.ICollection<BookingSourceGroup> Groups { get; set; } = default!;
+        public System.Collections.Generic.ICollection<BookingSourceGroup>? Groups { get; set; } = default!;
 
         /// <summary>
         /// Filter by booking source channels
         /// </summary>
         [System.Text.Json.Serialization.JsonPropertyName("channels")]
         // TODO(system.text.json): Add string enum item converter
-        public System.Collections.Generic.ICollection<BookingSourceChannel> Channels { get; set; } = default!;
+        public System.Collections.Generic.ICollection<BookingSourceChannel>? Channels { get; set; } = default!;
 
         /// <summary>
         /// Filter by booking source funnels
         /// </summary>
         [System.Text.Json.Serialization.JsonPropertyName("funnels")]
         // TODO(system.text.json): Add string enum item converter
-        public System.Collections.Generic.ICollection<BookingSourceFunnel> Funnels { get; set; } = default!;
+        public System.Collections.Generic.ICollection<BookingSourceFunnel>? Funnels { get; set; } = default!;
 
         /// <summary>
         /// Only return events where created_at is after this timestamp.
         /// </summary>
         [System.Text.Json.Serialization.JsonPropertyName("created_from")]
-        public System.DateTime Created_from { get; set; } = default!;
+        public System.DateTime? Created_from { get; set; } = default!;
 
         /// <summary>
         /// Only return events where created_at is before this timestamp.
         /// </summary>
         [System.Text.Json.Serialization.JsonPropertyName("created_to")]
-        public System.DateTime Created_to { get; set; } = default!;
+        public System.DateTime? Created_to { get; set; } = default!;
 
     }
 
@@ -58823,7 +59417,7 @@ namespace FSH.Starter.Blazor.Infrastructure.NoonaApi
         /// <br/>
         /// </summary>
         [System.Text.Json.Serialization.JsonPropertyName("notify")]
-        public bool Notify { get; set; } = false;
+        public bool? Notify { get; set; } = false;
 
         /// <summary>
         /// Whether to send a booking offer to the customer when the event is created.
@@ -58836,7 +59430,7 @@ namespace FSH.Starter.Blazor.Infrastructure.NoonaApi
         /// <br/>
         /// </summary>
         [System.Text.Json.Serialization.JsonPropertyName("booking_offer")]
-        public bool Booking_offer { get; set; } = false;
+        public bool? Booking_offer { get; set; } = false;
 
         private System.Collections.Generic.IDictionary<string, object>? _additionalProperties;
 
@@ -58865,7 +59459,7 @@ namespace FSH.Starter.Blazor.Infrastructure.NoonaApi
         /// <br/>
         /// </summary>
         [System.Text.Json.Serialization.JsonPropertyName("notify")]
-        public bool Notify { get; set; } = false;
+        public bool? Notify { get; set; } = false;
 
         /// <summary>
         /// What events to update when updating an event that is a part of a recurring event.
@@ -58877,7 +59471,7 @@ namespace FSH.Starter.Blazor.Infrastructure.NoonaApi
         /// </summary>
         [System.Text.Json.Serialization.JsonPropertyName("type")]
         [System.Text.Json.Serialization.JsonConverter(typeof(System.Text.Json.Serialization.JsonStringEnumConverter<EventUpdateBehaviorType>))]
-        public EventUpdateBehaviorType Type { get; set; } = FSH.Starter.Blazor.Infrastructure.NoonaApi.EventUpdateBehaviorType.Detach;
+        public EventUpdateBehaviorType? Type { get; set; } = FSH.Starter.Blazor.Infrastructure.NoonaApi.EventUpdateBehaviorType.Detach;
 
         private System.Collections.Generic.IDictionary<string, object>? _additionalProperties;
 
@@ -58906,7 +59500,7 @@ namespace FSH.Starter.Blazor.Infrastructure.NoonaApi
         /// </summary>
         [System.Text.Json.Serialization.JsonPropertyName("type")]
         [System.Text.Json.Serialization.JsonConverter(typeof(System.Text.Json.Serialization.JsonStringEnumConverter<EventDeletionBehaviorType>))]
-        public EventDeletionBehaviorType Type { get; set; } = FSH.Starter.Blazor.Infrastructure.NoonaApi.EventDeletionBehaviorType.Single;
+        public EventDeletionBehaviorType? Type { get; set; } = FSH.Starter.Blazor.Infrastructure.NoonaApi.EventDeletionBehaviorType.Single;
 
         /// <summary>
         /// Whether to notify customer about the event deletion.
@@ -58915,7 +59509,7 @@ namespace FSH.Starter.Blazor.Infrastructure.NoonaApi
         /// <br/>
         /// </summary>
         [System.Text.Json.Serialization.JsonPropertyName("notify")]
-        public bool Notify { get; set; } = false;
+        public bool? Notify { get; set; } = false;
 
         private System.Collections.Generic.IDictionary<string, object>? _additionalProperties;
 
@@ -58943,7 +59537,7 @@ namespace FSH.Starter.Blazor.Infrastructure.NoonaApi
         /// </summary>
         [System.Text.Json.Serialization.JsonPropertyName("type")]
         [System.Text.Json.Serialization.JsonConverter(typeof(System.Text.Json.Serialization.JsonStringEnumConverter<MozrestQueryBehaviorType>))]
-        public MozrestQueryBehaviorType Type { get; set; } = FSH.Starter.Blazor.Infrastructure.NoonaApi.MozrestQueryBehaviorType.Local;
+        public MozrestQueryBehaviorType? Type { get; set; } = FSH.Starter.Blazor.Infrastructure.NoonaApi.MozrestQueryBehaviorType.Local;
 
         private System.Collections.Generic.IDictionary<string, object>? _additionalProperties;
 
@@ -58967,13 +59561,13 @@ namespace FSH.Starter.Blazor.Infrastructure.NoonaApi
         /// Only return blocked times where starts_at is after this timestamp.
         /// </summary>
         [System.Text.Json.Serialization.JsonPropertyName("from")]
-        public System.DateTime From { get; set; } = default!;
+        public System.DateTime? From { get; set; } = default!;
 
         /// <summary>
         /// Only return blocked times where starts_at is before this timestamp.
         /// </summary>
         [System.Text.Json.Serialization.JsonPropertyName("to")]
-        public System.DateTime To { get; set; } = default!;
+        public System.DateTime? To { get; set; } = default!;
 
     }
 
@@ -59055,6 +59649,9 @@ namespace FSH.Starter.Blazor.Infrastructure.NoonaApi
         [System.Text.Json.Serialization.JsonStringEnumMemberName(@"payments")]
         Payments = 11,
 
+        [System.Text.Json.Serialization.JsonStringEnumMemberName(@"task_instances")]
+        Task_instances = 12,
+
     }
 
     /// <summary>
@@ -59123,6 +59720,9 @@ namespace FSH.Starter.Blazor.Infrastructure.NoonaApi
         [System.Text.Json.Serialization.JsonStringEnumMemberName(@"onPaymentUpdated")]
         OnPaymentUpdated = 11,
 
+        [System.Text.Json.Serialization.JsonStringEnumMemberName(@"onTaskInstanceUpdated")]
+        OnTaskInstanceUpdated = 12,
+
     }
 
     [System.CodeDom.Compiler.GeneratedCode("NJsonSchema", "14.6.1.0 (NJsonSchema v11.5.1.0 (Newtonsoft.Json v13.0.0.0))")]
@@ -59180,7 +59780,7 @@ namespace FSH.Starter.Blazor.Infrastructure.NoonaApi
         /// </summary>
         [System.Text.Json.Serialization.JsonPropertyName("type")]
         [System.Text.Json.Serialization.JsonConverter(typeof(System.Text.Json.Serialization.JsonStringEnumConverter<BlockedTimeUpdateBehaviorType>))]
-        public BlockedTimeUpdateBehaviorType Type { get; set; } = FSH.Starter.Blazor.Infrastructure.NoonaApi.BlockedTimeUpdateBehaviorType.Detach;
+        public BlockedTimeUpdateBehaviorType? Type { get; set; } = FSH.Starter.Blazor.Infrastructure.NoonaApi.BlockedTimeUpdateBehaviorType.Detach;
 
         private System.Collections.Generic.IDictionary<string, object>? _additionalProperties;
 
@@ -59209,7 +59809,7 @@ namespace FSH.Starter.Blazor.Infrastructure.NoonaApi
         /// </summary>
         [System.Text.Json.Serialization.JsonPropertyName("type")]
         [System.Text.Json.Serialization.JsonConverter(typeof(System.Text.Json.Serialization.JsonStringEnumConverter<BlockedTimeDeletionBehaviorType>))]
-        public BlockedTimeDeletionBehaviorType Type { get; set; } = FSH.Starter.Blazor.Infrastructure.NoonaApi.BlockedTimeDeletionBehaviorType.Single;
+        public BlockedTimeDeletionBehaviorType? Type { get; set; } = FSH.Starter.Blazor.Infrastructure.NoonaApi.BlockedTimeDeletionBehaviorType.Single;
 
         private System.Collections.Generic.IDictionary<string, object>? _additionalProperties;
 
@@ -59233,66 +59833,66 @@ namespace FSH.Starter.Blazor.Infrastructure.NoonaApi
     {
 
         [System.Text.Json.Serialization.JsonPropertyName("id")]
-        public string Id { get; set; } = default!;
+        public string? Id { get; set; } = default!;
 
         [System.Text.Json.Serialization.JsonPropertyName("company")]
-        public string Company { get; set; } = default!;
+        public string? Company { get; set; } = default!;
 
         [System.Text.Json.Serialization.JsonPropertyName("employee")]
-        public string Employee { get; set; } = default!;
+        public string? Employee { get; set; } = default!;
 
         [System.Text.Json.Serialization.JsonPropertyName("space")]
         [System.Obsolete]
-        public string Space { get; set; } = default!;
+        public string? Space { get; set; } = default!;
 
         [System.Text.Json.Serialization.JsonPropertyName("resource")]
-        public string Resource { get; set; } = default!;
+        public string? Resource { get; set; } = default!;
 
         [System.Text.Json.Serialization.JsonPropertyName("title")]
-        public string Title { get; set; } = default!;
+        public string? Title { get; set; } = default!;
 
         /// <summary>
         /// Start time of blocked time
         /// </summary>
         [System.Text.Json.Serialization.JsonPropertyName("starts_at")]
-        public System.DateTime Starts_at { get; set; } = default!;
+        public System.DateTime? Starts_at { get; set; } = default!;
 
         /// <summary>
         /// End time of blocked time
         /// </summary>
         [System.Text.Json.Serialization.JsonPropertyName("ends_at")]
-        public System.DateTime Ends_at { get; set; } = default!;
+        public System.DateTime? Ends_at { get; set; } = default!;
 
         /// <summary>
         /// Date of blocked time
         /// </summary>
         [System.Text.Json.Serialization.JsonPropertyName("date")]
-        public string Date { get; set; } = default!;
+        public string? Date { get; set; } = default!;
 
         [System.Text.Json.Serialization.JsonPropertyName("rrule")]
-        public string Rrule { get; set; } = default!;
+        public string? Rrule { get; set; } = default!;
 
         /// <summary>
         /// Duration of blocked time from start to end
         /// </summary>
         [System.Text.Json.Serialization.JsonPropertyName("duration")]
-        public int Duration { get; set; } = default!;
+        public int? Duration { get; set; } = default!;
 
         [System.Text.Json.Serialization.JsonPropertyName("theme")]
         [System.Text.Json.Serialization.JsonConverter(typeof(System.Text.Json.Serialization.JsonStringEnumConverter<BlockedTimeTheme>))]
-        public BlockedTimeTheme Theme { get; set; } = default!;
+        public BlockedTimeTheme? Theme { get; set; } = default!;
 
         [System.Text.Json.Serialization.JsonPropertyName("created_by")]
-        public string Created_by { get; set; } = default!;
+        public string? Created_by { get; set; } = default!;
 
         [System.Text.Json.Serialization.JsonPropertyName("updated_by")]
-        public string Updated_by { get; set; } = default!;
+        public string? Updated_by { get; set; } = default!;
 
         [System.Text.Json.Serialization.JsonPropertyName("created_at")]
-        public System.DateTime Created_at { get; set; } = default!;
+        public System.DateTime? Created_at { get; set; } = default!;
 
         [System.Text.Json.Serialization.JsonPropertyName("updated_at")]
-        public System.DateTime Updated_at { get; set; } = default!;
+        public System.DateTime? Updated_at { get; set; } = default!;
 
         private System.Collections.Generic.IDictionary<string, object>? _additionalProperties;
 
@@ -59318,17 +59918,17 @@ namespace FSH.Starter.Blazor.Infrastructure.NoonaApi
         public string Company { get; set; } = default!;
 
         [System.Text.Json.Serialization.JsonPropertyName("employee")]
-        public string Employee { get; set; } = default!;
+        public string? Employee { get; set; } = default!;
 
         [System.Text.Json.Serialization.JsonPropertyName("space")]
         [System.Obsolete]
-        public string Space { get; set; } = default!;
+        public string? Space { get; set; } = default!;
 
         [System.Text.Json.Serialization.JsonPropertyName("resource")]
-        public string Resource { get; set; } = default!;
+        public string? Resource { get; set; } = default!;
 
         [System.Text.Json.Serialization.JsonPropertyName("title")]
-        public string Title { get; set; } = default!;
+        public string? Title { get; set; } = default!;
 
         /// <summary>
         /// Start time of blocked time
@@ -59352,7 +59952,7 @@ namespace FSH.Starter.Blazor.Infrastructure.NoonaApi
         public string Date { get; set; } = default!;
 
         [System.Text.Json.Serialization.JsonPropertyName("rrule")]
-        public string Rrule { get; set; } = default!;
+        public string? Rrule { get; set; } = default!;
 
         /// <summary>
         /// Duration of blocked time from start to end
@@ -59405,17 +60005,17 @@ namespace FSH.Starter.Blazor.Infrastructure.NoonaApi
         public string Company { get; set; } = default!;
 
         [System.Text.Json.Serialization.JsonPropertyName("employee")]
-        public string Employee { get; set; } = default!;
+        public string? Employee { get; set; } = default!;
 
         [System.Text.Json.Serialization.JsonPropertyName("space")]
         [System.Obsolete]
-        public string Space { get; set; } = default!;
+        public string? Space { get; set; } = default!;
 
         [System.Text.Json.Serialization.JsonPropertyName("resource")]
-        public string Resource { get; set; } = default!;
+        public string? Resource { get; set; } = default!;
 
         [System.Text.Json.Serialization.JsonPropertyName("title")]
-        public string Title { get; set; } = default!;
+        public string? Title { get; set; } = default!;
 
         /// <summary>
         /// Start time of blocked time
@@ -59439,7 +60039,7 @@ namespace FSH.Starter.Blazor.Infrastructure.NoonaApi
         public string Date { get; set; } = default!;
 
         [System.Text.Json.Serialization.JsonPropertyName("rrule")]
-        public string Rrule { get; set; } = default!;
+        public string? Rrule { get; set; } = default!;
 
         /// <summary>
         /// Duration of blocked time from start to end
@@ -59538,31 +60138,31 @@ namespace FSH.Starter.Blazor.Infrastructure.NoonaApi
     {
 
         [System.Text.Json.Serialization.JsonPropertyName("company")]
-        public object Company { get; set; } = default!;
+        public object? Company { get; set; } = default!;
 
         [System.Text.Json.Serialization.JsonPropertyName("employee")]
-        public object Employee { get; set; } = default!;
+        public object? Employee { get; set; } = default!;
 
         [System.Text.Json.Serialization.JsonPropertyName("space")]
-        public object Space { get; set; } = default!;
+        public object? Space { get; set; } = default!;
 
         [System.Text.Json.Serialization.JsonPropertyName("resource")]
-        public object Resource { get; set; } = default!;
+        public object? Resource { get; set; } = default!;
 
         [System.Text.Json.Serialization.JsonPropertyName("rrule")]
-        public object Rrule { get; set; } = default!;
+        public object? Rrule { get; set; } = default!;
 
         /// <summary>
         /// Start time of blocked time
         /// </summary>
         [System.Text.Json.Serialization.JsonPropertyName("starts_at")]
-        public System.DateTime Starts_at { get; set; } = default!;
+        public System.DateTime? Starts_at { get; set; } = default!;
 
         /// <summary>
         /// End time of blocked time
         /// </summary>
         [System.Text.Json.Serialization.JsonPropertyName("ends_at")]
-        public System.DateTime Ends_at { get; set; } = default!;
+        public System.DateTime? Ends_at { get; set; } = default!;
 
     }
 
@@ -59571,31 +60171,31 @@ namespace FSH.Starter.Blazor.Infrastructure.NoonaApi
     {
 
         [System.Text.Json.Serialization.JsonPropertyName("company")]
-        public object Company { get; set; } = default!;
+        public object? Company { get; set; } = default!;
 
         [System.Text.Json.Serialization.JsonPropertyName("employee")]
-        public object Employee { get; set; } = default!;
+        public object? Employee { get; set; } = default!;
 
         [System.Text.Json.Serialization.JsonPropertyName("space")]
-        public object Space { get; set; } = default!;
+        public object? Space { get; set; } = default!;
 
         [System.Text.Json.Serialization.JsonPropertyName("resource")]
-        public object Resource { get; set; } = default!;
+        public object? Resource { get; set; } = default!;
 
         [System.Text.Json.Serialization.JsonPropertyName("rrule")]
-        public object Rrule { get; set; } = default!;
+        public object? Rrule { get; set; } = default!;
 
         /// <summary>
         /// Start time of blocked time
         /// </summary>
         [System.Text.Json.Serialization.JsonPropertyName("starts_at")]
-        public System.DateTime Starts_at { get; set; } = default!;
+        public System.DateTime? Starts_at { get; set; } = default!;
 
         /// <summary>
         /// End time of blocked time
         /// </summary>
         [System.Text.Json.Serialization.JsonPropertyName("ends_at")]
-        public System.DateTime Ends_at { get; set; } = default!;
+        public System.DateTime? Ends_at { get; set; } = default!;
 
         private System.Collections.Generic.IDictionary<string, object>? _additionalProperties;
 
@@ -59619,19 +60219,19 @@ namespace FSH.Starter.Blazor.Infrastructure.NoonaApi
         /// Filter by employee IDs
         /// </summary>
         [System.Text.Json.Serialization.JsonPropertyName("employees")]
-        public System.Collections.Generic.ICollection<string> Employees { get; set; } = default!;
+        public System.Collections.Generic.ICollection<string>? Employees { get; set; } = default!;
 
         /// <summary>
         /// Filter by space IDs
         /// </summary>
         [System.Text.Json.Serialization.JsonPropertyName("spaces")]
-        public System.Collections.Generic.ICollection<string> Spaces { get; set; } = default!;
+        public System.Collections.Generic.ICollection<string>? Spaces { get; set; } = default!;
 
         /// <summary>
         /// Filter by resource IDs
         /// </summary>
         [System.Text.Json.Serialization.JsonPropertyName("resources")]
-        public System.Collections.Generic.ICollection<string> Resources { get; set; } = default!;
+        public System.Collections.Generic.ICollection<string>? Resources { get; set; } = default!;
 
         private System.Collections.Generic.IDictionary<string, object>? _additionalProperties;
 
@@ -59649,22 +60249,22 @@ namespace FSH.Starter.Blazor.Infrastructure.NoonaApi
     {
 
         [System.Text.Json.Serialization.JsonPropertyName("city")]
-        public string City { get; set; } = default!;
+        public string? City { get; set; } = default!;
 
         [System.Text.Json.Serialization.JsonPropertyName("postalCode")]
-        public string PostalCode { get; set; } = default!;
+        public string? PostalCode { get; set; } = default!;
 
         [System.Text.Json.Serialization.JsonPropertyName("street")]
-        public string Street { get; set; } = default!;
+        public string? Street { get; set; } = default!;
 
         [System.Text.Json.Serialization.JsonPropertyName("region")]
-        public string Region { get; set; } = default!;
+        public string? Region { get; set; } = default!;
 
         [System.Text.Json.Serialization.JsonPropertyName("locality")]
-        public string Locality { get; set; } = default!;
+        public string? Locality { get; set; } = default!;
 
         [System.Text.Json.Serialization.JsonPropertyName("country")]
-        public string Country { get; set; } = default!;
+        public string? Country { get; set; } = default!;
 
         private System.Collections.Generic.IDictionary<string, object>? _additionalProperties;
 
@@ -59682,22 +60282,22 @@ namespace FSH.Starter.Blazor.Infrastructure.NoonaApi
     {
 
         [System.Text.Json.Serialization.JsonPropertyName("google_place_id")]
-        public string Google_place_id { get; set; } = default!;
+        public string? Google_place_id { get; set; } = default!;
 
         [System.Text.Json.Serialization.JsonPropertyName("address")]
-        public Address Address { get; set; } = default!;
+        public Address? Address { get; set; } = default!;
 
         [System.Text.Json.Serialization.JsonPropertyName("formatted_address")]
-        public string Formatted_address { get; set; } = default!;
+        public string? Formatted_address { get; set; } = default!;
 
         [System.Text.Json.Serialization.JsonPropertyName("lat_lng")]
-        public LocationLatLng Lat_lng { get; set; } = default!;
+        public LocationLatLng? Lat_lng { get; set; } = default!;
 
         [System.Text.Json.Serialization.JsonPropertyName("country")]
-        public Country Country { get; set; } = default!;
+        public Country? Country { get; set; } = default!;
 
         [System.Text.Json.Serialization.JsonPropertyName("time_zone")]
-        public string Time_zone { get; set; } = default!;
+        public string? Time_zone { get; set; } = default!;
 
         private System.Collections.Generic.IDictionary<string, object>? _additionalProperties;
 
@@ -59715,7 +60315,7 @@ namespace FSH.Starter.Blazor.Infrastructure.NoonaApi
     {
 
         [System.Text.Json.Serialization.JsonPropertyName("google_place_id")]
-        public string Google_place_id { get; set; } = default!;
+        public string? Google_place_id { get; set; } = default!;
 
         [System.Text.Json.Serialization.JsonPropertyName("address")]
         [System.ComponentModel.DataAnnotations.Required]
@@ -59749,10 +60349,10 @@ namespace FSH.Starter.Blazor.Infrastructure.NoonaApi
     {
 
         [System.Text.Json.Serialization.JsonPropertyName("short_name")]
-        public string Short_name { get; set; } = default!;
+        public string? Short_name { get; set; } = default!;
 
         [System.Text.Json.Serialization.JsonPropertyName("long_name")]
-        public string Long_name { get; set; } = default!;
+        public string? Long_name { get; set; } = default!;
 
         private System.Collections.Generic.IDictionary<string, object>? _additionalProperties;
 
@@ -59797,29 +60397,29 @@ namespace FSH.Starter.Blazor.Infrastructure.NoonaApi
     {
 
         [System.Text.Json.Serialization.JsonPropertyName("thumb")]
-        public string Thumb { get; set; } = default!;
+        public string? Thumb { get; set; } = default!;
 
         [System.Text.Json.Serialization.JsonPropertyName("image")]
-        public string Image1 { get; set; } = default!;
+        public string? Image1 { get; set; } = default!;
 
         [System.Text.Json.Serialization.JsonPropertyName("public_id")]
-        public string Public_id { get; set; } = default!;
+        public string? Public_id { get; set; } = default!;
 
         [System.Text.Json.Serialization.JsonPropertyName("type")]
-        public string Type { get; set; } = default!;
+        public string? Type { get; set; } = default!;
 
         [System.Text.Json.Serialization.JsonPropertyName("provider")]
         [System.Text.Json.Serialization.JsonConverter(typeof(System.Text.Json.Serialization.JsonStringEnumConverter<ImageProvider>))]
-        public ImageProvider Provider { get; set; } = default!;
+        public ImageProvider? Provider { get; set; } = default!;
 
         [System.Text.Json.Serialization.JsonPropertyName("width")]
-        public int Width { get; set; } = default!;
+        public int? Width { get; set; } = default!;
 
         [System.Text.Json.Serialization.JsonPropertyName("height")]
-        public int Height { get; set; } = default!;
+        public int? Height { get; set; } = default!;
 
         [System.Text.Json.Serialization.JsonPropertyName("bytes")]
-        public int Bytes { get; set; } = default!;
+        public int? Bytes { get; set; } = default!;
 
         private System.Collections.Generic.IDictionary<string, object>? _additionalProperties;
 
@@ -59873,11 +60473,11 @@ namespace FSH.Starter.Blazor.Infrastructure.NoonaApi
     {
 
         [System.Text.Json.Serialization.JsonPropertyName("field")]
-        public string Field { get; set; } = default!;
+        public string? Field { get; set; } = default!;
 
         [System.Text.Json.Serialization.JsonPropertyName("order")]
         [System.Text.Json.Serialization.JsonConverter(typeof(System.Text.Json.Serialization.JsonStringEnumConverter<SortOrder>))]
-        public SortOrder Order { get; set; } = default!;
+        public SortOrder? Order { get; set; } = default!;
 
         /// <summary>
         /// When true, use case-insensitive sorting for string fields.
@@ -59885,7 +60485,7 @@ namespace FSH.Starter.Blazor.Infrastructure.NoonaApi
         /// <br/>
         /// </summary>
         [System.Text.Json.Serialization.JsonPropertyName("ignore_casing")]
-        public bool Ignore_casing { get; set; } = false;
+        public bool? Ignore_casing { get; set; } = false;
 
         private System.Collections.Generic.IDictionary<string, object>? _additionalProperties;
 
@@ -59903,14 +60503,14 @@ namespace FSH.Starter.Blazor.Infrastructure.NoonaApi
     {
 
         [System.Text.Json.Serialization.JsonPropertyName("offset")]
-        public int Offset { get; set; } = 0;
+        public int? Offset { get; set; } = 0;
 
         /// <summary>
         /// The maximum number of results to return.
         /// </summary>
         [System.Text.Json.Serialization.JsonPropertyName("limit")]
         [System.ComponentModel.DataAnnotations.Range(1, 500)]
-        public int Limit { get; set; } = 500;
+        public int? Limit { get; set; } = 500;
 
         private System.Collections.Generic.IDictionary<string, object>? _additionalProperties;
 
@@ -59934,34 +60534,34 @@ namespace FSH.Starter.Blazor.Infrastructure.NoonaApi
     {
 
         [System.Text.Json.Serialization.JsonPropertyName("company")]
-        public string Company { get; set; } = default!;
+        public string? Company { get; set; } = default!;
 
         [System.Text.Json.Serialization.JsonPropertyName("title")]
-        public string Title { get; set; } = default!;
+        public string? Title { get; set; } = default!;
 
         [System.Text.Json.Serialization.JsonPropertyName("title_translations")]
-        public TranslationMap Title_translations { get; set; } = default!;
+        public TranslationMap? Title_translations { get; set; } = default!;
 
         [System.Text.Json.Serialization.JsonPropertyName("description")]
-        public string Description { get; set; } = default!;
+        public string? Description { get; set; } = default!;
 
         [System.Text.Json.Serialization.JsonPropertyName("description_translations")]
-        public TranslationMap Description_translations { get; set; } = default!;
+        public TranslationMap? Description_translations { get; set; } = default!;
 
         [System.Text.Json.Serialization.JsonPropertyName("images")]
-        public Images Images { get; set; } = default!;
+        public Images? Images { get; set; } = default!;
 
         [System.Text.Json.Serialization.JsonPropertyName("order")]
-        public int Order { get; set; } = default!;
+        public int? Order { get; set; } = default!;
 
         [System.Text.Json.Serialization.JsonPropertyName("event_types")]
-        public System.Collections.Generic.ICollection<string> Event_types { get; set; } = default!;
+        public System.Collections.Generic.ICollection<string>? Event_types { get; set; } = default!;
 
         [System.Text.Json.Serialization.JsonPropertyName("is_default_group")]
-        public bool Is_default_group { get; set; } = default!;
+        public bool? Is_default_group { get; set; } = default!;
 
         [System.Text.Json.Serialization.JsonPropertyName("parent_event_type_group")]
-        public string Parent_event_type_group { get; set; } = default!;
+        public string? Parent_event_type_group { get; set; } = default!;
 
         private System.Collections.Generic.IDictionary<string, object>? _additionalProperties;
 
@@ -60000,43 +60600,43 @@ namespace FSH.Starter.Blazor.Infrastructure.NoonaApi
     {
 
         [System.Text.Json.Serialization.JsonPropertyName("id")]
-        public string Id { get; set; } = default!;
+        public string? Id { get; set; } = default!;
 
         [System.Text.Json.Serialization.JsonPropertyName("company")]
-        public string Company { get; set; } = default!;
+        public string? Company { get; set; } = default!;
 
         [System.Text.Json.Serialization.JsonPropertyName("parent_event_type_group")]
-        public string Parent_event_type_group { get; set; } = default!;
+        public string? Parent_event_type_group { get; set; } = default!;
 
         [System.Text.Json.Serialization.JsonPropertyName("title")]
-        public string Title { get; set; } = default!;
+        public string? Title { get; set; } = default!;
 
         [System.Text.Json.Serialization.JsonPropertyName("title_translations")]
-        public TranslationMap Title_translations { get; set; } = default!;
+        public TranslationMap? Title_translations { get; set; } = default!;
 
         [System.Text.Json.Serialization.JsonPropertyName("description")]
-        public string Description { get; set; } = default!;
+        public string? Description { get; set; } = default!;
 
         [System.Text.Json.Serialization.JsonPropertyName("description_translations")]
-        public TranslationMap Description_translations { get; set; } = default!;
+        public TranslationMap? Description_translations { get; set; } = default!;
 
         [System.Text.Json.Serialization.JsonPropertyName("images")]
-        public Images Images { get; set; } = default!;
+        public Images? Images { get; set; } = default!;
 
         /// <summary>
         /// Used to control order in list hierarchy.
         /// </summary>
         [System.Text.Json.Serialization.JsonPropertyName("order")]
-        public int Order { get; set; } = default!;
+        public int? Order { get; set; } = default!;
 
         /// <summary>
         /// Whether this is the default group for event types that do not have a group.
         /// </summary>
         [System.Text.Json.Serialization.JsonPropertyName("is_default_group")]
-        public bool Is_default_group { get; set; } = default!;
+        public bool? Is_default_group { get; set; } = default!;
 
         [System.Text.Json.Serialization.JsonPropertyName("ordered_event_types")]
-        public OrderedExpandableEventTypes Ordered_event_types { get; set; } = default!;
+        public OrderedExpandableEventTypes? Ordered_event_types { get; set; } = default!;
 
         private System.Collections.Generic.IDictionary<string, object>? _additionalProperties;
 
@@ -60063,10 +60663,10 @@ namespace FSH.Starter.Blazor.Infrastructure.NoonaApi
         /// Used to control order in list hierarchy.
         /// </summary>
         [System.Text.Json.Serialization.JsonPropertyName("order")]
-        public int Order { get; set; } = default!;
+        public int? Order { get; set; } = default!;
 
         [System.Text.Json.Serialization.JsonPropertyName("event_type")]
-        public string Event_type { get; set; } = default!;
+        public string? Event_type { get; set; } = default!;
 
         private System.Collections.Generic.IDictionary<string, object>? _additionalProperties;
 
@@ -60090,7 +60690,7 @@ namespace FSH.Starter.Blazor.Infrastructure.NoonaApi
     {
 
         [System.Text.Json.Serialization.JsonPropertyName("id")]
-        public string Id { get; set; } = default!;
+        public string? Id { get; set; } = default!;
 
         /// <summary>
         /// An ID that can be used to reference the event type in an external system.
@@ -60098,126 +60698,126 @@ namespace FSH.Starter.Blazor.Infrastructure.NoonaApi
         /// <br/>
         /// </summary>
         [System.Text.Json.Serialization.JsonPropertyName("reference_id")]
-        public string Reference_id { get; set; } = default!;
+        public string? Reference_id { get; set; } = default!;
 
         /// <summary>
         /// Deprecated, please use company instead
         /// </summary>
         [System.Text.Json.Serialization.JsonPropertyName("company_id")]
         [System.Obsolete]
-        public string Company_id { get; set; } = default!;
+        public string? Company_id { get; set; } = default!;
 
         [System.Text.Json.Serialization.JsonPropertyName("company")]
-        public string Company { get; set; } = default!;
+        public string? Company { get; set; } = default!;
 
         [System.Text.Json.Serialization.JsonPropertyName("event_type_category")]
-        public string Event_type_category { get; set; } = default!;
+        public string? Event_type_category { get; set; } = default!;
 
         [System.Text.Json.Serialization.JsonPropertyName("event_type_category_group")]
-        public string Event_type_category_group { get; set; } = default!;
+        public string? Event_type_category_group { get; set; } = default!;
 
         [System.Text.Json.Serialization.JsonPropertyName("title")]
-        public string Title { get; set; } = default!;
+        public string? Title { get; set; } = default!;
 
         [System.Text.Json.Serialization.JsonPropertyName("title_translations")]
-        public TranslationMap Title_translations { get; set; } = default!;
+        public TranslationMap? Title_translations { get; set; } = default!;
 
         [System.Text.Json.Serialization.JsonPropertyName("description")]
-        public string Description { get; set; } = default!;
+        public string? Description { get; set; } = default!;
 
         [System.Text.Json.Serialization.JsonPropertyName("description_translations")]
-        public TranslationMap Description_translations { get; set; } = default!;
+        public TranslationMap? Description_translations { get; set; } = default!;
 
         /// <summary>
         /// Deprecated, please use duration instead
         /// </summary>
         [System.Text.Json.Serialization.JsonPropertyName("minutes")]
         [System.Obsolete]
-        public int Minutes { get; set; } = default!;
+        public int? Minutes { get; set; } = default!;
 
         /// <summary>
         /// Duration of the event type
         /// </summary>
         [System.Text.Json.Serialization.JsonPropertyName("duration")]
-        public int Duration { get; set; } = default!;
+        public int? Duration { get; set; } = default!;
 
         /// <summary>
         /// Delay in minutes from event start time
         /// </summary>
         [System.Text.Json.Serialization.JsonPropertyName("delay")]
-        public int Delay { get; set; } = default!;
+        public int? Delay { get; set; } = default!;
 
         /// <summary>
         /// The event duration before the pause
         /// </summary>
         [System.Text.Json.Serialization.JsonPropertyName("beforePause")]
-        public int BeforePause { get; set; } = default!;
+        public int? BeforePause { get; set; } = default!;
 
         /// <summary>
         /// The pause duration
         /// </summary>
         [System.Text.Json.Serialization.JsonPropertyName("pause")]
-        public int Pause { get; set; } = default!;
+        public int? Pause { get; set; } = default!;
 
         /// <summary>
         /// The event duration after the pause
         /// </summary>
         [System.Text.Json.Serialization.JsonPropertyName("afterPause")]
-        public int AfterPause { get; set; } = default!;
+        public int? AfterPause { get; set; } = default!;
 
         /// <summary>
         /// How many minutes of buffer the service needs after it ends. This does not affect the duration of the event shown to customers but is considered when calculating timeslots.
         /// </summary>
         [System.Text.Json.Serialization.JsonPropertyName("buffer_after_service")]
-        public int Buffer_after_service { get; set; } = default!;
+        public int? Buffer_after_service { get; set; } = default!;
 
         [System.Text.Json.Serialization.JsonPropertyName("min_guests_per_booking")]
-        public int Min_guests_per_booking { get; set; } = default!;
+        public int? Min_guests_per_booking { get; set; } = default!;
 
         [System.Text.Json.Serialization.JsonPropertyName("max_guests_per_booking")]
-        public int Max_guests_per_booking { get; set; } = default!;
+        public int? Max_guests_per_booking { get; set; } = default!;
 
         /// <summary>
         /// Use images instead.
         /// </summary>
         [System.Text.Json.Serialization.JsonPropertyName("thumb")]
         [System.Obsolete]
-        public string Thumb { get; set; } = default!;
+        public string? Thumb { get; set; } = default!;
 
         /// <summary>
         /// Use images instead.
         /// </summary>
         [System.Text.Json.Serialization.JsonPropertyName("image")]
         [System.Obsolete]
-        public string Image { get; set; } = default!;
+        public string? Image { get; set; } = default!;
 
         [System.Text.Json.Serialization.JsonPropertyName("images")]
-        public Images Images { get; set; } = default!;
+        public Images? Images { get; set; } = default!;
 
         /// <summary>
         /// Color code for the event
         /// </summary>
         [System.Text.Json.Serialization.JsonPropertyName("color")]
-        public string Color { get; set; } = default!;
+        public string? Color { get; set; } = default!;
 
         /// <summary>
         /// How event is overbookable
         /// </summary>
         [System.Text.Json.Serialization.JsonPropertyName("overbookable")]
         [System.Text.Json.Serialization.JsonConverter(typeof(System.Text.Json.Serialization.JsonStringEnumConverter<EventTypeOverbookable>))]
-        public EventTypeOverbookable Overbookable { get; set; } = default!;
+        public EventTypeOverbookable? Overbookable { get; set; } = default!;
 
         [System.Text.Json.Serialization.JsonPropertyName("vat")]
-        public string Vat { get; set; } = default!;
+        public string? Vat { get; set; } = default!;
 
         [System.Text.Json.Serialization.JsonPropertyName("variations")]
-        public EventTypeVariations Variations { get; set; } = default!;
+        public EventTypeVariations? Variations { get; set; } = default!;
 
         [System.Text.Json.Serialization.JsonPropertyName("price_ranges")]
-        public EventTypePriceRanges Price_ranges { get; set; } = default!;
+        public EventTypePriceRanges? Price_ranges { get; set; } = default!;
 
         [System.Text.Json.Serialization.JsonPropertyName("connections")]
-        public EventTypeConnections Connections { get; set; } = default!;
+        public EventTypeConnections? Connections { get; set; } = default!;
 
         /// <summary>
         /// By providing a **payments** object this is implicitly `true`.
@@ -60227,13 +60827,13 @@ namespace FSH.Starter.Blazor.Infrastructure.NoonaApi
         /// </summary>
         [System.Text.Json.Serialization.JsonPropertyName("custom_payment_settings")]
         [System.Obsolete]
-        public bool Custom_payment_settings { get; set; } = default!;
+        public bool? Custom_payment_settings { get; set; } = default!;
 
         [System.Text.Json.Serialization.JsonPropertyName("payments")]
-        public PaymentSettings Payments { get; set; } = default!;
+        public PaymentSettings? Payments { get; set; } = default!;
 
         [System.Text.Json.Serialization.JsonPropertyName("price")]
-        public CalculatedPrice Price { get; set; } = default!;
+        public CalculatedPrice? Price { get; set; } = default!;
 
         /// <summary>
         /// The reason for tax exemption. This is only used if the event type is tax exempt.
@@ -60241,13 +60841,13 @@ namespace FSH.Starter.Blazor.Infrastructure.NoonaApi
         /// <br/>
         /// </summary>
         [System.Text.Json.Serialization.JsonPropertyName("tax_exemption_reason")]
-        public string Tax_exemption_reason { get; set; } = default!;
+        public string? Tax_exemption_reason { get; set; } = default!;
 
         [System.Text.Json.Serialization.JsonPropertyName("created_at")]
-        public System.DateTime Created_at { get; set; } = default!;
+        public System.DateTime? Created_at { get; set; } = default!;
 
         [System.Text.Json.Serialization.JsonPropertyName("updated_at")]
-        public System.DateTime Updated_at { get; set; } = default!;
+        public System.DateTime? Updated_at { get; set; } = default!;
 
         private System.Collections.Generic.IDictionary<string, object>? _additionalProperties;
 
@@ -60273,13 +60873,13 @@ namespace FSH.Starter.Blazor.Infrastructure.NoonaApi
     {
 
         [System.Text.Json.Serialization.JsonPropertyName("currency")]
-        public string Currency { get; set; } = default!;
+        public string? Currency { get; set; } = default!;
 
         [System.Text.Json.Serialization.JsonPropertyName("amount")]
-        public double Amount { get; set; } = default!;
+        public double? Amount { get; set; } = default!;
 
         [System.Text.Json.Serialization.JsonPropertyName("amount_upper_limit")]
-        public double Amount_upper_limit { get; set; } = default!;
+        public double? Amount_upper_limit { get; set; } = default!;
 
         private System.Collections.Generic.IDictionary<string, object>? _additionalProperties;
 
@@ -60309,13 +60909,13 @@ namespace FSH.Starter.Blazor.Infrastructure.NoonaApi
     {
 
         [System.Text.Json.Serialization.JsonPropertyName("min")]
-        public double Min { get; set; } = default!;
+        public double? Min { get; set; } = default!;
 
         [System.Text.Json.Serialization.JsonPropertyName("max")]
-        public double Max { get; set; } = default!;
+        public double? Max { get; set; } = default!;
 
         [System.Text.Json.Serialization.JsonPropertyName("currency")]
-        public string Currency { get; set; } = default!;
+        public string? Currency { get; set; } = default!;
 
         private System.Collections.Generic.IDictionary<string, object>? _additionalProperties;
 
@@ -60339,31 +60939,31 @@ namespace FSH.Starter.Blazor.Infrastructure.NoonaApi
     {
 
         [System.Text.Json.Serialization.JsonPropertyName("id")]
-        public string Id { get; set; } = default!;
+        public string? Id { get; set; } = default!;
 
         [System.Text.Json.Serialization.JsonPropertyName("label")]
-        public string Label { get; set; } = default!;
+        public string? Label { get; set; } = default!;
 
         [System.Text.Json.Serialization.JsonPropertyName("label_translations")]
-        public TranslationMap Label_translations { get; set; } = default!;
+        public TranslationMap? Label_translations { get; set; } = default!;
 
         [System.Text.Json.Serialization.JsonPropertyName("description")]
-        public string Description { get; set; } = default!;
+        public string? Description { get; set; } = default!;
 
         [System.Text.Json.Serialization.JsonPropertyName("description_translations")]
-        public TranslationMap Description_translations { get; set; } = default!;
+        public TranslationMap? Description_translations { get; set; } = default!;
 
         /// <summary>
         /// Whether this variation is selectable in the marketplace
         /// </summary>
         [System.Text.Json.Serialization.JsonPropertyName("selectable_in_marketplace")]
-        public bool Selectable_in_marketplace { get; set; } = default!;
+        public bool? Selectable_in_marketplace { get; set; } = default!;
 
         [System.Text.Json.Serialization.JsonPropertyName("prices")]
-        public System.Collections.Generic.ICollection<EventTypeVariationPrice> Prices { get; set; } = default!;
+        public System.Collections.Generic.ICollection<EventTypeVariationPrice>? Prices { get; set; } = default!;
 
         [System.Text.Json.Serialization.JsonPropertyName("customer_group")]
-        public string Customer_group { get; set; } = default!;
+        public string? Customer_group { get; set; } = default!;
 
         private System.Collections.Generic.IDictionary<string, object>? _additionalProperties;
 
@@ -60381,10 +60981,10 @@ namespace FSH.Starter.Blazor.Infrastructure.NoonaApi
     {
 
         [System.Text.Json.Serialization.JsonPropertyName("currency")]
-        public string Currency { get; set; } = default!;
+        public string? Currency { get; set; } = default!;
 
         [System.Text.Json.Serialization.JsonPropertyName("amount")]
-        public double Amount { get; set; } = default!;
+        public double? Amount { get; set; } = default!;
 
         private System.Collections.Generic.IDictionary<string, object>? _additionalProperties;
 
@@ -60406,39 +61006,39 @@ namespace FSH.Starter.Blazor.Infrastructure.NoonaApi
         /// </summary>
         [System.Text.Json.Serialization.JsonPropertyName("service_needs")]
         [System.Text.Json.Serialization.JsonConverter(typeof(System.Text.Json.Serialization.JsonStringEnumConverter<EventTypeConnectionsService_needs>))]
-        public EventTypeConnectionsService_needs Service_needs { get; set; } = default!;
+        public EventTypeConnectionsService_needs? Service_needs { get; set; } = default!;
 
         /// <summary>
         /// For this event type, does the customer select the employee/space or is it selected automatically at random?
         /// </summary>
         [System.Text.Json.Serialization.JsonPropertyName("customer_selects")]
         [System.Text.Json.Serialization.JsonConverter(typeof(System.Text.Json.Serialization.JsonStringEnumConverter<EventTypeConnectionsCustomer_selects>))]
-        public EventTypeConnectionsCustomer_selects Customer_selects { get; set; } = default!;
+        public EventTypeConnectionsCustomer_selects? Customer_selects { get; set; } = default!;
 
         /// <summary>
         /// Deprecated, use `booking_questions` instead.
         /// </summary>
         [System.Text.Json.Serialization.JsonPropertyName("booking_question")]
         [System.Obsolete]
-        public string Booking_question { get; set; } = default!;
+        public string? Booking_question { get; set; } = default!;
 
         [System.Text.Json.Serialization.JsonPropertyName("booking_question_translations")]
-        public TranslationMap Booking_question_translations { get; set; } = default!;
+        public TranslationMap? Booking_question_translations { get; set; } = default!;
 
         [System.Text.Json.Serialization.JsonPropertyName("booking_questions")]
-        public BookingQuestions Booking_questions { get; set; } = default!;
+        public BookingQuestions? Booking_questions { get; set; } = default!;
 
         /// <summary>
         /// For a successful booking, this message is displayed for each event type booked.
         /// </summary>
         [System.Text.Json.Serialization.JsonPropertyName("booking_success_message")]
-        public string Booking_success_message { get; set; } = default!;
+        public string? Booking_success_message { get; set; } = default!;
 
         [System.Text.Json.Serialization.JsonPropertyName("booking_success_message_translations")]
-        public TranslationMap Booking_success_message_translations { get; set; } = default!;
+        public TranslationMap? Booking_success_message_translations { get; set; } = default!;
 
         [System.Text.Json.Serialization.JsonPropertyName("hidden")]
-        public bool Hidden { get; set; } = default!;
+        public bool? Hidden { get; set; } = default!;
 
         private System.Collections.Generic.IDictionary<string, object>? _additionalProperties;
 
@@ -60464,7 +61064,7 @@ namespace FSH.Starter.Blazor.Infrastructure.NoonaApi
         /// <br/>
         /// </summary>
         [System.Text.Json.Serialization.JsonPropertyName("pre_payment_enabled")]
-        public bool Pre_payment_enabled { get; set; } = default!;
+        public bool? Pre_payment_enabled { get; set; } = default!;
 
         /// <summary>
         /// The type of pre-payment.
@@ -60475,7 +61075,7 @@ namespace FSH.Starter.Blazor.Infrastructure.NoonaApi
         /// </summary>
         [System.Text.Json.Serialization.JsonPropertyName("pre_payment_type")]
         [System.Text.Json.Serialization.JsonConverter(typeof(System.Text.Json.Serialization.JsonStringEnumConverter<PaymentSettingsPre_payment_type>))]
-        public PaymentSettingsPre_payment_type Pre_payment_type { get; set; } = FSH.Starter.Blazor.Infrastructure.NoonaApi.PaymentSettingsPre_payment_type.Payment;
+        public PaymentSettingsPre_payment_type? Pre_payment_type { get; set; } = FSH.Starter.Blazor.Infrastructure.NoonaApi.PaymentSettingsPre_payment_type.Payment;
 
         /// <summary>
         /// Is any upfront payment required?
@@ -60486,14 +61086,14 @@ namespace FSH.Starter.Blazor.Infrastructure.NoonaApi
         /// <br/>
         /// </summary>
         [System.Text.Json.Serialization.JsonPropertyName("pre_payment_required")]
-        public bool Pre_payment_required { get; set; } = default!;
+        public bool? Pre_payment_required { get; set; } = default!;
 
         /// <summary>
         /// The minimum number of people that must be associated with reservation so that pre-payment is required.
         /// <br/>
         /// </summary>
         [System.Text.Json.Serialization.JsonPropertyName("pre_payment_min_pax")]
-        public int Pre_payment_min_pax { get; set; } = default!;
+        public int? Pre_payment_min_pax { get; set; } = default!;
 
         /// <summary>
         /// The amount that must be paid in advance.
@@ -60504,7 +61104,7 @@ namespace FSH.Starter.Blazor.Infrastructure.NoonaApi
         /// <br/>
         /// </summary>
         [System.Text.Json.Serialization.JsonPropertyName("flat_fee")]
-        public int Flat_fee { get; set; } = default!;
+        public int? Flat_fee { get; set; } = default!;
 
         /// <summary>
         /// How much of the total price must be paid in advance in %.
@@ -60514,7 +61114,7 @@ namespace FSH.Starter.Blazor.Infrastructure.NoonaApi
         /// </summary>
         [System.Text.Json.Serialization.JsonPropertyName("pre_payment_ratio")]
         [System.ComponentModel.DataAnnotations.Range(0, 100)]
-        public int Pre_payment_ratio { get; set; } = default!;
+        public int? Pre_payment_ratio { get; set; } = default!;
 
         /// <summary>
         /// Is full payment optional?
@@ -60525,17 +61125,17 @@ namespace FSH.Starter.Blazor.Infrastructure.NoonaApi
         /// <br/>
         /// </summary>
         [System.Text.Json.Serialization.JsonPropertyName("optional_full_payment")]
-        public bool Optional_full_payment { get; set; } = default!;
+        public bool? Optional_full_payment { get; set; } = default!;
 
         [System.Text.Json.Serialization.JsonPropertyName("settlement_account")]
-        public string Settlement_account { get; set; } = default!;
+        public string? Settlement_account { get; set; } = default!;
 
         [System.Text.Json.Serialization.JsonPropertyName("onboarded_at")]
-        public System.DateTime Onboarded_at { get; set; } = default!;
+        public System.DateTime? Onboarded_at { get; set; } = default!;
 
         [System.Text.Json.Serialization.JsonPropertyName("enabled_card_types")]
         // TODO(system.text.json): Add string enum item converter
-        public CardTypes Enabled_card_types { get; set; } = default!;
+        public CardTypes? Enabled_card_types { get; set; } = default!;
 
         private System.Collections.Generic.IDictionary<string, object>? _additionalProperties;
 
@@ -60577,13 +61177,13 @@ namespace FSH.Starter.Blazor.Infrastructure.NoonaApi
         /// Are vouchers enabled?
         /// </summary>
         [System.Text.Json.Serialization.JsonPropertyName("enabled")]
-        public bool Enabled { get; set; } = default!;
+        public bool? Enabled { get; set; } = default!;
 
         /// <summary>
         /// Are amount vouchers enabled?
         /// </summary>
         [System.Text.Json.Serialization.JsonPropertyName("amount_vouchers_enabled")]
-        public bool Amount_vouchers_enabled { get; set; } = default!;
+        public bool? Amount_vouchers_enabled { get; set; } = default!;
 
         private System.Collections.Generic.IDictionary<string, object>? _additionalProperties;
 
@@ -60604,53 +61204,59 @@ namespace FSH.Starter.Blazor.Infrastructure.NoonaApi
         /// The name that will be printed on invoices.
         /// </summary>
         [System.Text.Json.Serialization.JsonPropertyName("name_on_invoices")]
-        public string Name_on_invoices { get; set; } = default!;
+        public string? Name_on_invoices { get; set; } = default!;
 
         [System.Text.Json.Serialization.JsonPropertyName("legal_address")]
-        public string Legal_address { get; set; } = default!;
+        public string? Legal_address { get; set; } = default!;
 
         /// <summary>
         /// Extra information to include on invoices.
         /// </summary>
         [System.Text.Json.Serialization.JsonPropertyName("extra_invoice_info")]
-        public string Extra_invoice_info { get; set; } = default!;
+        public string? Extra_invoice_info { get; set; } = default!;
 
         /// <summary>
         /// The initial invoice number for the company.
         /// </summary>
         [System.Text.Json.Serialization.JsonPropertyName("initial_invoice_number")]
-        public long Initial_invoice_number { get; set; } = default!;
+        public long? Initial_invoice_number { get; set; } = default!;
+
+        /// <summary>
+        /// The invoice series prefix for fiscalization.
+        /// </summary>
+        [System.Text.Json.Serialization.JsonPropertyName("invoice_series")]
+        public string? Invoice_series { get; set; } = default!;
 
         [System.Text.Json.Serialization.JsonPropertyName("eac_code")]
-        public string Eac_code { get; set; } = default!;
+        public string? Eac_code { get; set; } = default!;
 
         /// <summary>
         /// The VAT number for the company.
         /// </summary>
         [System.Text.Json.Serialization.JsonPropertyName("vat_number")]
-        public string Vat_number { get; set; } = default!;
+        public string? Vat_number { get; set; } = default!;
 
         [System.Text.Json.Serialization.JsonPropertyName("default_vat")]
-        public string Default_vat { get; set; } = default!;
+        public string? Default_vat { get; set; } = default!;
 
         /// <summary>
         /// The kennitala for the company.
         /// </summary>
         [System.Text.Json.Serialization.JsonPropertyName("kennitala")]
-        public string Kennitala { get; set; } = default!;
+        public string? Kennitala { get; set; } = default!;
 
         /// <summary>
         /// The first tab to show in the checkout flow.
         /// </summary>
         [System.Text.Json.Serialization.JsonPropertyName("checkout_first_tab")]
         [System.Text.Json.Serialization.JsonConverter(typeof(System.Text.Json.Serialization.JsonStringEnumConverter<CompanyPOSSettingsCheckout_first_tab>))]
-        public CompanyPOSSettingsCheckout_first_tab Checkout_first_tab { get; set; } = default!;
+        public CompanyPOSSettingsCheckout_first_tab? Checkout_first_tab { get; set; } = default!;
 
         /// <summary>
         /// Whether fiscalization is enabled for this company.
         /// </summary>
         [System.Text.Json.Serialization.JsonPropertyName("fiscalization_enabled")]
-        public bool Fiscalization_enabled { get; set; } = default!;
+        public bool? Fiscalization_enabled { get; set; } = default!;
 
         private System.Collections.Generic.IDictionary<string, object>? _additionalProperties;
 
@@ -60671,37 +61277,37 @@ namespace FSH.Starter.Blazor.Infrastructure.NoonaApi
         /// Whether the user is issuing their own invoices or not.
         /// </summary>
         [System.Text.Json.Serialization.JsonPropertyName("enabled")]
-        public bool Enabled { get; set; } = default!;
+        public bool? Enabled { get; set; } = default!;
 
         /// <summary>
         /// The initial invoice number for the user.
         /// </summary>
         [System.Text.Json.Serialization.JsonPropertyName("initial_invoice_number")]
-        public long Initial_invoice_number { get; set; } = default!;
+        public long? Initial_invoice_number { get; set; } = default!;
 
         [System.Text.Json.Serialization.JsonPropertyName("name")]
-        public string Name { get; set; } = default!;
+        public string? Name { get; set; } = default!;
 
         /// <summary>
         /// Business Identification Number
         /// </summary>
         [System.Text.Json.Serialization.JsonPropertyName("bin")]
-        public string Bin { get; set; } = default!;
+        public string? Bin { get; set; } = default!;
 
         /// <summary>
         /// VAT Identification Number
         /// </summary>
         [System.Text.Json.Serialization.JsonPropertyName("vat_id")]
-        public string Vat_id { get; set; } = default!;
+        public string? Vat_id { get; set; } = default!;
 
         [System.Text.Json.Serialization.JsonPropertyName("legal_address")]
-        public string Legal_address { get; set; } = default!;
+        public string? Legal_address { get; set; } = default!;
 
         /// <summary>
         /// Extra information to include on invoices.
         /// </summary>
         [System.Text.Json.Serialization.JsonPropertyName("extra_invoice_info")]
-        public string Extra_invoice_info { get; set; } = default!;
+        public string? Extra_invoice_info { get; set; } = default!;
 
         private System.Collections.Generic.IDictionary<string, object>? _additionalProperties;
 
@@ -60725,33 +61331,33 @@ namespace FSH.Starter.Blazor.Infrastructure.NoonaApi
     {
 
         [System.Text.Json.Serialization.JsonPropertyName("id")]
-        public string Id { get; set; } = default!;
+        public string? Id { get; set; } = default!;
 
         [System.Text.Json.Serialization.JsonPropertyName("company")]
-        public string Company { get; set; } = default!;
+        public string? Company { get; set; } = default!;
 
         [System.Text.Json.Serialization.JsonPropertyName("name")]
-        public string Name { get; set; } = default!;
+        public string? Name { get; set; } = default!;
 
         [System.Text.Json.Serialization.JsonPropertyName("scope")]
         [System.Text.Json.Serialization.JsonConverter(typeof(System.Text.Json.Serialization.JsonStringEnumConverter<CustomPropertyScope>))]
-        public CustomPropertyScope Scope { get; set; } = default!;
+        public CustomPropertyScope? Scope { get; set; } = default!;
 
         [System.Text.Json.Serialization.JsonPropertyName("type")]
         [System.Text.Json.Serialization.JsonConverter(typeof(System.Text.Json.Serialization.JsonStringEnumConverter<CustomPropertyType>))]
-        public CustomPropertyType Type { get; set; } = default!;
+        public CustomPropertyType? Type { get; set; } = default!;
 
         [System.Text.Json.Serialization.JsonPropertyName("options")]
-        public CustomPropertyOptions Options { get; set; } = default!;
+        public CustomPropertyOptions? Options { get; set; } = default!;
 
         [System.Text.Json.Serialization.JsonPropertyName("order")]
-        public int Order { get; set; } = default!;
+        public int? Order { get; set; } = default!;
 
         [System.Text.Json.Serialization.JsonPropertyName("created_at")]
-        public System.DateTime Created_at { get; set; } = default!;
+        public System.DateTime? Created_at { get; set; } = default!;
 
         [System.Text.Json.Serialization.JsonPropertyName("updated_at")]
-        public System.DateTime Updated_at { get; set; } = default!;
+        public System.DateTime? Updated_at { get; set; } = default!;
 
         private System.Collections.Generic.IDictionary<string, object>? _additionalProperties;
 
@@ -60775,10 +61381,10 @@ namespace FSH.Starter.Blazor.Infrastructure.NoonaApi
     {
 
         [System.Text.Json.Serialization.JsonPropertyName("id")]
-        public string Id { get; set; } = default!;
+        public string? Id { get; set; } = default!;
 
         [System.Text.Json.Serialization.JsonPropertyName("name")]
-        public string Name { get; set; } = default!;
+        public string? Name { get; set; } = default!;
 
         private System.Collections.Generic.IDictionary<string, object>? _additionalProperties;
 
@@ -60802,13 +61408,13 @@ namespace FSH.Starter.Blazor.Infrastructure.NoonaApi
     {
 
         [System.Text.Json.Serialization.JsonPropertyName("id")]
-        public string Id { get; set; } = default!;
+        public string? Id { get; set; } = default!;
 
         [System.Text.Json.Serialization.JsonPropertyName("values")]
-        public System.Collections.Generic.ICollection<string> Values { get; set; } = default!;
+        public System.Collections.Generic.ICollection<string>? Values { get; set; } = default!;
 
         [System.Text.Json.Serialization.JsonPropertyName("valueIsId")]
-        public bool ValueIsId { get; set; } = default!;
+        public bool? ValueIsId { get; set; } = default!;
 
         private System.Collections.Generic.IDictionary<string, object>? _additionalProperties;
 
@@ -60826,13 +61432,13 @@ namespace FSH.Starter.Blazor.Infrastructure.NoonaApi
     {
 
         [System.Text.Json.Serialization.JsonPropertyName("sms")]
-        public bool Sms { get; set; } = default!;
+        public bool? Sms { get; set; } = default!;
 
         [System.Text.Json.Serialization.JsonPropertyName("email")]
-        public bool Email { get; set; } = default!;
+        public bool? Email { get; set; } = default!;
 
         [System.Text.Json.Serialization.JsonPropertyName("push")]
-        public bool Push { get; set; } = default!;
+        public bool? Push { get; set; } = default!;
 
         private System.Collections.Generic.IDictionary<string, object>? _additionalProperties;
 
@@ -60856,28 +61462,28 @@ namespace FSH.Starter.Blazor.Infrastructure.NoonaApi
     {
 
         [System.Text.Json.Serialization.JsonPropertyName("id")]
-        public string Id { get; set; } = default!;
+        public string? Id { get; set; } = default!;
 
         /// <summary>
         /// Original filename of the uploaded attachment
         /// </summary>
         [System.Text.Json.Serialization.JsonPropertyName("filename")]
-        public string Filename { get; set; } = default!;
+        public string? Filename { get; set; } = default!;
 
         [System.Text.Json.Serialization.JsonPropertyName("type")]
-        public string Type { get; set; } = default!;
+        public string? Type { get; set; } = default!;
 
         [System.Text.Json.Serialization.JsonPropertyName("secure_url")]
-        public string Secure_url { get; set; } = default!;
+        public string? Secure_url { get; set; } = default!;
 
         [System.Text.Json.Serialization.JsonPropertyName("relative_url")]
-        public string Relative_url { get; set; } = default!;
+        public string? Relative_url { get; set; } = default!;
 
         [System.Text.Json.Serialization.JsonPropertyName("created_at")]
-        public System.DateTime Created_at { get; set; } = default!;
+        public System.DateTime? Created_at { get; set; } = default!;
 
         [System.Text.Json.Serialization.JsonPropertyName("updated_at")]
-        public System.DateTime Updated_at { get; set; } = default!;
+        public System.DateTime? Updated_at { get; set; } = default!;
 
         private System.Collections.Generic.IDictionary<string, object>? _additionalProperties;
 
@@ -60981,41 +61587,41 @@ namespace FSH.Starter.Blazor.Infrastructure.NoonaApi
     {
 
         [System.Text.Json.Serialization.JsonPropertyName("id")]
-        public string Id { get; set; } = default!;
+        public string? Id { get; set; } = default!;
 
         [System.Text.Json.Serialization.JsonPropertyName("title")]
-        public string Title { get; set; } = default!;
+        public string? Title { get; set; } = default!;
 
         [System.Text.Json.Serialization.JsonPropertyName("description")]
-        public string Description { get; set; } = default!;
+        public string? Description { get; set; } = default!;
 
         [System.Text.Json.Serialization.JsonPropertyName("callback_url")]
-        public string Callback_url { get; set; } = default!;
+        public string? Callback_url { get; set; } = default!;
 
         [System.Text.Json.Serialization.JsonPropertyName("events")]
         // TODO(system.text.json): Add string enum item converter
-        public WebhookEvents Events { get; set; } = default!;
+        public WebhookEvents? Events { get; set; } = default!;
 
         [System.Text.Json.Serialization.JsonPropertyName("headers")]
-        public WebhookHeaders Headers { get; set; } = default!;
+        public WebhookHeaders? Headers { get; set; } = default!;
 
         /// <summary>
         /// Whether the webhook is enabled or not
         /// </summary>
         [System.Text.Json.Serialization.JsonPropertyName("enabled")]
-        public bool Enabled { get; set; } = default!;
+        public bool? Enabled { get; set; } = default!;
 
         [System.Text.Json.Serialization.JsonPropertyName("company")]
-        public string Company { get; set; } = default!;
+        public string? Company { get; set; } = default!;
 
         [System.Text.Json.Serialization.JsonPropertyName("app")]
-        public string App { get; set; } = default!;
+        public string? App { get; set; } = default!;
 
         [System.Text.Json.Serialization.JsonPropertyName("created_at")]
-        public System.DateTime Created_at { get; set; } = default!;
+        public System.DateTime? Created_at { get; set; } = default!;
 
         [System.Text.Json.Serialization.JsonPropertyName("updated_at")]
-        public System.DateTime Updated_at { get; set; } = default!;
+        public System.DateTime? Updated_at { get; set; } = default!;
 
         private System.Collections.Generic.IDictionary<string, object>? _additionalProperties;
 
@@ -61081,10 +61687,10 @@ namespace FSH.Starter.Blazor.Infrastructure.NoonaApi
     {
 
         [System.Text.Json.Serialization.JsonPropertyName("key")]
-        public string Key { get; set; } = default!;
+        public string? Key { get; set; } = default!;
 
         [System.Text.Json.Serialization.JsonPropertyName("values")]
-        public System.Collections.Generic.ICollection<string> Values { get; set; } = default!;
+        public System.Collections.Generic.ICollection<string>? Values { get; set; } = default!;
 
         private System.Collections.Generic.IDictionary<string, object>? _additionalProperties;
 
@@ -61105,17 +61711,17 @@ namespace FSH.Starter.Blazor.Infrastructure.NoonaApi
         /// The unique ID of each callback. Can be treated as an idempotency key.
         /// </summary>
         [System.Text.Json.Serialization.JsonPropertyName("id")]
-        public string Id { get; set; } = default!;
+        public string? Id { get; set; } = default!;
 
         [System.Text.Json.Serialization.JsonPropertyName("type")]
         [System.Text.Json.Serialization.JsonConverter(typeof(System.Text.Json.Serialization.JsonStringEnumConverter<WebhookEvent>))]
-        public WebhookEvent Type { get; set; } = default!;
+        public WebhookEvent? Type { get; set; } = default!;
 
         [System.Text.Json.Serialization.JsonPropertyName("data")]
-        public Event Data { get; set; } = default!;
+        public Event? Data { get; set; } = default!;
 
         [System.Text.Json.Serialization.JsonPropertyName("created_at")]
-        public System.DateTime Created_at { get; set; } = default!;
+        public System.DateTime? Created_at { get; set; } = default!;
 
         private System.Collections.Generic.IDictionary<string, object>? _additionalProperties;
 
@@ -61133,19 +61739,19 @@ namespace FSH.Starter.Blazor.Infrastructure.NoonaApi
     {
 
         [System.Text.Json.Serialization.JsonPropertyName("id")]
-        public string Id { get; set; } = default!;
+        public string? Id { get; set; } = default!;
 
         [System.Text.Json.Serialization.JsonPropertyName("company")]
-        public string Company { get; set; } = default!;
+        public string? Company { get; set; } = default!;
 
         [System.Text.Json.Serialization.JsonPropertyName("data")]
-        public Data4 Data { get; set; } = default!;
+        public Data4? Data { get; set; } = default!;
 
         [System.Text.Json.Serialization.JsonPropertyName("created_at")]
-        public System.DateTime Created_at { get; set; } = default!;
+        public System.DateTime? Created_at { get; set; } = default!;
 
         [System.Text.Json.Serialization.JsonPropertyName("updated_at")]
-        public System.DateTime Updated_at { get; set; } = default!;
+        public System.DateTime? Updated_at { get; set; } = default!;
 
         private System.Collections.Generic.IDictionary<string, object>? _additionalProperties;
 
@@ -61205,7 +61811,7 @@ namespace FSH.Starter.Blazor.Infrastructure.NoonaApi
     {
 
         [System.Text.Json.Serialization.JsonPropertyName("data")]
-        public Data5 Data { get; set; } = default!;
+        public Data5? Data { get; set; } = default!;
 
         private System.Collections.Generic.IDictionary<string, object>? _additionalProperties;
 
@@ -61264,56 +61870,68 @@ namespace FSH.Starter.Blazor.Infrastructure.NoonaApi
         /// Company name for invoices
         /// </summary>
         [System.Text.Json.Serialization.JsonPropertyName("company_name")]
-        public string Company_name { get; set; } = default!;
+        public string? Company_name { get; set; } = default!;
 
         /// <summary>
         /// VAT number with country prefix
         /// </summary>
         [System.Text.Json.Serialization.JsonPropertyName("vat_number")]
-        public string Vat_number { get; set; } = default!;
+        public string? Vat_number { get; set; } = default!;
 
         /// <summary>
         /// Contact email for invoices
         /// </summary>
         [System.Text.Json.Serialization.JsonPropertyName("contact_email")]
-        public string Contact_email { get; set; } = default!;
+        public string? Contact_email { get; set; } = default!;
 
         /// <summary>
         /// Street address
         /// </summary>
         [System.Text.Json.Serialization.JsonPropertyName("street_address")]
-        public string Street_address { get; set; } = default!;
+        public string? Street_address { get; set; } = default!;
 
         /// <summary>
         /// City
         /// </summary>
         [System.Text.Json.Serialization.JsonPropertyName("city")]
-        public string City { get; set; } = default!;
+        public string? City { get; set; } = default!;
 
         /// <summary>
         /// Postal code
         /// </summary>
         [System.Text.Json.Serialization.JsonPropertyName("postal_code")]
-        public string Postal_code { get; set; } = default!;
+        public string? Postal_code { get; set; } = default!;
 
         /// <summary>
         /// Country code
         /// </summary>
         [System.Text.Json.Serialization.JsonPropertyName("country")]
-        public string Country { get; set; } = default!;
+        public string? Country { get; set; } = default!;
+
+        /// <summary>
+        /// Invoice series prefix for Spain fiscalization.
+        /// </summary>
+        [System.Text.Json.Serialization.JsonPropertyName("invoice_series")]
+        public string? Invoice_series { get; set; } = default!;
+
+        /// <summary>
+        /// URL for completing supplier registration
+        /// </summary>
+        [System.Text.Json.Serialization.JsonPropertyName("registration_url")]
+        public System.Uri? Registration_url { get; set; } = default!;
 
         [System.Text.Json.Serialization.JsonPropertyName("onboarding_status")]
         [System.Text.Json.Serialization.JsonConverter(typeof(System.Text.Json.Serialization.JsonStringEnumConverter<FiscalizationOnboardingStatus>))]
-        public FiscalizationOnboardingStatus Onboarding_status { get; set; } = default!;
+        public FiscalizationOnboardingStatus? Onboarding_status { get; set; } = default!;
 
         [System.Text.Json.Serialization.JsonPropertyName("onboarding_completed_at")]
-        public System.DateTime Onboarding_completed_at { get; set; } = default!;
+        public System.DateTime? Onboarding_completed_at { get; set; } = default!;
 
         /// <summary>
         /// List of onboarding errors from Invopop
         /// </summary>
         [System.Text.Json.Serialization.JsonPropertyName("onboarding_errors")]
-        public System.Collections.Generic.ICollection<string> Onboarding_errors { get; set; } = default!;
+        public System.Collections.Generic.ICollection<string>? Onboarding_errors { get; set; } = default!;
 
         private System.Collections.Generic.IDictionary<string, object>? _additionalProperties;
 
@@ -61373,7 +61991,7 @@ namespace FSH.Starter.Blazor.Infrastructure.NoonaApi
         /// The new fiscalization enabled status
         /// </summary>
         [System.Text.Json.Serialization.JsonPropertyName("fiscalization_enabled")]
-        public bool Fiscalization_enabled { get; set; } = default!;
+        public bool? Fiscalization_enabled { get; set; } = default!;
 
         private System.Collections.Generic.IDictionary<string, object>? _additionalProperties;
 
@@ -61397,35 +62015,35 @@ namespace FSH.Starter.Blazor.Infrastructure.NoonaApi
     {
 
         [System.Text.Json.Serialization.JsonPropertyName("id")]
-        public string Id { get; set; } = default!;
+        public string? Id { get; set; } = default!;
 
         [System.Text.Json.Serialization.JsonPropertyName("callback_url")]
-        public string Callback_url { get; set; } = default!;
+        public string? Callback_url { get; set; } = default!;
 
         [System.Text.Json.Serialization.JsonPropertyName("event")]
         [System.Text.Json.Serialization.JsonConverter(typeof(System.Text.Json.Serialization.JsonStringEnumConverter<WebhookEvent>))]
-        public WebhookEvent Event { get; set; } = default!;
+        public WebhookEvent? Event { get; set; } = default!;
 
         [System.Text.Json.Serialization.JsonPropertyName("success")]
-        public bool Success { get; set; } = default!;
+        public bool? Success { get; set; } = default!;
 
         [System.Text.Json.Serialization.JsonPropertyName("responses")]
-        public WebhookInvocationResponses Responses { get; set; } = default!;
+        public WebhookInvocationResponses? Responses { get; set; } = default!;
 
         [System.Text.Json.Serialization.JsonPropertyName("webhook")]
-        public string Webhook { get; set; } = default!;
+        public string? Webhook { get; set; } = default!;
 
         [System.Text.Json.Serialization.JsonPropertyName("company")]
-        public string Company { get; set; } = default!;
+        public string? Company { get; set; } = default!;
 
         [System.Text.Json.Serialization.JsonPropertyName("failed_tries")]
-        public int Failed_tries { get; set; } = default!;
+        public int? Failed_tries { get; set; } = default!;
 
         [System.Text.Json.Serialization.JsonPropertyName("created_at")]
-        public System.DateTime Created_at { get; set; } = default!;
+        public System.DateTime? Created_at { get; set; } = default!;
 
         [System.Text.Json.Serialization.JsonPropertyName("updated_at")]
-        public System.DateTime Updated_at { get; set; } = default!;
+        public System.DateTime? Updated_at { get; set; } = default!;
 
         private System.Collections.Generic.IDictionary<string, object>? _additionalProperties;
 
@@ -61449,10 +62067,10 @@ namespace FSH.Starter.Blazor.Infrastructure.NoonaApi
     {
 
         [System.Text.Json.Serialization.JsonPropertyName("code")]
-        public int Code { get; set; } = default!;
+        public int? Code { get; set; } = default!;
 
         [System.Text.Json.Serialization.JsonPropertyName("body")]
-        public string Body { get; set; } = default!;
+        public string? Body { get; set; } = default!;
 
         private System.Collections.Generic.IDictionary<string, object>? _additionalProperties;
 
@@ -61476,13 +62094,13 @@ namespace FSH.Starter.Blazor.Infrastructure.NoonaApi
     {
 
         [System.Text.Json.Serialization.JsonPropertyName("id")]
-        public string Id { get; set; } = default!;
+        public string? Id { get; set; } = default!;
 
         [System.Text.Json.Serialization.JsonPropertyName("name")]
-        public string Name { get; set; } = default!;
+        public string? Name { get; set; } = default!;
 
         [System.Text.Json.Serialization.JsonPropertyName("bank_account")]
-        public SaltpayBankAccount Bank_account { get; set; } = default!;
+        public SaltpayBankAccount? Bank_account { get; set; } = default!;
 
         private System.Collections.Generic.IDictionary<string, object>? _additionalProperties;
 
@@ -61506,13 +62124,13 @@ namespace FSH.Starter.Blazor.Infrastructure.NoonaApi
     {
 
         [System.Text.Json.Serialization.JsonPropertyName("id")]
-        public string Id { get; set; } = default!;
+        public string? Id { get; set; } = default!;
 
         [System.Text.Json.Serialization.JsonPropertyName("name")]
-        public string Name { get; set; } = default!;
+        public string? Name { get; set; } = default!;
 
         [System.Text.Json.Serialization.JsonPropertyName("address")]
-        public SaltpayStoreAddress Address { get; set; } = default!;
+        public SaltpayStoreAddress? Address { get; set; } = default!;
 
         private System.Collections.Generic.IDictionary<string, object>? _additionalProperties;
 
@@ -61530,19 +62148,19 @@ namespace FSH.Starter.Blazor.Infrastructure.NoonaApi
     {
 
         [System.Text.Json.Serialization.JsonPropertyName("city")]
-        public string City { get; set; } = default!;
+        public string? City { get; set; } = default!;
 
         [System.Text.Json.Serialization.JsonPropertyName("country")]
-        public string Country { get; set; } = default!;
+        public string? Country { get; set; } = default!;
 
         [System.Text.Json.Serialization.JsonPropertyName("street_address_line_1")]
-        public string Street_address_line_1 { get; set; } = default!;
+        public string? Street_address_line_1 { get; set; } = default!;
 
         [System.Text.Json.Serialization.JsonPropertyName("street_address_line_2")]
-        public string Street_address_line_2 { get; set; } = default!;
+        public string? Street_address_line_2 { get; set; } = default!;
 
         [System.Text.Json.Serialization.JsonPropertyName("zip_code")]
-        public string Zip_code { get; set; } = default!;
+        public string? Zip_code { get; set; } = default!;
 
         private System.Collections.Generic.IDictionary<string, object>? _additionalProperties;
 
@@ -61566,19 +62184,19 @@ namespace FSH.Starter.Blazor.Infrastructure.NoonaApi
     {
 
         [System.Text.Json.Serialization.JsonPropertyName("terminal_id")]
-        public string Terminal_id { get; set; } = default!;
+        public string? Terminal_id { get; set; } = default!;
 
         [System.Text.Json.Serialization.JsonPropertyName("terminal_name")]
-        public string Terminal_name { get; set; } = default!;
+        public string? Terminal_name { get; set; } = default!;
 
         [System.Text.Json.Serialization.JsonPropertyName("serial_number")]
-        public string Serial_number { get; set; } = default!;
+        public string? Serial_number { get; set; } = default!;
 
         /// <summary>
         /// The issuer tied to the terminal.
         /// </summary>
         [System.Text.Json.Serialization.JsonPropertyName("issuer")]
-        public string Issuer { get; set; } = default!;
+        public string? Issuer { get; set; } = default!;
 
         private System.Collections.Generic.IDictionary<string, object>? _additionalProperties;
 
@@ -61596,20 +62214,20 @@ namespace FSH.Starter.Blazor.Infrastructure.NoonaApi
     {
 
         [System.Text.Json.Serialization.JsonPropertyName("id")]
-        public string Id { get; set; } = default!;
+        public string? Id { get; set; } = default!;
 
         /// <summary>
         /// Deprecated: use company_id instead
         /// </summary>
         [System.Text.Json.Serialization.JsonPropertyName("enterprise_id")]
         [System.Obsolete]
-        public string Enterprise_id { get; set; } = default!;
+        public string? Enterprise_id { get; set; } = default!;
 
         /// <summary>
         /// The company ID tied to the bank account.
         /// </summary>
         [System.Text.Json.Serialization.JsonPropertyName("company_id")]
-        public string Company_id { get; set; } = default!;
+        public string? Company_id { get; set; } = default!;
 
         /// <summary>
         /// The user ID tied to the bank account.
@@ -61618,19 +62236,19 @@ namespace FSH.Starter.Blazor.Infrastructure.NoonaApi
         /// <br/>
         /// </summary>
         [System.Text.Json.Serialization.JsonPropertyName("user_id")]
-        public string User_id { get; set; } = default!;
+        public string? User_id { get; set; } = default!;
 
         [System.Text.Json.Serialization.JsonPropertyName("kennitala")]
-        public string Kennitala { get; set; } = default!;
+        public string? Kennitala { get; set; } = default!;
 
         [System.Text.Json.Serialization.JsonPropertyName("bank_code")]
-        public string Bank_code { get; set; } = default!;
+        public string? Bank_code { get; set; } = default!;
 
         [System.Text.Json.Serialization.JsonPropertyName("account_type")]
-        public string Account_type { get; set; } = default!;
+        public string? Account_type { get; set; } = default!;
 
         [System.Text.Json.Serialization.JsonPropertyName("account_number")]
-        public string Account_number { get; set; } = default!;
+        public string? Account_number { get; set; } = default!;
 
         private System.Collections.Generic.IDictionary<string, object>? _additionalProperties;
 
@@ -61648,49 +62266,49 @@ namespace FSH.Starter.Blazor.Infrastructure.NoonaApi
     {
 
         [System.Text.Json.Serialization.JsonPropertyName("id")]
-        public string Id { get; set; } = default!;
+        public string? Id { get; set; } = default!;
 
         [System.Text.Json.Serialization.JsonPropertyName("customer_id")]
-        public string Customer_id { get; set; } = default!;
+        public string? Customer_id { get; set; } = default!;
 
         [System.Text.Json.Serialization.JsonPropertyName("status")]
         [System.Text.Json.Serialization.JsonConverter(typeof(System.Text.Json.Serialization.JsonStringEnumConverter<PaymentIntentStatus>))]
-        public PaymentIntentStatus Status { get; set; } = default!;
+        public PaymentIntentStatus? Status { get; set; } = default!;
 
         /// <summary>
         /// Currency code (ISO 4217 format) for transaction
         /// </summary>
         [System.Text.Json.Serialization.JsonPropertyName("currency_code")]
         [System.ComponentModel.DataAnnotations.StringLength(3)]
-        public string Currency_code { get; set; } = default!;
+        public string? Currency_code { get; set; } = default!;
 
         /// <summary>
         /// Amount in cents to be authorized for 3DS flow
         /// </summary>
         [System.Text.Json.Serialization.JsonPropertyName("amount")]
         [System.ComponentModel.DataAnnotations.Range(0, int.MaxValue)]
-        public int Amount { get; set; } = default!;
+        public int? Amount { get; set; } = default!;
 
         [System.Text.Json.Serialization.JsonPropertyName("gateway")]
-        public string Gateway { get; set; } = default!;
+        public string? Gateway { get; set; } = default!;
 
         [System.Text.Json.Serialization.JsonPropertyName("gateway_account_id")]
-        public string Gateway_account_id { get; set; } = default!;
+        public string? Gateway_account_id { get; set; } = default!;
 
         [System.Text.Json.Serialization.JsonPropertyName("expires_at")]
-        public long Expires_at { get; set; } = default!;
+        public long? Expires_at { get; set; } = default!;
 
         [System.Text.Json.Serialization.JsonPropertyName("created_at")]
-        public long Created_at { get; set; } = default!;
+        public long? Created_at { get; set; } = default!;
 
         [System.Text.Json.Serialization.JsonPropertyName("modified_at")]
-        public long Modified_at { get; set; } = default!;
+        public long? Modified_at { get; set; } = default!;
 
         [System.Text.Json.Serialization.JsonPropertyName("resource_version")]
-        public long Resource_version { get; set; } = default!;
+        public long? Resource_version { get; set; } = default!;
 
         [System.Text.Json.Serialization.JsonPropertyName("updated_at")]
-        public long Updated_at { get; set; } = default!;
+        public long? Updated_at { get; set; } = default!;
 
         private System.Collections.Generic.IDictionary<string, object>? _additionalProperties;
 
@@ -61708,51 +62326,51 @@ namespace FSH.Starter.Blazor.Infrastructure.NoonaApi
     {
 
         [System.Text.Json.Serialization.JsonPropertyName("id")]
-        public string Id { get; set; } = default!;
+        public string? Id { get; set; } = default!;
 
         [System.Text.Json.Serialization.JsonPropertyName("first_name")]
-        public string First_name { get; set; } = default!;
+        public string? First_name { get; set; } = default!;
 
         [System.Text.Json.Serialization.JsonPropertyName("last_name")]
-        public string Last_name { get; set; } = default!;
+        public string? Last_name { get; set; } = default!;
 
         [System.Text.Json.Serialization.JsonPropertyName("email")]
-        public string Email { get; set; } = default!;
+        public string? Email { get; set; } = default!;
 
         [System.Text.Json.Serialization.JsonPropertyName("phone")]
-        public string Phone { get; set; } = default!;
+        public string? Phone { get; set; } = default!;
 
         [System.Text.Json.Serialization.JsonPropertyName("company")]
-        public string Company { get; set; } = default!;
+        public string? Company { get; set; } = default!;
 
         [System.Text.Json.Serialization.JsonPropertyName("business_registration_id")]
-        public string Business_registration_id { get; set; } = default!;
+        public string? Business_registration_id { get; set; } = default!;
 
         [System.Text.Json.Serialization.JsonPropertyName("vat_number")]
-        public string Vat_number { get; set; } = default!;
+        public string? Vat_number { get; set; } = default!;
 
         [System.Text.Json.Serialization.JsonPropertyName("vat_number_status")]
         [System.Text.Json.Serialization.JsonConverter(typeof(System.Text.Json.Serialization.JsonStringEnumConverter<BillingCustomerVat_number_status>))]
-        public BillingCustomerVat_number_status Vat_number_status { get; set; } = default!;
+        public BillingCustomerVat_number_status? Vat_number_status { get; set; } = default!;
 
         /// <summary>
         /// The billing method. "card" for regular card-based subscriptions (default), "invoice" for invoice-based subscriptions (only available for Icelandic companies).
         /// </summary>
         [System.Text.Json.Serialization.JsonPropertyName("billing_method")]
         [System.Text.Json.Serialization.JsonConverter(typeof(System.Text.Json.Serialization.JsonStringEnumConverter<BillingCustomerBilling_method>))]
-        public BillingCustomerBilling_method Billing_method { get; set; } = FSH.Starter.Blazor.Infrastructure.NoonaApi.BillingCustomerBilling_method.Card;
+        public BillingCustomerBilling_method? Billing_method { get; set; } = FSH.Starter.Blazor.Infrastructure.NoonaApi.BillingCustomerBilling_method.Card;
 
         [System.Text.Json.Serialization.JsonPropertyName("payment_intent_id")]
-        public string Payment_intent_id { get; set; } = default!;
+        public string? Payment_intent_id { get; set; } = default!;
 
         [System.Text.Json.Serialization.JsonPropertyName("primary_payment_source_id")]
-        public string Primary_payment_source_id { get; set; } = default!;
+        public string? Primary_payment_source_id { get; set; } = default!;
 
         [System.Text.Json.Serialization.JsonPropertyName("card")]
-        public Card Card { get; set; } = default!;
+        public Card? Card { get; set; } = default!;
 
         [System.Text.Json.Serialization.JsonPropertyName("billing_address")]
-        public BillingAddress Billing_address { get; set; } = default!;
+        public BillingAddress? Billing_address { get; set; } = default!;
 
         private System.Collections.Generic.IDictionary<string, object>? _additionalProperties;
 
@@ -61770,31 +62388,31 @@ namespace FSH.Starter.Blazor.Infrastructure.NoonaApi
     {
 
         [System.Text.Json.Serialization.JsonPropertyName("first_name")]
-        public string First_name { get; set; } = default!;
+        public string? First_name { get; set; } = default!;
 
         [System.Text.Json.Serialization.JsonPropertyName("last_name")]
-        public string Last_name { get; set; } = default!;
+        public string? Last_name { get; set; } = default!;
 
         [System.Text.Json.Serialization.JsonPropertyName("email")]
-        public string Email { get; set; } = default!;
+        public string? Email { get; set; } = default!;
 
         [System.Text.Json.Serialization.JsonPropertyName("phone")]
-        public string Phone { get; set; } = default!;
+        public string? Phone { get; set; } = default!;
 
         [System.Text.Json.Serialization.JsonPropertyName("company")]
-        public string Company { get; set; } = default!;
+        public string? Company { get; set; } = default!;
 
         [System.Text.Json.Serialization.JsonPropertyName("street")]
-        public string Street { get; set; } = default!;
+        public string? Street { get; set; } = default!;
 
         [System.Text.Json.Serialization.JsonPropertyName("city")]
-        public string City { get; set; } = default!;
+        public string? City { get; set; } = default!;
 
         [System.Text.Json.Serialization.JsonPropertyName("country")]
-        public string Country { get; set; } = default!;
+        public string? Country { get; set; } = default!;
 
         [System.Text.Json.Serialization.JsonPropertyName("postal_code")]
-        public string Postal_code { get; set; } = default!;
+        public string? Postal_code { get; set; } = default!;
 
         private System.Collections.Generic.IDictionary<string, object>? _additionalProperties;
 
@@ -61812,28 +62430,28 @@ namespace FSH.Starter.Blazor.Infrastructure.NoonaApi
     {
 
         [System.Text.Json.Serialization.JsonPropertyName("first_name")]
-        public string First_name { get; set; } = default!;
+        public string? First_name { get; set; } = default!;
 
         [System.Text.Json.Serialization.JsonPropertyName("last_name")]
-        public string Last_name { get; set; } = default!;
+        public string? Last_name { get; set; } = default!;
 
         [System.Text.Json.Serialization.JsonPropertyName("status")]
         [System.Text.Json.Serialization.JsonConverter(typeof(System.Text.Json.Serialization.JsonStringEnumConverter<CardStatus>))]
-        public CardStatus Status { get; set; } = default!;
+        public CardStatus? Status { get; set; } = default!;
 
         [System.Text.Json.Serialization.JsonPropertyName("last4")]
-        public string Last4 { get; set; } = default!;
+        public string? Last4 { get; set; } = default!;
 
         [System.Text.Json.Serialization.JsonPropertyName("card_type")]
         [System.Text.Json.Serialization.JsonConverter(typeof(System.Text.Json.Serialization.JsonStringEnumConverter<Card_type>))]
-        public Card_type Card_type { get; set; } = default!;
+        public Card_type? Card_type { get; set; } = default!;
 
         [System.Text.Json.Serialization.JsonPropertyName("expiry_month")]
         [System.ComponentModel.DataAnnotations.Range(1, 12)]
-        public int Expiry_month { get; set; } = default!;
+        public int? Expiry_month { get; set; } = default!;
 
         [System.Text.Json.Serialization.JsonPropertyName("expiry_year")]
-        public int Expiry_year { get; set; } = default!;
+        public int? Expiry_year { get; set; } = default!;
 
         private System.Collections.Generic.IDictionary<string, object>? _additionalProperties;
 
@@ -61851,79 +62469,79 @@ namespace FSH.Starter.Blazor.Infrastructure.NoonaApi
     {
 
         [System.Text.Json.Serialization.JsonPropertyName("id")]
-        public string Id { get; set; } = default!;
+        public string? Id { get; set; } = default!;
 
         [System.Text.Json.Serialization.JsonPropertyName("customer")]
-        public string Customer { get; set; } = default!;
+        public string? Customer { get; set; } = default!;
 
         [System.Text.Json.Serialization.JsonPropertyName("status")]
         [System.Text.Json.Serialization.JsonConverter(typeof(System.Text.Json.Serialization.JsonStringEnumConverter<PowerupSubscriptionInfoStatus>))]
-        public PowerupSubscriptionInfoStatus Status { get; set; } = default!;
+        public PowerupSubscriptionInfoStatus? Status { get; set; } = default!;
 
         [System.Text.Json.Serialization.JsonPropertyName("subscription_items")]
-        public SubscriptionItems Subscription_items { get; set; } = default!;
+        public SubscriptionItems? Subscription_items { get; set; } = default!;
 
         [System.Text.Json.Serialization.JsonPropertyName("charged_items")]
-        public ChargedBillingItems Charged_items { get; set; } = default!;
+        public ChargedBillingItems? Charged_items { get; set; } = default!;
 
         [System.Text.Json.Serialization.JsonPropertyName("coupons")]
-        public SubscriptionCoupons Coupons { get; set; } = default!;
+        public SubscriptionCoupons? Coupons { get; set; } = default!;
 
         [System.Text.Json.Serialization.JsonPropertyName("discounts")]
-        public SubscriptionDiscounts Discounts { get; set; } = default!;
+        public SubscriptionDiscounts? Discounts { get; set; } = default!;
 
         [System.Text.Json.Serialization.JsonPropertyName("currency_code")]
         [System.ComponentModel.DataAnnotations.StringLength(3)]
-        public string Currency_code { get; set; } = default!;
+        public string? Currency_code { get; set; } = default!;
 
         [System.Text.Json.Serialization.JsonPropertyName("exchange_rate")]
-        public double Exchange_rate { get; set; } = default!;
+        public double? Exchange_rate { get; set; } = default!;
 
         [System.Text.Json.Serialization.JsonPropertyName("auto_close_invoices")]
-        public bool Auto_close_invoices { get; set; } = default!;
+        public bool? Auto_close_invoices { get; set; } = default!;
 
         [System.Text.Json.Serialization.JsonPropertyName("due_invoices_count")]
-        public int Due_invoices_count { get; set; } = default!;
+        public int? Due_invoices_count { get; set; } = default!;
 
         [System.Text.Json.Serialization.JsonPropertyName("total_dues")]
-        public int Total_dues { get; set; } = default!;
+        public int? Total_dues { get; set; } = default!;
 
         [System.Text.Json.Serialization.JsonPropertyName("due_since")]
-        public System.DateTime Due_since { get; set; } = default!;
+        public System.DateTime? Due_since { get; set; } = default!;
 
         [System.Text.Json.Serialization.JsonPropertyName("cancel_reason")]
         [System.Text.Json.Serialization.JsonConverter(typeof(System.Text.Json.Serialization.JsonStringEnumConverter<PowerupSubscriptionInfoCancel_reason>))]
-        public PowerupSubscriptionInfoCancel_reason Cancel_reason { get; set; } = default!;
+        public PowerupSubscriptionInfoCancel_reason? Cancel_reason { get; set; } = default!;
 
         [System.Text.Json.Serialization.JsonPropertyName("cancelled_at")]
-        public System.DateTime Cancelled_at { get; set; } = default!;
+        public System.DateTime? Cancelled_at { get; set; } = default!;
 
         /// <summary>
         /// Start of the trial period for the subscription. Presence of this value for future subscription implies the subscription will go into in_trial state when it starts.
         /// </summary>
         [System.Text.Json.Serialization.JsonPropertyName("trial_start")]
-        public System.DateTime Trial_start { get; set; } = default!;
+        public System.DateTime? Trial_start { get; set; } = default!;
 
         [System.Text.Json.Serialization.JsonPropertyName("current_term_start")]
-        public System.DateTime Current_term_start { get; set; } = default!;
+        public System.DateTime? Current_term_start { get; set; } = default!;
 
         [System.Text.Json.Serialization.JsonPropertyName("current_term_end")]
-        public System.DateTime Current_term_end { get; set; } = default!;
+        public System.DateTime? Current_term_end { get; set; } = default!;
 
         [System.Text.Json.Serialization.JsonPropertyName("next_billing_at")]
-        public System.DateTime Next_billing_at { get; set; } = default!;
+        public System.DateTime? Next_billing_at { get; set; } = default!;
 
         [System.Text.Json.Serialization.JsonPropertyName("started_at")]
-        public System.DateTime Started_at { get; set; } = default!;
+        public System.DateTime? Started_at { get; set; } = default!;
 
         [System.Text.Json.Serialization.JsonPropertyName("created_at")]
-        public System.DateTime Created_at { get; set; } = default!;
+        public System.DateTime? Created_at { get; set; } = default!;
 
         [System.Text.Json.Serialization.JsonPropertyName("updated_at")]
-        public System.DateTime Updated_at { get; set; } = default!;
+        public System.DateTime? Updated_at { get; set; } = default!;
 
         [System.Text.Json.Serialization.JsonPropertyName("deleted")]
-        public bool Deleted { get; set; } = default!;
+        public bool? Deleted { get; set; } = default!;
 
         private System.Collections.Generic.IDictionary<string, object>? _additionalProperties;
 
@@ -61947,23 +62565,23 @@ namespace FSH.Starter.Blazor.Infrastructure.NoonaApi
     {
 
         [System.Text.Json.Serialization.JsonPropertyName("item_price_id")]
-        public string Item_price_id { get; set; } = default!;
+        public string? Item_price_id { get; set; } = default!;
 
         [System.Text.Json.Serialization.JsonPropertyName("item_type")]
         [System.Text.Json.Serialization.JsonConverter(typeof(System.Text.Json.Serialization.JsonStringEnumConverter<SubscriptionItemItem_type>))]
-        public SubscriptionItemItem_type Item_type { get; set; } = default!;
+        public SubscriptionItemItem_type? Item_type { get; set; } = default!;
 
         [System.Text.Json.Serialization.JsonPropertyName("quantity")]
-        public int Quantity { get; set; } = default!;
+        public int? Quantity { get; set; } = default!;
 
         [System.Text.Json.Serialization.JsonPropertyName("unit_price")]
-        public int Unit_price { get; set; } = default!;
+        public int? Unit_price { get; set; } = default!;
 
         [System.Text.Json.Serialization.JsonPropertyName("amount")]
-        public int Amount { get; set; } = default!;
+        public int? Amount { get; set; } = default!;
 
         [System.Text.Json.Serialization.JsonPropertyName("trial_end")]
-        public System.DateTime Trial_end { get; set; } = default!;
+        public System.DateTime? Trial_end { get; set; } = default!;
 
         private System.Collections.Generic.IDictionary<string, object>? _additionalProperties;
 
@@ -61987,10 +62605,10 @@ namespace FSH.Starter.Blazor.Infrastructure.NoonaApi
     {
 
         [System.Text.Json.Serialization.JsonPropertyName("item_price_id")]
-        public string Item_price_id { get; set; } = default!;
+        public string? Item_price_id { get; set; } = default!;
 
         [System.Text.Json.Serialization.JsonPropertyName("last_charged_at")]
-        public System.DateTime Last_charged_at { get; set; } = default!;
+        public System.DateTime? Last_charged_at { get; set; } = default!;
 
         private System.Collections.Generic.IDictionary<string, object>? _additionalProperties;
 
@@ -62014,16 +62632,16 @@ namespace FSH.Starter.Blazor.Infrastructure.NoonaApi
     {
 
         [System.Text.Json.Serialization.JsonPropertyName("coupon_id")]
-        public string Coupon_id { get; set; } = default!;
+        public string? Coupon_id { get; set; } = default!;
 
         [System.Text.Json.Serialization.JsonPropertyName("coupon_code")]
-        public string Coupon_code { get; set; } = default!;
+        public string? Coupon_code { get; set; } = default!;
 
         [System.Text.Json.Serialization.JsonPropertyName("applied_count")]
-        public int Applied_count { get; set; } = default!;
+        public int? Applied_count { get; set; } = default!;
 
         [System.Text.Json.Serialization.JsonPropertyName("apply_till")]
-        public System.DateTime Apply_till { get; set; } = default!;
+        public System.DateTime? Apply_till { get; set; } = default!;
 
         private System.Collections.Generic.IDictionary<string, object>? _additionalProperties;
 
@@ -62047,56 +62665,56 @@ namespace FSH.Starter.Blazor.Infrastructure.NoonaApi
     {
 
         [System.Text.Json.Serialization.JsonPropertyName("id")]
-        public string Id { get; set; } = default!;
+        public string? Id { get; set; } = default!;
 
         [System.Text.Json.Serialization.JsonPropertyName("coupon")]
-        public string Coupon { get; set; } = default!;
+        public string? Coupon { get; set; } = default!;
 
         [System.Text.Json.Serialization.JsonPropertyName("invoice_name")]
-        public string Invoice_name { get; set; } = default!;
+        public string? Invoice_name { get; set; } = default!;
 
         [System.Text.Json.Serialization.JsonPropertyName("apply_on")]
         [System.Text.Json.Serialization.JsonConverter(typeof(System.Text.Json.Serialization.JsonStringEnumConverter<SubscriptionDiscountApply_on>))]
-        public SubscriptionDiscountApply_on Apply_on { get; set; } = default!;
+        public SubscriptionDiscountApply_on? Apply_on { get; set; } = default!;
 
         [System.Text.Json.Serialization.JsonPropertyName("item_price_id")]
-        public string Item_price_id { get; set; } = default!;
+        public string? Item_price_id { get; set; } = default!;
 
         [System.Text.Json.Serialization.JsonPropertyName("percentage")]
         [System.ComponentModel.DataAnnotations.Range(0D, 100D)]
-        public double Percentage { get; set; } = default!;
+        public double? Percentage { get; set; } = default!;
 
         [System.Text.Json.Serialization.JsonPropertyName("amount")]
         [System.ComponentModel.DataAnnotations.Range(0, int.MaxValue)]
-        public int Amount { get; set; } = default!;
+        public int? Amount { get; set; } = default!;
 
         [System.Text.Json.Serialization.JsonPropertyName("duration_type")]
         [System.Text.Json.Serialization.JsonConverter(typeof(System.Text.Json.Serialization.JsonStringEnumConverter<SubscriptionDiscountDuration_type>))]
-        public SubscriptionDiscountDuration_type Duration_type { get; set; } = default!;
+        public SubscriptionDiscountDuration_type? Duration_type { get; set; } = default!;
 
         [System.Text.Json.Serialization.JsonPropertyName("period_unit")]
         [System.Text.Json.Serialization.JsonConverter(typeof(System.Text.Json.Serialization.JsonStringEnumConverter<SubscriptionDiscountPeriod_unit>))]
-        public SubscriptionDiscountPeriod_unit Period_unit { get; set; } = default!;
+        public SubscriptionDiscountPeriod_unit? Period_unit { get; set; } = default!;
 
         [System.Text.Json.Serialization.JsonPropertyName("period")]
         [System.ComponentModel.DataAnnotations.Range(1, int.MaxValue)]
-        public int Period { get; set; } = default!;
+        public int? Period { get; set; } = default!;
 
         [System.Text.Json.Serialization.JsonPropertyName("currency_code")]
         [System.ComponentModel.DataAnnotations.StringLength(3)]
-        public string Currency_code { get; set; } = default!;
+        public string? Currency_code { get; set; } = default!;
 
         [System.Text.Json.Serialization.JsonPropertyName("included_in_mrr")]
-        public bool Included_in_mrr { get; set; } = default!;
+        public bool? Included_in_mrr { get; set; } = default!;
 
         [System.Text.Json.Serialization.JsonPropertyName("applied_count")]
-        public int Applied_count { get; set; } = default!;
+        public int? Applied_count { get; set; } = default!;
 
         [System.Text.Json.Serialization.JsonPropertyName("apply_till")]
-        public System.DateTime Apply_till { get; set; } = default!;
+        public System.DateTime? Apply_till { get; set; } = default!;
 
         [System.Text.Json.Serialization.JsonPropertyName("created_at")]
-        public System.DateTime Created_at { get; set; } = default!;
+        public System.DateTime? Created_at { get; set; } = default!;
 
         private System.Collections.Generic.IDictionary<string, object>? _additionalProperties;
 
@@ -62139,10 +62757,10 @@ namespace FSH.Starter.Blazor.Infrastructure.NoonaApi
 
         [System.Text.Json.Serialization.JsonPropertyName("churn_reasons")]
         // TODO(system.text.json): Add string enum item converter
-        public SubscriptionChurnReasons Churn_reasons { get; set; } = default!;
+        public SubscriptionChurnReasons? Churn_reasons { get; set; } = default!;
 
         [System.Text.Json.Serialization.JsonPropertyName("churn_elaboration")]
-        public string Churn_elaboration { get; set; } = default!;
+        public string? Churn_elaboration { get; set; } = default!;
 
         private System.Collections.Generic.IDictionary<string, object>? _additionalProperties;
 
@@ -62212,23 +62830,23 @@ namespace FSH.Starter.Blazor.Infrastructure.NoonaApi
     {
 
         [System.Text.Json.Serialization.JsonPropertyName("id")]
-        public string Id { get; set; } = default!;
+        public string? Id { get; set; } = default!;
 
         [System.Text.Json.Serialization.JsonPropertyName("amount")]
-        public int Amount { get; set; } = default!;
+        public int? Amount { get; set; } = default!;
 
         [System.Text.Json.Serialization.JsonPropertyName("currency")]
-        public string Currency { get; set; } = default!;
+        public string? Currency { get; set; } = default!;
 
         [System.Text.Json.Serialization.JsonPropertyName("date")]
-        public System.DateTime Date { get; set; } = default!;
+        public System.DateTime? Date { get; set; } = default!;
 
         [System.Text.Json.Serialization.JsonPropertyName("status")]
         [System.Text.Json.Serialization.JsonConverter(typeof(System.Text.Json.Serialization.JsonStringEnumConverter<BillingInvoiceStatus>))]
-        public BillingInvoiceStatus Status { get; set; } = default!;
+        public BillingInvoiceStatus? Status { get; set; } = default!;
 
         [System.Text.Json.Serialization.JsonPropertyName("payment_url")]
-        public string Payment_url { get; set; } = default!;
+        public string? Payment_url { get; set; } = default!;
 
         private System.Collections.Generic.IDictionary<string, object>? _additionalProperties;
 
@@ -62252,7 +62870,7 @@ namespace FSH.Starter.Blazor.Infrastructure.NoonaApi
     {
 
         [System.Text.Json.Serialization.JsonPropertyName("download_url")]
-        public string Download_url { get; set; } = default!;
+        public string? Download_url { get; set; } = default!;
 
         private System.Collections.Generic.IDictionary<string, object>? _additionalProperties;
 
@@ -62277,7 +62895,7 @@ namespace FSH.Starter.Blazor.Infrastructure.NoonaApi
         /// </summary>
         [System.Text.Json.Serialization.JsonPropertyName("status")]
         // TODO(system.text.json): Add string enum item converter
-        public System.Collections.Generic.ICollection<Status> Status { get; set; } = default!;
+        public System.Collections.Generic.ICollection<Status>? Status { get; set; } = default!;
 
         private System.Collections.Generic.IDictionary<string, object>? _additionalProperties;
 
@@ -62296,7 +62914,7 @@ namespace FSH.Starter.Blazor.Infrastructure.NoonaApi
 
         [System.Text.Json.Serialization.JsonPropertyName("product")]
         [System.Text.Json.Serialization.JsonConverter(typeof(System.Text.Json.Serialization.JsonStringEnumConverter<Powerup>))]
-        public Powerup Product { get; set; } = default!;
+        public Powerup? Product { get; set; } = default!;
 
         private System.Collections.Generic.IDictionary<string, object>? _additionalProperties;
 
@@ -62323,43 +62941,43 @@ namespace FSH.Starter.Blazor.Infrastructure.NoonaApi
         /// The subscription ID
         /// </summary>
         [System.Text.Json.Serialization.JsonPropertyName("id")]
-        public string Id { get; set; } = default!;
+        public string? Id { get; set; } = default!;
 
         [System.Text.Json.Serialization.JsonPropertyName("type")]
         [System.Text.Json.Serialization.JsonConverter(typeof(System.Text.Json.Serialization.JsonStringEnumConverter<Powerup>))]
-        public Powerup Type { get; set; } = default!;
+        public Powerup? Type { get; set; } = default!;
 
         /// <summary>
         /// Active status of powerup
         /// </summary>
         [System.Text.Json.Serialization.JsonPropertyName("status")]
         [System.Text.Json.Serialization.JsonConverter(typeof(System.Text.Json.Serialization.JsonStringEnumConverter<PowerupSubscriptionStatus>))]
-        public PowerupSubscriptionStatus Status { get; set; } = default!;
+        public PowerupSubscriptionStatus? Status { get; set; } = default!;
 
         /// <summary>
         /// The date the powerup subscription was activated.
         /// </summary>
         [System.Text.Json.Serialization.JsonPropertyName("active_since")]
-        public System.DateTime Active_since { get; set; } = default!;
+        public System.DateTime? Active_since { get; set; } = default!;
 
         /// <summary>
         /// If the powerup is deactivated, this is the date it was deactivated.
         /// <br/>
         /// </summary>
         [System.Text.Json.Serialization.JsonPropertyName("deactivated_at")]
-        public System.DateTime Deactivated_at { get; set; } = default!;
+        public System.DateTime? Deactivated_at { get; set; } = default!;
 
         /// <summary>
         /// Date when the trial started.
         /// </summary>
         [System.Text.Json.Serialization.JsonPropertyName("trial_started_at")]
-        public System.DateTime Trial_started_at { get; set; } = default!;
+        public System.DateTime? Trial_started_at { get; set; } = default!;
 
         /// <summary>
         /// Date when the user acknowledged the end of the trial.
         /// </summary>
         [System.Text.Json.Serialization.JsonPropertyName("trial_end_acknowledged_at")]
-        public System.DateTime Trial_end_acknowledged_at { get; set; } = default!;
+        public System.DateTime? Trial_end_acknowledged_at { get; set; } = default!;
 
         private System.Collections.Generic.IDictionary<string, object>? _additionalProperties;
 
@@ -62431,10 +63049,10 @@ namespace FSH.Starter.Blazor.Infrastructure.NoonaApi
     {
 
         [System.Text.Json.Serialization.JsonPropertyName("paid_invoices")]
-        public int Paid_invoices { get; set; } = default!;
+        public int? Paid_invoices { get; set; } = default!;
 
         [System.Text.Json.Serialization.JsonPropertyName("unpaid_invoices")]
-        public int Unpaid_invoices { get; set; } = default!;
+        public int? Unpaid_invoices { get; set; } = default!;
 
         private System.Collections.Generic.IDictionary<string, object>? _additionalProperties;
 
@@ -62522,16 +63140,16 @@ namespace FSH.Starter.Blazor.Infrastructure.NoonaApi
     {
 
         [System.Text.Json.Serialization.JsonPropertyName("id")]
-        public string Id { get; set; } = default!;
+        public string? Id { get; set; } = default!;
 
         [System.Text.Json.Serialization.JsonPropertyName("ratio")]
-        public double Ratio { get; set; } = default!;
+        public double? Ratio { get; set; } = default!;
 
         [System.Text.Json.Serialization.JsonPropertyName("country_code")]
-        public string Country_code { get; set; } = default!;
+        public string? Country_code { get; set; } = default!;
 
         [System.Text.Json.Serialization.JsonPropertyName("default")]
-        public bool Default { get; set; } = default!;
+        public bool? Default { get; set; } = default!;
 
         private System.Collections.Generic.IDictionary<string, object>? _additionalProperties;
 
@@ -62555,10 +63173,10 @@ namespace FSH.Starter.Blazor.Infrastructure.NoonaApi
     {
 
         [System.Text.Json.Serialization.JsonPropertyName("from")]
-        public System.DateTime From { get; set; } = default!;
+        public System.DateTime? From { get; set; } = default!;
 
         [System.Text.Json.Serialization.JsonPropertyName("to")]
-        public System.DateTime To { get; set; } = default!;
+        public System.DateTime? To { get; set; } = default!;
 
         private System.Collections.Generic.IDictionary<string, object>? _additionalProperties;
 
@@ -62582,46 +63200,46 @@ namespace FSH.Starter.Blazor.Infrastructure.NoonaApi
     {
 
         [System.Text.Json.Serialization.JsonPropertyName("id")]
-        public string Id { get; set; } = default!;
+        public string? Id { get; set; } = default!;
 
         [System.Text.Json.Serialization.JsonPropertyName("company")]
-        public string Company { get; set; } = default!;
+        public string? Company { get; set; } = default!;
 
         [System.Text.Json.Serialization.JsonPropertyName("event_types")]
-        public System.Collections.Generic.ICollection<string> Event_types { get; set; } = default!;
+        public System.Collections.Generic.ICollection<string>? Event_types { get; set; } = default!;
 
         [System.Text.Json.Serialization.JsonPropertyName("starts_at")]
-        public System.DateTime Starts_at { get; set; } = default!;
+        public System.DateTime? Starts_at { get; set; } = default!;
 
         [System.Text.Json.Serialization.JsonPropertyName("ends_at")]
-        public System.DateTime Ends_at { get; set; } = default!;
+        public System.DateTime? Ends_at { get; set; } = default!;
 
         /// <summary>
         /// Date of timeslot reservation
         /// </summary>
         [System.Text.Json.Serialization.JsonPropertyName("date")]
-        public string Date { get; set; } = default!;
+        public string? Date { get; set; } = default!;
 
         [System.Text.Json.Serialization.JsonPropertyName("duration")]
-        public int Duration { get; set; } = default!;
+        public int? Duration { get; set; } = default!;
 
         [System.Text.Json.Serialization.JsonPropertyName("employee")]
-        public string Employee { get; set; } = default!;
+        public string? Employee { get; set; } = default!;
 
         [System.Text.Json.Serialization.JsonPropertyName("space")]
-        public string Space { get; set; } = default!;
+        public string? Space { get; set; } = default!;
 
         [System.Text.Json.Serialization.JsonPropertyName("resources")]
-        public ExpandableResources Resources { get; set; } = default!;
+        public ExpandableResources? Resources { get; set; } = default!;
 
         [System.Text.Json.Serialization.JsonPropertyName("expires_at")]
-        public System.DateTime Expires_at { get; set; } = default!;
+        public System.DateTime? Expires_at { get; set; } = default!;
 
         [System.Text.Json.Serialization.JsonPropertyName("created_at")]
-        public System.DateTime Created_at { get; set; } = default!;
+        public System.DateTime? Created_at { get; set; } = default!;
 
         [System.Text.Json.Serialization.JsonPropertyName("updated_at")]
-        public System.DateTime Updated_at { get; set; } = default!;
+        public System.DateTime? Updated_at { get; set; } = default!;
 
         private System.Collections.Generic.IDictionary<string, object>? _additionalProperties;
 
@@ -62645,13 +63263,13 @@ namespace FSH.Starter.Blazor.Infrastructure.NoonaApi
         /// Only return reservations where starts_at is after this timestamp.
         /// </summary>
         [System.Text.Json.Serialization.JsonPropertyName("from")]
-        public System.DateTime From { get; set; } = default!;
+        public System.DateTime? From { get; set; } = default!;
 
         /// <summary>
         /// Only return reservations where starts_at is before this timestamp.
         /// </summary>
         [System.Text.Json.Serialization.JsonPropertyName("to")]
-        public System.DateTime To { get; set; } = default!;
+        public System.DateTime? To { get; set; } = default!;
 
     }
 
@@ -62727,43 +63345,43 @@ namespace FSH.Starter.Blazor.Infrastructure.NoonaApi
     {
 
         [System.Text.Json.Serialization.JsonPropertyName("id")]
-        public string Id { get; set; } = default!;
+        public string? Id { get; set; } = default!;
 
         [System.Text.Json.Serialization.JsonPropertyName("type")]
         [System.Text.Json.Serialization.JsonConverter(typeof(System.Text.Json.Serialization.JsonStringEnumConverter<ActivityType>))]
-        public ActivityType Type { get; set; } = default!;
+        public ActivityType? Type { get; set; } = default!;
 
         [System.Text.Json.Serialization.JsonPropertyName("action")]
         [System.Text.Json.Serialization.JsonConverter(typeof(System.Text.Json.Serialization.JsonStringEnumConverter<ActivityAction>))]
-        public ActivityAction Action { get; set; } = default!;
+        public ActivityAction? Action { get; set; } = default!;
 
         [System.Text.Json.Serialization.JsonPropertyName("field")]
         [System.Text.Json.Serialization.JsonConverter(typeof(System.Text.Json.Serialization.JsonStringEnumConverter<ActivityField>))]
-        public ActivityField Field { get; set; } = default!;
+        public ActivityField? Field { get; set; } = default!;
 
         [System.Text.Json.Serialization.JsonPropertyName("old_value")]
-        public string Old_value { get; set; } = default!;
+        public string? Old_value { get; set; } = default!;
 
         [System.Text.Json.Serialization.JsonPropertyName("new_value")]
-        public string New_value { get; set; } = default!;
+        public string? New_value { get; set; } = default!;
 
         [System.Text.Json.Serialization.JsonPropertyName("customer")]
-        public string Customer { get; set; } = default!;
+        public string? Customer { get; set; } = default!;
 
         [System.Text.Json.Serialization.JsonPropertyName("event")]
-        public string Event { get; set; } = default!;
+        public string? Event { get; set; } = default!;
 
         [System.Text.Json.Serialization.JsonPropertyName("event_type")]
-        public string Event_type { get; set; } = default!;
+        public string? Event_type { get; set; } = default!;
 
         [System.Text.Json.Serialization.JsonPropertyName("payment")]
-        public string Payment { get; set; } = default!;
+        public string? Payment { get; set; } = default!;
 
         [System.Text.Json.Serialization.JsonPropertyName("created_at")]
-        public System.DateTime Created_at { get; set; } = default!;
+        public System.DateTime? Created_at { get; set; } = default!;
 
         [System.Text.Json.Serialization.JsonPropertyName("created_by")]
-        public string Created_by { get; set; } = default!;
+        public string? Created_by { get; set; } = default!;
 
         private System.Collections.Generic.IDictionary<string, object>? _additionalProperties;
 
@@ -62839,7 +63457,7 @@ namespace FSH.Starter.Blazor.Infrastructure.NoonaApi
     {
 
         [System.Text.Json.Serialization.JsonPropertyName("id")]
-        public string Id { get; set; } = default!;
+        public string? Id { get; set; } = default!;
 
         [System.Text.Json.Serialization.JsonPropertyName("type")]
         [System.ComponentModel.DataAnnotations.Required(AllowEmptyStrings = true)]
@@ -62847,10 +63465,10 @@ namespace FSH.Starter.Blazor.Infrastructure.NoonaApi
         public ActorType Type { get; set; } = default!;
 
         [System.Text.Json.Serialization.JsonPropertyName("name")]
-        public string Name { get; set; } = default!;
+        public string? Name { get; set; } = default!;
 
         [System.Text.Json.Serialization.JsonPropertyName("image")]
-        public Image Image { get; set; } = default!;
+        public Image? Image { get; set; } = default!;
 
         private System.Collections.Generic.IDictionary<string, object>? _additionalProperties;
 
@@ -62883,7 +63501,7 @@ namespace FSH.Starter.Blazor.Infrastructure.NoonaApi
     {
 
         [System.Text.Json.Serialization.JsonPropertyName("email")]
-        public string Email { get; set; } = default!;
+        public string? Email { get; set; } = default!;
 
         private System.Collections.Generic.IDictionary<string, object>? _additionalProperties;
 
@@ -62901,10 +63519,10 @@ namespace FSH.Starter.Blazor.Infrastructure.NoonaApi
     {
 
         [System.Text.Json.Serialization.JsonPropertyName("transactions")]
-        public AmountMetricsByDay Transactions { get; set; } = default!;
+        public AmountMetricsByDay? Transactions { get; set; } = default!;
 
         [System.Text.Json.Serialization.JsonPropertyName("payments")]
-        public AmountMetricsByDay Payments { get; set; } = default!;
+        public AmountMetricsByDay? Payments { get; set; } = default!;
 
         private System.Collections.Generic.IDictionary<string, object>? _additionalProperties;
 
@@ -62922,13 +63540,13 @@ namespace FSH.Starter.Blazor.Infrastructure.NoonaApi
     {
 
         [System.Text.Json.Serialization.JsonPropertyName("today")]
-        public AmountMetric Today { get; set; } = default!;
+        public AmountMetric? Today { get; set; } = default!;
 
         [System.Text.Json.Serialization.JsonPropertyName("same_day_last_week")]
-        public AmountMetric Same_day_last_week { get; set; } = default!;
+        public AmountMetric? Same_day_last_week { get; set; } = default!;
 
         [System.Text.Json.Serialization.JsonPropertyName("percent_change")]
-        public AmountChangeMetric Percent_change { get; set; } = default!;
+        public AmountChangeMetric? Percent_change { get; set; } = default!;
 
         private System.Collections.Generic.IDictionary<string, object>? _additionalProperties;
 
@@ -62949,13 +63567,13 @@ namespace FSH.Starter.Blazor.Infrastructure.NoonaApi
     {
 
         [System.Text.Json.Serialization.JsonPropertyName("total")]
-        public double Total { get; set; } = default!;
+        public double? Total { get; set; } = default!;
 
         [System.Text.Json.Serialization.JsonPropertyName("average")]
-        public double Average { get; set; } = default!;
+        public double? Average { get; set; } = default!;
 
         [System.Text.Json.Serialization.JsonPropertyName("count")]
-        public double Count { get; set; } = default!;
+        public double? Count { get; set; } = default!;
 
         private System.Collections.Generic.IDictionary<string, object>? _additionalProperties;
 
@@ -62973,16 +63591,16 @@ namespace FSH.Starter.Blazor.Infrastructure.NoonaApi
     {
 
         [System.Text.Json.Serialization.JsonPropertyName("currency")]
-        public string Currency { get; set; } = default!;
+        public string? Currency { get; set; } = default!;
 
         [System.Text.Json.Serialization.JsonPropertyName("total")]
-        public double Total { get; set; } = default!;
+        public double? Total { get; set; } = default!;
 
         [System.Text.Json.Serialization.JsonPropertyName("average")]
-        public double Average { get; set; } = default!;
+        public double? Average { get; set; } = default!;
 
         [System.Text.Json.Serialization.JsonPropertyName("count")]
-        public int Count { get; set; } = default!;
+        public int? Count { get; set; } = default!;
 
         private System.Collections.Generic.IDictionary<string, object>? _additionalProperties;
 
@@ -63045,31 +63663,31 @@ namespace FSH.Starter.Blazor.Infrastructure.NoonaApi
         /// </summary>
         [System.Text.Json.Serialization.JsonPropertyName("time_bucket")]
         [System.Obsolete]
-        public string Time_bucket { get; set; } = default!;
+        public string? Time_bucket { get; set; } = default!;
 
         [System.Text.Json.Serialization.JsonPropertyName("booking_day")]
-        public string Booking_day { get; set; } = default!;
+        public string? Booking_day { get; set; } = default!;
 
         [System.Text.Json.Serialization.JsonPropertyName("created_day")]
-        public string Created_day { get; set; } = default!;
+        public string? Created_day { get; set; } = default!;
 
         [System.Text.Json.Serialization.JsonPropertyName("booking_source_group")]
-        public string Booking_source_group { get; set; } = default!;
+        public string? Booking_source_group { get; set; } = default!;
 
         [System.Text.Json.Serialization.JsonPropertyName("number_of_guests")]
-        public string Number_of_guests { get; set; } = default!;
+        public string? Number_of_guests { get; set; } = default!;
 
         [System.Text.Json.Serialization.JsonPropertyName("status")]
-        public string Status { get; set; } = default!;
+        public string? Status { get; set; } = default!;
 
         [System.Text.Json.Serialization.JsonPropertyName("event_type")]
-        public string Event_type { get; set; } = default!;
+        public string? Event_type { get; set; } = default!;
 
         [System.Text.Json.Serialization.JsonPropertyName("start_time")]
-        public string Start_time { get; set; } = default!;
+        public string? Start_time { get; set; } = default!;
 
         [System.Text.Json.Serialization.JsonPropertyName("duration")]
-        public string Duration { get; set; } = default!;
+        public string? Duration { get; set; } = default!;
 
         private System.Collections.Generic.IDictionary<string, object>? _additionalProperties;
 
@@ -63091,16 +63709,16 @@ namespace FSH.Starter.Blazor.Infrastructure.NoonaApi
         public EventsAggregateEntryKey Key { get; set; } = new EventsAggregateEntryKey();
 
         [System.Text.Json.Serialization.JsonPropertyName("count")]
-        public int Count { get; set; } = default!;
+        public int? Count { get; set; } = default!;
 
         [System.Text.Json.Serialization.JsonPropertyName("hours")]
-        public double Hours { get; set; } = default!;
+        public double? Hours { get; set; } = default!;
 
         [System.Text.Json.Serialization.JsonPropertyName("number_of_guests")]
-        public int Number_of_guests { get; set; } = default!;
+        public int? Number_of_guests { get; set; } = default!;
 
         [System.Text.Json.Serialization.JsonPropertyName("new_customers")]
-        public int New_customers { get; set; } = default!;
+        public int? New_customers { get; set; } = default!;
 
         private System.Collections.Generic.IDictionary<string, object>? _additionalProperties;
 
@@ -63124,7 +63742,7 @@ namespace FSH.Starter.Blazor.Infrastructure.NoonaApi
     {
 
         [System.Text.Json.Serialization.JsonPropertyName("time_bucket")]
-        public string Time_bucket { get; set; } = default!;
+        public string? Time_bucket { get; set; } = default!;
 
         private System.Collections.Generic.IDictionary<string, object>? _additionalProperties;
 
@@ -63170,7 +63788,7 @@ namespace FSH.Starter.Blazor.Infrastructure.NoonaApi
     {
 
         [System.Text.Json.Serialization.JsonPropertyName("time_bucket")]
-        public string Time_bucket { get; set; } = default!;
+        public string? Time_bucket { get; set; } = default!;
 
         private System.Collections.Generic.IDictionary<string, object>? _additionalProperties;
 
@@ -63281,7 +63899,7 @@ namespace FSH.Starter.Blazor.Infrastructure.NoonaApi
         /// </summary>
         [System.Text.Json.Serialization.JsonPropertyName("type")]
         [System.Text.Json.Serialization.JsonConverter(typeof(System.Text.Json.Serialization.JsonStringEnumConverter<CheckoutBehaviorType>))]
-        public CheckoutBehaviorType Type { get; set; } = FSH.Starter.Blazor.Infrastructure.NoonaApi.CheckoutBehaviorType.Checkout;
+        public CheckoutBehaviorType? Type { get; set; } = FSH.Starter.Blazor.Infrastructure.NoonaApi.CheckoutBehaviorType.Checkout;
 
         private System.Collections.Generic.IDictionary<string, object>? _additionalProperties;
 
@@ -63343,20 +63961,20 @@ namespace FSH.Starter.Blazor.Infrastructure.NoonaApi
         /// Total monetary value of the claim.
         /// </summary>
         [System.Text.Json.Serialization.JsonPropertyName("amount")]
-        public double Amount { get; set; } = default!;
+        public double? Amount { get; set; } = default!;
 
         /// <summary>
         /// Proportional share of the event cost to be paid, expressed as a percentage (1–100).
         /// </summary>
         [System.Text.Json.Serialization.JsonPropertyName("ratio")]
         [System.ComponentModel.DataAnnotations.Range(1D, 100D)]
-        public double Ratio { get; set; } = default!;
+        public double? Ratio { get; set; } = default!;
 
         /// <summary>
         /// Whether to notify the customer via sms about the claim.
         /// </summary>
         [System.Text.Json.Serialization.JsonPropertyName("notify_customer")]
-        public bool Notify_customer { get; set; } = default!;
+        public bool? Notify_customer { get; set; } = default!;
 
         private System.Collections.Generic.IDictionary<string, object>? _additionalProperties;
 
@@ -63374,44 +63992,44 @@ namespace FSH.Starter.Blazor.Infrastructure.NoonaApi
     {
 
         [System.Text.Json.Serialization.JsonPropertyName("id")]
-        public string Id { get; set; } = default!;
+        public string? Id { get; set; } = default!;
 
         [System.Text.Json.Serialization.JsonPropertyName("reference_id")]
-        public string Reference_id { get; set; } = default!;
+        public string? Reference_id { get; set; } = default!;
 
         [System.Text.Json.Serialization.JsonPropertyName("bill_number")]
-        public string Bill_number { get; set; } = default!;
+        public string? Bill_number { get; set; } = default!;
 
         [System.Text.Json.Serialization.JsonPropertyName("due_date")]
-        public string Due_date { get; set; } = default!;
+        public string? Due_date { get; set; } = default!;
 
         [System.Text.Json.Serialization.JsonPropertyName("claimant_id")]
-        public string Claimant_id { get; set; } = default!;
+        public string? Claimant_id { get; set; } = default!;
 
         [System.Text.Json.Serialization.JsonPropertyName("employee_name")]
-        public string Employee_name { get; set; } = default!;
+        public string? Employee_name { get; set; } = default!;
 
         [System.Text.Json.Serialization.JsonPropertyName("customer_name")]
-        public string Customer_name { get; set; } = default!;
+        public string? Customer_name { get; set; } = default!;
 
         [System.Text.Json.Serialization.JsonPropertyName("customer_kennitala")]
-        public string Customer_kennitala { get; set; } = default!;
+        public string? Customer_kennitala { get; set; } = default!;
 
         [System.Text.Json.Serialization.JsonPropertyName("amount")]
-        public int Amount { get; set; } = default!;
+        public int? Amount { get; set; } = default!;
 
         [System.Text.Json.Serialization.JsonPropertyName("currency")]
-        public string Currency { get; set; } = default!;
+        public string? Currency { get; set; } = default!;
 
         [System.Text.Json.Serialization.JsonPropertyName("status")]
         [System.Text.Json.Serialization.JsonConverter(typeof(System.Text.Json.Serialization.JsonStringEnumConverter<ClaimStatus>))]
-        public ClaimStatus Status { get; set; } = default!;
+        public ClaimStatus? Status { get; set; } = default!;
 
         [System.Text.Json.Serialization.JsonPropertyName("external_url")]
-        public string External_url { get; set; } = default!;
+        public string? External_url { get; set; } = default!;
 
         [System.Text.Json.Serialization.JsonPropertyName("created_at")]
-        public System.DateTime Created_at { get; set; } = default!;
+        public System.DateTime? Created_at { get; set; } = default!;
 
         private System.Collections.Generic.IDictionary<string, object>? _additionalProperties;
 
@@ -63459,7 +64077,7 @@ namespace FSH.Starter.Blazor.Infrastructure.NoonaApi
     {
 
         [System.Text.Json.Serialization.JsonPropertyName("created_at")]
-        public DateFilter Created_at { get; set; } = default!;
+        public DateFilter? Created_at { get; set; } = default!;
 
         private System.Collections.Generic.IDictionary<string, object>? _additionalProperties;
 
@@ -63489,7 +64107,7 @@ namespace FSH.Starter.Blazor.Infrastructure.NoonaApi
         public string Redirect_uri { get; set; } = default!;
 
         [System.Text.Json.Serialization.JsonPropertyName("state")]
-        public string State { get; set; } = default!;
+        public string? State { get; set; } = default!;
 
         [System.Text.Json.Serialization.JsonPropertyName("response_type")]
         [System.ComponentModel.DataAnnotations.Required(AllowEmptyStrings = true)]
@@ -63727,7 +64345,7 @@ namespace FSH.Starter.Blazor.Infrastructure.NoonaApi
     {
 
         [System.Text.Json.Serialization.JsonPropertyName("redirect_uri")]
-        public string Redirect_uri { get; set; } = default!;
+        public string? Redirect_uri { get; set; } = default!;
 
         private System.Collections.Generic.IDictionary<string, object>? _additionalProperties;
 
@@ -63750,10 +64368,10 @@ namespace FSH.Starter.Blazor.Infrastructure.NoonaApi
         public OAuthTokenRequestGrant_type Grant_type { get; set; } = default!;
 
         [System.Text.Json.Serialization.JsonPropertyName("code")]
-        public string Code { get; set; } = default!;
+        public string? Code { get; set; } = default!;
 
         [System.Text.Json.Serialization.JsonPropertyName("refresh_token")]
-        public string Refresh_token { get; set; } = default!;
+        public string? Refresh_token { get; set; } = default!;
 
         private System.Collections.Generic.IDictionary<string, object>? _additionalProperties;
 
@@ -63771,16 +64389,16 @@ namespace FSH.Starter.Blazor.Infrastructure.NoonaApi
     {
 
         [System.Text.Json.Serialization.JsonPropertyName("token_type")]
-        public string Token_type { get; set; } = default!;
+        public string? Token_type { get; set; } = default!;
 
         [System.Text.Json.Serialization.JsonPropertyName("expires_at")]
-        public System.DateTime Expires_at { get; set; } = default!;
+        public System.DateTime? Expires_at { get; set; } = default!;
 
         [System.Text.Json.Serialization.JsonPropertyName("access_token")]
-        public string Access_token { get; set; } = default!;
+        public string? Access_token { get; set; } = default!;
 
         [System.Text.Json.Serialization.JsonPropertyName("refresh_token")]
-        public string Refresh_token { get; set; } = default!;
+        public string? Refresh_token { get; set; } = default!;
 
         private System.Collections.Generic.IDictionary<string, object>? _additionalProperties;
 
@@ -63852,62 +64470,62 @@ namespace FSH.Starter.Blazor.Infrastructure.NoonaApi
     {
 
         [System.Text.Json.Serialization.JsonPropertyName("id")]
-        public string Id { get; set; } = default!;
+        public string? Id { get; set; } = default!;
 
         [System.Text.Json.Serialization.JsonPropertyName("logo")]
-        public string Logo { get; set; } = default!;
+        public string? Logo { get; set; } = default!;
 
         /// <summary>
         /// Shown to the user when they are asked to give consent.
         /// </summary>
         [System.Text.Json.Serialization.JsonPropertyName("name")]
-        public string Name { get; set; } = default!;
+        public string? Name { get; set; } = default!;
 
         [System.Text.Json.Serialization.JsonPropertyName("name_translations")]
-        public TranslationMap Name_translations { get; set; } = default!;
+        public TranslationMap? Name_translations { get; set; } = default!;
 
         [System.Text.Json.Serialization.JsonPropertyName("developer_name")]
-        public string Developer_name { get; set; } = default!;
+        public string? Developer_name { get; set; } = default!;
 
         /// <summary>
         /// Home page or documentation for your application.
         /// </summary>
         [System.Text.Json.Serialization.JsonPropertyName("developer_url")]
-        public string Developer_url { get; set; } = default!;
+        public string? Developer_url { get; set; } = default!;
 
         /// <summary>
         /// Short text about the functionality of the app that appears next to the icon in the list.
         /// </summary>
         [System.Text.Json.Serialization.JsonPropertyName("description")]
-        public string Description { get; set; } = default!;
+        public string? Description { get; set; } = default!;
 
         [System.Text.Json.Serialization.JsonPropertyName("description_translations")]
-        public TranslationMap Description_translations { get; set; } = default!;
+        public TranslationMap? Description_translations { get; set; } = default!;
 
         /// <summary>
         /// A longer description of the application which opens in a modal and support HTML.
         /// </summary>
         [System.Text.Json.Serialization.JsonPropertyName("about")]
-        public string About { get; set; } = default!;
+        public string? About { get; set; } = default!;
 
         [System.Text.Json.Serialization.JsonPropertyName("redirect_uris")]
-        public System.Collections.Generic.ICollection<string> Redirect_uris { get; set; } = default!;
+        public System.Collections.Generic.ICollection<string>? Redirect_uris { get; set; } = default!;
 
         [System.Text.Json.Serialization.JsonPropertyName("scopes")]
         // TODO(system.text.json): Add string enum item converter
-        public OAuthScopes Scopes { get; set; } = default!;
+        public OAuthScopes? Scopes { get; set; } = default!;
 
         /// <summary>
         /// If true, the application will be usable from outside of the company.
         /// </summary>
         [System.Text.Json.Serialization.JsonPropertyName("public")]
-        public bool Public { get; set; } = default!;
+        public bool? Public { get; set; } = default!;
 
         /// <summary>
         /// If true, the application will be listed in the Noona App Store.
         /// </summary>
         [System.Text.Json.Serialization.JsonPropertyName("app_store")]
-        public bool App_store { get; set; } = default!;
+        public bool? App_store { get; set; } = default!;
 
         /// <summary>
         /// If `true`, the application will appear in the navigation within Noona HQ.
@@ -63916,7 +64534,7 @@ namespace FSH.Starter.Blazor.Infrastructure.NoonaApi
         /// <br/>
         /// </summary>
         [System.Text.Json.Serialization.JsonPropertyName("show_in_navigation")]
-        public bool Show_in_navigation { get; set; } = default!;
+        public bool? Show_in_navigation { get; set; } = default!;
 
         /// <summary>
         /// The verticals the application is available in.
@@ -63926,7 +64544,7 @@ namespace FSH.Starter.Blazor.Infrastructure.NoonaApi
         /// </summary>
         [System.Text.Json.Serialization.JsonPropertyName("verticals")]
         // TODO(system.text.json): Add string enum item converter
-        public System.Collections.Generic.ICollection<CompanyVertical> Verticals { get; set; } = default!;
+        public System.Collections.Generic.ICollection<CompanyVertical>? Verticals { get; set; } = default!;
 
         /// <summary>
         /// The countries the application is available in.
@@ -63935,35 +64553,35 @@ namespace FSH.Starter.Blazor.Infrastructure.NoonaApi
         /// <br/>
         /// </summary>
         [System.Text.Json.Serialization.JsonPropertyName("countries")]
-        public System.Collections.Generic.ICollection<string> Countries { get; set; } = default!;
+        public System.Collections.Generic.ICollection<string>? Countries { get; set; } = default!;
 
         [System.Text.Json.Serialization.JsonPropertyName("payment_type")]
         [System.Text.Json.Serialization.JsonConverter(typeof(System.Text.Json.Serialization.JsonStringEnumConverter<ApplicationPayment_type>))]
-        public ApplicationPayment_type Payment_type { get; set; } = default!;
+        public ApplicationPayment_type? Payment_type { get; set; } = default!;
 
         /// <summary>
         /// Price in x100 format. (100 is 1.00)
         /// </summary>
         [System.Text.Json.Serialization.JsonPropertyName("price")]
-        public int Price { get; set; } = default!;
+        public int? Price { get; set; } = default!;
 
         [System.Text.Json.Serialization.JsonPropertyName("currency")]
-        public string Currency { get; set; } = default!;
+        public string? Currency { get; set; } = default!;
 
         [System.Text.Json.Serialization.JsonPropertyName("client_id")]
-        public string Client_id { get; set; } = default!;
+        public string? Client_id { get; set; } = default!;
 
         [System.Text.Json.Serialization.JsonPropertyName("client_secret")]
-        public string Client_secret { get; set; } = default!;
+        public string? Client_secret { get; set; } = default!;
 
         [System.Text.Json.Serialization.JsonPropertyName("approved")]
-        public bool Approved { get; set; } = default!;
+        public bool? Approved { get; set; } = default!;
 
         [System.Text.Json.Serialization.JsonPropertyName("created_at")]
-        public System.DateTime Created_at { get; set; } = default!;
+        public System.DateTime? Created_at { get; set; } = default!;
 
         [System.Text.Json.Serialization.JsonPropertyName("updated_at")]
-        public System.DateTime Updated_at { get; set; } = default!;
+        public System.DateTime? Updated_at { get; set; } = default!;
 
         private System.Collections.Generic.IDictionary<string, object>? _additionalProperties;
 
@@ -63988,7 +64606,7 @@ namespace FSH.Starter.Blazor.Infrastructure.NoonaApi
         public CountMetricsByTimeFrame Users { get; set; } = new CountMetricsByTimeFrame();
 
         [System.Text.Json.Serialization.JsonPropertyName("revenue")]
-        public ApplicationRevenueMetrics Revenue { get; set; } = default!;
+        public ApplicationRevenueMetrics? Revenue { get; set; } = default!;
 
         private System.Collections.Generic.IDictionary<string, object>? _additionalProperties;
 
@@ -64009,22 +64627,22 @@ namespace FSH.Starter.Blazor.Infrastructure.NoonaApi
         /// Revenue for the current month. (x100 format)
         /// </summary>
         [System.Text.Json.Serialization.JsonPropertyName("this_month")]
-        public int This_month { get; set; } = default!;
+        public int? This_month { get; set; } = default!;
 
         /// <summary>
         /// Revenue for the last month. (x100 format)
         /// </summary>
         [System.Text.Json.Serialization.JsonPropertyName("last_month")]
-        public int Last_month { get; set; } = default!;
+        public int? Last_month { get; set; } = default!;
 
         /// <summary>
         /// Change in revenue from last month in percent (75 = 75%)
         /// </summary>
         [System.Text.Json.Serialization.JsonPropertyName("percent_change")]
-        public int Percent_change { get; set; } = default!;
+        public int? Percent_change { get; set; } = default!;
 
         [System.Text.Json.Serialization.JsonPropertyName("currency")]
-        public string Currency { get; set; } = default!;
+        public string? Currency { get; set; } = default!;
 
         private System.Collections.Generic.IDictionary<string, object>? _additionalProperties;
 
@@ -64052,10 +64670,10 @@ namespace FSH.Starter.Blazor.Infrastructure.NoonaApi
         public string Id { get; set; } = default!;
 
         [System.Text.Json.Serialization.JsonPropertyName("public_company")]
-        public string Public_company { get; set; } = default!;
+        public string? Public_company { get; set; } = default!;
 
         [System.Text.Json.Serialization.JsonPropertyName("application")]
-        public string Application { get; set; } = default!;
+        public string? Application { get; set; } = default!;
 
         [System.Text.Json.Serialization.JsonPropertyName("event")]
         [System.ComponentModel.DataAnnotations.Required(AllowEmptyStrings = true)]
@@ -64094,16 +64712,16 @@ namespace FSH.Starter.Blazor.Infrastructure.NoonaApi
     {
 
         [System.Text.Json.Serialization.JsonPropertyName("id")]
-        public string Id { get; set; } = default!;
+        public string? Id { get; set; } = default!;
 
         [System.Text.Json.Serialization.JsonPropertyName("name")]
-        public string Name { get; set; } = default!;
+        public string? Name { get; set; } = default!;
 
         [System.Text.Json.Serialization.JsonPropertyName("logo")]
-        public string Logo { get; set; } = default!;
+        public string? Logo { get; set; } = default!;
 
         [System.Text.Json.Serialization.JsonPropertyName("country")]
-        public string Country { get; set; } = default!;
+        public string? Country { get; set; } = default!;
 
         private System.Collections.Generic.IDictionary<string, object>? _additionalProperties;
 
@@ -64175,50 +64793,50 @@ namespace FSH.Starter.Blazor.Infrastructure.NoonaApi
     {
 
         [System.Text.Json.Serialization.JsonPropertyName("id")]
-        public string Id { get; set; } = default!;
+        public string? Id { get; set; } = default!;
 
         [System.Text.Json.Serialization.JsonPropertyName("client_id")]
-        public string Client_id { get; set; } = default!;
+        public string? Client_id { get; set; } = default!;
 
         [System.Text.Json.Serialization.JsonPropertyName("logo")]
-        public string Logo { get; set; } = default!;
+        public string? Logo { get; set; } = default!;
 
         /// <summary>
         /// Shown to the user when they are asked to give consent.
         /// </summary>
         [System.Text.Json.Serialization.JsonPropertyName("name")]
-        public string Name { get; set; } = default!;
+        public string? Name { get; set; } = default!;
 
         [System.Text.Json.Serialization.JsonPropertyName("developer_name")]
-        public string Developer_name { get; set; } = default!;
+        public string? Developer_name { get; set; } = default!;
 
         /// <summary>
         /// Home page or documentation for your application.
         /// </summary>
         [System.Text.Json.Serialization.JsonPropertyName("developer_url")]
-        public string Developer_url { get; set; } = default!;
+        public string? Developer_url { get; set; } = default!;
 
         [System.Text.Json.Serialization.JsonPropertyName("description")]
-        public string Description { get; set; } = default!;
+        public string? Description { get; set; } = default!;
 
         [System.Text.Json.Serialization.JsonPropertyName("redirect_uri")]
-        public string Redirect_uri { get; set; } = default!;
+        public string? Redirect_uri { get; set; } = default!;
 
         [System.Text.Json.Serialization.JsonPropertyName("scopes")]
         // TODO(system.text.json): Add string enum item converter
-        public OAuthScopes Scopes { get; set; } = default!;
+        public OAuthScopes? Scopes { get; set; } = default!;
 
         /// <summary>
         /// Whether the app is enabled for the company.
         /// </summary>
         [System.Text.Json.Serialization.JsonPropertyName("enabled")]
-        public bool Enabled { get; set; } = default!;
+        public bool? Enabled { get; set; } = default!;
 
         /// <summary>
         /// Whether the app is visible in the app store (without being installed).
         /// </summary>
         [System.Text.Json.Serialization.JsonPropertyName("app_store")]
-        public bool App_store { get; set; } = default!;
+        public bool? App_store { get; set; } = default!;
 
         /// <summary>
         /// If `true`, the application will appear in the navigation within Noona HQ.
@@ -64227,7 +64845,7 @@ namespace FSH.Starter.Blazor.Infrastructure.NoonaApi
         /// <br/>
         /// </summary>
         [System.Text.Json.Serialization.JsonPropertyName("show_in_navigation")]
-        public bool Show_in_navigation { get; set; } = default!;
+        public bool? Show_in_navigation { get; set; } = default!;
 
         /// <summary>
         /// The ID token for the app. Only generated for installed apps.
@@ -64236,14 +64854,14 @@ namespace FSH.Starter.Blazor.Infrastructure.NoonaApi
         /// <br/>
         /// </summary>
         [System.Text.Json.Serialization.JsonPropertyName("id_token")]
-        public string Id_token { get; set; } = default!;
+        public string? Id_token { get; set; } = default!;
 
         /// <summary>
         /// The URL to open the app.
         /// <br/>
         /// </summary>
         [System.Text.Json.Serialization.JsonPropertyName("open_uri")]
-        public string Open_uri { get; set; } = default!;
+        public string? Open_uri { get; set; } = default!;
 
         private System.Collections.Generic.IDictionary<string, object>? _additionalProperties;
 
@@ -64267,7 +64885,7 @@ namespace FSH.Starter.Blazor.Infrastructure.NoonaApi
         /// Filter by client ID
         /// </summary>
         [System.Text.Json.Serialization.JsonPropertyName("client_id")]
-        public string Client_id { get; set; } = default!;
+        public string? Client_id { get; set; } = default!;
 
         private System.Collections.Generic.IDictionary<string, object>? _additionalProperties;
 
@@ -64291,7 +64909,7 @@ namespace FSH.Starter.Blazor.Infrastructure.NoonaApi
         /// Filter by company ID
         /// </summary>
         [System.Text.Json.Serialization.JsonPropertyName("company")]
-        public string Company { get; set; } = default!;
+        public string? Company { get; set; } = default!;
 
         private System.Collections.Generic.IDictionary<string, object>? _additionalProperties;
 
@@ -64404,7 +65022,7 @@ namespace FSH.Starter.Blazor.Infrastructure.NoonaApi
         /// The event the SMS is linked to
         /// </summary>
         [System.Text.Json.Serialization.JsonPropertyName("event_id")]
-        public string Event_id { get; set; } = default!;
+        public string? Event_id { get; set; } = default!;
 
         /// <summary>
         /// SMS message content
@@ -64430,42 +65048,42 @@ namespace FSH.Starter.Blazor.Infrastructure.NoonaApi
     {
 
         [System.Text.Json.Serialization.JsonPropertyName("id")]
-        public string Id { get; set; } = default!;
+        public string? Id { get; set; } = default!;
 
         [System.Text.Json.Serialization.JsonPropertyName("company")]
-        public string Company { get; set; } = default!;
+        public string? Company { get; set; } = default!;
 
         [System.Text.Json.Serialization.JsonPropertyName("employee")]
-        public string Employee { get; set; } = default!;
+        public string? Employee { get; set; } = default!;
 
         [System.Text.Json.Serialization.JsonPropertyName("event")]
-        public string Event { get; set; } = default!;
+        public string? Event { get; set; } = default!;
 
         [System.Text.Json.Serialization.JsonPropertyName("sender_name")]
-        public string Sender_name { get; set; } = default!;
+        public string? Sender_name { get; set; } = default!;
 
         [System.Text.Json.Serialization.JsonPropertyName("body")]
-        public string Body { get; set; } = default!;
+        public string? Body { get; set; } = default!;
 
         [System.Text.Json.Serialization.JsonPropertyName("phone_country_code")]
-        public string Phone_country_code { get; set; } = default!;
+        public string? Phone_country_code { get; set; } = default!;
 
         [System.Text.Json.Serialization.JsonPropertyName("phone_number")]
-        public string Phone_number { get; set; } = default!;
+        public string? Phone_number { get; set; } = default!;
 
         [System.Text.Json.Serialization.JsonPropertyName("type")]
         [System.Text.Json.Serialization.JsonConverter(typeof(System.Text.Json.Serialization.JsonStringEnumConverter<SMSMessageType>))]
-        public SMSMessageType Type { get; set; } = default!;
+        public SMSMessageType? Type { get; set; } = default!;
 
         [System.Text.Json.Serialization.JsonPropertyName("status")]
         [System.Text.Json.Serialization.JsonConverter(typeof(System.Text.Json.Serialization.JsonStringEnumConverter<SMSMessageStatus>))]
-        public SMSMessageStatus Status { get; set; } = default!;
+        public SMSMessageStatus? Status { get; set; } = default!;
 
         [System.Text.Json.Serialization.JsonPropertyName("created_at")]
-        public System.DateTime Created_at { get; set; } = default!;
+        public System.DateTime? Created_at { get; set; } = default!;
 
         [System.Text.Json.Serialization.JsonPropertyName("updated_at")]
-        public System.DateTime Updated_at { get; set; } = default!;
+        public System.DateTime? Updated_at { get; set; } = default!;
 
         private System.Collections.Generic.IDictionary<string, object>? _additionalProperties;
 
@@ -64489,13 +65107,13 @@ namespace FSH.Starter.Blazor.Infrastructure.NoonaApi
         /// Filter by recipient phone number
         /// </summary>
         [System.Text.Json.Serialization.JsonPropertyName("phone_number")]
-        public string Phone_number { get; set; } = default!;
+        public string? Phone_number { get; set; } = default!;
 
         /// <summary>
         /// Filter by event IDs
         /// </summary>
         [System.Text.Json.Serialization.JsonPropertyName("event_ids")]
-        public System.Collections.Generic.ICollection<string> Event_ids { get; set; } = default!;
+        public System.Collections.Generic.ICollection<string>? Event_ids { get; set; } = default!;
 
         private System.Collections.Generic.IDictionary<string, object>? _additionalProperties;
 
@@ -64555,32 +65173,32 @@ namespace FSH.Starter.Blazor.Infrastructure.NoonaApi
     {
 
         [System.Text.Json.Serialization.JsonPropertyName("id")]
-        public string Id { get; set; } = default!;
+        public string? Id { get; set; } = default!;
 
         [System.Text.Json.Serialization.JsonPropertyName("company")]
-        public string Company { get; set; } = default!;
+        public string? Company { get; set; } = default!;
 
         [System.Text.Json.Serialization.JsonPropertyName("name")]
-        public string Name { get; set; } = default!;
+        public string? Name { get; set; } = default!;
 
         [System.Text.Json.Serialization.JsonPropertyName("type")]
         [System.Text.Json.Serialization.JsonConverter(typeof(System.Text.Json.Serialization.JsonStringEnumConverter<CampaignType>))]
-        public CampaignType Type { get; set; } = default!;
+        public CampaignType? Type { get; set; } = default!;
 
         [System.Text.Json.Serialization.JsonPropertyName("message")]
-        public string Message { get; set; } = default!;
+        public string? Message { get; set; } = default!;
 
         /// <summary>
         /// Number of recipients for this campaign
         /// </summary>
         [System.Text.Json.Serialization.JsonPropertyName("recipient_count")]
-        public int Recipient_count { get; set; } = default!;
+        public int? Recipient_count { get; set; } = default!;
 
         [System.Text.Json.Serialization.JsonPropertyName("created_at")]
-        public System.DateTime Created_at { get; set; } = default!;
+        public System.DateTime? Created_at { get; set; } = default!;
 
         [System.Text.Json.Serialization.JsonPropertyName("updated_at")]
-        public System.DateTime Updated_at { get; set; } = default!;
+        public System.DateTime? Updated_at { get; set; } = default!;
 
         private System.Collections.Generic.IDictionary<string, object>? _additionalProperties;
 
@@ -64614,7 +65232,7 @@ namespace FSH.Starter.Blazor.Infrastructure.NoonaApi
         /// </summary>
         [System.Text.Json.Serialization.JsonPropertyName("message")]
         [System.ComponentModel.DataAnnotations.StringLength(320, MinimumLength = 1)]
-        public string Message { get; set; } = default!;
+        public string? Message { get; set; } = default!;
 
         [System.Text.Json.Serialization.JsonPropertyName("filter")]
         [System.ComponentModel.DataAnnotations.Required]
@@ -64636,7 +65254,7 @@ namespace FSH.Starter.Blazor.Infrastructure.NoonaApi
     {
 
         [System.Text.Json.Serialization.JsonPropertyName("recipients")]
-        public CampaignRecipients Recipients { get; set; } = default!;
+        public CampaignRecipients? Recipients { get; set; } = default!;
 
     }
 
@@ -64651,19 +65269,19 @@ namespace FSH.Starter.Blazor.Infrastructure.NoonaApi
     {
 
         [System.Text.Json.Serialization.JsonPropertyName("id")]
-        public string Id { get; set; } = default!;
+        public string? Id { get; set; } = default!;
 
         [System.Text.Json.Serialization.JsonPropertyName("name")]
-        public string Name { get; set; } = default!;
+        public string? Name { get; set; } = default!;
 
         [System.Text.Json.Serialization.JsonPropertyName("phone_country_code")]
-        public string Phone_country_code { get; set; } = default!;
+        public string? Phone_country_code { get; set; } = default!;
 
         [System.Text.Json.Serialization.JsonPropertyName("phone_number")]
-        public string Phone_number { get; set; } = default!;
+        public string? Phone_number { get; set; } = default!;
 
         [System.Text.Json.Serialization.JsonPropertyName("email")]
-        public string Email { get; set; } = default!;
+        public string? Email { get; set; } = default!;
 
         private System.Collections.Generic.IDictionary<string, object>? _additionalProperties;
 
@@ -64684,37 +65302,37 @@ namespace FSH.Starter.Blazor.Infrastructure.NoonaApi
         /// If the campaign should only be sent to clients that have booking with specific employees
         /// </summary>
         [System.Text.Json.Serialization.JsonPropertyName("employee_ids")]
-        public System.Collections.Generic.ICollection<string> Employee_ids { get; set; } = default!;
+        public System.Collections.Generic.ICollection<string>? Employee_ids { get; set; } = default!;
 
         /// <summary>
         /// If the campaign should only be sent to clients that have a booking to specific services
         /// </summary>
         [System.Text.Json.Serialization.JsonPropertyName("event_type_ids")]
-        public System.Collections.Generic.ICollection<string> Event_type_ids { get; set; } = default!;
+        public System.Collections.Generic.ICollection<string>? Event_type_ids { get; set; } = default!;
 
         /// <summary>
         /// If the campaign should only be sent to clients in specific client groups
         /// </summary>
         [System.Text.Json.Serialization.JsonPropertyName("customer_group_ids")]
-        public System.Collections.Generic.ICollection<string> Customer_group_ids { get; set; } = default!;
+        public System.Collections.Generic.ICollection<string>? Customer_group_ids { get; set; } = default!;
 
         /// <summary>
         /// Start date for filtering events
         /// </summary>
         [System.Text.Json.Serialization.JsonPropertyName("start_date")]
-        public System.DateTime Start_date { get; set; } = default!;
+        public System.DateTime? Start_date { get; set; } = default!;
 
         /// <summary>
         /// End date for filtering events
         /// </summary>
         [System.Text.Json.Serialization.JsonPropertyName("end_date")]
-        public System.DateTime End_date { get; set; } = default!;
+        public System.DateTime? End_date { get; set; } = default!;
 
         /// <summary>
         /// Exclude clients with upcoming events after end date
         /// </summary>
         [System.Text.Json.Serialization.JsonPropertyName("exclude_upcoming_events")]
-        public bool Exclude_upcoming_events { get; set; } = default!;
+        public bool? Exclude_upcoming_events { get; set; } = default!;
 
         private System.Collections.Generic.IDictionary<string, object>? _additionalProperties;
 
@@ -64736,19 +65354,19 @@ namespace FSH.Starter.Blazor.Infrastructure.NoonaApi
 
         [System.Text.Json.Serialization.JsonPropertyName("type")]
         [System.Text.Json.Serialization.JsonConverter(typeof(System.Text.Json.Serialization.JsonStringEnumConverter<CampaignType>))]
-        public CampaignType Type { get; set; } = default!;
+        public CampaignType? Type { get; set; } = default!;
 
         /// <summary>
         /// Filter campaigns created after this date
         /// </summary>
         [System.Text.Json.Serialization.JsonPropertyName("created_from")]
-        public System.DateTime Created_from { get; set; } = default!;
+        public System.DateTime? Created_from { get; set; } = default!;
 
         /// <summary>
         /// Filter campaigns created before this date
         /// </summary>
         [System.Text.Json.Serialization.JsonPropertyName("created_to")]
-        public System.DateTime Created_to { get; set; } = default!;
+        public System.DateTime? Created_to { get; set; } = default!;
 
         private System.Collections.Generic.IDictionary<string, object>? _additionalProperties;
 
@@ -64811,19 +65429,19 @@ namespace FSH.Starter.Blazor.Infrastructure.NoonaApi
         /// Number of unique recipients
         /// </summary>
         [System.Text.Json.Serialization.JsonPropertyName("recipient_count")]
-        public int Recipient_count { get; set; } = default!;
+        public int? Recipient_count { get; set; } = default!;
 
         /// <summary>
         /// Estimated total cost in cents for sending the campaign
         /// </summary>
         [System.Text.Json.Serialization.JsonPropertyName("total_cost")]
-        public int Total_cost { get; set; } = default!;
+        public int? Total_cost { get; set; } = default!;
 
         /// <summary>
         /// Currency code for the estimated cost
         /// </summary>
         [System.Text.Json.Serialization.JsonPropertyName("currency")]
-        public string Currency { get; set; } = default!;
+        public string? Currency { get; set; } = default!;
 
         private System.Collections.Generic.IDictionary<string, object>? _additionalProperties;
 
@@ -64847,23 +65465,23 @@ namespace FSH.Starter.Blazor.Infrastructure.NoonaApi
     {
 
         [System.Text.Json.Serialization.JsonPropertyName("id")]
-        public string Id { get; set; } = default!;
+        public string? Id { get; set; } = default!;
 
         [System.Text.Json.Serialization.JsonPropertyName("email")]
-        public string Email1 { get; set; } = default!;
+        public string? Email1 { get; set; } = default!;
 
         [System.Text.Json.Serialization.JsonPropertyName("type")]
         [System.Text.Json.Serialization.JsonConverter(typeof(System.Text.Json.Serialization.JsonStringEnumConverter<EmailType>))]
-        public EmailType Type { get; set; } = default!;
+        public EmailType? Type { get; set; } = default!;
 
         [System.Text.Json.Serialization.JsonPropertyName("events")]
-        public EmailEvents Events { get; set; } = default!;
+        public EmailEvents? Events { get; set; } = default!;
 
         [System.Text.Json.Serialization.JsonPropertyName("created_at")]
-        public System.DateTime Created_at { get; set; } = default!;
+        public System.DateTime? Created_at { get; set; } = default!;
 
         [System.Text.Json.Serialization.JsonPropertyName("updated_at")]
-        public System.DateTime Updated_at { get; set; } = default!;
+        public System.DateTime? Updated_at { get; set; } = default!;
 
         private System.Collections.Generic.IDictionary<string, object>? _additionalProperties;
 
@@ -64888,10 +65506,10 @@ namespace FSH.Starter.Blazor.Infrastructure.NoonaApi
 
         [System.Text.Json.Serialization.JsonPropertyName("status")]
         [System.Text.Json.Serialization.JsonConverter(typeof(System.Text.Json.Serialization.JsonStringEnumConverter<EmailEventStatus>))]
-        public EmailEventStatus Status { get; set; } = default!;
+        public EmailEventStatus? Status { get; set; } = default!;
 
         [System.Text.Json.Serialization.JsonPropertyName("created_at")]
-        public System.DateTime Created_at { get; set; } = default!;
+        public System.DateTime? Created_at { get; set; } = default!;
 
         private System.Collections.Generic.IDictionary<string, object>? _additionalProperties;
 
@@ -64915,19 +65533,19 @@ namespace FSH.Starter.Blazor.Infrastructure.NoonaApi
         /// Filter by event ID
         /// </summary>
         [System.Text.Json.Serialization.JsonPropertyName("event_id")]
-        public string Event_id { get; set; } = default!;
+        public string? Event_id { get; set; } = default!;
 
         /// <summary>
         /// Filter by customer ID
         /// </summary>
         [System.Text.Json.Serialization.JsonPropertyName("customer_id")]
-        public string Customer_id { get; set; } = default!;
+        public string? Customer_id { get; set; } = default!;
 
         /// <summary>
         /// Filter by email, supports partial matching
         /// </summary>
         [System.Text.Json.Serialization.JsonPropertyName("email")]
-        public string Email { get; set; } = default!;
+        public string? Email { get; set; } = default!;
 
         private System.Collections.Generic.IDictionary<string, object>? _additionalProperties;
 
@@ -64954,7 +65572,7 @@ namespace FSH.Starter.Blazor.Infrastructure.NoonaApi
         /// </summary>
         [System.Text.Json.Serialization.JsonPropertyName("code")]
         [System.Text.Json.Serialization.JsonConverter(typeof(System.Text.Json.Serialization.JsonStringEnumConverter<RefundMarketplaceSaleErrorCode>))]
-        public RefundMarketplaceSaleErrorCode Code { get; set; } = default!;
+        public RefundMarketplaceSaleErrorCode? Code { get; set; } = default!;
 
     }
 
@@ -64964,7 +65582,7 @@ namespace FSH.Starter.Blazor.Infrastructure.NoonaApi
 
         [System.Text.Json.Serialization.JsonPropertyName("code")]
         [System.Text.Json.Serialization.JsonConverter(typeof(System.Text.Json.Serialization.JsonStringEnumConverter<CreatePaymentErrorCode>))]
-        public CreatePaymentErrorCode Code { get; set; } = default!;
+        public CreatePaymentErrorCode? Code { get; set; } = default!;
 
     }
 
@@ -65011,7 +65629,7 @@ namespace FSH.Starter.Blazor.Infrastructure.NoonaApi
         /// Email to send voucher to.
         /// </summary>
         [System.Text.Json.Serialization.JsonPropertyName("email")]
-        public string Email { get; set; } = default!;
+        public string? Email { get; set; } = default!;
 
         private System.Collections.Generic.IDictionary<string, object>? _additionalProperties;
 
@@ -65075,20 +65693,20 @@ namespace FSH.Starter.Blazor.Infrastructure.NoonaApi
         /// The URL to Adyen's hosted onboarding flow.
         /// </summary>
         [System.Text.Json.Serialization.JsonPropertyName("onboarding_link")]
-        public string Onboarding_link { get; set; } = default!;
+        public string? Onboarding_link { get; set; } = default!;
 
         [System.Text.Json.Serialization.JsonPropertyName("onboarded_at")]
-        public System.DateTime Onboarded_at { get; set; } = default!;
+        public System.DateTime? Onboarded_at { get; set; } = default!;
 
         [System.Text.Json.Serialization.JsonPropertyName("onboarding_status")]
         [System.Text.Json.Serialization.JsonConverter(typeof(System.Text.Json.Serialization.JsonStringEnumConverter<AdyenOnboardingStatus>))]
-        public AdyenOnboardingStatus Onboarding_status { get; set; } = default!;
+        public AdyenOnboardingStatus? Onboarding_status { get; set; } = default!;
 
         [System.Text.Json.Serialization.JsonPropertyName("error_codes")]
-        public System.Collections.Generic.ICollection<string> Error_codes { get; set; } = default!;
+        public System.Collections.Generic.ICollection<string>? Error_codes { get; set; } = default!;
 
         [System.Text.Json.Serialization.JsonPropertyName("transfer_instrument")]
-        public AdyenTransferInstrument Transfer_instrument { get; set; } = default!;
+        public AdyenTransferInstrument? Transfer_instrument { get; set; } = default!;
 
         private System.Collections.Generic.IDictionary<string, object>? _additionalProperties;
 
@@ -65139,13 +65757,13 @@ namespace FSH.Starter.Blazor.Infrastructure.NoonaApi
     {
 
         [System.Text.Json.Serialization.JsonPropertyName("id")]
-        public string Id { get; set; } = default!;
+        public string? Id { get; set; } = default!;
 
         [System.Text.Json.Serialization.JsonPropertyName("company")]
-        public string Company { get; set; } = default!;
+        public string? Company { get; set; } = default!;
 
         [System.Text.Json.Serialization.JsonPropertyName("name")]
-        public string Name { get; set; } = default!;
+        public string? Name { get; set; } = default!;
 
         /// <summary>
         /// The label of the status. This is the label that is shown to the user in the UI.
@@ -65156,7 +65774,7 @@ namespace FSH.Starter.Blazor.Infrastructure.NoonaApi
         /// <br/>
         /// </summary>
         [System.Text.Json.Serialization.JsonPropertyName("label")]
-        public string Label { get; set; } = default!;
+        public string? Label { get; set; } = default!;
 
         /// <summary>
         /// The order of the status. This is the order that the statuses are shown in the UI.
@@ -65167,19 +65785,19 @@ namespace FSH.Starter.Blazor.Infrastructure.NoonaApi
         /// <br/>
         /// </summary>
         [System.Text.Json.Serialization.JsonPropertyName("order")]
-        public int Order { get; set; } = default!;
+        public int? Order { get; set; } = default!;
 
         [System.Text.Json.Serialization.JsonPropertyName("color")]
-        public string Color { get; set; } = default!;
+        public string? Color { get; set; } = default!;
 
         [System.Text.Json.Serialization.JsonPropertyName("default")]
-        public bool Default { get; set; } = default!;
+        public bool? Default { get; set; } = default!;
 
         [System.Text.Json.Serialization.JsonPropertyName("created_at")]
-        public System.DateTime Created_at { get; set; } = default!;
+        public System.DateTime? Created_at { get; set; } = default!;
 
         [System.Text.Json.Serialization.JsonPropertyName("updated_at")]
-        public System.DateTime Updated_at { get; set; } = default!;
+        public System.DateTime? Updated_at { get; set; } = default!;
 
         private System.Collections.Generic.IDictionary<string, object>? _additionalProperties;
 
@@ -65203,7 +65821,7 @@ namespace FSH.Starter.Blazor.Infrastructure.NoonaApi
         /// The name of the user
         /// </summary>
         [System.Text.Json.Serialization.JsonPropertyName("name")]
-        public string Name { get; set; } = default!;
+        public string? Name { get; set; } = default!;
 
         private System.Collections.Generic.IDictionary<string, object>? _additionalProperties;
 
@@ -65227,52 +65845,52 @@ namespace FSH.Starter.Blazor.Infrastructure.NoonaApi
     {
 
         [System.Text.Json.Serialization.JsonPropertyName("id")]
-        public string Id { get; set; } = default!;
+        public string? Id { get; set; } = default!;
 
         [System.Text.Json.Serialization.JsonPropertyName("email")]
-        public string Email { get; set; } = default!;
+        public string? Email { get; set; } = default!;
 
         [System.Text.Json.Serialization.JsonPropertyName("locale")]
-        public string Locale { get; set; } = default!;
+        public string? Locale { get; set; } = default!;
 
         [System.Text.Json.Serialization.JsonPropertyName("user_profile")]
-        public UserProfile User_profile { get; set; } = default!;
+        public UserProfile? User_profile { get; set; } = default!;
 
         [System.Text.Json.Serialization.JsonPropertyName("image")]
-        public Image Image { get; set; } = default!;
+        public Image? Image { get; set; } = default!;
 
         [System.Text.Json.Serialization.JsonPropertyName("active_company")]
-        public string Active_company { get; set; } = default!;
+        public string? Active_company { get; set; } = default!;
 
         [System.Text.Json.Serialization.JsonPropertyName("companies")]
-        public ExpandableCompanies Companies { get; set; } = default!;
+        public ExpandableCompanies? Companies { get; set; } = default!;
 
         [System.Text.Json.Serialization.JsonPropertyName("connections")]
-        public UserConnections Connections { get; set; } = default!;
+        public UserConnections? Connections { get; set; } = default!;
 
         [System.Text.Json.Serialization.JsonPropertyName("employees")]
-        public Employees Employees { get; set; } = default!;
+        public Employees? Employees { get; set; } = default!;
 
         [System.Text.Json.Serialization.JsonPropertyName("settings")]
-        public UserSettings Settings { get; set; } = default!;
+        public UserSettings? Settings { get; set; } = default!;
 
         [System.Text.Json.Serialization.JsonPropertyName("pos")]
-        public UserPOSSettings Pos { get; set; } = default!;
+        public UserPOSSettings? Pos { get; set; } = default!;
 
         [System.Text.Json.Serialization.JsonPropertyName("verification")]
-        public Verification Verification { get; set; } = default!;
+        public Verification? Verification { get; set; } = default!;
 
         /// <summary>
         /// Indicates whether the user has ever been associated with any company
         /// </summary>
         [System.Text.Json.Serialization.JsonPropertyName("has_onboarded")]
-        public bool Has_onboarded { get; set; } = default!;
+        public bool? Has_onboarded { get; set; } = default!;
 
         [System.Text.Json.Serialization.JsonPropertyName("is_secretary")]
-        public bool Is_secretary { get; set; } = default!;
+        public bool? Is_secretary { get; set; } = default!;
 
         [System.Text.Json.Serialization.JsonPropertyName("is_admin")]
-        public bool Is_admin { get; set; } = default!;
+        public bool? Is_admin { get; set; } = default!;
 
         private System.Collections.Generic.IDictionary<string, object>? _additionalProperties;
 
@@ -65290,13 +65908,13 @@ namespace FSH.Starter.Blazor.Infrastructure.NoonaApi
     {
 
         [System.Text.Json.Serialization.JsonPropertyName("active_company_id")]
-        public string Active_company_id { get; set; } = default!;
+        public string? Active_company_id { get; set; } = default!;
 
         [System.Text.Json.Serialization.JsonPropertyName("settings")]
-        public UserSettings Settings { get; set; } = default!;
+        public UserSettings? Settings { get; set; } = default!;
 
         [System.Text.Json.Serialization.JsonPropertyName("pos")]
-        public UserPOSSettings Pos { get; set; } = default!;
+        public UserPOSSettings? Pos { get; set; } = default!;
 
         private System.Collections.Generic.IDictionary<string, object>? _additionalProperties;
 
@@ -65329,13 +65947,13 @@ namespace FSH.Starter.Blazor.Infrastructure.NoonaApi
     {
 
         [System.Text.Json.Serialization.JsonPropertyName("adyen")]
-        public AdyenConnection Adyen { get; set; } = default!;
+        public AdyenConnection? Adyen { get; set; } = default!;
 
         [System.Text.Json.Serialization.JsonPropertyName("google")]
-        public UserConnectionsGoogle Google { get; set; } = default!;
+        public UserConnectionsGoogle? Google { get; set; } = default!;
 
         [System.Text.Json.Serialization.JsonPropertyName("teya")]
-        public TeyaConnection Teya { get; set; } = default!;
+        public TeyaConnection? Teya { get; set; } = default!;
 
         private System.Collections.Generic.IDictionary<string, object>? _additionalProperties;
 
@@ -65356,10 +65974,10 @@ namespace FSH.Starter.Blazor.Infrastructure.NoonaApi
         /// Whether the user has connected their Google account.
         /// </summary>
         [System.Text.Json.Serialization.JsonPropertyName("connected")]
-        public bool Connected { get; set; } = default!;
+        public bool? Connected { get; set; } = default!;
 
         [System.Text.Json.Serialization.JsonPropertyName("calendar_connection")]
-        public string Calendar_connection { get; set; } = default!;
+        public string? Calendar_connection { get; set; } = default!;
 
         private System.Collections.Generic.IDictionary<string, object>? _additionalProperties;
 
@@ -65377,31 +65995,31 @@ namespace FSH.Starter.Blazor.Infrastructure.NoonaApi
     {
 
         [System.Text.Json.Serialization.JsonPropertyName("id")]
-        public string Id { get; set; } = default!;
+        public string? Id { get; set; } = default!;
 
         [System.Text.Json.Serialization.JsonPropertyName("name")]
-        public string Name { get; set; } = "Noona";
+        public string? Name { get; set; } = "Noona";
 
         /// <summary>
         /// Whether events should be synced between Noona and Google Calendar.
         /// <br/>
         /// </summary>
         [System.Text.Json.Serialization.JsonPropertyName("sync_events")]
-        public bool Sync_events { get; set; } = true;
+        public bool? Sync_events { get; set; } = true;
 
         /// <summary>
         /// Whether blocked times should be synced from Noona to Google.
         /// <br/>
         /// </summary>
         [System.Text.Json.Serialization.JsonPropertyName("sync_blocked_times_to_google")]
-        public bool Sync_blocked_times_to_google { get; set; } = true;
+        public bool? Sync_blocked_times_to_google { get; set; } = true;
 
         /// <summary>
         /// Whether blocked times should be synced from Google to Noona.
         /// <br/>
         /// </summary>
         [System.Text.Json.Serialization.JsonPropertyName("sync_blocked_times_to_noona")]
-        public bool Sync_blocked_times_to_noona { get; set; } = true;
+        public bool? Sync_blocked_times_to_noona { get; set; } = true;
 
         private System.Collections.Generic.IDictionary<string, object>? _additionalProperties;
 
@@ -65419,10 +66037,10 @@ namespace FSH.Starter.Blazor.Infrastructure.NoonaApi
     {
 
         [System.Text.Json.Serialization.JsonPropertyName("language")]
-        public string Language { get; set; } = default!;
+        public string? Language { get; set; } = default!;
 
         [System.Text.Json.Serialization.JsonPropertyName("calendar_slot_height")]
-        public int Calendar_slot_height { get; set; } = default!;
+        public int? Calendar_slot_height { get; set; } = default!;
 
         private System.Collections.Generic.IDictionary<string, object>? _additionalProperties;
 
@@ -65446,7 +66064,7 @@ namespace FSH.Starter.Blazor.Infrastructure.NoonaApi
     {
 
         [System.Text.Json.Serialization.JsonPropertyName("id")]
-        public string Id { get; set; } = default!;
+        public string? Id { get; set; } = default!;
 
         /// <summary>
         /// The message to be displayed in Noona HQ.
@@ -65467,19 +66085,19 @@ namespace FSH.Starter.Blazor.Infrastructure.NoonaApi
         /// Configures whether the notice can be dismissed by the user.
         /// </summary>
         [System.Text.Json.Serialization.JsonPropertyName("dismissable")]
-        public bool Dismissable { get; set; } = default!;
+        public bool? Dismissable { get; set; } = default!;
 
         /// <summary>
         /// Optionally configure a timestamp for when the notice should expire and stop being visible in Noona HQ.
         /// </summary>
         [System.Text.Json.Serialization.JsonPropertyName("expires_at")]
-        public System.DateTime Expires_at { get; set; } = default!;
+        public System.DateTime? Expires_at { get; set; } = default!;
 
         [System.Text.Json.Serialization.JsonPropertyName("created_at")]
-        public System.DateTime Created_at { get; set; } = default!;
+        public System.DateTime? Created_at { get; set; } = default!;
 
         [System.Text.Json.Serialization.JsonPropertyName("updated_at")]
-        public System.DateTime Updated_at { get; set; } = default!;
+        public System.DateTime? Updated_at { get; set; } = default!;
 
         private System.Collections.Generic.IDictionary<string, object>? _additionalProperties;
 
@@ -65551,47 +66169,47 @@ namespace FSH.Starter.Blazor.Infrastructure.NoonaApi
     {
 
         [System.Text.Json.Serialization.JsonPropertyName("id")]
-        public string Id { get; set; } = default!;
+        public string? Id { get; set; } = default!;
 
         [System.Text.Json.Serialization.JsonPropertyName("company")]
-        public string Company { get; set; } = default!;
+        public string? Company { get; set; } = default!;
 
         [System.Text.Json.Serialization.JsonPropertyName("customer")]
-        public string Customer { get; set; } = default!;
+        public string? Customer { get; set; } = default!;
 
         [System.Text.Json.Serialization.JsonPropertyName("employee")]
-        public string Employee { get; set; } = default!;
+        public string? Employee { get; set; } = default!;
 
         [System.Text.Json.Serialization.JsonPropertyName("resource")]
-        public string Resource { get; set; } = default!;
+        public string? Resource { get; set; } = default!;
 
         [System.Text.Json.Serialization.JsonPropertyName("event_types")]
-        public System.Collections.Generic.ICollection<string> Event_types { get; set; } = default!;
+        public System.Collections.Generic.ICollection<string>? Event_types { get; set; } = default!;
 
         /// <summary>
         /// Number of guests for the event.
         /// </summary>
         [System.Text.Json.Serialization.JsonPropertyName("number_of_guests")]
-        public int Number_of_guests { get; set; } = default!;
+        public int? Number_of_guests { get; set; } = default!;
 
         [System.Text.Json.Serialization.JsonPropertyName("notes")]
-        public string Notes { get; set; } = default!;
+        public string? Notes { get; set; } = default!;
 
         [System.Text.Json.Serialization.JsonPropertyName("preferred_times")]
-        public PreferredTimes Preferred_times { get; set; } = default!;
+        public PreferredTimes? Preferred_times { get; set; } = default!;
 
         [System.Text.Json.Serialization.JsonPropertyName("booking_offers")]
-        public ExpandableBookingOffers Booking_offers { get; set; } = default!;
+        public ExpandableBookingOffers? Booking_offers { get; set; } = default!;
 
         [System.Text.Json.Serialization.JsonPropertyName("expires_at")]
         [System.Obsolete]
-        public System.DateTime Expires_at { get; set; } = default!;
+        public System.DateTime? Expires_at { get; set; } = default!;
 
         [System.Text.Json.Serialization.JsonPropertyName("created_at")]
-        public System.DateTime Created_at { get; set; } = default!;
+        public System.DateTime? Created_at { get; set; } = default!;
 
         [System.Text.Json.Serialization.JsonPropertyName("updated_at")]
-        public System.DateTime Updated_at { get; set; } = default!;
+        public System.DateTime? Updated_at { get; set; } = default!;
 
         private System.Collections.Generic.IDictionary<string, object>? _additionalProperties;
 
@@ -65622,7 +66240,7 @@ namespace FSH.Starter.Blazor.Infrastructure.NoonaApi
         /// If empty, it means any time on the specified date is acceptable
         /// </summary>
         [System.Text.Json.Serialization.JsonPropertyName("times")]
-        public System.Collections.Generic.ICollection<System.TimeSpan> Times { get; set; } = default!;
+        public System.Collections.Generic.ICollection<System.TimeSpan>? Times { get; set; } = default!;
 
         private System.Collections.Generic.IDictionary<string, object>? _additionalProperties;
 
@@ -65652,10 +66270,10 @@ namespace FSH.Starter.Blazor.Infrastructure.NoonaApi
         public string Customer { get; set; } = default!;
 
         [System.Text.Json.Serialization.JsonPropertyName("employee")]
-        public string Employee { get; set; } = default!;
+        public string? Employee { get; set; } = default!;
 
         [System.Text.Json.Serialization.JsonPropertyName("resource")]
-        public string Resource { get; set; } = default!;
+        public string? Resource { get; set; } = default!;
 
         [System.Text.Json.Serialization.JsonPropertyName("event_types")]
         [System.ComponentModel.DataAnnotations.Required]
@@ -65665,13 +66283,13 @@ namespace FSH.Starter.Blazor.Infrastructure.NoonaApi
         /// Number of guests for the event.
         /// </summary>
         [System.Text.Json.Serialization.JsonPropertyName("number_of_guests")]
-        public int Number_of_guests { get; set; } = default!;
+        public int? Number_of_guests { get; set; } = default!;
 
         [System.Text.Json.Serialization.JsonPropertyName("notes")]
-        public string Notes { get; set; } = default!;
+        public string? Notes { get; set; } = default!;
 
         [System.Text.Json.Serialization.JsonPropertyName("preferred_times")]
-        public System.Collections.Generic.ICollection<PreferredTime> Preferred_times { get; set; } = default!;
+        public System.Collections.Generic.ICollection<PreferredTime>? Preferred_times { get; set; } = default!;
 
         [System.Text.Json.Serialization.JsonPropertyName("created_at")]
         [System.ComponentModel.DataAnnotations.Required(AllowEmptyStrings = true)]
@@ -65709,10 +66327,10 @@ namespace FSH.Starter.Blazor.Infrastructure.NoonaApi
         public string Customer { get; set; } = default!;
 
         [System.Text.Json.Serialization.JsonPropertyName("employee")]
-        public string Employee { get; set; } = default!;
+        public string? Employee { get; set; } = default!;
 
         [System.Text.Json.Serialization.JsonPropertyName("resource")]
-        public string Resource { get; set; } = default!;
+        public string? Resource { get; set; } = default!;
 
         [System.Text.Json.Serialization.JsonPropertyName("event_types")]
         [System.ComponentModel.DataAnnotations.Required]
@@ -65722,13 +66340,13 @@ namespace FSH.Starter.Blazor.Infrastructure.NoonaApi
         /// Number of guests for the event.
         /// </summary>
         [System.Text.Json.Serialization.JsonPropertyName("number_of_guests")]
-        public int Number_of_guests { get; set; } = default!;
+        public int? Number_of_guests { get; set; } = default!;
 
         [System.Text.Json.Serialization.JsonPropertyName("notes")]
-        public string Notes { get; set; } = default!;
+        public string? Notes { get; set; } = default!;
 
         [System.Text.Json.Serialization.JsonPropertyName("preferred_times")]
-        public System.Collections.Generic.ICollection<PreferredTime> Preferred_times { get; set; } = default!;
+        public System.Collections.Generic.ICollection<PreferredTime>? Preferred_times { get; set; } = default!;
 
         [System.Text.Json.Serialization.JsonPropertyName("created_at")]
         [System.ComponentModel.DataAnnotations.Required(AllowEmptyStrings = true)]
@@ -65759,10 +66377,10 @@ namespace FSH.Starter.Blazor.Infrastructure.NoonaApi
         public string Customer { get; set; } = default!;
 
         [System.Text.Json.Serialization.JsonPropertyName("employee")]
-        public string Employee { get; set; } = default!;
+        public string? Employee { get; set; } = default!;
 
         [System.Text.Json.Serialization.JsonPropertyName("resource")]
-        public string Resource { get; set; } = default!;
+        public string? Resource { get; set; } = default!;
 
         [System.Text.Json.Serialization.JsonPropertyName("event_types")]
         [System.ComponentModel.DataAnnotations.Required]
@@ -65772,13 +66390,13 @@ namespace FSH.Starter.Blazor.Infrastructure.NoonaApi
         /// Number of guests for the event.
         /// </summary>
         [System.Text.Json.Serialization.JsonPropertyName("number_of_guests")]
-        public int Number_of_guests { get; set; } = default!;
+        public int? Number_of_guests { get; set; } = default!;
 
         [System.Text.Json.Serialization.JsonPropertyName("notes")]
-        public string Notes { get; set; } = default!;
+        public string? Notes { get; set; } = default!;
 
         [System.Text.Json.Serialization.JsonPropertyName("preferred_times")]
-        public System.Collections.Generic.ICollection<PreferredTime> Preferred_times { get; set; } = default!;
+        public System.Collections.Generic.ICollection<PreferredTime>? Preferred_times { get; set; } = default!;
 
     }
 
@@ -65795,10 +66413,10 @@ namespace FSH.Starter.Blazor.Infrastructure.NoonaApi
         public string Customer { get; set; } = default!;
 
         [System.Text.Json.Serialization.JsonPropertyName("employee")]
-        public string Employee { get; set; } = default!;
+        public string? Employee { get; set; } = default!;
 
         [System.Text.Json.Serialization.JsonPropertyName("resource")]
-        public string Resource { get; set; } = default!;
+        public string? Resource { get; set; } = default!;
 
         [System.Text.Json.Serialization.JsonPropertyName("event_types")]
         [System.ComponentModel.DataAnnotations.Required]
@@ -65808,13 +66426,13 @@ namespace FSH.Starter.Blazor.Infrastructure.NoonaApi
         /// Number of guests for the event.
         /// </summary>
         [System.Text.Json.Serialization.JsonPropertyName("number_of_guests")]
-        public int Number_of_guests { get; set; } = default!;
+        public int? Number_of_guests { get; set; } = default!;
 
         [System.Text.Json.Serialization.JsonPropertyName("notes")]
-        public string Notes { get; set; } = default!;
+        public string? Notes { get; set; } = default!;
 
         [System.Text.Json.Serialization.JsonPropertyName("preferred_times")]
-        public System.Collections.Generic.ICollection<PreferredTime> Preferred_times { get; set; } = default!;
+        public System.Collections.Generic.ICollection<PreferredTime>? Preferred_times { get; set; } = default!;
 
         private System.Collections.Generic.IDictionary<string, object>? _additionalProperties;
 
@@ -65832,31 +66450,31 @@ namespace FSH.Starter.Blazor.Infrastructure.NoonaApi
     {
 
         [System.Text.Json.Serialization.JsonPropertyName("company")]
-        public object Company { get; set; } = default!;
+        public object? Company { get; set; } = default!;
 
         [System.Text.Json.Serialization.JsonPropertyName("customer")]
-        public string Customer { get; set; } = default!;
+        public string? Customer { get; set; } = default!;
 
         [System.Text.Json.Serialization.JsonPropertyName("employee")]
-        public string Employee { get; set; } = default!;
+        public string? Employee { get; set; } = default!;
 
         [System.Text.Json.Serialization.JsonPropertyName("resource")]
-        public string Resource { get; set; } = default!;
+        public string? Resource { get; set; } = default!;
 
         [System.Text.Json.Serialization.JsonPropertyName("event_types")]
-        public System.Collections.Generic.ICollection<string> Event_types { get; set; } = default!;
+        public System.Collections.Generic.ICollection<string>? Event_types { get; set; } = default!;
 
         /// <summary>
         /// Number of guests for the event.
         /// </summary>
         [System.Text.Json.Serialization.JsonPropertyName("number_of_guests")]
-        public int Number_of_guests { get; set; } = default!;
+        public int? Number_of_guests { get; set; } = default!;
 
         [System.Text.Json.Serialization.JsonPropertyName("notes")]
-        public string Notes { get; set; } = default!;
+        public string? Notes { get; set; } = default!;
 
         [System.Text.Json.Serialization.JsonPropertyName("preferred_times")]
-        public System.Collections.Generic.ICollection<PreferredTime> Preferred_times { get; set; } = default!;
+        public System.Collections.Generic.ICollection<PreferredTime>? Preferred_times { get; set; } = default!;
 
     }
 
@@ -65865,31 +66483,31 @@ namespace FSH.Starter.Blazor.Infrastructure.NoonaApi
     {
 
         [System.Text.Json.Serialization.JsonPropertyName("company")]
-        public object Company { get; set; } = default!;
+        public object? Company { get; set; } = default!;
 
         [System.Text.Json.Serialization.JsonPropertyName("customer")]
-        public string Customer { get; set; } = default!;
+        public string? Customer { get; set; } = default!;
 
         [System.Text.Json.Serialization.JsonPropertyName("employee")]
-        public string Employee { get; set; } = default!;
+        public string? Employee { get; set; } = default!;
 
         [System.Text.Json.Serialization.JsonPropertyName("resource")]
-        public string Resource { get; set; } = default!;
+        public string? Resource { get; set; } = default!;
 
         [System.Text.Json.Serialization.JsonPropertyName("event_types")]
-        public System.Collections.Generic.ICollection<string> Event_types { get; set; } = default!;
+        public System.Collections.Generic.ICollection<string>? Event_types { get; set; } = default!;
 
         /// <summary>
         /// Number of guests for the event.
         /// </summary>
         [System.Text.Json.Serialization.JsonPropertyName("number_of_guests")]
-        public int Number_of_guests { get; set; } = default!;
+        public int? Number_of_guests { get; set; } = default!;
 
         [System.Text.Json.Serialization.JsonPropertyName("notes")]
-        public string Notes { get; set; } = default!;
+        public string? Notes { get; set; } = default!;
 
         [System.Text.Json.Serialization.JsonPropertyName("preferred_times")]
-        public System.Collections.Generic.ICollection<PreferredTime> Preferred_times { get; set; } = default!;
+        public System.Collections.Generic.ICollection<PreferredTime>? Preferred_times { get; set; } = default!;
 
         private System.Collections.Generic.IDictionary<string, object>? _additionalProperties;
 
@@ -65913,31 +66531,31 @@ namespace FSH.Starter.Blazor.Infrastructure.NoonaApi
         /// Filter by employee IDs
         /// </summary>
         [System.Text.Json.Serialization.JsonPropertyName("employees")]
-        public System.Collections.Generic.ICollection<string> Employees { get; set; } = default!;
+        public System.Collections.Generic.ICollection<string>? Employees { get; set; } = default!;
 
         /// <summary>
         /// Filter by customer IDs
         /// </summary>
         [System.Text.Json.Serialization.JsonPropertyName("customers")]
-        public System.Collections.Generic.ICollection<string> Customers { get; set; } = default!;
+        public System.Collections.Generic.ICollection<string>? Customers { get; set; } = default!;
 
         /// <summary>
         /// Filter by maximum duration in minutes
         /// </summary>
         [System.Text.Json.Serialization.JsonPropertyName("max_duration")]
-        public int Max_duration { get; set; } = default!;
+        public int? Max_duration { get; set; } = default!;
 
         /// <summary>
         /// Filter entries with preferred dates starting from this date (inclusive) [YYYY-MM-DD]
         /// </summary>
         [System.Text.Json.Serialization.JsonPropertyName("preferred_date_from")]
-        public string Preferred_date_from { get; set; } = default!;
+        public string? Preferred_date_from { get; set; } = default!;
 
         /// <summary>
         /// Filter entries with preferred dates up to this date (inclusive) [YYYY-MM-DD]
         /// </summary>
         [System.Text.Json.Serialization.JsonPropertyName("preferred_date_to")]
-        public string Preferred_date_to { get; set; } = default!;
+        public string? Preferred_date_to { get; set; } = default!;
 
         private System.Collections.Generic.IDictionary<string, object>? _additionalProperties;
 
@@ -65976,28 +66594,28 @@ namespace FSH.Starter.Blazor.Infrastructure.NoonaApi
     {
 
         [System.Text.Json.Serialization.JsonPropertyName("id")]
-        public string Id { get; set; } = default!;
+        public string? Id { get; set; } = default!;
 
         [System.Text.Json.Serialization.JsonPropertyName("company")]
-        public string Company { get; set; } = default!;
+        public string? Company { get; set; } = default!;
 
         [System.Text.Json.Serialization.JsonPropertyName("employee")]
-        public string Employee { get; set; } = default!;
+        public string? Employee { get; set; } = default!;
 
         [System.Text.Json.Serialization.JsonPropertyName("title")]
-        public string Title { get; set; } = default!;
+        public string? Title { get; set; } = default!;
 
         [System.Text.Json.Serialization.JsonPropertyName("content")]
-        public string Content { get; set; } = default!;
+        public string? Content { get; set; } = default!;
 
         [System.Text.Json.Serialization.JsonPropertyName("date")]
-        public string Date { get; set; } = default!;
+        public string? Date { get; set; } = default!;
 
         [System.Text.Json.Serialization.JsonPropertyName("created_at")]
-        public System.DateTime Created_at { get; set; } = default!;
+        public System.DateTime? Created_at { get; set; } = default!;
 
         [System.Text.Json.Serialization.JsonPropertyName("updated_at")]
-        public System.DateTime Updated_at { get; set; } = default!;
+        public System.DateTime? Updated_at { get; set; } = default!;
 
         private System.Collections.Generic.IDictionary<string, object>? _additionalProperties;
 
@@ -66023,17 +66641,17 @@ namespace FSH.Starter.Blazor.Infrastructure.NoonaApi
         public string Company { get; set; } = default!;
 
         [System.Text.Json.Serialization.JsonPropertyName("employee")]
-        public string Employee { get; set; } = default!;
+        public string? Employee { get; set; } = default!;
 
         [System.Text.Json.Serialization.JsonPropertyName("title")]
         [System.ComponentModel.DataAnnotations.Required(AllowEmptyStrings = true)]
         public string Title { get; set; } = default!;
 
         [System.Text.Json.Serialization.JsonPropertyName("content")]
-        public string Content { get; set; } = default!;
+        public string? Content { get; set; } = default!;
 
         [System.Text.Json.Serialization.JsonPropertyName("date")]
-        public string Date { get; set; } = default!;
+        public string? Date { get; set; } = default!;
 
         [System.Text.Json.Serialization.JsonPropertyName("created_at")]
         [System.ComponentModel.DataAnnotations.Required(AllowEmptyStrings = true)]
@@ -66067,17 +66685,17 @@ namespace FSH.Starter.Blazor.Infrastructure.NoonaApi
         public string Company { get; set; } = default!;
 
         [System.Text.Json.Serialization.JsonPropertyName("employee")]
-        public string Employee { get; set; } = default!;
+        public string? Employee { get; set; } = default!;
 
         [System.Text.Json.Serialization.JsonPropertyName("title")]
         [System.ComponentModel.DataAnnotations.Required(AllowEmptyStrings = true)]
         public string Title { get; set; } = default!;
 
         [System.Text.Json.Serialization.JsonPropertyName("content")]
-        public string Content { get; set; } = default!;
+        public string? Content { get; set; } = default!;
 
         [System.Text.Json.Serialization.JsonPropertyName("date")]
-        public string Date { get; set; } = default!;
+        public string? Date { get; set; } = default!;
 
         [System.Text.Json.Serialization.JsonPropertyName("created_at")]
         [System.ComponentModel.DataAnnotations.Required(AllowEmptyStrings = true)]
@@ -66104,17 +66722,17 @@ namespace FSH.Starter.Blazor.Infrastructure.NoonaApi
         public string Company { get; set; } = default!;
 
         [System.Text.Json.Serialization.JsonPropertyName("employee")]
-        public string Employee { get; set; } = default!;
+        public string? Employee { get; set; } = default!;
 
         [System.Text.Json.Serialization.JsonPropertyName("title")]
         [System.ComponentModel.DataAnnotations.Required(AllowEmptyStrings = true)]
         public string Title { get; set; } = default!;
 
         [System.Text.Json.Serialization.JsonPropertyName("content")]
-        public string Content { get; set; } = default!;
+        public string? Content { get; set; } = default!;
 
         [System.Text.Json.Serialization.JsonPropertyName("date")]
-        public string Date { get; set; } = default!;
+        public string? Date { get; set; } = default!;
 
     }
 
@@ -66127,17 +66745,17 @@ namespace FSH.Starter.Blazor.Infrastructure.NoonaApi
         public string Company { get; set; } = default!;
 
         [System.Text.Json.Serialization.JsonPropertyName("employee")]
-        public string Employee { get; set; } = default!;
+        public string? Employee { get; set; } = default!;
 
         [System.Text.Json.Serialization.JsonPropertyName("title")]
         [System.ComponentModel.DataAnnotations.Required(AllowEmptyStrings = true)]
         public string Title { get; set; } = default!;
 
         [System.Text.Json.Serialization.JsonPropertyName("content")]
-        public string Content { get; set; } = default!;
+        public string? Content { get; set; } = default!;
 
         [System.Text.Json.Serialization.JsonPropertyName("date")]
-        public string Date { get; set; } = default!;
+        public string? Date { get; set; } = default!;
 
         private System.Collections.Generic.IDictionary<string, object>? _additionalProperties;
 
@@ -66155,19 +66773,19 @@ namespace FSH.Starter.Blazor.Infrastructure.NoonaApi
     {
 
         [System.Text.Json.Serialization.JsonPropertyName("company")]
-        public object Company { get; set; } = default!;
+        public object? Company { get; set; } = default!;
 
         [System.Text.Json.Serialization.JsonPropertyName("employee")]
-        public string Employee { get; set; } = default!;
+        public string? Employee { get; set; } = default!;
 
         [System.Text.Json.Serialization.JsonPropertyName("title")]
-        public string Title { get; set; } = default!;
+        public string? Title { get; set; } = default!;
 
         [System.Text.Json.Serialization.JsonPropertyName("content")]
-        public string Content { get; set; } = default!;
+        public string? Content { get; set; } = default!;
 
         [System.Text.Json.Serialization.JsonPropertyName("date")]
-        public string Date { get; set; } = default!;
+        public string? Date { get; set; } = default!;
 
     }
 
@@ -66176,19 +66794,19 @@ namespace FSH.Starter.Blazor.Infrastructure.NoonaApi
     {
 
         [System.Text.Json.Serialization.JsonPropertyName("company")]
-        public object Company { get; set; } = default!;
+        public object? Company { get; set; } = default!;
 
         [System.Text.Json.Serialization.JsonPropertyName("employee")]
-        public string Employee { get; set; } = default!;
+        public string? Employee { get; set; } = default!;
 
         [System.Text.Json.Serialization.JsonPropertyName("title")]
-        public string Title { get; set; } = default!;
+        public string? Title { get; set; } = default!;
 
         [System.Text.Json.Serialization.JsonPropertyName("content")]
-        public string Content { get; set; } = default!;
+        public string? Content { get; set; } = default!;
 
         [System.Text.Json.Serialization.JsonPropertyName("date")]
-        public string Date { get; set; } = default!;
+        public string? Date { get; set; } = default!;
 
         private System.Collections.Generic.IDictionary<string, object>? _additionalProperties;
 
@@ -66212,7 +66830,7 @@ namespace FSH.Starter.Blazor.Infrastructure.NoonaApi
         /// Filter by employees
         /// </summary>
         [System.Text.Json.Serialization.JsonPropertyName("employees")]
-        public System.Collections.Generic.ICollection<string> Employees { get; set; } = default!;
+        public System.Collections.Generic.ICollection<string>? Employees { get; set; } = default!;
 
         private System.Collections.Generic.IDictionary<string, object>? _additionalProperties;
 
@@ -66226,6 +66844,374 @@ namespace FSH.Starter.Blazor.Infrastructure.NoonaApi
     }
 
     [System.CodeDom.Compiler.GeneratedCode("NJsonSchema", "14.6.1.0 (NJsonSchema v11.5.1.0 (Newtonsoft.Json v13.0.0.0))")]
+    public partial class Goals : System.Collections.ObjectModel.Collection<Goal>
+    {
+
+    }
+
+    [System.CodeDom.Compiler.GeneratedCode("NJsonSchema", "14.6.1.0 (NJsonSchema v11.5.1.0 (Newtonsoft.Json v13.0.0.0))")]
+    public partial class Goal
+    {
+
+        [System.Text.Json.Serialization.JsonPropertyName("id")]
+        [System.ComponentModel.DataAnnotations.Required(AllowEmptyStrings = true)]
+        public string Id { get; set; } = default!;
+
+        [System.Text.Json.Serialization.JsonPropertyName("company_id")]
+        [System.ComponentModel.DataAnnotations.Required(AllowEmptyStrings = true)]
+        public string Company_id { get; set; } = default!;
+
+        [System.Text.Json.Serialization.JsonPropertyName("goal_template")]
+        [System.ComponentModel.DataAnnotations.Required(AllowEmptyStrings = true)]
+        [System.Text.Json.Serialization.JsonConverter(typeof(System.Text.Json.Serialization.JsonStringEnumConverter<GoalTemplate>))]
+        public GoalTemplate Goal_template { get; set; } = default!;
+
+        /// <summary>
+        /// Whether this is the currently active goal for the company
+        /// </summary>
+        [System.Text.Json.Serialization.JsonPropertyName("active")]
+        public bool Active { get; set; } = default!;
+
+        /// <summary>
+        /// Localized title from the goal template
+        /// </summary>
+        [System.Text.Json.Serialization.JsonPropertyName("title")]
+        public string? Title { get; set; } = default!;
+
+        /// <summary>
+        /// Localized description from the goal template
+        /// </summary>
+        [System.Text.Json.Serialization.JsonPropertyName("description")]
+        public string? Description { get; set; } = default!;
+
+        /// <summary>
+        /// Tasks belonging to this goal (always included)
+        /// </summary>
+        [System.Text.Json.Serialization.JsonPropertyName("tasks")]
+        [System.ComponentModel.DataAnnotations.Required]
+        public System.Collections.Generic.ICollection<Task> Tasks { get; set; } = new System.Collections.ObjectModel.Collection<Task>();
+
+        /// <summary>
+        /// Total number of tasks belonging to this goal
+        /// </summary>
+        [System.Text.Json.Serialization.JsonPropertyName("total_tasks")]
+        public int? Total_tasks { get; set; } = default!;
+
+        /// <summary>
+        /// Number of tasks marked as completed for this goal
+        /// </summary>
+        [System.Text.Json.Serialization.JsonPropertyName("completed_tasks")]
+        public int? Completed_tasks { get; set; } = default!;
+
+        [System.Text.Json.Serialization.JsonPropertyName("created_at")]
+        [System.ComponentModel.DataAnnotations.Required(AllowEmptyStrings = true)]
+        public System.DateTime Created_at { get; set; } = default!;
+
+        [System.Text.Json.Serialization.JsonPropertyName("updated_at")]
+        [System.ComponentModel.DataAnnotations.Required(AllowEmptyStrings = true)]
+        public System.DateTime Updated_at { get; set; } = default!;
+
+        /// <summary>
+        /// Set when all tasks in the goal are completed
+        /// </summary>
+        [System.Text.Json.Serialization.JsonPropertyName("completed_at")]
+        public System.DateTime? Completed_at { get; set; } = default!;
+
+        private System.Collections.Generic.IDictionary<string, object>? _additionalProperties;
+
+        [System.Text.Json.Serialization.JsonExtensionData]
+        public System.Collections.Generic.IDictionary<string, object> AdditionalProperties
+        {
+            get { return _additionalProperties ?? (_additionalProperties = new System.Collections.Generic.Dictionary<string, object>()); }
+            set { _additionalProperties = value; }
+        }
+
+    }
+
+    [System.CodeDom.Compiler.GeneratedCode("NJsonSchema", "14.6.1.0 (NJsonSchema v11.5.1.0 (Newtonsoft.Json v13.0.0.0))")]
+    public enum GoalTemplate
+    {
+
+        [System.Text.Json.Serialization.JsonStringEnumMemberName(@"goal_first_online_booking")]
+        Goal_first_online_booking = 0,
+
+    }
+
+    /// <summary>
+    /// [Filtering](https://api.noona.is/docs/working-with-the-apis/filtering)
+    /// </summary>
+    [System.CodeDom.Compiler.GeneratedCode("NJsonSchema", "14.6.1.0 (NJsonSchema v11.5.1.0 (Newtonsoft.Json v13.0.0.0))")]
+    public partial class GoalFilter
+    {
+
+        /// <summary>
+        /// Filter by active status
+        /// </summary>
+        [System.Text.Json.Serialization.JsonPropertyName("active")]
+        public bool? Active { get; set; } = default!;
+
+        [System.Text.Json.Serialization.JsonPropertyName("goal_template_ids")]
+        // TODO(system.text.json): Add string enum item converter
+        public System.Collections.Generic.ICollection<GoalTemplate>? Goal_template_ids { get; set; } = default!;
+
+        private System.Collections.Generic.IDictionary<string, object>? _additionalProperties;
+
+        [System.Text.Json.Serialization.JsonExtensionData]
+        public System.Collections.Generic.IDictionary<string, object> AdditionalProperties
+        {
+            get { return _additionalProperties ?? (_additionalProperties = new System.Collections.Generic.Dictionary<string, object>()); }
+            set { _additionalProperties = value; }
+        }
+
+    }
+
+    [System.CodeDom.Compiler.GeneratedCode("NJsonSchema", "14.6.1.0 (NJsonSchema v11.5.1.0 (Newtonsoft.Json v13.0.0.0))")]
+    public partial class Tasks : System.Collections.ObjectModel.Collection<Task>
+    {
+
+    }
+
+    [System.CodeDom.Compiler.GeneratedCode("NJsonSchema", "14.6.1.0 (NJsonSchema v11.5.1.0 (Newtonsoft.Json v13.0.0.0))")]
+    public partial class Task
+    {
+
+        [System.Text.Json.Serialization.JsonPropertyName("id")]
+        [System.ComponentModel.DataAnnotations.Required(AllowEmptyStrings = true)]
+        public string Id { get; set; } = default!;
+
+        [System.Text.Json.Serialization.JsonPropertyName("company_id")]
+        [System.ComponentModel.DataAnnotations.Required(AllowEmptyStrings = true)]
+        public string Company_id { get; set; } = default!;
+
+        [System.Text.Json.Serialization.JsonPropertyName("goal_instance")]
+        [System.ComponentModel.DataAnnotations.Required(AllowEmptyStrings = true)]
+        public string Goal_instance { get; set; } = default!;
+
+        [System.Text.Json.Serialization.JsonPropertyName("task_template")]
+        [System.ComponentModel.DataAnnotations.Required(AllowEmptyStrings = true)]
+        public string Task_template { get; set; } = default!;
+
+        /// <summary>
+        /// Localized title from the task template
+        /// </summary>
+        [System.Text.Json.Serialization.JsonPropertyName("title")]
+        public string? Title { get; set; } = default!;
+
+        /// <summary>
+        /// Localized description from the task template
+        /// </summary>
+        [System.Text.Json.Serialization.JsonPropertyName("description")]
+        public string? Description { get; set; } = default!;
+
+        [System.Text.Json.Serialization.JsonPropertyName("completion_method")]
+        [System.Text.Json.Serialization.JsonConverter(typeof(System.Text.Json.Serialization.JsonStringEnumConverter<TaskCompletionMethod>))]
+        public TaskCompletionMethod? Completion_method { get; set; } = default!;
+
+        /// <summary>
+        /// Display order within the goal
+        /// </summary>
+        [System.Text.Json.Serialization.JsonPropertyName("order")]
+        public int? Order { get; set; } = default!;
+
+        /// <summary>
+        /// Task template IDs that must be completed before this task
+        /// </summary>
+        [System.Text.Json.Serialization.JsonPropertyName("prerequisites")]
+        public System.Collections.Generic.ICollection<string>? Prerequisites { get; set; } = default!;
+
+        [System.Text.Json.Serialization.JsonPropertyName("icon")]
+        public string? Icon { get; set; } = default!;
+
+        [System.Text.Json.Serialization.JsonPropertyName("action")]
+        public TaskAction? Action { get; set; } = default!;
+
+        [System.Text.Json.Serialization.JsonPropertyName("created_at")]
+        [System.ComponentModel.DataAnnotations.Required(AllowEmptyStrings = true)]
+        public System.DateTime Created_at { get; set; } = default!;
+
+        [System.Text.Json.Serialization.JsonPropertyName("updated_at")]
+        [System.ComponentModel.DataAnnotations.Required(AllowEmptyStrings = true)]
+        public System.DateTime Updated_at { get; set; } = default!;
+
+        /// <summary>
+        /// Set when the task is marked complete (manually or computed)
+        /// </summary>
+        [System.Text.Json.Serialization.JsonPropertyName("completed_at")]
+        public System.DateTime? Completed_at { get; set; } = default!;
+
+        /// <summary>
+        /// Whether the task is blocked by incomplete prerequisites
+        /// </summary>
+        [System.Text.Json.Serialization.JsonPropertyName("blocked")]
+        public bool? Blocked { get; set; } = default!;
+
+        private System.Collections.Generic.IDictionary<string, object>? _additionalProperties;
+
+        [System.Text.Json.Serialization.JsonExtensionData]
+        public System.Collections.Generic.IDictionary<string, object> AdditionalProperties
+        {
+            get { return _additionalProperties ?? (_additionalProperties = new System.Collections.Generic.Dictionary<string, object>()); }
+            set { _additionalProperties = value; }
+        }
+
+    }
+
+    [System.CodeDom.Compiler.GeneratedCode("NJsonSchema", "14.6.1.0 (NJsonSchema v11.5.1.0 (Newtonsoft.Json v13.0.0.0))")]
+    public partial class ActivateGoalRequest
+    {
+
+        /// <summary>
+        /// The company ID that owns the goal
+        /// </summary>
+        [System.Text.Json.Serialization.JsonPropertyName("company_id")]
+        [System.ComponentModel.DataAnnotations.Required(AllowEmptyStrings = true)]
+        public string Company_id { get; set; } = default!;
+
+        private System.Collections.Generic.IDictionary<string, object>? _additionalProperties;
+
+        [System.Text.Json.Serialization.JsonExtensionData]
+        public System.Collections.Generic.IDictionary<string, object> AdditionalProperties
+        {
+            get { return _additionalProperties ?? (_additionalProperties = new System.Collections.Generic.Dictionary<string, object>()); }
+            set { _additionalProperties = value; }
+        }
+
+    }
+
+    [System.CodeDom.Compiler.GeneratedCode("NJsonSchema", "14.6.1.0 (NJsonSchema v11.5.1.0 (Newtonsoft.Json v13.0.0.0))")]
+    public partial class UpdateTaskRequest
+    {
+
+        /// <summary>
+        /// The company ID that owns the task
+        /// </summary>
+        [System.Text.Json.Serialization.JsonPropertyName("company_id")]
+        [System.ComponentModel.DataAnnotations.Required(AllowEmptyStrings = true)]
+        public string Company_id { get; set; } = default!;
+
+        /// <summary>
+        /// Set to true to mark the task as complete. For manual tasks only. Computed tasks are automatically evaluated.
+        /// <br/>
+        /// </summary>
+        [System.Text.Json.Serialization.JsonPropertyName("completed")]
+        public bool? Completed { get; set; } = default!;
+
+        private System.Collections.Generic.IDictionary<string, object>? _additionalProperties;
+
+        [System.Text.Json.Serialization.JsonExtensionData]
+        public System.Collections.Generic.IDictionary<string, object> AdditionalProperties
+        {
+            get { return _additionalProperties ?? (_additionalProperties = new System.Collections.Generic.Dictionary<string, object>()); }
+            set { _additionalProperties = value; }
+        }
+
+    }
+
+    /// <summary>
+    /// How the task is completed:
+    /// <br/>- manual: Explicitly marked complete via a request to the API
+    /// <br/>- computed: Automatically computed based on company data
+    /// <br/>
+    /// </summary>
+    [System.CodeDom.Compiler.GeneratedCode("NJsonSchema", "14.6.1.0 (NJsonSchema v11.5.1.0 (Newtonsoft.Json v13.0.0.0))")]
+    public enum TaskCompletionMethod
+    {
+
+        [System.Text.Json.Serialization.JsonStringEnumMemberName(@"manual")]
+        Manual = 0,
+
+        [System.Text.Json.Serialization.JsonStringEnumMemberName(@"computed")]
+        Computed = 1,
+
+    }
+
+    /// <summary>
+    /// Configuration for the task's call-to-action button
+    /// </summary>
+    [System.CodeDom.Compiler.GeneratedCode("NJsonSchema", "14.6.1.0 (NJsonSchema v11.5.1.0 (Newtonsoft.Json v13.0.0.0))")]
+    public partial class TaskAction
+    {
+
+        /// <summary>
+        /// Localized button text
+        /// </summary>
+        [System.Text.Json.Serialization.JsonPropertyName("title")]
+        public string? Title { get; set; } = default!;
+
+        [System.Text.Json.Serialization.JsonPropertyName("type")]
+        [System.Text.Json.Serialization.JsonConverter(typeof(System.Text.Json.Serialization.JsonStringEnumConverter<TaskActionType>))]
+        public TaskActionType? Type { get; set; } = default!;
+
+        [System.Text.Json.Serialization.JsonPropertyName("navigate_to")]
+        [System.Text.Json.Serialization.JsonConverter(typeof(System.Text.Json.Serialization.JsonStringEnumConverter<TaskNavigateTo>))]
+        public TaskNavigateTo? Navigate_to { get; set; } = default!;
+
+        /// <summary>
+        /// Dynamic content based on action type.
+        /// </summary>
+        [System.Text.Json.Serialization.JsonPropertyName("content")]
+        public string? Content { get; set; } = default!;
+
+        private System.Collections.Generic.IDictionary<string, object>? _additionalProperties;
+
+        [System.Text.Json.Serialization.JsonExtensionData]
+        public System.Collections.Generic.IDictionary<string, object> AdditionalProperties
+        {
+            get { return _additionalProperties ?? (_additionalProperties = new System.Collections.Generic.Dictionary<string, object>()); }
+            set { _additionalProperties = value; }
+        }
+
+    }
+
+    /// <summary>
+    /// Type of action:
+    /// <br/>- navigate: Navigate to a specific pre-determined location in the app
+    /// <br/>- copy: Copy content to clipboard
+    /// <br/>
+    /// </summary>
+    [System.CodeDom.Compiler.GeneratedCode("NJsonSchema", "14.6.1.0 (NJsonSchema v11.5.1.0 (Newtonsoft.Json v13.0.0.0))")]
+    public enum TaskActionType
+    {
+
+        [System.Text.Json.Serialization.JsonStringEnumMemberName(@"navigate")]
+        Navigate = 0,
+
+        [System.Text.Json.Serialization.JsonStringEnumMemberName(@"copy")]
+        Copy = 1,
+
+    }
+
+    /// <summary>
+    /// Pre-determined navigation destination for the task action.
+    /// <br/>- marketplace_profile_onboarding: Navigate to marketplace profile onboarding flow
+    /// <br/>- marketplace_profile: Navigate to marketplace profile settings
+    /// <br/>- event_types: Navigate to event types/services page
+    /// <br/>- employees: Navigate to employees/staff page
+    /// <br/>- calendar_settings: Navigate to calendar settings page
+    /// <br/>
+    /// </summary>
+    [System.CodeDom.Compiler.GeneratedCode("NJsonSchema", "14.6.1.0 (NJsonSchema v11.5.1.0 (Newtonsoft.Json v13.0.0.0))")]
+    public enum TaskNavigateTo
+    {
+
+        [System.Text.Json.Serialization.JsonStringEnumMemberName(@"marketplace_profile_onboarding")]
+        Marketplace_profile_onboarding = 0,
+
+        [System.Text.Json.Serialization.JsonStringEnumMemberName(@"marketplace_profile")]
+        Marketplace_profile = 1,
+
+        [System.Text.Json.Serialization.JsonStringEnumMemberName(@"event_types")]
+        Event_types = 2,
+
+        [System.Text.Json.Serialization.JsonStringEnumMemberName(@"employees")]
+        Employees = 3,
+
+        [System.Text.Json.Serialization.JsonStringEnumMemberName(@"calendar_settings")]
+        Calendar_settings = 4,
+
+    }
+
+    [System.CodeDom.Compiler.GeneratedCode("NJsonSchema", "14.6.1.0 (NJsonSchema v11.5.1.0 (Newtonsoft.Json v13.0.0.0))")]
     public partial class EventTypeCategoryGroup
     {
 
@@ -66234,7 +67220,7 @@ namespace FSH.Starter.Blazor.Infrastructure.NoonaApi
         public string Id { get; set; } = default!;
 
         [System.Text.Json.Serialization.JsonPropertyName("readable_id")]
-        public string Readable_id { get; set; } = default!;
+        public string? Readable_id { get; set; } = default!;
 
         [System.Text.Json.Serialization.JsonPropertyName("name")]
         [System.ComponentModel.DataAnnotations.Required(AllowEmptyStrings = true)]
@@ -66301,7 +67287,7 @@ namespace FSH.Starter.Blazor.Infrastructure.NoonaApi
         /// Only get terminals directly connected to the company.
         /// </summary>
         [System.Text.Json.Serialization.JsonPropertyName("company_only")]
-        public bool Company_only { get; set; } = default!;
+        public bool? Company_only { get; set; } = default!;
 
         private System.Collections.Generic.IDictionary<string, object>? _additionalProperties;
 
@@ -66322,10 +67308,10 @@ namespace FSH.Starter.Blazor.Infrastructure.NoonaApi
     {
 
         [System.Text.Json.Serialization.JsonPropertyName("from")]
-        public string From { get; set; } = default!;
+        public string? From { get; set; } = default!;
 
         [System.Text.Json.Serialization.JsonPropertyName("to")]
-        public string To { get; set; } = default!;
+        public string? To { get; set; } = default!;
 
         /// <summary>
         /// Expand recurring rule sets into individual rule sets.
@@ -66334,13 +67320,13 @@ namespace FSH.Starter.Blazor.Infrastructure.NoonaApi
         /// <br/>
         /// </summary>
         [System.Text.Json.Serialization.JsonPropertyName("expand_recurring")]
-        public bool Expand_recurring { get; set; } = default!;
+        public bool? Expand_recurring { get; set; } = default!;
 
         /// <summary>
         /// Only created from template with this ID.
         /// </summary>
         [System.Text.Json.Serialization.JsonPropertyName("template_id")]
-        public string Template_id { get; set; } = default!;
+        public string? Template_id { get; set; } = default!;
 
         private System.Collections.Generic.IDictionary<string, object>? _additionalProperties;
 
@@ -66370,7 +67356,7 @@ namespace FSH.Starter.Blazor.Infrastructure.NoonaApi
         /// <br/>
         /// </summary>
         [System.Text.Json.Serialization.JsonPropertyName("date")]
-        public string Date { get; set; } = default!;
+        public string? Date { get; set; } = default!;
 
         /// <summary>
         /// [RRULE](https://icalendar.org/iCalendar-RFC-5545/3-3-10-recurrence-rule.html) string.
@@ -66379,13 +67365,13 @@ namespace FSH.Starter.Blazor.Infrastructure.NoonaApi
         /// <br/>
         /// </summary>
         [System.Text.Json.Serialization.JsonPropertyName("rrule")]
-        public string Rrule { get; set; } = default!;
+        public string? Rrule { get; set; } = default!;
 
         /// <summary>
         /// The template that was used to create this rule set
         /// </summary>
         [System.Text.Json.Serialization.JsonPropertyName("rule_set_template_id")]
-        public string Rule_set_template_id { get; set; } = default!;
+        public string? Rule_set_template_id { get; set; } = default!;
 
     }
 
@@ -66513,7 +67499,7 @@ namespace FSH.Starter.Blazor.Infrastructure.NoonaApi
         public object Company { get; set; } = default!;
 
         [System.Text.Json.Serialization.JsonPropertyName("rule_set_template_id")]
-        public object Rule_set_template_id { get; set; } = default!;
+        public object? Rule_set_template_id { get; set; } = default!;
 
         private System.Collections.Generic.IDictionary<string, object>? _additionalProperties;
 
@@ -66535,7 +67521,7 @@ namespace FSH.Starter.Blazor.Infrastructure.NoonaApi
         public object Company { get; set; } = default!;
 
         [System.Text.Json.Serialization.JsonPropertyName("rule_set_template_id")]
-        public object Rule_set_template_id { get; set; } = default!;
+        public object? Rule_set_template_id { get; set; } = default!;
 
     }
 
@@ -66550,25 +67536,25 @@ namespace FSH.Starter.Blazor.Infrastructure.NoonaApi
     {
 
         [System.Text.Json.Serialization.JsonPropertyName("id")]
-        public string Id { get; set; } = default!;
+        public string? Id { get; set; } = default!;
 
         [System.Text.Json.Serialization.JsonPropertyName("company")]
-        public string Company { get; set; } = default!;
+        public string? Company { get; set; } = default!;
 
         [System.Text.Json.Serialization.JsonPropertyName("title")]
-        public string Title { get; set; } = default!;
+        public string? Title { get; set; } = default!;
 
         /// <summary>
         /// Start time
         /// </summary>
         [System.Text.Json.Serialization.JsonPropertyName("starts_at")]
-        public string Starts_at { get; set; } = default!;
+        public string? Starts_at { get; set; } = default!;
 
         /// <summary>
         /// End time
         /// </summary>
         [System.Text.Json.Serialization.JsonPropertyName("ends_at")]
-        public string Ends_at { get; set; } = default!;
+        public string? Ends_at { get; set; } = default!;
 
         /// <summary>
         /// Lower numbers have higher priority.
@@ -66577,10 +67563,10 @@ namespace FSH.Starter.Blazor.Infrastructure.NoonaApi
         /// <br/>
         /// </summary>
         [System.Text.Json.Serialization.JsonPropertyName("priority")]
-        public int Priority { get; set; } = default!;
+        public int? Priority { get; set; } = default!;
 
         [System.Text.Json.Serialization.JsonPropertyName("rules")]
-        public Rules Rules { get; set; } = default!;
+        public Rules? Rules { get; set; } = default!;
 
         /// <summary>
         /// The number of future instances that exist from this template.
@@ -66589,7 +67575,7 @@ namespace FSH.Starter.Blazor.Infrastructure.NoonaApi
         /// <br/>
         /// </summary>
         [System.Text.Json.Serialization.JsonPropertyName("future_instance_count")]
-        public int Future_instance_count { get; set; } = default!;
+        public int? Future_instance_count { get; set; } = default!;
 
         /// <summary>
         /// The date of the next instance of this template.
@@ -66598,13 +67584,13 @@ namespace FSH.Starter.Blazor.Infrastructure.NoonaApi
         /// <br/>
         /// </summary>
         [System.Text.Json.Serialization.JsonPropertyName("next_instance")]
-        public string Next_instance { get; set; } = default!;
+        public string? Next_instance { get; set; } = default!;
 
         [System.Text.Json.Serialization.JsonPropertyName("created_at")]
-        public System.DateTime Created_at { get; set; } = default!;
+        public System.DateTime? Created_at { get; set; } = default!;
 
         [System.Text.Json.Serialization.JsonPropertyName("updated_at")]
-        public System.DateTime Updated_at { get; set; } = default!;
+        public System.DateTime? Updated_at { get; set; } = default!;
 
         private System.Collections.Generic.IDictionary<string, object>? _additionalProperties;
 
@@ -66827,11 +67813,11 @@ namespace FSH.Starter.Blazor.Infrastructure.NoonaApi
     {
 
         [System.Text.Json.Serialization.JsonPropertyName("event_types")]
-        public System.Collections.Generic.ICollection<string> Event_types { get; set; } = default!;
+        public System.Collections.Generic.ICollection<string>? Event_types { get; set; } = default!;
 
         [System.Text.Json.Serialization.JsonPropertyName("event_types_association")]
         [System.Text.Json.Serialization.JsonConverter(typeof(System.Text.Json.Serialization.JsonStringEnumConverter<RuleEntitiesEventTypesEvent_types_association>))]
-        public RuleEntitiesEventTypesEvent_types_association Event_types_association { get; set; } = FSH.Starter.Blazor.Infrastructure.NoonaApi.RuleEntitiesEventTypesEvent_types_association.Excludes;
+        public RuleEntitiesEventTypesEvent_types_association? Event_types_association { get; set; } = FSH.Starter.Blazor.Infrastructure.NoonaApi.RuleEntitiesEventTypesEvent_types_association.Excludes;
 
         private System.Collections.Generic.IDictionary<string, object>? _additionalProperties;
 
@@ -66849,11 +67835,11 @@ namespace FSH.Starter.Blazor.Infrastructure.NoonaApi
     {
 
         [System.Text.Json.Serialization.JsonPropertyName("resources")]
-        public System.Collections.Generic.ICollection<string> Resources { get; set; } = default!;
+        public System.Collections.Generic.ICollection<string>? Resources { get; set; } = default!;
 
         [System.Text.Json.Serialization.JsonPropertyName("resources_association")]
         [System.Text.Json.Serialization.JsonConverter(typeof(System.Text.Json.Serialization.JsonStringEnumConverter<RuleEntitiesResourcesResources_association>))]
-        public RuleEntitiesResourcesResources_association Resources_association { get; set; } = FSH.Starter.Blazor.Infrastructure.NoonaApi.RuleEntitiesResourcesResources_association.Excludes;
+        public RuleEntitiesResourcesResources_association? Resources_association { get; set; } = FSH.Starter.Blazor.Infrastructure.NoonaApi.RuleEntitiesResourcesResources_association.Excludes;
 
         private System.Collections.Generic.IDictionary<string, object>? _additionalProperties;
 
@@ -66871,11 +67857,11 @@ namespace FSH.Starter.Blazor.Infrastructure.NoonaApi
     {
 
         [System.Text.Json.Serialization.JsonPropertyName("employees")]
-        public System.Collections.Generic.ICollection<string> Employees { get; set; } = default!;
+        public System.Collections.Generic.ICollection<string>? Employees { get; set; } = default!;
 
         [System.Text.Json.Serialization.JsonPropertyName("employees_association")]
         [System.Text.Json.Serialization.JsonConverter(typeof(System.Text.Json.Serialization.JsonStringEnumConverter<RuleEntitiesEmployeesEmployees_association>))]
-        public RuleEntitiesEmployeesEmployees_association Employees_association { get; set; } = FSH.Starter.Blazor.Infrastructure.NoonaApi.RuleEntitiesEmployeesEmployees_association.Excludes;
+        public RuleEntitiesEmployeesEmployees_association? Employees_association { get; set; } = FSH.Starter.Blazor.Infrastructure.NoonaApi.RuleEntitiesEmployeesEmployees_association.Excludes;
 
         private System.Collections.Generic.IDictionary<string, object>? _additionalProperties;
 
@@ -66920,13 +67906,13 @@ namespace FSH.Starter.Blazor.Infrastructure.NoonaApi
         /// Start time within the day
         /// </summary>
         [System.Text.Json.Serialization.JsonPropertyName("starts_at")]
-        public string Starts_at { get; set; } = default!;
+        public string? Starts_at { get; set; } = default!;
 
         /// <summary>
         /// End time within the day
         /// </summary>
         [System.Text.Json.Serialization.JsonPropertyName("ends_at")]
-        public string Ends_at { get; set; } = default!;
+        public string? Ends_at { get; set; } = default!;
 
         private System.Collections.Generic.IDictionary<string, object>? _additionalProperties;
 
@@ -66959,25 +67945,25 @@ namespace FSH.Starter.Blazor.Infrastructure.NoonaApi
     {
 
         [System.Text.Json.Serialization.JsonPropertyName("event_types")]
-        public System.Collections.Generic.ICollection<string> Event_types { get; set; } = default!;
+        public System.Collections.Generic.ICollection<string>? Event_types { get; set; } = default!;
 
         [System.Text.Json.Serialization.JsonPropertyName("event_types_association")]
         [System.Text.Json.Serialization.JsonConverter(typeof(System.Text.Json.Serialization.JsonStringEnumConverter<RuleEntitiesEventTypesEvent_types_association>))]
-        public RuleEntitiesEventTypesEvent_types_association Event_types_association { get; set; } = FSH.Starter.Blazor.Infrastructure.NoonaApi.RuleEntitiesEventTypesEvent_types_association.Excludes;
+        public RuleEntitiesEventTypesEvent_types_association? Event_types_association { get; set; } = FSH.Starter.Blazor.Infrastructure.NoonaApi.RuleEntitiesEventTypesEvent_types_association.Excludes;
 
         [System.Text.Json.Serialization.JsonPropertyName("resources")]
-        public System.Collections.Generic.ICollection<string> Resources { get; set; } = default!;
+        public System.Collections.Generic.ICollection<string>? Resources { get; set; } = default!;
 
         [System.Text.Json.Serialization.JsonPropertyName("resources_association")]
         [System.Text.Json.Serialization.JsonConverter(typeof(System.Text.Json.Serialization.JsonStringEnumConverter<RuleEntitiesResourcesResources_association>))]
-        public RuleEntitiesResourcesResources_association Resources_association { get; set; } = FSH.Starter.Blazor.Infrastructure.NoonaApi.RuleEntitiesResourcesResources_association.Excludes;
+        public RuleEntitiesResourcesResources_association? Resources_association { get; set; } = FSH.Starter.Blazor.Infrastructure.NoonaApi.RuleEntitiesResourcesResources_association.Excludes;
 
         [System.Text.Json.Serialization.JsonPropertyName("employees")]
-        public System.Collections.Generic.ICollection<string> Employees { get; set; } = default!;
+        public System.Collections.Generic.ICollection<string>? Employees { get; set; } = default!;
 
         [System.Text.Json.Serialization.JsonPropertyName("employees_association")]
         [System.Text.Json.Serialization.JsonConverter(typeof(System.Text.Json.Serialization.JsonStringEnumConverter<RuleEntitiesEmployeesEmployees_association>))]
-        public RuleEntitiesEmployeesEmployees_association Employees_association { get; set; } = FSH.Starter.Blazor.Infrastructure.NoonaApi.RuleEntitiesEmployeesEmployees_association.Excludes;
+        public RuleEntitiesEmployeesEmployees_association? Employees_association { get; set; } = FSH.Starter.Blazor.Infrastructure.NoonaApi.RuleEntitiesEmployeesEmployees_association.Excludes;
 
         [System.Text.Json.Serialization.JsonPropertyName("type")]
         [System.ComponentModel.DataAnnotations.Required(AllowEmptyStrings = true)]
@@ -67026,11 +68012,11 @@ namespace FSH.Starter.Blazor.Infrastructure.NoonaApi
     {
 
         [System.Text.Json.Serialization.JsonPropertyName("event_types")]
-        public System.Collections.Generic.ICollection<string> Event_types { get; set; } = default!;
+        public System.Collections.Generic.ICollection<string>? Event_types { get; set; } = default!;
 
         [System.Text.Json.Serialization.JsonPropertyName("event_types_association")]
         [System.Text.Json.Serialization.JsonConverter(typeof(System.Text.Json.Serialization.JsonStringEnumConverter<RuleEntitiesEventTypesEvent_types_association>))]
-        public RuleEntitiesEventTypesEvent_types_association Event_types_association { get; set; } = FSH.Starter.Blazor.Infrastructure.NoonaApi.RuleEntitiesEventTypesEvent_types_association.Excludes;
+        public RuleEntitiesEventTypesEvent_types_association? Event_types_association { get; set; } = FSH.Starter.Blazor.Infrastructure.NoonaApi.RuleEntitiesEventTypesEvent_types_association.Excludes;
 
         [System.Text.Json.Serialization.JsonPropertyName("type")]
         [System.ComponentModel.DataAnnotations.Required(AllowEmptyStrings = true)]
@@ -67129,7 +68115,7 @@ namespace FSH.Starter.Blazor.Infrastructure.NoonaApi
         public int Duration { get; set; } = default!;
 
         [System.Text.Json.Serialization.JsonPropertyName("pax_overrides")]
-        public EventTypeDurationPaxOverrides Pax_overrides { get; set; } = default!;
+        public EventTypeDurationPaxOverrides? Pax_overrides { get; set; } = default!;
 
         private System.Collections.Generic.IDictionary<string, object>? _additionalProperties;
 
@@ -67227,10 +68213,10 @@ namespace FSH.Starter.Blazor.Infrastructure.NoonaApi
     {
 
         [System.Text.Json.Serialization.JsonPropertyName("from")]
-        public string From { get; set; } = default!;
+        public string? From { get; set; } = default!;
 
         [System.Text.Json.Serialization.JsonPropertyName("to")]
-        public string To { get; set; } = default!;
+        public string? To { get; set; } = default!;
 
         private System.Collections.Generic.IDictionary<string, object>? _additionalProperties;
 
@@ -67251,10 +68237,10 @@ namespace FSH.Starter.Blazor.Infrastructure.NoonaApi
     {
 
         [System.Text.Json.Serialization.JsonPropertyName("from")]
-        public string From { get; set; } = default!;
+        public string? From { get; set; } = default!;
 
         [System.Text.Json.Serialization.JsonPropertyName("to")]
-        public string To { get; set; } = default!;
+        public string? To { get; set; } = default!;
 
         private System.Collections.Generic.IDictionary<string, object>? _additionalProperties;
 
@@ -67286,13 +68272,13 @@ namespace FSH.Starter.Blazor.Infrastructure.NoonaApi
         /// Filter by employee ID
         /// </summary>
         [System.Text.Json.Serialization.JsonPropertyName("employee")]
-        public string Employee { get; set; } = default!;
+        public string? Employee { get; set; } = default!;
 
         /// <summary>
         /// Filter by resource ID
         /// </summary>
         [System.Text.Json.Serialization.JsonPropertyName("resource")]
-        public string Resource { get; set; } = default!;
+        public string? Resource { get; set; } = default!;
 
         private System.Collections.Generic.IDictionary<string, object>? _additionalProperties;
 
@@ -67316,53 +68302,53 @@ namespace FSH.Starter.Blazor.Infrastructure.NoonaApi
         /// From/to, created from/to or time_bucket are required
         /// </summary>
         [System.Text.Json.Serialization.JsonPropertyName("from")]
-        public System.DateTime From { get; set; } = default!;
+        public System.DateTime? From { get; set; } = default!;
 
         /// <summary>
         /// From/to, created from/to or time_bucket are required
         /// </summary>
         [System.Text.Json.Serialization.JsonPropertyName("to")]
-        public System.DateTime To { get; set; } = default!;
+        public System.DateTime? To { get; set; } = default!;
 
         /// <summary>
         /// From/to, created from/to or time_bucket are required
         /// </summary>
         [System.Text.Json.Serialization.JsonPropertyName("created_from")]
-        public System.DateTime Created_from { get; set; } = default!;
+        public System.DateTime? Created_from { get; set; } = default!;
 
         /// <summary>
         /// From/to, created from/to or time_bucket are required
         /// </summary>
         [System.Text.Json.Serialization.JsonPropertyName("created_to")]
-        public System.DateTime Created_to { get; set; } = default!;
+        public System.DateTime? Created_to { get; set; } = default!;
 
         /// <summary>
         /// From/to, created from/to or time_bucket are required
         /// </summary>
         [System.Text.Json.Serialization.JsonPropertyName("time_bucket")]
-        public string Time_bucket { get; set; } = default!;
+        public string? Time_bucket { get; set; } = default!;
 
         /// <summary>
         /// Filter by employee IDs
         /// </summary>
         [System.Text.Json.Serialization.JsonPropertyName("employees")]
-        public System.Collections.Generic.ICollection<string> Employees { get; set; } = default!;
+        public System.Collections.Generic.ICollection<string>? Employees { get; set; } = default!;
 
         /// <summary>
         /// Filter by resource IDs
         /// </summary>
         [System.Text.Json.Serialization.JsonPropertyName("resources")]
-        public System.Collections.Generic.ICollection<string> Resources { get; set; } = default!;
+        public System.Collections.Generic.ICollection<string>? Resources { get; set; } = default!;
 
         /// <summary>
         /// Filter by event type IDs
         /// </summary>
         [System.Text.Json.Serialization.JsonPropertyName("event_types")]
-        public System.Collections.Generic.ICollection<string> Event_types { get; set; } = default!;
+        public System.Collections.Generic.ICollection<string>? Event_types { get; set; } = default!;
 
         [System.Text.Json.Serialization.JsonPropertyName("origins")]
         // TODO(system.text.json): Add string enum item converter
-        public EventOrigins Origins { get; set; } = default!;
+        public EventOrigins? Origins { get; set; } = default!;
 
         /// <summary>
         /// The status of the event.
@@ -67371,37 +68357,37 @@ namespace FSH.Starter.Blazor.Infrastructure.NoonaApi
         /// <br/>
         /// </summary>
         [System.Text.Json.Serialization.JsonPropertyName("statuses")]
-        public System.Collections.Generic.ICollection<string> Statuses { get; set; } = default!;
+        public System.Collections.Generic.ICollection<string>? Statuses { get; set; } = default!;
 
         /// <summary>
         /// Filter by custom property values
         /// </summary>
         [System.Text.Json.Serialization.JsonPropertyName("custom_property_values")]
-        public System.Collections.Generic.ICollection<string> Custom_property_values { get; set; } = default!;
+        public System.Collections.Generic.ICollection<string>? Custom_property_values { get; set; } = default!;
 
         /// <summary>
         /// Filter by customer custom property values
         /// </summary>
         [System.Text.Json.Serialization.JsonPropertyName("customer_custom_property_values")]
-        public System.Collections.Generic.ICollection<string> Customer_custom_property_values { get; set; } = default!;
+        public System.Collections.Generic.ICollection<string>? Customer_custom_property_values { get; set; } = default!;
 
         /// <summary>
         /// Only include bookings of new customers
         /// </summary>
         [System.Text.Json.Serialization.JsonPropertyName("only_new_customers")]
-        public bool Only_new_customers { get; set; } = default!;
+        public bool? Only_new_customers { get; set; } = default!;
 
         /// <summary>
         /// Include canceled and no-show events
         /// </summary>
         [System.Text.Json.Serialization.JsonPropertyName("include_canceled_noshow")]
-        public bool Include_canceled_noshow { get; set; } = default!;
+        public bool? Include_canceled_noshow { get; set; } = default!;
 
         /// <summary>
         /// Include deleted events
         /// </summary>
         [System.Text.Json.Serialization.JsonPropertyName("include_deleted")]
-        public bool Include_deleted { get; set; } = default!;
+        public bool? Include_deleted { get; set; } = default!;
 
         private System.Collections.Generic.IDictionary<string, object>? _additionalProperties;
 
@@ -67425,31 +68411,31 @@ namespace FSH.Starter.Blazor.Infrastructure.NoonaApi
         /// From/to or time_bucket are required
         /// </summary>
         [System.Text.Json.Serialization.JsonPropertyName("from")]
-        public System.DateTime From { get; set; } = default!;
+        public System.DateTime? From { get; set; } = default!;
 
         /// <summary>
         /// From/to or time_bucket are required
         /// </summary>
         [System.Text.Json.Serialization.JsonPropertyName("to")]
-        public System.DateTime To { get; set; } = default!;
+        public System.DateTime? To { get; set; } = default!;
 
         /// <summary>
         /// From/to or time_bucket are required
         /// </summary>
         [System.Text.Json.Serialization.JsonPropertyName("time_bucket")]
-        public string Time_bucket { get; set; } = default!;
+        public string? Time_bucket { get; set; } = default!;
 
         /// <summary>
         /// Filter by employee IDs
         /// </summary>
         [System.Text.Json.Serialization.JsonPropertyName("employees")]
-        public System.Collections.Generic.ICollection<string> Employees { get; set; } = default!;
+        public System.Collections.Generic.ICollection<string>? Employees { get; set; } = default!;
 
         /// <summary>
         /// Filter by custom property values
         /// </summary>
         [System.Text.Json.Serialization.JsonPropertyName("custom_property_values")]
-        public System.Collections.Generic.ICollection<string> Custom_property_values { get; set; } = default!;
+        public System.Collections.Generic.ICollection<string>? Custom_property_values { get; set; } = default!;
 
         private System.Collections.Generic.IDictionary<string, object>? _additionalProperties;
 
@@ -67473,35 +68459,35 @@ namespace FSH.Starter.Blazor.Infrastructure.NoonaApi
         /// From/to or time_bucket are required
         /// </summary>
         [System.Text.Json.Serialization.JsonPropertyName("from")]
-        public System.DateTime From { get; set; } = default!;
+        public System.DateTime? From { get; set; } = default!;
 
         /// <summary>
         /// From/to or time_bucket are required
         /// </summary>
         [System.Text.Json.Serialization.JsonPropertyName("to")]
-        public System.DateTime To { get; set; } = default!;
+        public System.DateTime? To { get; set; } = default!;
 
         /// <summary>
         /// From/to or time_bucket are required
         /// </summary>
         [System.Text.Json.Serialization.JsonPropertyName("time_bucket")]
-        public string Time_bucket { get; set; } = default!;
+        public string? Time_bucket { get; set; } = default!;
 
         [System.Text.Json.Serialization.JsonPropertyName("types")]
         // TODO(system.text.json): Add string enum item converter
-        public System.Collections.Generic.ICollection<SMSMessageType> Types { get; set; } = default!;
+        public System.Collections.Generic.ICollection<SMSMessageType>? Types { get; set; } = default!;
 
         /// <summary>
         /// Filter by employee IDs
         /// </summary>
         [System.Text.Json.Serialization.JsonPropertyName("employees")]
-        public System.Collections.Generic.ICollection<string> Employees { get; set; } = default!;
+        public System.Collections.Generic.ICollection<string>? Employees { get; set; } = default!;
 
         /// <summary>
         /// Only include custom messages
         /// </summary>
         [System.Text.Json.Serialization.JsonPropertyName("custom")]
-        public bool Custom { get; set; } = default!;
+        public bool? Custom { get; set; } = default!;
 
         private System.Collections.Generic.IDictionary<string, object>? _additionalProperties;
 
@@ -67522,24 +68508,24 @@ namespace FSH.Starter.Blazor.Infrastructure.NoonaApi
     {
 
         [System.Text.Json.Serialization.JsonPropertyName("from")]
-        public System.DateTime From { get; set; } = default!;
+        public System.DateTime? From { get; set; } = default!;
 
         [System.Text.Json.Serialization.JsonPropertyName("to")]
-        public System.DateTime To { get; set; } = default!;
+        public System.DateTime? To { get; set; } = default!;
 
         /// <summary>
         /// Filter by actor IDs
         /// </summary>
         [System.Text.Json.Serialization.JsonPropertyName("actors")]
-        public System.Collections.Generic.ICollection<string> Actors { get; set; } = default!;
+        public System.Collections.Generic.ICollection<string>? Actors { get; set; } = default!;
 
         [System.Text.Json.Serialization.JsonPropertyName("types")]
         // TODO(system.text.json): Add string enum item converter
-        public ActivityTypes Types { get; set; } = default!;
+        public ActivityTypes? Types { get; set; } = default!;
 
         [System.Text.Json.Serialization.JsonPropertyName("actions")]
         // TODO(system.text.json): Add string enum item converter
-        public ActivityActions Actions { get; set; } = default!;
+        public ActivityActions? Actions { get; set; } = default!;
 
         private System.Collections.Generic.IDictionary<string, object>? _additionalProperties;
 
@@ -67596,17 +68582,17 @@ namespace FSH.Starter.Blazor.Infrastructure.NoonaApi
     {
 
         [System.Text.Json.Serialization.JsonPropertyName("id")]
-        public string Id { get; set; } = default!;
+        public string? Id { get; set; } = default!;
 
         [System.Text.Json.Serialization.JsonPropertyName("name")]
-        public string Name { get; set; } = default!;
+        public string? Name { get; set; } = default!;
 
         [System.Text.Json.Serialization.JsonPropertyName("enabled")]
-        public bool Enabled { get; set; } = default!;
+        public bool? Enabled { get; set; } = default!;
 
         [System.Text.Json.Serialization.JsonPropertyName("status")]
         [System.Text.Json.Serialization.JsonConverter(typeof(System.Text.Json.Serialization.JsonStringEnumConverter<MozrestBookingChannelStatus>))]
-        public MozrestBookingChannelStatus Status { get; set; } = default!;
+        public MozrestBookingChannelStatus? Status { get; set; } = default!;
 
         /// <summary>
         /// If the channel has an install link, it is provided here.
@@ -67615,7 +68601,7 @@ namespace FSH.Starter.Blazor.Infrastructure.NoonaApi
         /// <br/>
         /// </summary>
         [System.Text.Json.Serialization.JsonPropertyName("install_link")]
-        public string Install_link { get; set; } = default!;
+        public string? Install_link { get; set; } = default!;
 
         private System.Collections.Generic.IDictionary<string, object>? _additionalProperties;
 
@@ -67645,7 +68631,7 @@ namespace FSH.Starter.Blazor.Infrastructure.NoonaApi
 
         [System.Text.Json.Serialization.JsonPropertyName("status")]
         [System.Text.Json.Serialization.JsonConverter(typeof(System.Text.Json.Serialization.JsonStringEnumConverter<MozrestBookingChannelStatus>))]
-        public MozrestBookingChannelStatus Status { get; set; } = default!;
+        public MozrestBookingChannelStatus? Status { get; set; } = default!;
 
         /// <summary>
         /// If the channel has an install link, it is provided here.
@@ -67654,7 +68640,7 @@ namespace FSH.Starter.Blazor.Infrastructure.NoonaApi
         /// <br/>
         /// </summary>
         [System.Text.Json.Serialization.JsonPropertyName("install_link")]
-        public string Install_link { get; set; } = default!;
+        public string? Install_link { get; set; } = default!;
 
         private System.Collections.Generic.IDictionary<string, object>? _additionalProperties;
 
@@ -67713,7 +68699,7 @@ namespace FSH.Starter.Blazor.Infrastructure.NoonaApi
 
         [System.Text.Json.Serialization.JsonPropertyName("status")]
         [System.Text.Json.Serialization.JsonConverter(typeof(System.Text.Json.Serialization.JsonStringEnumConverter<MozrestBookingChannelStatus>))]
-        public MozrestBookingChannelStatus Status { get; set; } = default!;
+        public MozrestBookingChannelStatus? Status { get; set; } = default!;
 
         /// <summary>
         /// If the channel has an install link, it is provided here.
@@ -67722,7 +68708,7 @@ namespace FSH.Starter.Blazor.Infrastructure.NoonaApi
         /// <br/>
         /// </summary>
         [System.Text.Json.Serialization.JsonPropertyName("install_link")]
-        public string Install_link { get; set; } = default!;
+        public string? Install_link { get; set; } = default!;
 
     }
 
@@ -67764,22 +68750,22 @@ namespace FSH.Starter.Blazor.Infrastructure.NoonaApi
     {
 
         [System.Text.Json.Serialization.JsonPropertyName("id")]
-        public string Id { get; set; } = default!;
+        public string? Id { get; set; } = default!;
 
         [System.Text.Json.Serialization.JsonPropertyName("name")]
-        public string Name { get; set; } = default!;
+        public string? Name { get; set; } = default!;
 
         [System.Text.Json.Serialization.JsonPropertyName("readable_id")]
-        public string Readable_id { get; set; } = default!;
+        public string? Readable_id { get; set; } = default!;
 
         [System.Text.Json.Serialization.JsonPropertyName("order")]
-        public int Order { get; set; } = default!;
+        public int? Order { get; set; } = default!;
 
         [System.Text.Json.Serialization.JsonPropertyName("created_at")]
-        public System.DateTime Created_at { get; set; } = default!;
+        public System.DateTime? Created_at { get; set; } = default!;
 
         [System.Text.Json.Serialization.JsonPropertyName("updated_at")]
-        public System.DateTime Updated_at { get; set; } = default!;
+        public System.DateTime? Updated_at { get; set; } = default!;
 
         private System.Collections.Generic.IDictionary<string, object>? _additionalProperties;
 
@@ -67888,10 +68874,10 @@ namespace FSH.Starter.Blazor.Infrastructure.NoonaApi
         public string Readable_id { get; set; } = default!;
 
         [System.Text.Json.Serialization.JsonPropertyName("selectable_in_hq")]
-        public bool Selectable_in_hq { get; set; } = default!;
+        public bool? Selectable_in_hq { get; set; } = default!;
 
         [System.Text.Json.Serialization.JsonPropertyName("show_in_marketplace")]
-        public bool Show_in_marketplace { get; set; } = default!;
+        public bool? Show_in_marketplace { get; set; } = default!;
 
         [System.Text.Json.Serialization.JsonPropertyName("order")]
         public int Order { get; set; } = default!;
@@ -67932,41 +68918,41 @@ namespace FSH.Starter.Blazor.Infrastructure.NoonaApi
     {
 
         [System.Text.Json.Serialization.JsonPropertyName("id")]
-        public string Id { get; set; } = default!;
+        public string? Id { get; set; } = default!;
 
         [System.Text.Json.Serialization.JsonPropertyName("company")]
-        public string Company { get; set; } = default!;
+        public string? Company { get; set; } = default!;
 
         [System.Text.Json.Serialization.JsonPropertyName("message")]
-        public string Message { get; set; } = default!;
+        public string? Message { get; set; } = default!;
 
         /// <summary>
         /// The start time of the event.
         /// <br/>
         /// </summary>
         [System.Text.Json.Serialization.JsonPropertyName("starts_at")]
-        public System.DateTime Starts_at { get; set; } = default!;
+        public System.DateTime? Starts_at { get; set; } = default!;
 
         /// <summary>
         /// If the booking offer was explicitly declined, this timestamp is set.
         /// </summary>
         [System.Text.Json.Serialization.JsonPropertyName("declined_at")]
-        public System.DateTime Declined_at { get; set; } = default!;
+        public System.DateTime? Declined_at { get; set; } = default!;
 
         [System.Text.Json.Serialization.JsonPropertyName("expires_at")]
-        public System.DateTime Expires_at { get; set; } = default!;
+        public System.DateTime? Expires_at { get; set; } = default!;
 
         [System.Text.Json.Serialization.JsonPropertyName("created_at")]
-        public System.DateTime Created_at { get; set; } = default!;
+        public System.DateTime? Created_at { get; set; } = default!;
 
         [System.Text.Json.Serialization.JsonPropertyName("updated_at")]
-        public System.DateTime Updated_at { get; set; } = default!;
+        public System.DateTime? Updated_at { get; set; } = default!;
 
         [System.Text.Json.Serialization.JsonPropertyName("deleted_at")]
-        public System.DateTime Deleted_at { get; set; } = default!;
+        public System.DateTime? Deleted_at { get; set; } = default!;
 
         [System.Text.Json.Serialization.JsonPropertyName("event")]
-        public string Event { get; set; } = default!;
+        public string? Event { get; set; } = default!;
 
         private System.Collections.Generic.IDictionary<string, object>? _additionalProperties;
 
@@ -68052,14 +69038,14 @@ namespace FSH.Starter.Blazor.Infrastructure.NoonaApi
         public string Payment_method { get; set; } = default!;
 
         [System.Text.Json.Serialization.JsonPropertyName("is_custom")]
-        public bool Is_custom { get; set; } = default!;
+        public bool? Is_custom { get; set; } = default!;
 
         [System.Text.Json.Serialization.JsonPropertyName("title")]
         [System.ComponentModel.DataAnnotations.Required(AllowEmptyStrings = true)]
         public string Title { get; set; } = default!;
 
         [System.Text.Json.Serialization.JsonPropertyName("title_translations")]
-        public System.Collections.Generic.IDictionary<string, string> Title_translations { get; set; } = default!;
+        public System.Collections.Generic.IDictionary<string, string>? Title_translations { get; set; } = default!;
 
         [System.Text.Json.Serialization.JsonPropertyName("order")]
         public int Order { get; set; } = default!;
@@ -68106,7 +69092,7 @@ namespace FSH.Starter.Blazor.Infrastructure.NoonaApi
         public string Title { get; set; } = default!;
 
         [System.Text.Json.Serialization.JsonPropertyName("enabled")]
-        public bool Enabled { get; set; } = true;
+        public bool? Enabled { get; set; } = true;
 
         private System.Collections.Generic.IDictionary<string, object>? _additionalProperties;
 
@@ -68127,19 +69113,19 @@ namespace FSH.Starter.Blazor.Infrastructure.NoonaApi
         /// New position for this payment method. Other methods will be reordered automatically.
         /// </summary>
         [System.Text.Json.Serialization.JsonPropertyName("order")]
-        public int Order { get; set; } = default!;
+        public int? Order { get; set; } = default!;
 
         /// <summary>
         /// Whether this payment method is enabled for the company.
         /// </summary>
         [System.Text.Json.Serialization.JsonPropertyName("enabled")]
-        public bool Enabled { get; set; } = default!;
+        public bool? Enabled { get; set; } = default!;
 
         /// <summary>
         /// Display name of the payment method.
         /// </summary>
         [System.Text.Json.Serialization.JsonPropertyName("title")]
-        public string Title { get; set; } = default!;
+        public string? Title { get; set; } = default!;
 
         private System.Collections.Generic.IDictionary<string, object>? _additionalProperties;
 
@@ -68158,13 +69144,13 @@ namespace FSH.Starter.Blazor.Infrastructure.NoonaApi
 
         [System.Text.Json.Serialization.JsonPropertyName("status")]
         // TODO(system.text.json): Add string enum item converter
-        public System.Collections.Generic.ICollection<Status2> Status { get; set; } = default!;
+        public System.Collections.Generic.ICollection<Status2>? Status { get; set; } = default!;
 
         /// <summary>
         /// Filter by one or more payment method IDs.
         /// </summary>
         [System.Text.Json.Serialization.JsonPropertyName("payment_method_ids")]
-        public System.Collections.Generic.ICollection<string> Payment_method_ids { get; set; } = default!;
+        public System.Collections.Generic.ICollection<string>? Payment_method_ids { get; set; } = default!;
 
         private System.Collections.Generic.IDictionary<string, object>? _additionalProperties;
 
@@ -68349,25 +69335,25 @@ namespace FSH.Starter.Blazor.Infrastructure.NoonaApi
         /// Number of rows processed so far
         /// </summary>
         [System.Text.Json.Serialization.JsonPropertyName("processed_rows")]
-        public int Processed_rows { get; set; } = default!;
+        public int? Processed_rows { get; set; } = default!;
 
         /// <summary>
         /// Number of rows processed successfully
         /// </summary>
         [System.Text.Json.Serialization.JsonPropertyName("success_rows")]
-        public int Success_rows { get; set; } = default!;
+        public int? Success_rows { get; set; } = default!;
 
         /// <summary>
         /// Number of rows that failed processing
         /// </summary>
         [System.Text.Json.Serialization.JsonPropertyName("error_rows")]
-        public int Error_rows { get; set; } = default!;
+        public int? Error_rows { get; set; } = default!;
 
         /// <summary>
         /// List of error messages from processing
         /// </summary>
         [System.Text.Json.Serialization.JsonPropertyName("error_messages")]
-        public System.Collections.Generic.ICollection<string> Error_messages { get; set; } = default!;
+        public System.Collections.Generic.ICollection<string>? Error_messages { get; set; } = default!;
 
         [System.Text.Json.Serialization.JsonPropertyName("created_at")]
         [System.ComponentModel.DataAnnotations.Required(AllowEmptyStrings = true)]
@@ -68378,7 +69364,7 @@ namespace FSH.Starter.Blazor.Infrastructure.NoonaApi
         public System.DateTime Updated_at { get; set; } = default!;
 
         [System.Text.Json.Serialization.JsonPropertyName("completed_at")]
-        public System.DateTime Completed_at { get; set; } = default!;
+        public System.DateTime? Completed_at { get; set; } = default!;
 
         /// <summary>
         /// ID of the user who created the import job
@@ -68409,19 +69395,19 @@ namespace FSH.Starter.Blazor.Infrastructure.NoonaApi
         /// GOBL envelope UUID
         /// </summary>
         [System.Text.Json.Serialization.JsonPropertyName("uuid")]
-        public string Uuid { get; set; } = default!;
+        public string? Uuid { get; set; } = default!;
 
         /// <summary>
         /// Full invoice identifier
         /// </summary>
         [System.Text.Json.Serialization.JsonPropertyName("code")]
-        public string Code { get; set; } = default!;
+        public string? Code { get; set; } = default!;
 
         [System.Text.Json.Serialization.JsonPropertyName("digest")]
-        public InvopopDigest Digest { get; set; } = default!;
+        public InvopopDigest? Digest { get; set; } = default!;
 
         [System.Text.Json.Serialization.JsonPropertyName("stamps")]
-        public System.Collections.Generic.ICollection<InvopopStamp> Stamps { get; set; } = default!;
+        public System.Collections.Generic.ICollection<InvopopStamp>? Stamps { get; set; } = default!;
 
         private System.Collections.Generic.IDictionary<string, object>? _additionalProperties;
 
@@ -68445,13 +69431,13 @@ namespace FSH.Starter.Blazor.Infrastructure.NoonaApi
         /// Hash algorithm used
         /// </summary>
         [System.Text.Json.Serialization.JsonPropertyName("algorithm")]
-        public string Algorithm { get; set; } = default!;
+        public string? Algorithm { get; set; } = default!;
 
         /// <summary>
         /// Hash value (hex encoded)
         /// </summary>
         [System.Text.Json.Serialization.JsonPropertyName("value")]
-        public string Value { get; set; } = default!;
+        public string? Value { get; set; } = default!;
 
         private System.Collections.Generic.IDictionary<string, object>? _additionalProperties;
 
@@ -68475,13 +69461,13 @@ namespace FSH.Starter.Blazor.Infrastructure.NoonaApi
         /// Stamp provider code (e.g., at-atcud, at-qr, at-hash)
         /// </summary>
         [System.Text.Json.Serialization.JsonPropertyName("provider")]
-        public string Provider { get; set; } = default!;
+        public string? Provider { get; set; } = default!;
 
         /// <summary>
         /// Stamp value from the authority
         /// </summary>
         [System.Text.Json.Serialization.JsonPropertyName("value")]
-        public string Value { get; set; } = default!;
+        public string? Value { get; set; } = default!;
 
         private System.Collections.Generic.IDictionary<string, object>? _additionalProperties;
 
@@ -68581,10 +69567,10 @@ namespace FSH.Starter.Blazor.Infrastructure.NoonaApi
     {
 
         [System.Text.Json.Serialization.JsonPropertyName("email")]
-        public string Email { get; set; } = default!;
+        public string? Email { get; set; } = default!;
 
         [System.Text.Json.Serialization.JsonPropertyName("phone")]
-        public Phone Phone { get; set; } = default!;
+        public Phone? Phone { get; set; } = default!;
 
         private System.Collections.Generic.IDictionary<string, object>? _additionalProperties;
 
@@ -68608,7 +69594,7 @@ namespace FSH.Starter.Blazor.Infrastructure.NoonaApi
         /// <br/>
         /// </summary>
         [System.Text.Json.Serialization.JsonPropertyName("customer_tax_id")]
-        public string Customer_tax_id { get; set; } = default!;
+        public string? Customer_tax_id { get; set; } = default!;
 
         /// <summary>
         /// The customer's country code in the tax authority's system.
@@ -68617,7 +69603,7 @@ namespace FSH.Starter.Blazor.Infrastructure.NoonaApi
         /// <br/>
         /// </summary>
         [System.Text.Json.Serialization.JsonPropertyName("country_code")]
-        public string Country_code { get; set; } = default!;
+        public string? Country_code { get; set; } = default!;
 
         private System.Collections.Generic.IDictionary<string, object>? _additionalProperties;
 
@@ -68720,7 +69706,7 @@ namespace FSH.Starter.Blazor.Infrastructure.NoonaApi
         /// </summary>
         [System.Text.Json.Serialization.JsonPropertyName("certification_level")]
         [System.Text.Json.Serialization.JsonConverter(typeof(System.Text.Json.Serialization.JsonStringEnumConverter<Body4Certification_level>))]
-        public Body4Certification_level Certification_level { get; set; } = default!;
+        public Body4Certification_level? Certification_level { get; set; } = default!;
 
         private System.Collections.Generic.IDictionary<string, object>? _additionalProperties;
 
@@ -69076,8 +70062,8 @@ namespace FSH.Starter.Blazor.Infrastructure.NoonaApi
     public enum NotificationType
     {
 
-        [System.Text.Json.Serialization.JsonStringEnumMemberName(@"legacy")]
-        Legacy = 0,
+        [System.Text.Json.Serialization.JsonStringEnumMemberName(@"survey")]
+        Survey = 0,
 
     }
 
@@ -69096,15 +70082,6 @@ namespace FSH.Starter.Blazor.Infrastructure.NoonaApi
 
         [System.Text.Json.Serialization.JsonStringEnumMemberName(@"success")]
         Success = 3,
-
-    }
-
-    [System.CodeDom.Compiler.GeneratedCode("NJsonSchema", "14.6.1.0 (NJsonSchema v11.5.1.0 (Newtonsoft.Json v13.0.0.0))")]
-    public enum NotificationSurveyType
-    {
-
-        [System.Text.Json.Serialization.JsonStringEnumMemberName(@"survey")]
-        Survey = 0,
 
     }
 
@@ -69141,6 +70118,9 @@ namespace FSH.Starter.Blazor.Infrastructure.NoonaApi
 
         [System.Text.Json.Serialization.JsonStringEnumMemberName(@"request")]
         Request = 3,
+
+        [System.Text.Json.Serialization.JsonStringEnumMemberName(@"resource_only")]
+        Resource_only = 4,
 
     }
 
@@ -69203,23 +70183,23 @@ namespace FSH.Starter.Blazor.Infrastructure.NoonaApi
         /// Filter by phone number of customer
         /// </summary>
         [System.Text.Json.Serialization.JsonPropertyName("phone_number")]
-        public string Phone_number { get; set; } = default!;
+        public string? Phone_number { get; set; } = default!;
 
         /// <summary>
         /// Filter by phone country code of customer
         /// </summary>
         [System.Text.Json.Serialization.JsonPropertyName("phone_country_code")]
-        public string Phone_country_code { get; set; } = default!;
+        public string? Phone_country_code { get; set; } = default!;
 
         /// <summary>
         /// Filter by social security number of customer
         /// </summary>
         [System.Text.Json.Serialization.JsonPropertyName("social_security_number")]
-        public string Social_security_number { get; set; } = default!;
+        public string? Social_security_number { get; set; } = default!;
 
         [System.Text.Json.Serialization.JsonPropertyName("duplicate_status")]
         [System.Text.Json.Serialization.JsonConverter(typeof(System.Text.Json.Serialization.JsonStringEnumConverter<DuplicateStatus>))]
-        public DuplicateStatus Duplicate_status { get; set; } = default!;
+        public DuplicateStatus? Duplicate_status { get; set; } = default!;
 
         private System.Collections.Generic.IDictionary<string, object>? _additionalProperties;
 
@@ -70269,10 +71249,10 @@ namespace FSH.Starter.Blazor.Infrastructure.NoonaApi
     {
 
         [System.Text.Json.Serialization.JsonPropertyName("phone_number")]
-        public string Phone_number { get; set; } = default!;
+        public string? Phone_number { get; set; } = default!;
 
         [System.Text.Json.Serialization.JsonPropertyName("phone_country_code")]
-        public string Phone_country_code { get; set; } = default!;
+        public string? Phone_country_code { get; set; } = default!;
 
         private System.Collections.Generic.IDictionary<string, object>? _additionalProperties;
 

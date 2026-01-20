@@ -1,0 +1,30 @@
+generatorOptions:
+  disableNameSuffixHash: true
+
+secretGenerator:
+- name: kafka-sasl-passwords
+  literals:
+  - client-passwords=rootAdmin321,rootAdmin321,rootAdmin321,rootAdmin321,rootAdmin321
+  - system-user-password=rootAdmin321
+  - inter-broker-password=rootAdmin321
+  - controller-password=rootAdmin321
+
+- name: kafka-ui-sasl-jaas-config
+  literals:
+  - 'config=org.apache.kafka.common.security.scram.ScramLoginModule required username="admin" password="rootAdmin321";'
+
+- name: core-kafka
+  envs:
+  - ./core-kafka.env
+
+- name: insights-factory-kafka
+  envs:
+  - ./insights-factory-kafka.env
+
+- name: cashflow-assistant-kafka
+  envs:
+  - ./cashflow-assistant-kafka.env
+
+- name: smart-money-rules-kafka
+  envs:
+  - ./smart-money-rules-kafka.env

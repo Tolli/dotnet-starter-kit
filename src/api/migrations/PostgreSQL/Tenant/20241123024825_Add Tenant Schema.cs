@@ -23,6 +23,7 @@ namespace FSH.Starter.WebApi.Migrations.PostgreSQL.Tenant
                     Identifier = table.Column<string>(type: "text", nullable: false),
                     Name = table.Column<string>(type: "text", nullable: false),
                     ConnectionString = table.Column<string>(type: "text", nullable: false),
+                    ExternalIdentifier = table.Column<string>(type: "text", nullable: false),
                     AdminEmail = table.Column<string>(type: "text", nullable: false),
                     IsActive = table.Column<bool>(type: "boolean", nullable: false),
                     ValidUpto = table.Column<DateTime>(type: "timestamp without time zone", nullable: false),

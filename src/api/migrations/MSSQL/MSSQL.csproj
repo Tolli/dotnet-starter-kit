@@ -10,6 +10,7 @@
     <ProjectReference Include="..\..\modules\Todo\Todo.csproj" />
   </ItemGroup>
   <ItemGroup>
+    <Folder Include="Booking\" />
     <Folder Include="Catalog\" />
     <Folder Include="Identity\" />
     <Folder Include="Tenant\" />

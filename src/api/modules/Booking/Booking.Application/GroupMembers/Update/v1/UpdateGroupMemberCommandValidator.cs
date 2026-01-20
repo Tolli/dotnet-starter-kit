@@ -8,8 +8,8 @@ public class UpdateGroupMemberCommandValidator : AbstractValidator<UpdateGroupMe
         RuleFor(p => p.Id).NotEmpty();
         RuleFor(p => p.GroupId).NotEmpty();
         RuleFor(p => p.CustomerId).NotEmpty();
-        RuleFor(p => p.Price).GreaterThan(0);
-        RuleFor(p => p.Percentage).InclusiveBetween(0, 100);
+        RuleFor(p => p.Amount).GreaterThan(0);
+        RuleFor(p => p.Discount).InclusiveBetween(0, 100);
         RuleFor(p => p.IsContact).NotNull();
     }
 }

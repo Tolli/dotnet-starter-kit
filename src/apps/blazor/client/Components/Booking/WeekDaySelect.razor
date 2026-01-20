@@ -1,0 +1,39 @@
+﻿<MudSelect @bind-Value="_value"
+           Variant="variant"
+           Label="@variant.ToString()"
+           Margin="_margin"
+           Dense="_dense"
+           FitContent="_fitContent"
+           Disabled="_disabled"
+           ReadOnly="_readonly"
+           Placeholder="@(_placeholder ? "Placeholder" : null)"
+           HelperText="@(_helperText ? "Helper Text" : null)"
+           HelperTextOnFocus="_helperTextOnFocus"
+           Clearable="_clearable"
+           Modal="_modal">
+    @foreach (var day in _weekDays)
+    {
+        <MudSelectItem Value="day">@day</MudSelectItem>
+    }
+</MudSelect>
+
+    @code {
+    private Variant variant = Variant.Text;
+    private string _value;
+    private Margin _margin;
+    private bool _dense;
+    private bool _disabled;
+    private bool _readonly;
+    private bool _placeholder;
+    private bool _helperText;
+    private bool _helperTextOnFocus;
+    private bool _clearable;
+    private bool _fitContent;
+    private bool _modal = true;
+
+    private readonly string[] _weekDays =
+    {
+        "Monday", "Tuesday", "Wednesday", "Thursday",
+        "Friday", "Saturday", "Sunday"
+    };
+}

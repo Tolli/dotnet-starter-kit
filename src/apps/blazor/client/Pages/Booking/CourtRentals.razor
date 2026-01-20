@@ -1,0 +1,67 @@
+﻿@page "/booking/CourtRentals"
+
+<PageHeader Title="CourtRentals" Header="CourtRentals" SubHeader="Manage your CourtRentals." />
+
+<EntityTable @ref="_table" TEntity="CourtRentalResponse" TId="Guid" TRequest="CourtRentalViewModel" Context="@Context">
+    <ExtraActions>
+        <MudMenuItem OnClick="(() => ManageShares(context.Id))">Manage Shares</MudMenuItem>
+    </ExtraActions>
+    <AdvancedSearchContent>
+        <!-- Add any advanced search content here if needed -->
+    </AdvancedSearchContent>
+
+    <EditFormContent>
+        <MudTabs>
+
+        </MudTabs>
+        @if (!Context.AddEditModal.IsCreate)
+        {
+            <MudItem xs="12" md="6">
+                <MudTextField Value="context.Id" Underline=false ReadOnly Label="CourtRental Id" />
+            </MudItem>
+        }
+        <MudItem xs="12" md="6">
+            <MudTextField Label="Court" For="@(() => context.Court)" @bind-Value="context.Court" />
+        </MudItem>
+        <MudItem xs="12" md="6">
+            <MudTextField Label="Weekday" For="@(() => context.Weekday)" @bind-Value="context.Weekday" />
+        </MudItem>
+        <MudItem xs="12" md="6">
+            <MudTimePicker Label="Time" Editable="true" @bind-Time="context.StartTimeEditor" />
+        </MudItem>
+        <MudItem xs="12" md="6">
+            <MudDatePicker Label="Start Date" DateFormat="dddd, MMM dd, yyyy" @bind-Date="context.StartDate" />
+        </MudItem>
+        <MudItem xs="12" md="6">
+            <MudDatePicker Label="End Date" DateFormat="dddd, MMM dd, yyyy" @bind-Date="context.EndDate" />
+        </MudItem>
+        <MudItem xs="12" md="6">
+            <MudTextField Label="Amount" For="@(() => context.Amount)" @bind-Value="context.Amount" />
+        </MudItem>
+        <MudItem xs="12" md="6">
+            <MudTextField Label="Discount" For="@(() => context.Discount)" @bind-Value="context.Discount" />
+        </MudItem>
+        <MudItem xs="12" md="6">
+            <MudTextField Label="Duration" For="@(() => context.Duration)" @bind-Value="context.Duration" />
+        </MudItem>
+        <MudItem xs="12" md="12">
+            <MudItem>
+                <div>
+                    @if(!Context.AddEditModal.IsCreate)
+                    {
+                        <MudButton HtmlTag="label" Variant="Variant.Filled" Color="Color.Info" Size="Size.Small" Target="_blank"
+                            StartIcon="@Icons.Material.Filled.RemoveRedEye" Style="margin-left: 5px;" >
+                            View
+                        </MudButton>
+
+                        <MudButton HtmlTag="label" Variant="Variant.Filled" Color="Color.Error" Size="Size.Small"
+                                   StartIcon="@Icons.Material.Filled.Delete" Style="margin-left: 5px;">
+                            Delete
+                        </MudButton>
+                    }
+                </div>
+            </MudItem>
+        </MudItem>
+    </EditFormContent>
+
+</EntityTable>

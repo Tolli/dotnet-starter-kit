@@ -60,6 +60,22 @@ public static class FshPermissions
         new("Delete CourtRentals", FshActions.Delete, FshResources.CourtRentals),
         new("Export CourtRentals", FshActions.Export, FshResources.CourtRentals),
 
+        //courtrentalshares
+        new("View CourtRentalShares", FshActions.View, FshResources.CourtRentalShares, IsBasic: true),
+        new("Search CourtRentalShares", FshActions.Search, FshResources.CourtRentalShares, IsBasic: true),
+        new("Create CourtRentalShares", FshActions.Create, FshResources.CourtRentalShares),
+        new("Update CourtRentalShares", FshActions.Update, FshResources.CourtRentalShares),
+        new("Delete CourtRentalShares", FshActions.Delete, FshResources.CourtRentalShares),
+        new("Export CourtRentalShares", FshActions.Export, FshResources.CourtRentalShares),
+
+        //receipts
+        new("View Receipts", FshActions.View, FshResources.Receipts, IsBasic: true),
+        new("Search Receipts", FshActions.Search, FshResources.Receipts, IsBasic: true),
+        new("Create Receipts", FshActions.Create, FshResources.Receipts),
+        new("Update Receipts", FshActions.Update, FshResources.Receipts),
+        new("Delete Receipts", FshActions.Delete, FshResources.Receipts),
+        new("Export Receipts", FshActions.Export, FshResources.Receipts),
+
         //groups
         new("View Groups", FshActions.View, FshResources.Groups, IsBasic: true),
         new("Search Groups", FshActions.Search, FshResources.Groups, IsBasic: true),
@@ -67,6 +83,22 @@ public static class FshPermissions
         new("Update Groups", FshActions.Update, FshResources.Groups),
         new("Delete Groups", FshActions.Delete, FshResources.Groups),
         new("Export Groups", FshActions.Export, FshResources.Groups),
+
+        //groupmembers
+        new("View GroupMembers", FshActions.View, FshResources.GroupMembers, IsBasic: true),
+        new("Search GroupMembers", FshActions.Search, FshResources.GroupMembers, IsBasic: true),
+        new("Create GroupMembers", FshActions.Create, FshResources.GroupMembers),
+        new("Update GroupMembers", FshActions.Update, FshResources.GroupMembers),
+        new("Delete GroupMembers", FshActions.Delete, FshResources.GroupMembers),
+        new("Export GroupMembers", FshActions.Export, FshResources.GroupMembers),
+
+        //externalsystems
+        new("View ExternalSystems", FshActions.View, FshResources.ExternalSystems, IsBasic: true),
+        new("Search ExternalSystems", FshActions.Search, FshResources.ExternalSystems, IsBasic: true),
+        new("Create ExternalSystems", FshActions.Create, FshResources.ExternalSystems),
+        new("Update ExternalSystems", FshActions.Update, FshResources.ExternalSystems),
+        new("Delete ExternalSystems", FshActions.Delete, FshResources.ExternalSystems),
+        new("Export ExternalSystems", FshActions.Export, FshResources.ExternalSystems),
 
         //todos
         new("View Todos", FshActions.View, FshResources.Todos, IsBasic: true),
@@ -76,8 +108,10 @@ public static class FshPermissions
         new("Delete Todos", FshActions.Delete, FshResources.Todos),
         new("Export Todos", FshActions.Export, FshResources.Todos),
 
-         new("View Hangfire", FshActions.View, FshResources.Hangfire),
-         new("View Dashboard", FshActions.View, FshResources.Dashboard),
+        new("View Hangfire", FshActions.View, FshResources.Hangfire),
+        new("View Dashboard", FshActions.View, FshResources.Dashboard),
+
+
 
         //audit
         new("View Audit Trails", FshActions.View, FshResources.AuditTrails),

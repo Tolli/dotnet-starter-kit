@@ -5,9 +5,9 @@ using FSH.Starter.WebApi.Booking.Domain.Events;
 namespace FSH.Starter.WebApi.Booking.Domain;
 public class GroupMember : AuditableEntity, IAggregateRoot
 {
-    public decimal Price { get; private set; }
+    public decimal Amount { get; private set; }
 
-    public decimal Percentage { get; private set; }
+    public decimal Discount { get; private set; }
 
     public bool IsContact { get; private set; }
     
@@ -16,36 +16,37 @@ public class GroupMember : AuditableEntity, IAggregateRoot
 
     public Guid GroupId { get; private set; }
     public virtual Group Group { get; private set; } = default!;
-    private GroupMember(Guid id, Guid groupId, Guid customerId, decimal price, decimal percentage, bool isContact)
+    public virtual ICollection<Receipt>? Receipts { get; private set; } = new HashSet<Receipt>();
+    private GroupMember(Guid id, Guid groupId, Guid customerId, decimal amount, decimal discount, bool isContact)
     {
         Id = id;
         GroupId = groupId;
         CustomerId = customerId;
-        Price = price;
-        Percentage = percentage;
+        Amount = amount;
+        Discount = discount;
         IsContact = isContact;
 
         QueueDomainEvent(new GroupMemberCreated { GroupMember = this });
     }
 
-    public static GroupMember Create(Guid groupId, Guid customerId, decimal price, decimal percentage, bool isContact)
+    public static GroupMember Create(Guid groupId, Guid customerId, decimal amount, decimal discount, bool isContact)
     {
-        return new GroupMember(Guid.NewGuid(), groupId, customerId, price, percentage, isContact);
+        return new GroupMember(Guid.NewGuid(), groupId, customerId, amount, discount, isContact);
     }
 
-    public GroupMember Update(Guid? groupId, Guid? customerId, decimal price, decimal percentage, bool isContact)
+    public GroupMember Update(Guid? groupId, Guid? customerId, decimal amount, decimal discount, bool isContact)
     {
         bool isUpdated = false;
 
-        if (Price != price)
+        if (Amount != amount)
         {
-            Price = price;
+            Amount = amount;
             isUpdated = true;
         }
 
-        if (Percentage != percentage)
+        if (Discount != discount)
         {
-            Percentage = percentage;
+            Discount = discount;
             isUpdated = true;
         }
 

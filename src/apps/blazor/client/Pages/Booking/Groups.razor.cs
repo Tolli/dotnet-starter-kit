@@ -15,6 +15,12 @@ public partial class Groups
 
     private EntityTable<GroupResponse, Guid, GroupViewModel> _table = default!;
 
+    private void ManageMembers(in Guid? groupId) =>
+        Navigation.NavigateTo($"/booking/groups/{groupId}/members");
+
+    private void ManageCourtRentals(in Guid? groupId) =>
+        Navigation.NavigateTo($"/booking/groups/{groupId}/rentals");
+
     protected override void OnInitialized() =>
     Context = new(
             entityName: "Group",

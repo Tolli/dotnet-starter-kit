@@ -30,121 +30,6 @@ namespace FSH.Starter.Blazor.Infrastructure.Api
     public partial interface IApiClient
     {
         /// <summary>
-        /// creates a brand
-        /// </summary>
-        /// <remarks>
-        /// creates a brand
-        /// </remarks>
-        /// <param name="version">The requested API version</param>
-        /// <returns>OK</returns>
-        /// <exception cref="ApiException">A server side error occurred.</exception>
-        System.Threading.Tasks.Task<CreateBrandResponse> CreateBrandEndpointAsync(string version, CreateBrandCommand body);
-
-        /// <param name="cancellationToken">A cancellation token that can be used by other objects or threads to receive notice of cancellation.</param>
-        /// <summary>
-        /// creates a brand
-        /// </summary>
-        /// <remarks>
-        /// creates a brand
-        /// </remarks>
-        /// <param name="version">The requested API version</param>
-        /// <returns>OK</returns>
-        /// <exception cref="ApiException">A server side error occurred.</exception>
-        System.Threading.Tasks.Task<CreateBrandResponse> CreateBrandEndpointAsync(string version, CreateBrandCommand body, System.Threading.CancellationToken cancellationToken);
-
-        /// <summary>
-        /// gets brand by id
-        /// </summary>
-        /// <remarks>
-        /// gets brand by id
-        /// </remarks>
-        /// <param name="version">The requested API version</param>
-        /// <returns>OK</returns>
-        /// <exception cref="ApiException">A server side error occurred.</exception>
-        System.Threading.Tasks.Task<BrandResponse> GetBrandEndpointAsync(string version, System.Guid id);
-
-        /// <param name="cancellationToken">A cancellation token that can be used by other objects or threads to receive notice of cancellation.</param>
-        /// <summary>
-        /// gets brand by id
-        /// </summary>
-        /// <remarks>
-        /// gets brand by id
-        /// </remarks>
-        /// <param name="version">The requested API version</param>
-        /// <returns>OK</returns>
-        /// <exception cref="ApiException">A server side error occurred.</exception>
-        System.Threading.Tasks.Task<BrandResponse> GetBrandEndpointAsync(string version, System.Guid id, System.Threading.CancellationToken cancellationToken);
-
-        /// <summary>
-        /// update a brand
-        /// </summary>
-        /// <remarks>
-        /// update a brand
-        /// </remarks>
-        /// <param name="version">The requested API version</param>
-        /// <returns>OK</returns>
-        /// <exception cref="ApiException">A server side error occurred.</exception>
-        System.Threading.Tasks.Task<UpdateBrandResponse> UpdateBrandEndpointAsync(string version, System.Guid id, UpdateBrandCommand body);
-
-        /// <param name="cancellationToken">A cancellation token that can be used by other objects or threads to receive notice of cancellation.</param>
-        /// <summary>
-        /// update a brand
-        /// </summary>
-        /// <remarks>
-        /// update a brand
-        /// </remarks>
-        /// <param name="version">The requested API version</param>
-        /// <returns>OK</returns>
-        /// <exception cref="ApiException">A server side error occurred.</exception>
-        System.Threading.Tasks.Task<UpdateBrandResponse> UpdateBrandEndpointAsync(string version, System.Guid id, UpdateBrandCommand body, System.Threading.CancellationToken cancellationToken);
-
-        /// <summary>
-        /// deletes brand by id
-        /// </summary>
-        /// <remarks>
-        /// deletes brand by id
-        /// </remarks>
-        /// <param name="version">The requested API version</param>
-        /// <returns>No Content</returns>
-        /// <exception cref="ApiException">A server side error occurred.</exception>
-        System.Threading.Tasks.Task DeleteBrandEndpointAsync(string version, System.Guid id);
-
-        /// <param name="cancellationToken">A cancellation token that can be used by other objects or threads to receive notice of cancellation.</param>
-        /// <summary>
-        /// deletes brand by id
-        /// </summary>
-        /// <remarks>
-        /// deletes brand by id
-        /// </remarks>
-        /// <param name="version">The requested API version</param>
-        /// <returns>No Content</returns>
-        /// <exception cref="ApiException">A server side error occurred.</exception>
-        System.Threading.Tasks.Task DeleteBrandEndpointAsync(string version, System.Guid id, System.Threading.CancellationToken cancellationToken);
-
-        /// <summary>
-        /// Gets a list of brands
-        /// </summary>
-        /// <remarks>
-        /// Gets a list of brands with pagination and filtering support
-        /// </remarks>
-        /// <param name="version">The requested API version</param>
-        /// <returns>OK</returns>
-        /// <exception cref="ApiException">A server side error occurred.</exception>
-        System.Threading.Tasks.Task<BrandResponsePagedList> SearchBrandsEndpointAsync(string version, SearchBrandsCommand body);
-
-        /// <param name="cancellationToken">A cancellation token that can be used by other objects or threads to receive notice of cancellation.</param>
-        /// <summary>
-        /// Gets a list of brands
-        /// </summary>
-        /// <remarks>
-        /// Gets a list of brands with pagination and filtering support
-        /// </remarks>
-        /// <param name="version">The requested API version</param>
-        /// <returns>OK</returns>
-        /// <exception cref="ApiException">A server side error occurred.</exception>
-        System.Threading.Tasks.Task<BrandResponsePagedList> SearchBrandsEndpointAsync(string version, SearchBrandsCommand body, System.Threading.CancellationToken cancellationToken);
-
-        /// <summary>
         /// creates a courtrental
         /// </summary>
         /// <remarks>
@@ -237,6 +122,29 @@ namespace FSH.Starter.Blazor.Infrastructure.Api
         System.Threading.Tasks.Task DeleteCourtRentalEndpointAsync(string version, System.Guid id, System.Threading.CancellationToken cancellationToken);
 
         /// <summary>
+        /// Gets a list of CourtRentals by group id
+        /// </summary>
+        /// <remarks>
+        /// Gets a list of CourtRentals with pagination and filtering support
+        /// </remarks>
+        /// <param name="version">The requested API version</param>
+        /// <returns>OK</returns>
+        /// <exception cref="ApiException">A server side error occurred.</exception>
+        System.Threading.Tasks.Task<CourtRentalResponsePagedList> GetCourtRentalsByGroupIdEndpointAsync(string version, System.Guid groupId, GetCourtRentalsByGroupIdCommand body);
+
+        /// <param name="cancellationToken">A cancellation token that can be used by other objects or threads to receive notice of cancellation.</param>
+        /// <summary>
+        /// Gets a list of CourtRentals by group id
+        /// </summary>
+        /// <remarks>
+        /// Gets a list of CourtRentals with pagination and filtering support
+        /// </remarks>
+        /// <param name="version">The requested API version</param>
+        /// <returns>OK</returns>
+        /// <exception cref="ApiException">A server side error occurred.</exception>
+        System.Threading.Tasks.Task<CourtRentalResponsePagedList> GetCourtRentalsByGroupIdEndpointAsync(string version, System.Guid groupId, GetCourtRentalsByGroupIdCommand body, System.Threading.CancellationToken cancellationToken);
+
+        /// <summary>
         /// Gets a list of courtrentals
         /// </summary>
         /// <remarks>
@@ -258,6 +166,328 @@ namespace FSH.Starter.Blazor.Infrastructure.Api
         /// <returns>OK</returns>
         /// <exception cref="ApiException">A server side error occurred.</exception>
         System.Threading.Tasks.Task<CourtRentalResponsePagedList> SearchCourtRentalsEndpointAsync(string version, SearchCourtRentalsCommand body, System.Threading.CancellationToken cancellationToken);
+
+        /// <summary>
+        /// Gets a list of courtrentals by house weekday time court
+        /// </summary>
+        /// <remarks>
+        /// Gets a list of courtrentals with pagination and filtering support
+        /// </remarks>
+        /// <param name="version">The requested API version</param>
+        /// <returns>OK</returns>
+        /// <exception cref="ApiException">A server side error occurred.</exception>
+        System.Threading.Tasks.Task<CourtRentalResponsePagedList> SearchCourtRentalsByHouseDayTimeCourtEndpointAsync(string version, SearchCourtRentalsByHouseDayTimeCourtCommand body);
+
+        /// <param name="cancellationToken">A cancellation token that can be used by other objects or threads to receive notice of cancellation.</param>
+        /// <summary>
+        /// Gets a list of courtrentals by house weekday time court
+        /// </summary>
+        /// <remarks>
+        /// Gets a list of courtrentals with pagination and filtering support
+        /// </remarks>
+        /// <param name="version">The requested API version</param>
+        /// <returns>OK</returns>
+        /// <exception cref="ApiException">A server side error occurred.</exception>
+        System.Threading.Tasks.Task<CourtRentalResponsePagedList> SearchCourtRentalsByHouseDayTimeCourtEndpointAsync(string version, SearchCourtRentalsByHouseDayTimeCourtCommand body, System.Threading.CancellationToken cancellationToken);
+
+        /// <summary>
+        /// creates a courtrental session
+        /// </summary>
+        /// <remarks>
+        /// creates a courtrental session
+        /// </remarks>
+        /// <param name="version">The requested API version</param>
+        /// <returns>OK</returns>
+        /// <exception cref="ApiException">A server side error occurred.</exception>
+        System.Threading.Tasks.Task<CreateCourtRentalSessionResponse> CreateCourtRentalSessionEndpointAsync(string version, CreateCourtRentalSessionCommand body);
+
+        /// <param name="cancellationToken">A cancellation token that can be used by other objects or threads to receive notice of cancellation.</param>
+        /// <summary>
+        /// creates a courtrental session
+        /// </summary>
+        /// <remarks>
+        /// creates a courtrental session
+        /// </remarks>
+        /// <param name="version">The requested API version</param>
+        /// <returns>OK</returns>
+        /// <exception cref="ApiException">A server side error occurred.</exception>
+        System.Threading.Tasks.Task<CreateCourtRentalSessionResponse> CreateCourtRentalSessionEndpointAsync(string version, CreateCourtRentalSessionCommand body, System.Threading.CancellationToken cancellationToken);
+
+        /// <summary>
+        /// gets courtrental session by id
+        /// </summary>
+        /// <remarks>
+        /// gets courtrental session by id
+        /// </remarks>
+        /// <param name="version">The requested API version</param>
+        /// <returns>OK</returns>
+        /// <exception cref="ApiException">A server side error occurred.</exception>
+        System.Threading.Tasks.Task<CourtRentalSessionResponse> GetCourtRentalSessionEndpointAsync(string version, System.Guid id);
+
+        /// <param name="cancellationToken">A cancellation token that can be used by other objects or threads to receive notice of cancellation.</param>
+        /// <summary>
+        /// gets courtrental session by id
+        /// </summary>
+        /// <remarks>
+        /// gets courtrental session by id
+        /// </remarks>
+        /// <param name="version">The requested API version</param>
+        /// <returns>OK</returns>
+        /// <exception cref="ApiException">A server side error occurred.</exception>
+        System.Threading.Tasks.Task<CourtRentalSessionResponse> GetCourtRentalSessionEndpointAsync(string version, System.Guid id, System.Threading.CancellationToken cancellationToken);
+
+        /// <summary>
+        /// update a courtrental session
+        /// </summary>
+        /// <remarks>
+        /// update a courtrental session
+        /// </remarks>
+        /// <param name="version">The requested API version</param>
+        /// <returns>OK</returns>
+        /// <exception cref="ApiException">A server side error occurred.</exception>
+        System.Threading.Tasks.Task<UpdateCourtRentalSessionResponse> UpdateCourtRentalSessionEndpointAsync(string version, System.Guid id, UpdateCourtRentalSessionCommand body);
+
+        /// <param name="cancellationToken">A cancellation token that can be used by other objects or threads to receive notice of cancellation.</param>
+        /// <summary>
+        /// update a courtrental session
+        /// </summary>
+        /// <remarks>
+        /// update a courtrental session
+        /// </remarks>
+        /// <param name="version">The requested API version</param>
+        /// <returns>OK</returns>
+        /// <exception cref="ApiException">A server side error occurred.</exception>
+        System.Threading.Tasks.Task<UpdateCourtRentalSessionResponse> UpdateCourtRentalSessionEndpointAsync(string version, System.Guid id, UpdateCourtRentalSessionCommand body, System.Threading.CancellationToken cancellationToken);
+
+        /// <summary>
+        /// deletes courtrental session by id
+        /// </summary>
+        /// <remarks>
+        /// deletes courtrental session by id
+        /// </remarks>
+        /// <param name="version">The requested API version</param>
+        /// <returns>No Content</returns>
+        /// <exception cref="ApiException">A server side error occurred.</exception>
+        System.Threading.Tasks.Task DeleteCourtRentalSessionEndpointAsync(string version, System.Guid id);
+
+        /// <param name="cancellationToken">A cancellation token that can be used by other objects or threads to receive notice of cancellation.</param>
+        /// <summary>
+        /// deletes courtrental session by id
+        /// </summary>
+        /// <remarks>
+        /// deletes courtrental session by id
+        /// </remarks>
+        /// <param name="version">The requested API version</param>
+        /// <returns>No Content</returns>
+        /// <exception cref="ApiException">A server side error occurred.</exception>
+        System.Threading.Tasks.Task DeleteCourtRentalSessionEndpointAsync(string version, System.Guid id, System.Threading.CancellationToken cancellationToken);
+
+        /// <summary>
+        /// Gets a list of CourtRentalSessions by court rental id
+        /// </summary>
+        /// <remarks>
+        /// Gets a list of CourtRentalSessions with pagination and filtering support
+        /// </remarks>
+        /// <param name="version">The requested API version</param>
+        /// <returns>OK</returns>
+        /// <exception cref="ApiException">A server side error occurred.</exception>
+        System.Threading.Tasks.Task<CourtRentalSessionResponsePagedList> GetCourtRentalSessionsByCourtRentalIdEndpointAsync(string version, System.Guid groupId, GetCourtRentalSessionsByCourtRentalIdCommand body);
+
+        /// <param name="cancellationToken">A cancellation token that can be used by other objects or threads to receive notice of cancellation.</param>
+        /// <summary>
+        /// Gets a list of CourtRentalSessions by court rental id
+        /// </summary>
+        /// <remarks>
+        /// Gets a list of CourtRentalSessions with pagination and filtering support
+        /// </remarks>
+        /// <param name="version">The requested API version</param>
+        /// <returns>OK</returns>
+        /// <exception cref="ApiException">A server side error occurred.</exception>
+        System.Threading.Tasks.Task<CourtRentalSessionResponsePagedList> GetCourtRentalSessionsByCourtRentalIdEndpointAsync(string version, System.Guid groupId, GetCourtRentalSessionsByCourtRentalIdCommand body, System.Threading.CancellationToken cancellationToken);
+
+        /// <summary>
+        /// Gets a list of courtrental sessions
+        /// </summary>
+        /// <remarks>
+        /// Gets a list of courtrental sessions with pagination and filtering support
+        /// </remarks>
+        /// <param name="version">The requested API version</param>
+        /// <returns>OK</returns>
+        /// <exception cref="ApiException">A server side error occurred.</exception>
+        System.Threading.Tasks.Task<CourtRentalSessionResponsePagedList> SearchCourtRentalSessionsEndpointAsync(string version, SearchCourtRentalSessionsCommand body);
+
+        /// <param name="cancellationToken">A cancellation token that can be used by other objects or threads to receive notice of cancellation.</param>
+        /// <summary>
+        /// Gets a list of courtrental sessions
+        /// </summary>
+        /// <remarks>
+        /// Gets a list of courtrental sessions with pagination and filtering support
+        /// </remarks>
+        /// <param name="version">The requested API version</param>
+        /// <returns>OK</returns>
+        /// <exception cref="ApiException">A server side error occurred.</exception>
+        System.Threading.Tasks.Task<CourtRentalSessionResponsePagedList> SearchCourtRentalSessionsEndpointAsync(string version, SearchCourtRentalSessionsCommand body, System.Threading.CancellationToken cancellationToken);
+
+        /// <summary>
+        /// Gets a list of courtrental sessions by house weekday time court
+        /// </summary>
+        /// <remarks>
+        /// Gets a list of courtrental sessions with pagination and filtering support
+        /// </remarks>
+        /// <param name="version">The requested API version</param>
+        /// <returns>OK</returns>
+        /// <exception cref="ApiException">A server side error occurred.</exception>
+        System.Threading.Tasks.Task<CourtRentalSessionResponsePagedList> SearchCourtRentalSessionsByDateCourtEndpointAsync(string version, SearchCourtRentalSessionsByDateCourtCommand body);
+
+        /// <param name="cancellationToken">A cancellation token that can be used by other objects or threads to receive notice of cancellation.</param>
+        /// <summary>
+        /// Gets a list of courtrental sessions by house weekday time court
+        /// </summary>
+        /// <remarks>
+        /// Gets a list of courtrental sessions with pagination and filtering support
+        /// </remarks>
+        /// <param name="version">The requested API version</param>
+        /// <returns>OK</returns>
+        /// <exception cref="ApiException">A server side error occurred.</exception>
+        System.Threading.Tasks.Task<CourtRentalSessionResponsePagedList> SearchCourtRentalSessionsByDateCourtEndpointAsync(string version, SearchCourtRentalSessionsByDateCourtCommand body, System.Threading.CancellationToken cancellationToken);
+
+        /// <summary>
+        /// creates a CourtRentalShare
+        /// </summary>
+        /// <remarks>
+        /// creates a CourtRentalShare
+        /// </remarks>
+        /// <param name="version">The requested API version</param>
+        /// <returns>OK</returns>
+        /// <exception cref="ApiException">A server side error occurred.</exception>
+        System.Threading.Tasks.Task<CreateCourtRentalShareResponse> CreateCourtRentalShareEndpointAsync(string version, CreateCourtRentalShareCommand body);
+
+        /// <param name="cancellationToken">A cancellation token that can be used by other objects or threads to receive notice of cancellation.</param>
+        /// <summary>
+        /// creates a CourtRentalShare
+        /// </summary>
+        /// <remarks>
+        /// creates a CourtRentalShare
+        /// </remarks>
+        /// <param name="version">The requested API version</param>
+        /// <returns>OK</returns>
+        /// <exception cref="ApiException">A server side error occurred.</exception>
+        System.Threading.Tasks.Task<CreateCourtRentalShareResponse> CreateCourtRentalShareEndpointAsync(string version, CreateCourtRentalShareCommand body, System.Threading.CancellationToken cancellationToken);
+
+        /// <summary>
+        /// gets CourtRentalShare by id
+        /// </summary>
+        /// <remarks>
+        /// gets CourtRentalShare by id
+        /// </remarks>
+        /// <param name="version">The requested API version</param>
+        /// <returns>OK</returns>
+        /// <exception cref="ApiException">A server side error occurred.</exception>
+        System.Threading.Tasks.Task<CourtRentalShareResponse> GetCourtRentalShareEndpointAsync(string version, System.Guid id);
+
+        /// <param name="cancellationToken">A cancellation token that can be used by other objects or threads to receive notice of cancellation.</param>
+        /// <summary>
+        /// gets CourtRentalShare by id
+        /// </summary>
+        /// <remarks>
+        /// gets CourtRentalShare by id
+        /// </remarks>
+        /// <param name="version">The requested API version</param>
+        /// <returns>OK</returns>
+        /// <exception cref="ApiException">A server side error occurred.</exception>
+        System.Threading.Tasks.Task<CourtRentalShareResponse> GetCourtRentalShareEndpointAsync(string version, System.Guid id, System.Threading.CancellationToken cancellationToken);
+
+        /// <summary>
+        /// update a CourtRentalShare
+        /// </summary>
+        /// <remarks>
+        /// update a CourtRentalShare
+        /// </remarks>
+        /// <param name="version">The requested API version</param>
+        /// <returns>OK</returns>
+        /// <exception cref="ApiException">A server side error occurred.</exception>
+        System.Threading.Tasks.Task<UpdateCourtRentalShareResponse> UpdateCourtRentalShareEndpointAsync(string version, System.Guid id, UpdateCourtRentalShareCommand body);
+
+        /// <param name="cancellationToken">A cancellation token that can be used by other objects or threads to receive notice of cancellation.</param>
+        /// <summary>
+        /// update a CourtRentalShare
+        /// </summary>
+        /// <remarks>
+        /// update a CourtRentalShare
+        /// </remarks>
+        /// <param name="version">The requested API version</param>
+        /// <returns>OK</returns>
+        /// <exception cref="ApiException">A server side error occurred.</exception>
+        System.Threading.Tasks.Task<UpdateCourtRentalShareResponse> UpdateCourtRentalShareEndpointAsync(string version, System.Guid id, UpdateCourtRentalShareCommand body, System.Threading.CancellationToken cancellationToken);
+
+        /// <summary>
+        /// deletes CourtRentalShare by id
+        /// </summary>
+        /// <remarks>
+        /// deletes CourtRentalShare by id
+        /// </remarks>
+        /// <param name="version">The requested API version</param>
+        /// <returns>No Content</returns>
+        /// <exception cref="ApiException">A server side error occurred.</exception>
+        System.Threading.Tasks.Task DeleteCourtRentalShareEndpointAsync(string version, System.Guid id);
+
+        /// <param name="cancellationToken">A cancellation token that can be used by other objects or threads to receive notice of cancellation.</param>
+        /// <summary>
+        /// deletes CourtRentalShare by id
+        /// </summary>
+        /// <remarks>
+        /// deletes CourtRentalShare by id
+        /// </remarks>
+        /// <param name="version">The requested API version</param>
+        /// <returns>No Content</returns>
+        /// <exception cref="ApiException">A server side error occurred.</exception>
+        System.Threading.Tasks.Task DeleteCourtRentalShareEndpointAsync(string version, System.Guid id, System.Threading.CancellationToken cancellationToken);
+
+        /// <summary>
+        /// Gets a list of CourtRentalShares by group id
+        /// </summary>
+        /// <remarks>
+        /// Gets a list of CourtRentalShares with pagination and filtering support
+        /// </remarks>
+        /// <param name="version">The requested API version</param>
+        /// <returns>OK</returns>
+        /// <exception cref="ApiException">A server side error occurred.</exception>
+        System.Threading.Tasks.Task<CourtRentalShareResponsePagedList> GetCourtRentalSharesByCourtRentalIdEndpointAsync(string version, System.Guid courtRentalId, GetCourtRentalSharesByCourtRentalIdCommand body);
+
+        /// <param name="cancellationToken">A cancellation token that can be used by other objects or threads to receive notice of cancellation.</param>
+        /// <summary>
+        /// Gets a list of CourtRentalShares by group id
+        /// </summary>
+        /// <remarks>
+        /// Gets a list of CourtRentalShares with pagination and filtering support
+        /// </remarks>
+        /// <param name="version">The requested API version</param>
+        /// <returns>OK</returns>
+        /// <exception cref="ApiException">A server side error occurred.</exception>
+        System.Threading.Tasks.Task<CourtRentalShareResponsePagedList> GetCourtRentalSharesByCourtRentalIdEndpointAsync(string version, System.Guid courtRentalId, GetCourtRentalSharesByCourtRentalIdCommand body, System.Threading.CancellationToken cancellationToken);
+
+        /// <summary>
+        /// Gets a list of CourtRentalShares
+        /// </summary>
+        /// <remarks>
+        /// Gets a list of CourtRentalShares with pagination and filtering support
+        /// </remarks>
+        /// <param name="version">The requested API version</param>
+        /// <returns>OK</returns>
+        /// <exception cref="ApiException">A server side error occurred.</exception>
+        System.Threading.Tasks.Task<CourtRentalShareResponsePagedList> SearchCourtRentalSharesEndpointAsync(string version, SearchCourtRentalSharesCommand body);
+
+        /// <param name="cancellationToken">A cancellation token that can be used by other objects or threads to receive notice of cancellation.</param>
+        /// <summary>
+        /// Gets a list of CourtRentalShares
+        /// </summary>
+        /// <remarks>
+        /// Gets a list of CourtRentalShares with pagination and filtering support
+        /// </remarks>
+        /// <param name="version">The requested API version</param>
+        /// <returns>OK</returns>
+        /// <exception cref="ApiException">A server side error occurred.</exception>
+        System.Threading.Tasks.Task<CourtRentalShareResponsePagedList> SearchCourtRentalSharesEndpointAsync(string version, SearchCourtRentalSharesCommand body, System.Threading.CancellationToken cancellationToken);
 
         /// <summary>
         /// creates a customer
@@ -490,6 +720,29 @@ namespace FSH.Starter.Blazor.Infrastructure.Api
         System.Threading.Tasks.Task<GroupMemberResponsePagedList> SearchGroupMembersEndpointAsync(string version, SearchGroupMembersCommand body, System.Threading.CancellationToken cancellationToken);
 
         /// <summary>
+        /// Gets a list of groupmembers by group id
+        /// </summary>
+        /// <remarks>
+        /// Gets a list of groupmembers with pagination and filtering support
+        /// </remarks>
+        /// <param name="version">The requested API version</param>
+        /// <returns>OK</returns>
+        /// <exception cref="ApiException">A server side error occurred.</exception>
+        System.Threading.Tasks.Task<GroupMemberResponsePagedList> GetGroupMembersByGroupIdEndpointAsync(string version, System.Guid groupId, GetGroupMembersByGroupIdCommand body);
+
+        /// <param name="cancellationToken">A cancellation token that can be used by other objects or threads to receive notice of cancellation.</param>
+        /// <summary>
+        /// Gets a list of groupmembers by group id
+        /// </summary>
+        /// <remarks>
+        /// Gets a list of groupmembers with pagination and filtering support
+        /// </remarks>
+        /// <param name="version">The requested API version</param>
+        /// <returns>OK</returns>
+        /// <exception cref="ApiException">A server side error occurred.</exception>
+        System.Threading.Tasks.Task<GroupMemberResponsePagedList> GetGroupMembersByGroupIdEndpointAsync(string version, System.Guid groupId, GetGroupMembersByGroupIdCommand body, System.Threading.CancellationToken cancellationToken);
+
+        /// <summary>
         /// creates a group
         /// </summary>
         /// <remarks>
@@ -605,119 +858,119 @@ namespace FSH.Starter.Blazor.Infrastructure.Api
         System.Threading.Tasks.Task<GroupResponsePagedList> SearchGroupsEndpointAsync(string version, SearchGroupsCommand body, System.Threading.CancellationToken cancellationToken);
 
         /// <summary>
-        /// creates a product
+        /// creates a Receipt
         /// </summary>
         /// <remarks>
-        /// creates a product
+        /// creates a Receipt
         /// </remarks>
         /// <param name="version">The requested API version</param>
         /// <returns>OK</returns>
         /// <exception cref="ApiException">A server side error occurred.</exception>
-        System.Threading.Tasks.Task<CreateProductResponse> CreateProductEndpointAsync(string version, CreateProductCommand body);
+        System.Threading.Tasks.Task<CreateReceiptResponse> CreateReceiptEndpointAsync(string version, CreateReceiptCommand body);
 
         /// <param name="cancellationToken">A cancellation token that can be used by other objects or threads to receive notice of cancellation.</param>
         /// <summary>
-        /// creates a product
+        /// creates a Receipt
         /// </summary>
         /// <remarks>
-        /// creates a product
+        /// creates a Receipt
         /// </remarks>
         /// <param name="version">The requested API version</param>
         /// <returns>OK</returns>
         /// <exception cref="ApiException">A server side error occurred.</exception>
-        System.Threading.Tasks.Task<CreateProductResponse> CreateProductEndpointAsync(string version, CreateProductCommand body, System.Threading.CancellationToken cancellationToken);
+        System.Threading.Tasks.Task<CreateReceiptResponse> CreateReceiptEndpointAsync(string version, CreateReceiptCommand body, System.Threading.CancellationToken cancellationToken);
 
         /// <summary>
-        /// gets product by id
+        /// gets Receipt by id
         /// </summary>
         /// <remarks>
-        /// gets prodct by id
+        /// gets Receipt by id
         /// </remarks>
         /// <param name="version">The requested API version</param>
         /// <returns>OK</returns>
         /// <exception cref="ApiException">A server side error occurred.</exception>
-        System.Threading.Tasks.Task<ProductResponse> GetProductEndpointAsync(string version, System.Guid id);
-
-        /// <param name="cancellationToken">A cancellation token that can be used by other objects or threads to receive notice of cancellation.</param>
-        /// <summary>
-        /// gets product by id
-        /// </summary>
-        /// <remarks>
-        /// gets prodct by id
-        /// </remarks>
-        /// <param name="version">The requested API version</param>
-        /// <returns>OK</returns>
-        /// <exception cref="ApiException">A server side error occurred.</exception>
-        System.Threading.Tasks.Task<ProductResponse> GetProductEndpointAsync(string version, System.Guid id, System.Threading.CancellationToken cancellationToken);
-
-        /// <summary>
-        /// update a product
-        /// </summary>
-        /// <remarks>
-        /// update a product
-        /// </remarks>
-        /// <param name="version">The requested API version</param>
-        /// <returns>OK</returns>
-        /// <exception cref="ApiException">A server side error occurred.</exception>
-        System.Threading.Tasks.Task<UpdateProductResponse> UpdateProductEndpointAsync(string version, System.Guid id, UpdateProductCommand body);
+        System.Threading.Tasks.Task<ReceiptResponse> GetReceiptEndpointAsync(string version, System.Guid id);
 
         /// <param name="cancellationToken">A cancellation token that can be used by other objects or threads to receive notice of cancellation.</param>
         /// <summary>
-        /// update a product
+        /// gets Receipt by id
         /// </summary>
         /// <remarks>
-        /// update a product
+        /// gets Receipt by id
         /// </remarks>
         /// <param name="version">The requested API version</param>
         /// <returns>OK</returns>
         /// <exception cref="ApiException">A server side error occurred.</exception>
-        System.Threading.Tasks.Task<UpdateProductResponse> UpdateProductEndpointAsync(string version, System.Guid id, UpdateProductCommand body, System.Threading.CancellationToken cancellationToken);
+        System.Threading.Tasks.Task<ReceiptResponse> GetReceiptEndpointAsync(string version, System.Guid id, System.Threading.CancellationToken cancellationToken);
 
         /// <summary>
-        /// deletes product by id
+        /// update a Receipt
         /// </summary>
         /// <remarks>
-        /// deletes product by id
+        /// update a Receipt
+        /// </remarks>
+        /// <param name="version">The requested API version</param>
+        /// <returns>OK</returns>
+        /// <exception cref="ApiException">A server side error occurred.</exception>
+        System.Threading.Tasks.Task<UpdateReceiptResponse> UpdateReceiptEndpointAsync(string version, System.Guid id, UpdateReceiptCommand body);
+
+        /// <param name="cancellationToken">A cancellation token that can be used by other objects or threads to receive notice of cancellation.</param>
+        /// <summary>
+        /// update a Receipt
+        /// </summary>
+        /// <remarks>
+        /// update a Receipt
+        /// </remarks>
+        /// <param name="version">The requested API version</param>
+        /// <returns>OK</returns>
+        /// <exception cref="ApiException">A server side error occurred.</exception>
+        System.Threading.Tasks.Task<UpdateReceiptResponse> UpdateReceiptEndpointAsync(string version, System.Guid id, UpdateReceiptCommand body, System.Threading.CancellationToken cancellationToken);
+
+        /// <summary>
+        /// deletes Receipt by id
+        /// </summary>
+        /// <remarks>
+        /// deletes Receipt by id
         /// </remarks>
         /// <param name="version">The requested API version</param>
         /// <returns>No Content</returns>
         /// <exception cref="ApiException">A server side error occurred.</exception>
-        System.Threading.Tasks.Task DeleteProductEndpointAsync(string version, System.Guid id);
+        System.Threading.Tasks.Task DeleteReceiptEndpointAsync(string version, System.Guid id);
 
         /// <param name="cancellationToken">A cancellation token that can be used by other objects or threads to receive notice of cancellation.</param>
         /// <summary>
-        /// deletes product by id
+        /// deletes Receipt by id
         /// </summary>
         /// <remarks>
-        /// deletes product by id
+        /// deletes Receipt by id
         /// </remarks>
         /// <param name="version">The requested API version</param>
         /// <returns>No Content</returns>
         /// <exception cref="ApiException">A server side error occurred.</exception>
-        System.Threading.Tasks.Task DeleteProductEndpointAsync(string version, System.Guid id, System.Threading.CancellationToken cancellationToken);
+        System.Threading.Tasks.Task DeleteReceiptEndpointAsync(string version, System.Guid id, System.Threading.CancellationToken cancellationToken);
 
         /// <summary>
-        /// Gets a list of products
+        /// Gets a list of Receipts
         /// </summary>
         /// <remarks>
-        /// Gets a list of products with pagination and filtering support
+        /// Gets a list of Receipts with pagination and filtering support
         /// </remarks>
         /// <param name="version">The requested API version</param>
         /// <returns>OK</returns>
         /// <exception cref="ApiException">A server side error occurred.</exception>
-        System.Threading.Tasks.Task<ProductResponsePagedList> SearchProductsEndpointAsync(string version, SearchProductsCommand body);
+        System.Threading.Tasks.Task<ReceiptResponsePagedList> SearchReceiptsEndpointAsync(string version, SearchReceiptsCommand body);
 
         /// <param name="cancellationToken">A cancellation token that can be used by other objects or threads to receive notice of cancellation.</param>
         /// <summary>
-        /// Gets a list of products
+        /// Gets a list of Receipts
         /// </summary>
         /// <remarks>
-        /// Gets a list of products with pagination and filtering support
+        /// Gets a list of Receipts with pagination and filtering support
         /// </remarks>
         /// <param name="version">The requested API version</param>
         /// <returns>OK</returns>
         /// <exception cref="ApiException">A server side error occurred.</exception>
-        System.Threading.Tasks.Task<ProductResponsePagedList> SearchProductsEndpointAsync(string version, SearchProductsCommand body, System.Threading.CancellationToken cancellationToken);
+        System.Threading.Tasks.Task<ReceiptResponsePagedList> SearchReceiptsEndpointAsync(string version, SearchReceiptsCommand body, System.Threading.CancellationToken cancellationToken);
 
         /// <summary>
         /// Get role details by ID
@@ -1499,518 +1752,6 @@ namespace FSH.Starter.Blazor.Infrastructure.Api
         partial void ProcessResponse(System.Net.Http.HttpClient client, System.Net.Http.HttpResponseMessage response);
 
         /// <summary>
-        /// creates a brand
-        /// </summary>
-        /// <remarks>
-        /// creates a brand
-        /// </remarks>
-        /// <param name="version">The requested API version</param>
-        /// <returns>OK</returns>
-        /// <exception cref="ApiException">A server side error occurred.</exception>
-        public virtual System.Threading.Tasks.Task<CreateBrandResponse> CreateBrandEndpointAsync(string version, CreateBrandCommand body)
-        {
-            return CreateBrandEndpointAsync(version, body, System.Threading.CancellationToken.None);
-        }
-
-        /// <param name="cancellationToken">A cancellation token that can be used by other objects or threads to receive notice of cancellation.</param>
-        /// <summary>
-        /// creates a brand
-        /// </summary>
-        /// <remarks>
-        /// creates a brand
-        /// </remarks>
-        /// <param name="version">The requested API version</param>
-        /// <returns>OK</returns>
-        /// <exception cref="ApiException">A server side error occurred.</exception>
-        public virtual async System.Threading.Tasks.Task<CreateBrandResponse> CreateBrandEndpointAsync(string version, CreateBrandCommand body, System.Threading.CancellationToken cancellationToken)
-        {
-            if (version == null)
-                throw new System.ArgumentNullException("version");
-
-            if (body == null)
-                throw new System.ArgumentNullException("body");
-
-            var client_ = _httpClient;
-            var disposeClient_ = false;
-            try
-            {
-                using (var request_ = new System.Net.Http.HttpRequestMessage())
-                {
-                    var json_ = System.Text.Json.JsonSerializer.SerializeToUtf8Bytes(body, JsonSerializerSettings);
-                    var content_ = new System.Net.Http.ByteArrayContent(json_);
-                    content_.Headers.ContentType = System.Net.Http.Headers.MediaTypeHeaderValue.Parse("application/json");
-                    request_.Content = content_;
-                    request_.Method = new System.Net.Http.HttpMethod("POST");
-                    request_.Headers.Accept.Add(System.Net.Http.Headers.MediaTypeWithQualityHeaderValue.Parse("application/json"));
-
-                    var urlBuilder_ = new System.Text.StringBuilder();
-                
-                    // Operation Path: "api/v{version}/catalog/brands"
-                    urlBuilder_.Append("api/v");
-                    urlBuilder_.Append(System.Uri.EscapeDataString(ConvertToString(version, System.Globalization.CultureInfo.InvariantCulture)));
-                    urlBuilder_.Append("/catalog/brands");
-
-                    PrepareRequest(client_, request_, urlBuilder_);
-
-                    var url_ = urlBuilder_.ToString();
-                    request_.RequestUri = new System.Uri(url_, System.UriKind.RelativeOrAbsolute);
-
-                    PrepareRequest(client_, request_, url_);
-
-                    var response_ = await client_.SendAsync(request_, System.Net.Http.HttpCompletionOption.ResponseHeadersRead, cancellationToken).ConfigureAwait(false);
-                    var disposeResponse_ = true;
-                    try
-                    {
-                        var headers_ = new System.Collections.Generic.Dictionary<string, System.Collections.Generic.IEnumerable<string>>();
-                        foreach (var item_ in response_.Headers)
-                            headers_[item_.Key] = item_.Value;
-                        if (response_.Content != null && response_.Content.Headers != null)
-                        {
-                            foreach (var item_ in response_.Content.Headers)
-                                headers_[item_.Key] = item_.Value;
-                        }
-
-                        ProcessResponse(client_, response_);
-
-                        var status_ = (int)response_.StatusCode;
-                        if (status_ == 200)
-                        {
-                            var objectResponse_ = await ReadObjectResponseAsync<CreateBrandResponse>(response_, headers_, cancellationToken).ConfigureAwait(false);
-                            if (objectResponse_.Object == null)
-                            {
-                                throw new ApiException("Response was null which was not expected.", status_, objectResponse_.Text, headers_, null);
-                            }
-                            return objectResponse_.Object;
-                        }
-                        else
-                        {
-                            var responseData_ = response_.Content == null ? null : await ReadAsStringAsync(response_.Content, cancellationToken).ConfigureAwait(false);
-                            throw new ApiException("The HTTP status code of the response was not expected (" + status_ + ").", status_, responseData_, headers_, null);
-                        }
-                    }
-                    finally
-                    {
-                        if (disposeResponse_)
-                            response_.Dispose();
-                    }
-                }
-            }
-            finally
-            {
-                if (disposeClient_)
-                    client_.Dispose();
-            }
-        }
-
-        /// <summary>
-        /// gets brand by id
-        /// </summary>
-        /// <remarks>
-        /// gets brand by id
-        /// </remarks>
-        /// <param name="version">The requested API version</param>
-        /// <returns>OK</returns>
-        /// <exception cref="ApiException">A server side error occurred.</exception>
-        public virtual System.Threading.Tasks.Task<BrandResponse> GetBrandEndpointAsync(string version, System.Guid id)
-        {
-            return GetBrandEndpointAsync(version, id, System.Threading.CancellationToken.None);
-        }
-
-        /// <param name="cancellationToken">A cancellation token that can be used by other objects or threads to receive notice of cancellation.</param>
-        /// <summary>
-        /// gets brand by id
-        /// </summary>
-        /// <remarks>
-        /// gets brand by id
-        /// </remarks>
-        /// <param name="version">The requested API version</param>
-        /// <returns>OK</returns>
-        /// <exception cref="ApiException">A server side error occurred.</exception>
-        public virtual async System.Threading.Tasks.Task<BrandResponse> GetBrandEndpointAsync(string version, System.Guid id, System.Threading.CancellationToken cancellationToken)
-        {
-            if (version == null)
-                throw new System.ArgumentNullException("version");
-
-            if (id == null)
-                throw new System.ArgumentNullException("id");
-
-            var client_ = _httpClient;
-            var disposeClient_ = false;
-            try
-            {
-                using (var request_ = new System.Net.Http.HttpRequestMessage())
-                {
-                    request_.Method = new System.Net.Http.HttpMethod("GET");
-                    request_.Headers.Accept.Add(System.Net.Http.Headers.MediaTypeWithQualityHeaderValue.Parse("application/json"));
-
-                    var urlBuilder_ = new System.Text.StringBuilder();
-                
-                    // Operation Path: "api/v{version}/catalog/brands/{id}"
-                    urlBuilder_.Append("api/v");
-                    urlBuilder_.Append(System.Uri.EscapeDataString(ConvertToString(version, System.Globalization.CultureInfo.InvariantCulture)));
-                    urlBuilder_.Append("/catalog/brands/");
-                    urlBuilder_.Append(System.Uri.EscapeDataString(ConvertToString(id, System.Globalization.CultureInfo.InvariantCulture)));
-
-                    PrepareRequest(client_, request_, urlBuilder_);
-
-                    var url_ = urlBuilder_.ToString();
-                    request_.RequestUri = new System.Uri(url_, System.UriKind.RelativeOrAbsolute);
-
-                    PrepareRequest(client_, request_, url_);
-
-                    var response_ = await client_.SendAsync(request_, System.Net.Http.HttpCompletionOption.ResponseHeadersRead, cancellationToken).ConfigureAwait(false);
-                    var disposeResponse_ = true;
-                    try
-                    {
-                        var headers_ = new System.Collections.Generic.Dictionary<string, System.Collections.Generic.IEnumerable<string>>();
-                        foreach (var item_ in response_.Headers)
-                            headers_[item_.Key] = item_.Value;
-                        if (response_.Content != null && response_.Content.Headers != null)
-                        {
-                            foreach (var item_ in response_.Content.Headers)
-                                headers_[item_.Key] = item_.Value;
-                        }
-
-                        ProcessResponse(client_, response_);
-
-                        var status_ = (int)response_.StatusCode;
-                        if (status_ == 200)
-                        {
-                            var objectResponse_ = await ReadObjectResponseAsync<BrandResponse>(response_, headers_, cancellationToken).ConfigureAwait(false);
-                            if (objectResponse_.Object == null)
-                            {
-                                throw new ApiException("Response was null which was not expected.", status_, objectResponse_.Text, headers_, null);
-                            }
-                            return objectResponse_.Object;
-                        }
-                        else
-                        {
-                            var responseData_ = response_.Content == null ? null : await ReadAsStringAsync(response_.Content, cancellationToken).ConfigureAwait(false);
-                            throw new ApiException("The HTTP status code of the response was not expected (" + status_ + ").", status_, responseData_, headers_, null);
-                        }
-                    }
-                    finally
-                    {
-                        if (disposeResponse_)
-                            response_.Dispose();
-                    }
-                }
-            }
-            finally
-            {
-                if (disposeClient_)
-                    client_.Dispose();
-            }
-        }
-
-        /// <summary>
-        /// update a brand
-        /// </summary>
-        /// <remarks>
-        /// update a brand
-        /// </remarks>
-        /// <param name="version">The requested API version</param>
-        /// <returns>OK</returns>
-        /// <exception cref="ApiException">A server side error occurred.</exception>
-        public virtual System.Threading.Tasks.Task<UpdateBrandResponse> UpdateBrandEndpointAsync(string version, System.Guid id, UpdateBrandCommand body)
-        {
-            return UpdateBrandEndpointAsync(version, id, body, System.Threading.CancellationToken.None);
-        }
-
-        /// <param name="cancellationToken">A cancellation token that can be used by other objects or threads to receive notice of cancellation.</param>
-        /// <summary>
-        /// update a brand
-        /// </summary>
-        /// <remarks>
-        /// update a brand
-        /// </remarks>
-        /// <param name="version">The requested API version</param>
-        /// <returns>OK</returns>
-        /// <exception cref="ApiException">A server side error occurred.</exception>
-        public virtual async System.Threading.Tasks.Task<UpdateBrandResponse> UpdateBrandEndpointAsync(string version, System.Guid id, UpdateBrandCommand body, System.Threading.CancellationToken cancellationToken)
-        {
-            if (version == null)
-                throw new System.ArgumentNullException("version");
-
-            if (id == null)
-                throw new System.ArgumentNullException("id");
-
-            if (body == null)
-                throw new System.ArgumentNullException("body");
-
-            var client_ = _httpClient;
-            var disposeClient_ = false;
-            try
-            {
-                using (var request_ = new System.Net.Http.HttpRequestMessage())
-                {
-                    var json_ = System.Text.Json.JsonSerializer.SerializeToUtf8Bytes(body, JsonSerializerSettings);
-                    var content_ = new System.Net.Http.ByteArrayContent(json_);
-                    content_.Headers.ContentType = System.Net.Http.Headers.MediaTypeHeaderValue.Parse("application/json");
-                    request_.Content = content_;
-                    request_.Method = new System.Net.Http.HttpMethod("PUT");
-                    request_.Headers.Accept.Add(System.Net.Http.Headers.MediaTypeWithQualityHeaderValue.Parse("application/json"));
-
-                    var urlBuilder_ = new System.Text.StringBuilder();
-                
-                    // Operation Path: "api/v{version}/catalog/brands/{id}"
-                    urlBuilder_.Append("api/v");
-                    urlBuilder_.Append(System.Uri.EscapeDataString(ConvertToString(version, System.Globalization.CultureInfo.InvariantCulture)));
-                    urlBuilder_.Append("/catalog/brands/");
-                    urlBuilder_.Append(System.Uri.EscapeDataString(ConvertToString(id, System.Globalization.CultureInfo.InvariantCulture)));
-
-                    PrepareRequest(client_, request_, urlBuilder_);
-
-                    var url_ = urlBuilder_.ToString();
-                    request_.RequestUri = new System.Uri(url_, System.UriKind.RelativeOrAbsolute);
-
-                    PrepareRequest(client_, request_, url_);
-
-                    var response_ = await client_.SendAsync(request_, System.Net.Http.HttpCompletionOption.ResponseHeadersRead, cancellationToken).ConfigureAwait(false);
-                    var disposeResponse_ = true;
-                    try
-                    {
-                        var headers_ = new System.Collections.Generic.Dictionary<string, System.Collections.Generic.IEnumerable<string>>();
-                        foreach (var item_ in response_.Headers)
-                            headers_[item_.Key] = item_.Value;
-                        if (response_.Content != null && response_.Content.Headers != null)
-                        {
-                            foreach (var item_ in response_.Content.Headers)
-                                headers_[item_.Key] = item_.Value;
-                        }
-
-                        ProcessResponse(client_, response_);
-
-                        var status_ = (int)response_.StatusCode;
-                        if (status_ == 200)
-                        {
-                            var objectResponse_ = await ReadObjectResponseAsync<UpdateBrandResponse>(response_, headers_, cancellationToken).ConfigureAwait(false);
-                            if (objectResponse_.Object == null)
-                            {
-                                throw new ApiException("Response was null which was not expected.", status_, objectResponse_.Text, headers_, null);
-                            }
-                            return objectResponse_.Object;
-                        }
-                        else
-                        {
-                            var responseData_ = response_.Content == null ? null : await ReadAsStringAsync(response_.Content, cancellationToken).ConfigureAwait(false);
-                            throw new ApiException("The HTTP status code of the response was not expected (" + status_ + ").", status_, responseData_, headers_, null);
-                        }
-                    }
-                    finally
-                    {
-                        if (disposeResponse_)
-                            response_.Dispose();
-                    }
-                }
-            }
-            finally
-            {
-                if (disposeClient_)
-                    client_.Dispose();
-            }
-        }
-
-        /// <summary>
-        /// deletes brand by id
-        /// </summary>
-        /// <remarks>
-        /// deletes brand by id
-        /// </remarks>
-        /// <param name="version">The requested API version</param>
-        /// <returns>No Content</returns>
-        /// <exception cref="ApiException">A server side error occurred.</exception>
-        public virtual System.Threading.Tasks.Task DeleteBrandEndpointAsync(string version, System.Guid id)
-        {
-            return DeleteBrandEndpointAsync(version, id, System.Threading.CancellationToken.None);
-        }
-
-        /// <param name="cancellationToken">A cancellation token that can be used by other objects or threads to receive notice of cancellation.</param>
-        /// <summary>
-        /// deletes brand by id
-        /// </summary>
-        /// <remarks>
-        /// deletes brand by id
-        /// </remarks>
-        /// <param name="version">The requested API version</param>
-        /// <returns>No Content</returns>
-        /// <exception cref="ApiException">A server side error occurred.</exception>
-        public virtual async System.Threading.Tasks.Task DeleteBrandEndpointAsync(string version, System.Guid id, System.Threading.CancellationToken cancellationToken)
-        {
-            if (version == null)
-                throw new System.ArgumentNullException("version");
-
-            if (id == null)
-                throw new System.ArgumentNullException("id");
-
-            var client_ = _httpClient;
-            var disposeClient_ = false;
-            try
-            {
-                using (var request_ = new System.Net.Http.HttpRequestMessage())
-                {
-                    request_.Method = new System.Net.Http.HttpMethod("DELETE");
-
-                    var urlBuilder_ = new System.Text.StringBuilder();
-                
-                    // Operation Path: "api/v{version}/catalog/brands/{id}"
-                    urlBuilder_.Append("api/v");
-                    urlBuilder_.Append(System.Uri.EscapeDataString(ConvertToString(version, System.Globalization.CultureInfo.InvariantCulture)));
-                    urlBuilder_.Append("/catalog/brands/");
-                    urlBuilder_.Append(System.Uri.EscapeDataString(ConvertToString(id, System.Globalization.CultureInfo.InvariantCulture)));
-
-                    PrepareRequest(client_, request_, urlBuilder_);
-
-                    var url_ = urlBuilder_.ToString();
-                    request_.RequestUri = new System.Uri(url_, System.UriKind.RelativeOrAbsolute);
-
-                    PrepareRequest(client_, request_, url_);
-
-                    var response_ = await client_.SendAsync(request_, System.Net.Http.HttpCompletionOption.ResponseHeadersRead, cancellationToken).ConfigureAwait(false);
-                    var disposeResponse_ = true;
-                    try
-                    {
-                        var headers_ = new System.Collections.Generic.Dictionary<string, System.Collections.Generic.IEnumerable<string>>();
-                        foreach (var item_ in response_.Headers)
-                            headers_[item_.Key] = item_.Value;
-                        if (response_.Content != null && response_.Content.Headers != null)
-                        {
-                            foreach (var item_ in response_.Content.Headers)
-                                headers_[item_.Key] = item_.Value;
-                        }
-
-                        ProcessResponse(client_, response_);
-
-                        var status_ = (int)response_.StatusCode;
-                        if (status_ == 204)
-                        {
-                            return;
-                        }
-                        else
-                        {
-                            var responseData_ = response_.Content == null ? null : await ReadAsStringAsync(response_.Content, cancellationToken).ConfigureAwait(false);
-                            throw new ApiException("The HTTP status code of the response was not expected (" + status_ + ").", status_, responseData_, headers_, null);
-                        }
-                    }
-                    finally
-                    {
-                        if (disposeResponse_)
-                            response_.Dispose();
-                    }
-                }
-            }
-            finally
-            {
-                if (disposeClient_)
-                    client_.Dispose();
-            }
-        }
-
-        /// <summary>
-        /// Gets a list of brands
-        /// </summary>
-        /// <remarks>
-        /// Gets a list of brands with pagination and filtering support
-        /// </remarks>
-        /// <param name="version">The requested API version</param>
-        /// <returns>OK</returns>
-        /// <exception cref="ApiException">A server side error occurred.</exception>
-        public virtual System.Threading.Tasks.Task<BrandResponsePagedList> SearchBrandsEndpointAsync(string version, SearchBrandsCommand body)
-        {
-            return SearchBrandsEndpointAsync(version, body, System.Threading.CancellationToken.None);
-        }
-
-        /// <param name="cancellationToken">A cancellation token that can be used by other objects or threads to receive notice of cancellation.</param>
-        /// <summary>
-        /// Gets a list of brands
-        /// </summary>
-        /// <remarks>
-        /// Gets a list of brands with pagination and filtering support
-        /// </remarks>
-        /// <param name="version">The requested API version</param>
-        /// <returns>OK</returns>
-        /// <exception cref="ApiException">A server side error occurred.</exception>
-        public virtual async System.Threading.Tasks.Task<BrandResponsePagedList> SearchBrandsEndpointAsync(string version, SearchBrandsCommand body, System.Threading.CancellationToken cancellationToken)
-        {
-            if (version == null)
-                throw new System.ArgumentNullException("version");
-
-            if (body == null)
-                throw new System.ArgumentNullException("body");
-
-            var client_ = _httpClient;
-            var disposeClient_ = false;
-            try
-            {
-                using (var request_ = new System.Net.Http.HttpRequestMessage())
-                {
-                    var json_ = System.Text.Json.JsonSerializer.SerializeToUtf8Bytes(body, JsonSerializerSettings);
-                    var content_ = new System.Net.Http.ByteArrayContent(json_);
-                    content_.Headers.ContentType = System.Net.Http.Headers.MediaTypeHeaderValue.Parse("application/json");
-                    request_.Content = content_;
-                    request_.Method = new System.Net.Http.HttpMethod("POST");
-                    request_.Headers.Accept.Add(System.Net.Http.Headers.MediaTypeWithQualityHeaderValue.Parse("application/json"));
-
-                    var urlBuilder_ = new System.Text.StringBuilder();
-                
-                    // Operation Path: "api/v{version}/catalog/brands/search"
-                    urlBuilder_.Append("api/v");
-                    urlBuilder_.Append(System.Uri.EscapeDataString(ConvertToString(version, System.Globalization.CultureInfo.InvariantCulture)));
-                    urlBuilder_.Append("/catalog/brands/search");
-
-                    PrepareRequest(client_, request_, urlBuilder_);
-
-                    var url_ = urlBuilder_.ToString();
-                    request_.RequestUri = new System.Uri(url_, System.UriKind.RelativeOrAbsolute);
-
-                    PrepareRequest(client_, request_, url_);
-
-                    var response_ = await client_.SendAsync(request_, System.Net.Http.HttpCompletionOption.ResponseHeadersRead, cancellationToken).ConfigureAwait(false);
-                    var disposeResponse_ = true;
-                    try
-                    {
-                        var headers_ = new System.Collections.Generic.Dictionary<string, System.Collections.Generic.IEnumerable<string>>();
-                        foreach (var item_ in response_.Headers)
-                            headers_[item_.Key] = item_.Value;
-                        if (response_.Content != null && response_.Content.Headers != null)
-                        {
-                            foreach (var item_ in response_.Content.Headers)
-                                headers_[item_.Key] = item_.Value;
-                        }
-
-                        ProcessResponse(client_, response_);
-
-                        var status_ = (int)response_.StatusCode;
-                        if (status_ == 200)
-                        {
-                            var objectResponse_ = await ReadObjectResponseAsync<BrandResponsePagedList>(response_, headers_, cancellationToken).ConfigureAwait(false);
-                            if (objectResponse_.Object == null)
-                            {
-                                throw new ApiException("Response was null which was not expected.", status_, objectResponse_.Text, headers_, null);
-                            }
-                            return objectResponse_.Object;
-                        }
-                        else
-                        {
-                            var responseData_ = response_.Content == null ? null : await ReadAsStringAsync(response_.Content, cancellationToken).ConfigureAwait(false);
-                            throw new ApiException("The HTTP status code of the response was not expected (" + status_ + ").", status_, responseData_, headers_, null);
-                        }
-                    }
-                    finally
-                    {
-                        if (disposeResponse_)
-                            response_.Dispose();
-                    }
-                }
-            }
-            finally
-            {
-                if (disposeClient_)
-                    client_.Dispose();
-            }
-        }
-
-        /// <summary>
         /// creates a courtrental
         /// </summary>
         /// <remarks>
@@ -2419,6 +2160,115 @@ namespace FSH.Starter.Blazor.Infrastructure.Api
         }
 
         /// <summary>
+        /// Gets a list of CourtRentals by group id
+        /// </summary>
+        /// <remarks>
+        /// Gets a list of CourtRentals with pagination and filtering support
+        /// </remarks>
+        /// <param name="version">The requested API version</param>
+        /// <returns>OK</returns>
+        /// <exception cref="ApiException">A server side error occurred.</exception>
+        public virtual System.Threading.Tasks.Task<CourtRentalResponsePagedList> GetCourtRentalsByGroupIdEndpointAsync(string version, System.Guid groupId, GetCourtRentalsByGroupIdCommand body)
+        {
+            return GetCourtRentalsByGroupIdEndpointAsync(version, groupId, body, System.Threading.CancellationToken.None);
+        }
+
+        /// <param name="cancellationToken">A cancellation token that can be used by other objects or threads to receive notice of cancellation.</param>
+        /// <summary>
+        /// Gets a list of CourtRentals by group id
+        /// </summary>
+        /// <remarks>
+        /// Gets a list of CourtRentals with pagination and filtering support
+        /// </remarks>
+        /// <param name="version">The requested API version</param>
+        /// <returns>OK</returns>
+        /// <exception cref="ApiException">A server side error occurred.</exception>
+        public virtual async System.Threading.Tasks.Task<CourtRentalResponsePagedList> GetCourtRentalsByGroupIdEndpointAsync(string version, System.Guid groupId, GetCourtRentalsByGroupIdCommand body, System.Threading.CancellationToken cancellationToken)
+        {
+            if (version == null)
+                throw new System.ArgumentNullException("version");
+
+            if (groupId == null)
+                throw new System.ArgumentNullException("groupId");
+
+            if (body == null)
+                throw new System.ArgumentNullException("body");
+
+            var client_ = _httpClient;
+            var disposeClient_ = false;
+            try
+            {
+                using (var request_ = new System.Net.Http.HttpRequestMessage())
+                {
+                    var json_ = System.Text.Json.JsonSerializer.SerializeToUtf8Bytes(body, JsonSerializerSettings);
+                    var content_ = new System.Net.Http.ByteArrayContent(json_);
+                    content_.Headers.ContentType = System.Net.Http.Headers.MediaTypeHeaderValue.Parse("application/json");
+                    request_.Content = content_;
+                    request_.Method = new System.Net.Http.HttpMethod("POST");
+                    request_.Headers.Accept.Add(System.Net.Http.Headers.MediaTypeWithQualityHeaderValue.Parse("application/json"));
+
+                    var urlBuilder_ = new System.Text.StringBuilder();
+                
+                    // Operation Path: "api/v{version}/booking/courtrentals/{groupId}/courtrentals"
+                    urlBuilder_.Append("api/v");
+                    urlBuilder_.Append(System.Uri.EscapeDataString(ConvertToString(version, System.Globalization.CultureInfo.InvariantCulture)));
+                    urlBuilder_.Append("/booking/courtrentals/");
+                    urlBuilder_.Append(System.Uri.EscapeDataString(ConvertToString(groupId, System.Globalization.CultureInfo.InvariantCulture)));
+                    urlBuilder_.Append("/courtrentals");
+
+                    PrepareRequest(client_, request_, urlBuilder_);
+
+                    var url_ = urlBuilder_.ToString();
+                    request_.RequestUri = new System.Uri(url_, System.UriKind.RelativeOrAbsolute);
+
+                    PrepareRequest(client_, request_, url_);
+
+                    var response_ = await client_.SendAsync(request_, System.Net.Http.HttpCompletionOption.ResponseHeadersRead, cancellationToken).ConfigureAwait(false);
+                    var disposeResponse_ = true;
+                    try
+                    {
+                        var headers_ = new System.Collections.Generic.Dictionary<string, System.Collections.Generic.IEnumerable<string>>();
+                        foreach (var item_ in response_.Headers)
+                            headers_[item_.Key] = item_.Value;
+                        if (response_.Content != null && response_.Content.Headers != null)
+                        {
+                            foreach (var item_ in response_.Content.Headers)
+                                headers_[item_.Key] = item_.Value;
+                        }
+
+                        ProcessResponse(client_, response_);
+
+                        var status_ = (int)response_.StatusCode;
+                        if (status_ == 200)
+                        {
+                            var objectResponse_ = await ReadObjectResponseAsync<CourtRentalResponsePagedList>(response_, headers_, cancellationToken).ConfigureAwait(false);
+                            if (objectResponse_.Object == null)
+                            {
+                                throw new ApiException("Response was null which was not expected.", status_, objectResponse_.Text, headers_, null);
+                            }
+                            return objectResponse_.Object;
+                        }
+                        else
+                        {
+                            var responseData_ = response_.Content == null ? null : await ReadAsStringAsync(response_.Content, cancellationToken).ConfigureAwait(false);
+                            throw new ApiException("The HTTP status code of the response was not expected (" + status_ + ").", status_, responseData_, headers_, null);
+                        }
+                    }
+                    finally
+                    {
+                        if (disposeResponse_)
+                            response_.Dispose();
+                    }
+                }
+            }
+            finally
+            {
+                if (disposeClient_)
+                    client_.Dispose();
+            }
+        }
+
+        /// <summary>
         /// Gets a list of courtrentals
         /// </summary>
         /// <remarks>
@@ -2496,6 +2346,1458 @@ namespace FSH.Starter.Blazor.Infrastructure.Api
                         if (status_ == 200)
                         {
                             var objectResponse_ = await ReadObjectResponseAsync<CourtRentalResponsePagedList>(response_, headers_, cancellationToken).ConfigureAwait(false);
+                            if (objectResponse_.Object == null)
+                            {
+                                throw new ApiException("Response was null which was not expected.", status_, objectResponse_.Text, headers_, null);
+                            }
+                            return objectResponse_.Object;
+                        }
+                        else
+                        {
+                            var responseData_ = response_.Content == null ? null : await ReadAsStringAsync(response_.Content, cancellationToken).ConfigureAwait(false);
+                            throw new ApiException("The HTTP status code of the response was not expected (" + status_ + ").", status_, responseData_, headers_, null);
+                        }
+                    }
+                    finally
+                    {
+                        if (disposeResponse_)
+                            response_.Dispose();
+                    }
+                }
+            }
+            finally
+            {
+                if (disposeClient_)
+                    client_.Dispose();
+            }
+        }
+
+        /// <summary>
+        /// Gets a list of courtrentals by house weekday time court
+        /// </summary>
+        /// <remarks>
+        /// Gets a list of courtrentals with pagination and filtering support
+        /// </remarks>
+        /// <param name="version">The requested API version</param>
+        /// <returns>OK</returns>
+        /// <exception cref="ApiException">A server side error occurred.</exception>
+        public virtual System.Threading.Tasks.Task<CourtRentalResponsePagedList> SearchCourtRentalsByHouseDayTimeCourtEndpointAsync(string version, SearchCourtRentalsByHouseDayTimeCourtCommand body)
+        {
+            return SearchCourtRentalsByHouseDayTimeCourtEndpointAsync(version, body, System.Threading.CancellationToken.None);
+        }
+
+        /// <param name="cancellationToken">A cancellation token that can be used by other objects or threads to receive notice of cancellation.</param>
+        /// <summary>
+        /// Gets a list of courtrentals by house weekday time court
+        /// </summary>
+        /// <remarks>
+        /// Gets a list of courtrentals with pagination and filtering support
+        /// </remarks>
+        /// <param name="version">The requested API version</param>
+        /// <returns>OK</returns>
+        /// <exception cref="ApiException">A server side error occurred.</exception>
+        public virtual async System.Threading.Tasks.Task<CourtRentalResponsePagedList> SearchCourtRentalsByHouseDayTimeCourtEndpointAsync(string version, SearchCourtRentalsByHouseDayTimeCourtCommand body, System.Threading.CancellationToken cancellationToken)
+        {
+            if (version == null)
+                throw new System.ArgumentNullException("version");
+
+            if (body == null)
+                throw new System.ArgumentNullException("body");
+
+            var client_ = _httpClient;
+            var disposeClient_ = false;
+            try
+            {
+                using (var request_ = new System.Net.Http.HttpRequestMessage())
+                {
+                    var json_ = System.Text.Json.JsonSerializer.SerializeToUtf8Bytes(body, JsonSerializerSettings);
+                    var content_ = new System.Net.Http.ByteArrayContent(json_);
+                    content_.Headers.ContentType = System.Net.Http.Headers.MediaTypeHeaderValue.Parse("application/json");
+                    request_.Content = content_;
+                    request_.Method = new System.Net.Http.HttpMethod("POST");
+                    request_.Headers.Accept.Add(System.Net.Http.Headers.MediaTypeWithQualityHeaderValue.Parse("application/json"));
+
+                    var urlBuilder_ = new System.Text.StringBuilder();
+                
+                    // Operation Path: "api/v{version}/booking/courtrentals/searchbydaytimecourt"
+                    urlBuilder_.Append("api/v");
+                    urlBuilder_.Append(System.Uri.EscapeDataString(ConvertToString(version, System.Globalization.CultureInfo.InvariantCulture)));
+                    urlBuilder_.Append("/booking/courtrentals/searchbydaytimecourt");
+
+                    PrepareRequest(client_, request_, urlBuilder_);
+
+                    var url_ = urlBuilder_.ToString();
+                    request_.RequestUri = new System.Uri(url_, System.UriKind.RelativeOrAbsolute);
+
+                    PrepareRequest(client_, request_, url_);
+
+                    var response_ = await client_.SendAsync(request_, System.Net.Http.HttpCompletionOption.ResponseHeadersRead, cancellationToken).ConfigureAwait(false);
+                    var disposeResponse_ = true;
+                    try
+                    {
+                        var headers_ = new System.Collections.Generic.Dictionary<string, System.Collections.Generic.IEnumerable<string>>();
+                        foreach (var item_ in response_.Headers)
+                            headers_[item_.Key] = item_.Value;
+                        if (response_.Content != null && response_.Content.Headers != null)
+                        {
+                            foreach (var item_ in response_.Content.Headers)
+                                headers_[item_.Key] = item_.Value;
+                        }
+
+                        ProcessResponse(client_, response_);
+
+                        var status_ = (int)response_.StatusCode;
+                        if (status_ == 200)
+                        {
+                            var objectResponse_ = await ReadObjectResponseAsync<CourtRentalResponsePagedList>(response_, headers_, cancellationToken).ConfigureAwait(false);
+                            if (objectResponse_.Object == null)
+                            {
+                                throw new ApiException("Response was null which was not expected.", status_, objectResponse_.Text, headers_, null);
+                            }
+                            return objectResponse_.Object;
+                        }
+                        else
+                        {
+                            var responseData_ = response_.Content == null ? null : await ReadAsStringAsync(response_.Content, cancellationToken).ConfigureAwait(false);
+                            throw new ApiException("The HTTP status code of the response was not expected (" + status_ + ").", status_, responseData_, headers_, null);
+                        }
+                    }
+                    finally
+                    {
+                        if (disposeResponse_)
+                            response_.Dispose();
+                    }
+                }
+            }
+            finally
+            {
+                if (disposeClient_)
+                    client_.Dispose();
+            }
+        }
+
+        /// <summary>
+        /// creates a courtrental session
+        /// </summary>
+        /// <remarks>
+        /// creates a courtrental session
+        /// </remarks>
+        /// <param name="version">The requested API version</param>
+        /// <returns>OK</returns>
+        /// <exception cref="ApiException">A server side error occurred.</exception>
+        public virtual System.Threading.Tasks.Task<CreateCourtRentalSessionResponse> CreateCourtRentalSessionEndpointAsync(string version, CreateCourtRentalSessionCommand body)
+        {
+            return CreateCourtRentalSessionEndpointAsync(version, body, System.Threading.CancellationToken.None);
+        }
+
+        /// <param name="cancellationToken">A cancellation token that can be used by other objects or threads to receive notice of cancellation.</param>
+        /// <summary>
+        /// creates a courtrental session
+        /// </summary>
+        /// <remarks>
+        /// creates a courtrental session
+        /// </remarks>
+        /// <param name="version">The requested API version</param>
+        /// <returns>OK</returns>
+        /// <exception cref="ApiException">A server side error occurred.</exception>
+        public virtual async System.Threading.Tasks.Task<CreateCourtRentalSessionResponse> CreateCourtRentalSessionEndpointAsync(string version, CreateCourtRentalSessionCommand body, System.Threading.CancellationToken cancellationToken)
+        {
+            if (version == null)
+                throw new System.ArgumentNullException("version");
+
+            if (body == null)
+                throw new System.ArgumentNullException("body");
+
+            var client_ = _httpClient;
+            var disposeClient_ = false;
+            try
+            {
+                using (var request_ = new System.Net.Http.HttpRequestMessage())
+                {
+                    var json_ = System.Text.Json.JsonSerializer.SerializeToUtf8Bytes(body, JsonSerializerSettings);
+                    var content_ = new System.Net.Http.ByteArrayContent(json_);
+                    content_.Headers.ContentType = System.Net.Http.Headers.MediaTypeHeaderValue.Parse("application/json");
+                    request_.Content = content_;
+                    request_.Method = new System.Net.Http.HttpMethod("POST");
+                    request_.Headers.Accept.Add(System.Net.Http.Headers.MediaTypeWithQualityHeaderValue.Parse("application/json"));
+
+                    var urlBuilder_ = new System.Text.StringBuilder();
+                
+                    // Operation Path: "api/v{version}/booking/courtrentalsessions"
+                    urlBuilder_.Append("api/v");
+                    urlBuilder_.Append(System.Uri.EscapeDataString(ConvertToString(version, System.Globalization.CultureInfo.InvariantCulture)));
+                    urlBuilder_.Append("/booking/courtrentalsessions");
+
+                    PrepareRequest(client_, request_, urlBuilder_);
+
+                    var url_ = urlBuilder_.ToString();
+                    request_.RequestUri = new System.Uri(url_, System.UriKind.RelativeOrAbsolute);
+
+                    PrepareRequest(client_, request_, url_);
+
+                    var response_ = await client_.SendAsync(request_, System.Net.Http.HttpCompletionOption.ResponseHeadersRead, cancellationToken).ConfigureAwait(false);
+                    var disposeResponse_ = true;
+                    try
+                    {
+                        var headers_ = new System.Collections.Generic.Dictionary<string, System.Collections.Generic.IEnumerable<string>>();
+                        foreach (var item_ in response_.Headers)
+                            headers_[item_.Key] = item_.Value;
+                        if (response_.Content != null && response_.Content.Headers != null)
+                        {
+                            foreach (var item_ in response_.Content.Headers)
+                                headers_[item_.Key] = item_.Value;
+                        }
+
+                        ProcessResponse(client_, response_);
+
+                        var status_ = (int)response_.StatusCode;
+                        if (status_ == 200)
+                        {
+                            var objectResponse_ = await ReadObjectResponseAsync<CreateCourtRentalSessionResponse>(response_, headers_, cancellationToken).ConfigureAwait(false);
+                            if (objectResponse_.Object == null)
+                            {
+                                throw new ApiException("Response was null which was not expected.", status_, objectResponse_.Text, headers_, null);
+                            }
+                            return objectResponse_.Object;
+                        }
+                        else
+                        {
+                            var responseData_ = response_.Content == null ? null : await ReadAsStringAsync(response_.Content, cancellationToken).ConfigureAwait(false);
+                            throw new ApiException("The HTTP status code of the response was not expected (" + status_ + ").", status_, responseData_, headers_, null);
+                        }
+                    }
+                    finally
+                    {
+                        if (disposeResponse_)
+                            response_.Dispose();
+                    }
+                }
+            }
+            finally
+            {
+                if (disposeClient_)
+                    client_.Dispose();
+            }
+        }
+
+        /// <summary>
+        /// gets courtrental session by id
+        /// </summary>
+        /// <remarks>
+        /// gets courtrental session by id
+        /// </remarks>
+        /// <param name="version">The requested API version</param>
+        /// <returns>OK</returns>
+        /// <exception cref="ApiException">A server side error occurred.</exception>
+        public virtual System.Threading.Tasks.Task<CourtRentalSessionResponse> GetCourtRentalSessionEndpointAsync(string version, System.Guid id)
+        {
+            return GetCourtRentalSessionEndpointAsync(version, id, System.Threading.CancellationToken.None);
+        }
+
+        /// <param name="cancellationToken">A cancellation token that can be used by other objects or threads to receive notice of cancellation.</param>
+        /// <summary>
+        /// gets courtrental session by id
+        /// </summary>
+        /// <remarks>
+        /// gets courtrental session by id
+        /// </remarks>
+        /// <param name="version">The requested API version</param>
+        /// <returns>OK</returns>
+        /// <exception cref="ApiException">A server side error occurred.</exception>
+        public virtual async System.Threading.Tasks.Task<CourtRentalSessionResponse> GetCourtRentalSessionEndpointAsync(string version, System.Guid id, System.Threading.CancellationToken cancellationToken)
+        {
+            if (version == null)
+                throw new System.ArgumentNullException("version");
+
+            if (id == null)
+                throw new System.ArgumentNullException("id");
+
+            var client_ = _httpClient;
+            var disposeClient_ = false;
+            try
+            {
+                using (var request_ = new System.Net.Http.HttpRequestMessage())
+                {
+                    request_.Method = new System.Net.Http.HttpMethod("GET");
+                    request_.Headers.Accept.Add(System.Net.Http.Headers.MediaTypeWithQualityHeaderValue.Parse("application/json"));
+
+                    var urlBuilder_ = new System.Text.StringBuilder();
+                
+                    // Operation Path: "api/v{version}/booking/courtrentalsessions/{id}"
+                    urlBuilder_.Append("api/v");
+                    urlBuilder_.Append(System.Uri.EscapeDataString(ConvertToString(version, System.Globalization.CultureInfo.InvariantCulture)));
+                    urlBuilder_.Append("/booking/courtrentalsessions/");
+                    urlBuilder_.Append(System.Uri.EscapeDataString(ConvertToString(id, System.Globalization.CultureInfo.InvariantCulture)));
+
+                    PrepareRequest(client_, request_, urlBuilder_);
+
+                    var url_ = urlBuilder_.ToString();
+                    request_.RequestUri = new System.Uri(url_, System.UriKind.RelativeOrAbsolute);
+
+                    PrepareRequest(client_, request_, url_);
+
+                    var response_ = await client_.SendAsync(request_, System.Net.Http.HttpCompletionOption.ResponseHeadersRead, cancellationToken).ConfigureAwait(false);
+                    var disposeResponse_ = true;
+                    try
+                    {
+                        var headers_ = new System.Collections.Generic.Dictionary<string, System.Collections.Generic.IEnumerable<string>>();
+                        foreach (var item_ in response_.Headers)
+                            headers_[item_.Key] = item_.Value;
+                        if (response_.Content != null && response_.Content.Headers != null)
+                        {
+                            foreach (var item_ in response_.Content.Headers)
+                                headers_[item_.Key] = item_.Value;
+                        }
+
+                        ProcessResponse(client_, response_);
+
+                        var status_ = (int)response_.StatusCode;
+                        if (status_ == 200)
+                        {
+                            var objectResponse_ = await ReadObjectResponseAsync<CourtRentalSessionResponse>(response_, headers_, cancellationToken).ConfigureAwait(false);
+                            if (objectResponse_.Object == null)
+                            {
+                                throw new ApiException("Response was null which was not expected.", status_, objectResponse_.Text, headers_, null);
+                            }
+                            return objectResponse_.Object;
+                        }
+                        else
+                        {
+                            var responseData_ = response_.Content == null ? null : await ReadAsStringAsync(response_.Content, cancellationToken).ConfigureAwait(false);
+                            throw new ApiException("The HTTP status code of the response was not expected (" + status_ + ").", status_, responseData_, headers_, null);
+                        }
+                    }
+                    finally
+                    {
+                        if (disposeResponse_)
+                            response_.Dispose();
+                    }
+                }
+            }
+            finally
+            {
+                if (disposeClient_)
+                    client_.Dispose();
+            }
+        }
+
+        /// <summary>
+        /// update a courtrental session
+        /// </summary>
+        /// <remarks>
+        /// update a courtrental session
+        /// </remarks>
+        /// <param name="version">The requested API version</param>
+        /// <returns>OK</returns>
+        /// <exception cref="ApiException">A server side error occurred.</exception>
+        public virtual System.Threading.Tasks.Task<UpdateCourtRentalSessionResponse> UpdateCourtRentalSessionEndpointAsync(string version, System.Guid id, UpdateCourtRentalSessionCommand body)
+        {
+            return UpdateCourtRentalSessionEndpointAsync(version, id, body, System.Threading.CancellationToken.None);
+        }
+
+        /// <param name="cancellationToken">A cancellation token that can be used by other objects or threads to receive notice of cancellation.</param>
+        /// <summary>
+        /// update a courtrental session
+        /// </summary>
+        /// <remarks>
+        /// update a courtrental session
+        /// </remarks>
+        /// <param name="version">The requested API version</param>
+        /// <returns>OK</returns>
+        /// <exception cref="ApiException">A server side error occurred.</exception>
+        public virtual async System.Threading.Tasks.Task<UpdateCourtRentalSessionResponse> UpdateCourtRentalSessionEndpointAsync(string version, System.Guid id, UpdateCourtRentalSessionCommand body, System.Threading.CancellationToken cancellationToken)
+        {
+            if (version == null)
+                throw new System.ArgumentNullException("version");
+
+            if (id == null)
+                throw new System.ArgumentNullException("id");
+
+            if (body == null)
+                throw new System.ArgumentNullException("body");
+
+            var client_ = _httpClient;
+            var disposeClient_ = false;
+            try
+            {
+                using (var request_ = new System.Net.Http.HttpRequestMessage())
+                {
+                    var json_ = System.Text.Json.JsonSerializer.SerializeToUtf8Bytes(body, JsonSerializerSettings);
+                    var content_ = new System.Net.Http.ByteArrayContent(json_);
+                    content_.Headers.ContentType = System.Net.Http.Headers.MediaTypeHeaderValue.Parse("application/json");
+                    request_.Content = content_;
+                    request_.Method = new System.Net.Http.HttpMethod("PUT");
+                    request_.Headers.Accept.Add(System.Net.Http.Headers.MediaTypeWithQualityHeaderValue.Parse("application/json"));
+
+                    var urlBuilder_ = new System.Text.StringBuilder();
+                
+                    // Operation Path: "api/v{version}/booking/courtrentalsessions/{id}"
+                    urlBuilder_.Append("api/v");
+                    urlBuilder_.Append(System.Uri.EscapeDataString(ConvertToString(version, System.Globalization.CultureInfo.InvariantCulture)));
+                    urlBuilder_.Append("/booking/courtrentalsessions/");
+                    urlBuilder_.Append(System.Uri.EscapeDataString(ConvertToString(id, System.Globalization.CultureInfo.InvariantCulture)));
+
+                    PrepareRequest(client_, request_, urlBuilder_);
+
+                    var url_ = urlBuilder_.ToString();
+                    request_.RequestUri = new System.Uri(url_, System.UriKind.RelativeOrAbsolute);
+
+                    PrepareRequest(client_, request_, url_);
+
+                    var response_ = await client_.SendAsync(request_, System.Net.Http.HttpCompletionOption.ResponseHeadersRead, cancellationToken).ConfigureAwait(false);
+                    var disposeResponse_ = true;
+                    try
+                    {
+                        var headers_ = new System.Collections.Generic.Dictionary<string, System.Collections.Generic.IEnumerable<string>>();
+                        foreach (var item_ in response_.Headers)
+                            headers_[item_.Key] = item_.Value;
+                        if (response_.Content != null && response_.Content.Headers != null)
+                        {
+                            foreach (var item_ in response_.Content.Headers)
+                                headers_[item_.Key] = item_.Value;
+                        }
+
+                        ProcessResponse(client_, response_);
+
+                        var status_ = (int)response_.StatusCode;
+                        if (status_ == 200)
+                        {
+                            var objectResponse_ = await ReadObjectResponseAsync<UpdateCourtRentalSessionResponse>(response_, headers_, cancellationToken).ConfigureAwait(false);
+                            if (objectResponse_.Object == null)
+                            {
+                                throw new ApiException("Response was null which was not expected.", status_, objectResponse_.Text, headers_, null);
+                            }
+                            return objectResponse_.Object;
+                        }
+                        else
+                        {
+                            var responseData_ = response_.Content == null ? null : await ReadAsStringAsync(response_.Content, cancellationToken).ConfigureAwait(false);
+                            throw new ApiException("The HTTP status code of the response was not expected (" + status_ + ").", status_, responseData_, headers_, null);
+                        }
+                    }
+                    finally
+                    {
+                        if (disposeResponse_)
+                            response_.Dispose();
+                    }
+                }
+            }
+            finally
+            {
+                if (disposeClient_)
+                    client_.Dispose();
+            }
+        }
+
+        /// <summary>
+        /// deletes courtrental session by id
+        /// </summary>
+        /// <remarks>
+        /// deletes courtrental session by id
+        /// </remarks>
+        /// <param name="version">The requested API version</param>
+        /// <returns>No Content</returns>
+        /// <exception cref="ApiException">A server side error occurred.</exception>
+        public virtual System.Threading.Tasks.Task DeleteCourtRentalSessionEndpointAsync(string version, System.Guid id)
+        {
+            return DeleteCourtRentalSessionEndpointAsync(version, id, System.Threading.CancellationToken.None);
+        }
+
+        /// <param name="cancellationToken">A cancellation token that can be used by other objects or threads to receive notice of cancellation.</param>
+        /// <summary>
+        /// deletes courtrental session by id
+        /// </summary>
+        /// <remarks>
+        /// deletes courtrental session by id
+        /// </remarks>
+        /// <param name="version">The requested API version</param>
+        /// <returns>No Content</returns>
+        /// <exception cref="ApiException">A server side error occurred.</exception>
+        public virtual async System.Threading.Tasks.Task DeleteCourtRentalSessionEndpointAsync(string version, System.Guid id, System.Threading.CancellationToken cancellationToken)
+        {
+            if (version == null)
+                throw new System.ArgumentNullException("version");
+
+            if (id == null)
+                throw new System.ArgumentNullException("id");
+
+            var client_ = _httpClient;
+            var disposeClient_ = false;
+            try
+            {
+                using (var request_ = new System.Net.Http.HttpRequestMessage())
+                {
+                    request_.Method = new System.Net.Http.HttpMethod("DELETE");
+
+                    var urlBuilder_ = new System.Text.StringBuilder();
+                
+                    // Operation Path: "api/v{version}/booking/courtrentalsessions/{id}"
+                    urlBuilder_.Append("api/v");
+                    urlBuilder_.Append(System.Uri.EscapeDataString(ConvertToString(version, System.Globalization.CultureInfo.InvariantCulture)));
+                    urlBuilder_.Append("/booking/courtrentalsessions/");
+                    urlBuilder_.Append(System.Uri.EscapeDataString(ConvertToString(id, System.Globalization.CultureInfo.InvariantCulture)));
+
+                    PrepareRequest(client_, request_, urlBuilder_);
+
+                    var url_ = urlBuilder_.ToString();
+                    request_.RequestUri = new System.Uri(url_, System.UriKind.RelativeOrAbsolute);
+
+                    PrepareRequest(client_, request_, url_);
+
+                    var response_ = await client_.SendAsync(request_, System.Net.Http.HttpCompletionOption.ResponseHeadersRead, cancellationToken).ConfigureAwait(false);
+                    var disposeResponse_ = true;
+                    try
+                    {
+                        var headers_ = new System.Collections.Generic.Dictionary<string, System.Collections.Generic.IEnumerable<string>>();
+                        foreach (var item_ in response_.Headers)
+                            headers_[item_.Key] = item_.Value;
+                        if (response_.Content != null && response_.Content.Headers != null)
+                        {
+                            foreach (var item_ in response_.Content.Headers)
+                                headers_[item_.Key] = item_.Value;
+                        }
+
+                        ProcessResponse(client_, response_);
+
+                        var status_ = (int)response_.StatusCode;
+                        if (status_ == 204)
+                        {
+                            return;
+                        }
+                        else
+                        {
+                            var responseData_ = response_.Content == null ? null : await ReadAsStringAsync(response_.Content, cancellationToken).ConfigureAwait(false);
+                            throw new ApiException("The HTTP status code of the response was not expected (" + status_ + ").", status_, responseData_, headers_, null);
+                        }
+                    }
+                    finally
+                    {
+                        if (disposeResponse_)
+                            response_.Dispose();
+                    }
+                }
+            }
+            finally
+            {
+                if (disposeClient_)
+                    client_.Dispose();
+            }
+        }
+
+        /// <summary>
+        /// Gets a list of CourtRentalSessions by court rental id
+        /// </summary>
+        /// <remarks>
+        /// Gets a list of CourtRentalSessions with pagination and filtering support
+        /// </remarks>
+        /// <param name="version">The requested API version</param>
+        /// <returns>OK</returns>
+        /// <exception cref="ApiException">A server side error occurred.</exception>
+        public virtual System.Threading.Tasks.Task<CourtRentalSessionResponsePagedList> GetCourtRentalSessionsByCourtRentalIdEndpointAsync(string version, System.Guid groupId, GetCourtRentalSessionsByCourtRentalIdCommand body)
+        {
+            return GetCourtRentalSessionsByCourtRentalIdEndpointAsync(version, groupId, body, System.Threading.CancellationToken.None);
+        }
+
+        /// <param name="cancellationToken">A cancellation token that can be used by other objects or threads to receive notice of cancellation.</param>
+        /// <summary>
+        /// Gets a list of CourtRentalSessions by court rental id
+        /// </summary>
+        /// <remarks>
+        /// Gets a list of CourtRentalSessions with pagination and filtering support
+        /// </remarks>
+        /// <param name="version">The requested API version</param>
+        /// <returns>OK</returns>
+        /// <exception cref="ApiException">A server side error occurred.</exception>
+        public virtual async System.Threading.Tasks.Task<CourtRentalSessionResponsePagedList> GetCourtRentalSessionsByCourtRentalIdEndpointAsync(string version, System.Guid groupId, GetCourtRentalSessionsByCourtRentalIdCommand body, System.Threading.CancellationToken cancellationToken)
+        {
+            if (version == null)
+                throw new System.ArgumentNullException("version");
+
+            if (groupId == null)
+                throw new System.ArgumentNullException("groupId");
+
+            if (body == null)
+                throw new System.ArgumentNullException("body");
+
+            var client_ = _httpClient;
+            var disposeClient_ = false;
+            try
+            {
+                using (var request_ = new System.Net.Http.HttpRequestMessage())
+                {
+                    var json_ = System.Text.Json.JsonSerializer.SerializeToUtf8Bytes(body, JsonSerializerSettings);
+                    var content_ = new System.Net.Http.ByteArrayContent(json_);
+                    content_.Headers.ContentType = System.Net.Http.Headers.MediaTypeHeaderValue.Parse("application/json");
+                    request_.Content = content_;
+                    request_.Method = new System.Net.Http.HttpMethod("POST");
+                    request_.Headers.Accept.Add(System.Net.Http.Headers.MediaTypeWithQualityHeaderValue.Parse("application/json"));
+
+                    var urlBuilder_ = new System.Text.StringBuilder();
+                
+                    // Operation Path: "api/v{version}/booking/courtrentalsessions/{courtRentalId}/courtrentalsessions"
+                    urlBuilder_.Append("api/v");
+                    urlBuilder_.Append(System.Uri.EscapeDataString(ConvertToString(version, System.Globalization.CultureInfo.InvariantCulture)));
+                    urlBuilder_.Append("/booking/courtrentalsessions/");
+                    urlBuilder_.Append("/courtrentalsessions");
+                    urlBuilder_.Append('?');
+                    urlBuilder_.Append(System.Uri.EscapeDataString("groupId")).Append('=').Append(System.Uri.EscapeDataString(ConvertToString(groupId, System.Globalization.CultureInfo.InvariantCulture))).Append('&');
+                    urlBuilder_.Length--;
+
+                    PrepareRequest(client_, request_, urlBuilder_);
+
+                    var url_ = urlBuilder_.ToString();
+                    request_.RequestUri = new System.Uri(url_, System.UriKind.RelativeOrAbsolute);
+
+                    PrepareRequest(client_, request_, url_);
+
+                    var response_ = await client_.SendAsync(request_, System.Net.Http.HttpCompletionOption.ResponseHeadersRead, cancellationToken).ConfigureAwait(false);
+                    var disposeResponse_ = true;
+                    try
+                    {
+                        var headers_ = new System.Collections.Generic.Dictionary<string, System.Collections.Generic.IEnumerable<string>>();
+                        foreach (var item_ in response_.Headers)
+                            headers_[item_.Key] = item_.Value;
+                        if (response_.Content != null && response_.Content.Headers != null)
+                        {
+                            foreach (var item_ in response_.Content.Headers)
+                                headers_[item_.Key] = item_.Value;
+                        }
+
+                        ProcessResponse(client_, response_);
+
+                        var status_ = (int)response_.StatusCode;
+                        if (status_ == 200)
+                        {
+                            var objectResponse_ = await ReadObjectResponseAsync<CourtRentalSessionResponsePagedList>(response_, headers_, cancellationToken).ConfigureAwait(false);
+                            if (objectResponse_.Object == null)
+                            {
+                                throw new ApiException("Response was null which was not expected.", status_, objectResponse_.Text, headers_, null);
+                            }
+                            return objectResponse_.Object;
+                        }
+                        else
+                        {
+                            var responseData_ = response_.Content == null ? null : await ReadAsStringAsync(response_.Content, cancellationToken).ConfigureAwait(false);
+                            throw new ApiException("The HTTP status code of the response was not expected (" + status_ + ").", status_, responseData_, headers_, null);
+                        }
+                    }
+                    finally
+                    {
+                        if (disposeResponse_)
+                            response_.Dispose();
+                    }
+                }
+            }
+            finally
+            {
+                if (disposeClient_)
+                    client_.Dispose();
+            }
+        }
+
+        /// <summary>
+        /// Gets a list of courtrental sessions
+        /// </summary>
+        /// <remarks>
+        /// Gets a list of courtrental sessions with pagination and filtering support
+        /// </remarks>
+        /// <param name="version">The requested API version</param>
+        /// <returns>OK</returns>
+        /// <exception cref="ApiException">A server side error occurred.</exception>
+        public virtual System.Threading.Tasks.Task<CourtRentalSessionResponsePagedList> SearchCourtRentalSessionsEndpointAsync(string version, SearchCourtRentalSessionsCommand body)
+        {
+            return SearchCourtRentalSessionsEndpointAsync(version, body, System.Threading.CancellationToken.None);
+        }
+
+        /// <param name="cancellationToken">A cancellation token that can be used by other objects or threads to receive notice of cancellation.</param>
+        /// <summary>
+        /// Gets a list of courtrental sessions
+        /// </summary>
+        /// <remarks>
+        /// Gets a list of courtrental sessions with pagination and filtering support
+        /// </remarks>
+        /// <param name="version">The requested API version</param>
+        /// <returns>OK</returns>
+        /// <exception cref="ApiException">A server side error occurred.</exception>
+        public virtual async System.Threading.Tasks.Task<CourtRentalSessionResponsePagedList> SearchCourtRentalSessionsEndpointAsync(string version, SearchCourtRentalSessionsCommand body, System.Threading.CancellationToken cancellationToken)
+        {
+            if (version == null)
+                throw new System.ArgumentNullException("version");
+
+            if (body == null)
+                throw new System.ArgumentNullException("body");
+
+            var client_ = _httpClient;
+            var disposeClient_ = false;
+            try
+            {
+                using (var request_ = new System.Net.Http.HttpRequestMessage())
+                {
+                    var json_ = System.Text.Json.JsonSerializer.SerializeToUtf8Bytes(body, JsonSerializerSettings);
+                    var content_ = new System.Net.Http.ByteArrayContent(json_);
+                    content_.Headers.ContentType = System.Net.Http.Headers.MediaTypeHeaderValue.Parse("application/json");
+                    request_.Content = content_;
+                    request_.Method = new System.Net.Http.HttpMethod("POST");
+                    request_.Headers.Accept.Add(System.Net.Http.Headers.MediaTypeWithQualityHeaderValue.Parse("application/json"));
+
+                    var urlBuilder_ = new System.Text.StringBuilder();
+                
+                    // Operation Path: "api/v{version}/booking/courtrentalsessions/search"
+                    urlBuilder_.Append("api/v");
+                    urlBuilder_.Append(System.Uri.EscapeDataString(ConvertToString(version, System.Globalization.CultureInfo.InvariantCulture)));
+                    urlBuilder_.Append("/booking/courtrentalsessions/search");
+
+                    PrepareRequest(client_, request_, urlBuilder_);
+
+                    var url_ = urlBuilder_.ToString();
+                    request_.RequestUri = new System.Uri(url_, System.UriKind.RelativeOrAbsolute);
+
+                    PrepareRequest(client_, request_, url_);
+
+                    var response_ = await client_.SendAsync(request_, System.Net.Http.HttpCompletionOption.ResponseHeadersRead, cancellationToken).ConfigureAwait(false);
+                    var disposeResponse_ = true;
+                    try
+                    {
+                        var headers_ = new System.Collections.Generic.Dictionary<string, System.Collections.Generic.IEnumerable<string>>();
+                        foreach (var item_ in response_.Headers)
+                            headers_[item_.Key] = item_.Value;
+                        if (response_.Content != null && response_.Content.Headers != null)
+                        {
+                            foreach (var item_ in response_.Content.Headers)
+                                headers_[item_.Key] = item_.Value;
+                        }
+
+                        ProcessResponse(client_, response_);
+
+                        var status_ = (int)response_.StatusCode;
+                        if (status_ == 200)
+                        {
+                            var objectResponse_ = await ReadObjectResponseAsync<CourtRentalSessionResponsePagedList>(response_, headers_, cancellationToken).ConfigureAwait(false);
+                            if (objectResponse_.Object == null)
+                            {
+                                throw new ApiException("Response was null which was not expected.", status_, objectResponse_.Text, headers_, null);
+                            }
+                            return objectResponse_.Object;
+                        }
+                        else
+                        {
+                            var responseData_ = response_.Content == null ? null : await ReadAsStringAsync(response_.Content, cancellationToken).ConfigureAwait(false);
+                            throw new ApiException("The HTTP status code of the response was not expected (" + status_ + ").", status_, responseData_, headers_, null);
+                        }
+                    }
+                    finally
+                    {
+                        if (disposeResponse_)
+                            response_.Dispose();
+                    }
+                }
+            }
+            finally
+            {
+                if (disposeClient_)
+                    client_.Dispose();
+            }
+        }
+
+        /// <summary>
+        /// Gets a list of courtrental sessions by house weekday time court
+        /// </summary>
+        /// <remarks>
+        /// Gets a list of courtrental sessions with pagination and filtering support
+        /// </remarks>
+        /// <param name="version">The requested API version</param>
+        /// <returns>OK</returns>
+        /// <exception cref="ApiException">A server side error occurred.</exception>
+        public virtual System.Threading.Tasks.Task<CourtRentalSessionResponsePagedList> SearchCourtRentalSessionsByDateCourtEndpointAsync(string version, SearchCourtRentalSessionsByDateCourtCommand body)
+        {
+            return SearchCourtRentalSessionsByDateCourtEndpointAsync(version, body, System.Threading.CancellationToken.None);
+        }
+
+        /// <param name="cancellationToken">A cancellation token that can be used by other objects or threads to receive notice of cancellation.</param>
+        /// <summary>
+        /// Gets a list of courtrental sessions by house weekday time court
+        /// </summary>
+        /// <remarks>
+        /// Gets a list of courtrental sessions with pagination and filtering support
+        /// </remarks>
+        /// <param name="version">The requested API version</param>
+        /// <returns>OK</returns>
+        /// <exception cref="ApiException">A server side error occurred.</exception>
+        public virtual async System.Threading.Tasks.Task<CourtRentalSessionResponsePagedList> SearchCourtRentalSessionsByDateCourtEndpointAsync(string version, SearchCourtRentalSessionsByDateCourtCommand body, System.Threading.CancellationToken cancellationToken)
+        {
+            if (version == null)
+                throw new System.ArgumentNullException("version");
+
+            if (body == null)
+                throw new System.ArgumentNullException("body");
+
+            var client_ = _httpClient;
+            var disposeClient_ = false;
+            try
+            {
+                using (var request_ = new System.Net.Http.HttpRequestMessage())
+                {
+                    var json_ = System.Text.Json.JsonSerializer.SerializeToUtf8Bytes(body, JsonSerializerSettings);
+                    var content_ = new System.Net.Http.ByteArrayContent(json_);
+                    content_.Headers.ContentType = System.Net.Http.Headers.MediaTypeHeaderValue.Parse("application/json");
+                    request_.Content = content_;
+                    request_.Method = new System.Net.Http.HttpMethod("POST");
+                    request_.Headers.Accept.Add(System.Net.Http.Headers.MediaTypeWithQualityHeaderValue.Parse("application/json"));
+
+                    var urlBuilder_ = new System.Text.StringBuilder();
+                
+                    // Operation Path: "api/v{version}/booking/courtrentalsessions/searchbydatecourt"
+                    urlBuilder_.Append("api/v");
+                    urlBuilder_.Append(System.Uri.EscapeDataString(ConvertToString(version, System.Globalization.CultureInfo.InvariantCulture)));
+                    urlBuilder_.Append("/booking/courtrentalsessions/searchbydatecourt");
+
+                    PrepareRequest(client_, request_, urlBuilder_);
+
+                    var url_ = urlBuilder_.ToString();
+                    request_.RequestUri = new System.Uri(url_, System.UriKind.RelativeOrAbsolute);
+
+                    PrepareRequest(client_, request_, url_);
+
+                    var response_ = await client_.SendAsync(request_, System.Net.Http.HttpCompletionOption.ResponseHeadersRead, cancellationToken).ConfigureAwait(false);
+                    var disposeResponse_ = true;
+                    try
+                    {
+                        var headers_ = new System.Collections.Generic.Dictionary<string, System.Collections.Generic.IEnumerable<string>>();
+                        foreach (var item_ in response_.Headers)
+                            headers_[item_.Key] = item_.Value;
+                        if (response_.Content != null && response_.Content.Headers != null)
+                        {
+                            foreach (var item_ in response_.Content.Headers)
+                                headers_[item_.Key] = item_.Value;
+                        }
+
+                        ProcessResponse(client_, response_);
+
+                        var status_ = (int)response_.StatusCode;
+                        if (status_ == 200)
+                        {
+                            var objectResponse_ = await ReadObjectResponseAsync<CourtRentalSessionResponsePagedList>(response_, headers_, cancellationToken).ConfigureAwait(false);
+                            if (objectResponse_.Object == null)
+                            {
+                                throw new ApiException("Response was null which was not expected.", status_, objectResponse_.Text, headers_, null);
+                            }
+                            return objectResponse_.Object;
+                        }
+                        else
+                        {
+                            var responseData_ = response_.Content == null ? null : await ReadAsStringAsync(response_.Content, cancellationToken).ConfigureAwait(false);
+                            throw new ApiException("The HTTP status code of the response was not expected (" + status_ + ").", status_, responseData_, headers_, null);
+                        }
+                    }
+                    finally
+                    {
+                        if (disposeResponse_)
+                            response_.Dispose();
+                    }
+                }
+            }
+            finally
+            {
+                if (disposeClient_)
+                    client_.Dispose();
+            }
+        }
+
+        /// <summary>
+        /// creates a CourtRentalShare
+        /// </summary>
+        /// <remarks>
+        /// creates a CourtRentalShare
+        /// </remarks>
+        /// <param name="version">The requested API version</param>
+        /// <returns>OK</returns>
+        /// <exception cref="ApiException">A server side error occurred.</exception>
+        public virtual System.Threading.Tasks.Task<CreateCourtRentalShareResponse> CreateCourtRentalShareEndpointAsync(string version, CreateCourtRentalShareCommand body)
+        {
+            return CreateCourtRentalShareEndpointAsync(version, body, System.Threading.CancellationToken.None);
+        }
+
+        /// <param name="cancellationToken">A cancellation token that can be used by other objects or threads to receive notice of cancellation.</param>
+        /// <summary>
+        /// creates a CourtRentalShare
+        /// </summary>
+        /// <remarks>
+        /// creates a CourtRentalShare
+        /// </remarks>
+        /// <param name="version">The requested API version</param>
+        /// <returns>OK</returns>
+        /// <exception cref="ApiException">A server side error occurred.</exception>
+        public virtual async System.Threading.Tasks.Task<CreateCourtRentalShareResponse> CreateCourtRentalShareEndpointAsync(string version, CreateCourtRentalShareCommand body, System.Threading.CancellationToken cancellationToken)
+        {
+            if (version == null)
+                throw new System.ArgumentNullException("version");
+
+            if (body == null)
+                throw new System.ArgumentNullException("body");
+
+            var client_ = _httpClient;
+            var disposeClient_ = false;
+            try
+            {
+                using (var request_ = new System.Net.Http.HttpRequestMessage())
+                {
+                    var json_ = System.Text.Json.JsonSerializer.SerializeToUtf8Bytes(body, JsonSerializerSettings);
+                    var content_ = new System.Net.Http.ByteArrayContent(json_);
+                    content_.Headers.ContentType = System.Net.Http.Headers.MediaTypeHeaderValue.Parse("application/json");
+                    request_.Content = content_;
+                    request_.Method = new System.Net.Http.HttpMethod("POST");
+                    request_.Headers.Accept.Add(System.Net.Http.Headers.MediaTypeWithQualityHeaderValue.Parse("application/json"));
+
+                    var urlBuilder_ = new System.Text.StringBuilder();
+                
+                    // Operation Path: "api/v{version}/booking/courtrentalshares"
+                    urlBuilder_.Append("api/v");
+                    urlBuilder_.Append(System.Uri.EscapeDataString(ConvertToString(version, System.Globalization.CultureInfo.InvariantCulture)));
+                    urlBuilder_.Append("/booking/courtrentalshares");
+
+                    PrepareRequest(client_, request_, urlBuilder_);
+
+                    var url_ = urlBuilder_.ToString();
+                    request_.RequestUri = new System.Uri(url_, System.UriKind.RelativeOrAbsolute);
+
+                    PrepareRequest(client_, request_, url_);
+
+                    var response_ = await client_.SendAsync(request_, System.Net.Http.HttpCompletionOption.ResponseHeadersRead, cancellationToken).ConfigureAwait(false);
+                    var disposeResponse_ = true;
+                    try
+                    {
+                        var headers_ = new System.Collections.Generic.Dictionary<string, System.Collections.Generic.IEnumerable<string>>();
+                        foreach (var item_ in response_.Headers)
+                            headers_[item_.Key] = item_.Value;
+                        if (response_.Content != null && response_.Content.Headers != null)
+                        {
+                            foreach (var item_ in response_.Content.Headers)
+                                headers_[item_.Key] = item_.Value;
+                        }
+
+                        ProcessResponse(client_, response_);
+
+                        var status_ = (int)response_.StatusCode;
+                        if (status_ == 200)
+                        {
+                            var objectResponse_ = await ReadObjectResponseAsync<CreateCourtRentalShareResponse>(response_, headers_, cancellationToken).ConfigureAwait(false);
+                            if (objectResponse_.Object == null)
+                            {
+                                throw new ApiException("Response was null which was not expected.", status_, objectResponse_.Text, headers_, null);
+                            }
+                            return objectResponse_.Object;
+                        }
+                        else
+                        {
+                            var responseData_ = response_.Content == null ? null : await ReadAsStringAsync(response_.Content, cancellationToken).ConfigureAwait(false);
+                            throw new ApiException("The HTTP status code of the response was not expected (" + status_ + ").", status_, responseData_, headers_, null);
+                        }
+                    }
+                    finally
+                    {
+                        if (disposeResponse_)
+                            response_.Dispose();
+                    }
+                }
+            }
+            finally
+            {
+                if (disposeClient_)
+                    client_.Dispose();
+            }
+        }
+
+        /// <summary>
+        /// gets CourtRentalShare by id
+        /// </summary>
+        /// <remarks>
+        /// gets CourtRentalShare by id
+        /// </remarks>
+        /// <param name="version">The requested API version</param>
+        /// <returns>OK</returns>
+        /// <exception cref="ApiException">A server side error occurred.</exception>
+        public virtual System.Threading.Tasks.Task<CourtRentalShareResponse> GetCourtRentalShareEndpointAsync(string version, System.Guid id)
+        {
+            return GetCourtRentalShareEndpointAsync(version, id, System.Threading.CancellationToken.None);
+        }
+
+        /// <param name="cancellationToken">A cancellation token that can be used by other objects or threads to receive notice of cancellation.</param>
+        /// <summary>
+        /// gets CourtRentalShare by id
+        /// </summary>
+        /// <remarks>
+        /// gets CourtRentalShare by id
+        /// </remarks>
+        /// <param name="version">The requested API version</param>
+        /// <returns>OK</returns>
+        /// <exception cref="ApiException">A server side error occurred.</exception>
+        public virtual async System.Threading.Tasks.Task<CourtRentalShareResponse> GetCourtRentalShareEndpointAsync(string version, System.Guid id, System.Threading.CancellationToken cancellationToken)
+        {
+            if (version == null)
+                throw new System.ArgumentNullException("version");
+
+            if (id == null)
+                throw new System.ArgumentNullException("id");
+
+            var client_ = _httpClient;
+            var disposeClient_ = false;
+            try
+            {
+                using (var request_ = new System.Net.Http.HttpRequestMessage())
+                {
+                    request_.Method = new System.Net.Http.HttpMethod("GET");
+                    request_.Headers.Accept.Add(System.Net.Http.Headers.MediaTypeWithQualityHeaderValue.Parse("application/json"));
+
+                    var urlBuilder_ = new System.Text.StringBuilder();
+                
+                    // Operation Path: "api/v{version}/booking/courtrentalshares/{id}"
+                    urlBuilder_.Append("api/v");
+                    urlBuilder_.Append(System.Uri.EscapeDataString(ConvertToString(version, System.Globalization.CultureInfo.InvariantCulture)));
+                    urlBuilder_.Append("/booking/courtrentalshares/");
+                    urlBuilder_.Append(System.Uri.EscapeDataString(ConvertToString(id, System.Globalization.CultureInfo.InvariantCulture)));
+
+                    PrepareRequest(client_, request_, urlBuilder_);
+
+                    var url_ = urlBuilder_.ToString();
+                    request_.RequestUri = new System.Uri(url_, System.UriKind.RelativeOrAbsolute);
+
+                    PrepareRequest(client_, request_, url_);
+
+                    var response_ = await client_.SendAsync(request_, System.Net.Http.HttpCompletionOption.ResponseHeadersRead, cancellationToken).ConfigureAwait(false);
+                    var disposeResponse_ = true;
+                    try
+                    {
+                        var headers_ = new System.Collections.Generic.Dictionary<string, System.Collections.Generic.IEnumerable<string>>();
+                        foreach (var item_ in response_.Headers)
+                            headers_[item_.Key] = item_.Value;
+                        if (response_.Content != null && response_.Content.Headers != null)
+                        {
+                            foreach (var item_ in response_.Content.Headers)
+                                headers_[item_.Key] = item_.Value;
+                        }
+
+                        ProcessResponse(client_, response_);
+
+                        var status_ = (int)response_.StatusCode;
+                        if (status_ == 200)
+                        {
+                            var objectResponse_ = await ReadObjectResponseAsync<CourtRentalShareResponse>(response_, headers_, cancellationToken).ConfigureAwait(false);
+                            if (objectResponse_.Object == null)
+                            {
+                                throw new ApiException("Response was null which was not expected.", status_, objectResponse_.Text, headers_, null);
+                            }
+                            return objectResponse_.Object;
+                        }
+                        else
+                        {
+                            var responseData_ = response_.Content == null ? null : await ReadAsStringAsync(response_.Content, cancellationToken).ConfigureAwait(false);
+                            throw new ApiException("The HTTP status code of the response was not expected (" + status_ + ").", status_, responseData_, headers_, null);
+                        }
+                    }
+                    finally
+                    {
+                        if (disposeResponse_)
+                            response_.Dispose();
+                    }
+                }
+            }
+            finally
+            {
+                if (disposeClient_)
+                    client_.Dispose();
+            }
+        }
+
+        /// <summary>
+        /// update a CourtRentalShare
+        /// </summary>
+        /// <remarks>
+        /// update a CourtRentalShare
+        /// </remarks>
+        /// <param name="version">The requested API version</param>
+        /// <returns>OK</returns>
+        /// <exception cref="ApiException">A server side error occurred.</exception>
+        public virtual System.Threading.Tasks.Task<UpdateCourtRentalShareResponse> UpdateCourtRentalShareEndpointAsync(string version, System.Guid id, UpdateCourtRentalShareCommand body)
+        {
+            return UpdateCourtRentalShareEndpointAsync(version, id, body, System.Threading.CancellationToken.None);
+        }
+
+        /// <param name="cancellationToken">A cancellation token that can be used by other objects or threads to receive notice of cancellation.</param>
+        /// <summary>
+        /// update a CourtRentalShare
+        /// </summary>
+        /// <remarks>
+        /// update a CourtRentalShare
+        /// </remarks>
+        /// <param name="version">The requested API version</param>
+        /// <returns>OK</returns>
+        /// <exception cref="ApiException">A server side error occurred.</exception>
+        public virtual async System.Threading.Tasks.Task<UpdateCourtRentalShareResponse> UpdateCourtRentalShareEndpointAsync(string version, System.Guid id, UpdateCourtRentalShareCommand body, System.Threading.CancellationToken cancellationToken)
+        {
+            if (version == null)
+                throw new System.ArgumentNullException("version");
+
+            if (id == null)
+                throw new System.ArgumentNullException("id");
+
+            if (body == null)
+                throw new System.ArgumentNullException("body");
+
+            var client_ = _httpClient;
+            var disposeClient_ = false;
+            try
+            {
+                using (var request_ = new System.Net.Http.HttpRequestMessage())
+                {
+                    var json_ = System.Text.Json.JsonSerializer.SerializeToUtf8Bytes(body, JsonSerializerSettings);
+                    var content_ = new System.Net.Http.ByteArrayContent(json_);
+                    content_.Headers.ContentType = System.Net.Http.Headers.MediaTypeHeaderValue.Parse("application/json");
+                    request_.Content = content_;
+                    request_.Method = new System.Net.Http.HttpMethod("PUT");
+                    request_.Headers.Accept.Add(System.Net.Http.Headers.MediaTypeWithQualityHeaderValue.Parse("application/json"));
+
+                    var urlBuilder_ = new System.Text.StringBuilder();
+                
+                    // Operation Path: "api/v{version}/booking/courtrentalshares/{id}"
+                    urlBuilder_.Append("api/v");
+                    urlBuilder_.Append(System.Uri.EscapeDataString(ConvertToString(version, System.Globalization.CultureInfo.InvariantCulture)));
+                    urlBuilder_.Append("/booking/courtrentalshares/");
+                    urlBuilder_.Append(System.Uri.EscapeDataString(ConvertToString(id, System.Globalization.CultureInfo.InvariantCulture)));
+
+                    PrepareRequest(client_, request_, urlBuilder_);
+
+                    var url_ = urlBuilder_.ToString();
+                    request_.RequestUri = new System.Uri(url_, System.UriKind.RelativeOrAbsolute);
+
+                    PrepareRequest(client_, request_, url_);
+
+                    var response_ = await client_.SendAsync(request_, System.Net.Http.HttpCompletionOption.ResponseHeadersRead, cancellationToken).ConfigureAwait(false);
+                    var disposeResponse_ = true;
+                    try
+                    {
+                        var headers_ = new System.Collections.Generic.Dictionary<string, System.Collections.Generic.IEnumerable<string>>();
+                        foreach (var item_ in response_.Headers)
+                            headers_[item_.Key] = item_.Value;
+                        if (response_.Content != null && response_.Content.Headers != null)
+                        {
+                            foreach (var item_ in response_.Content.Headers)
+                                headers_[item_.Key] = item_.Value;
+                        }
+
+                        ProcessResponse(client_, response_);
+
+                        var status_ = (int)response_.StatusCode;
+                        if (status_ == 200)
+                        {
+                            var objectResponse_ = await ReadObjectResponseAsync<UpdateCourtRentalShareResponse>(response_, headers_, cancellationToken).ConfigureAwait(false);
+                            if (objectResponse_.Object == null)
+                            {
+                                throw new ApiException("Response was null which was not expected.", status_, objectResponse_.Text, headers_, null);
+                            }
+                            return objectResponse_.Object;
+                        }
+                        else
+                        {
+                            var responseData_ = response_.Content == null ? null : await ReadAsStringAsync(response_.Content, cancellationToken).ConfigureAwait(false);
+                            throw new ApiException("The HTTP status code of the response was not expected (" + status_ + ").", status_, responseData_, headers_, null);
+                        }
+                    }
+                    finally
+                    {
+                        if (disposeResponse_)
+                            response_.Dispose();
+                    }
+                }
+            }
+            finally
+            {
+                if (disposeClient_)
+                    client_.Dispose();
+            }
+        }
+
+        /// <summary>
+        /// deletes CourtRentalShare by id
+        /// </summary>
+        /// <remarks>
+        /// deletes CourtRentalShare by id
+        /// </remarks>
+        /// <param name="version">The requested API version</param>
+        /// <returns>No Content</returns>
+        /// <exception cref="ApiException">A server side error occurred.</exception>
+        public virtual System.Threading.Tasks.Task DeleteCourtRentalShareEndpointAsync(string version, System.Guid id)
+        {
+            return DeleteCourtRentalShareEndpointAsync(version, id, System.Threading.CancellationToken.None);
+        }
+
+        /// <param name="cancellationToken">A cancellation token that can be used by other objects or threads to receive notice of cancellation.</param>
+        /// <summary>
+        /// deletes CourtRentalShare by id
+        /// </summary>
+        /// <remarks>
+        /// deletes CourtRentalShare by id
+        /// </remarks>
+        /// <param name="version">The requested API version</param>
+        /// <returns>No Content</returns>
+        /// <exception cref="ApiException">A server side error occurred.</exception>
+        public virtual async System.Threading.Tasks.Task DeleteCourtRentalShareEndpointAsync(string version, System.Guid id, System.Threading.CancellationToken cancellationToken)
+        {
+            if (version == null)
+                throw new System.ArgumentNullException("version");
+
+            if (id == null)
+                throw new System.ArgumentNullException("id");
+
+            var client_ = _httpClient;
+            var disposeClient_ = false;
+            try
+            {
+                using (var request_ = new System.Net.Http.HttpRequestMessage())
+                {
+                    request_.Method = new System.Net.Http.HttpMethod("DELETE");
+
+                    var urlBuilder_ = new System.Text.StringBuilder();
+                
+                    // Operation Path: "api/v{version}/booking/courtrentalshares/{id}"
+                    urlBuilder_.Append("api/v");
+                    urlBuilder_.Append(System.Uri.EscapeDataString(ConvertToString(version, System.Globalization.CultureInfo.InvariantCulture)));
+                    urlBuilder_.Append("/booking/courtrentalshares/");
+                    urlBuilder_.Append(System.Uri.EscapeDataString(ConvertToString(id, System.Globalization.CultureInfo.InvariantCulture)));
+
+                    PrepareRequest(client_, request_, urlBuilder_);
+
+                    var url_ = urlBuilder_.ToString();
+                    request_.RequestUri = new System.Uri(url_, System.UriKind.RelativeOrAbsolute);
+
+                    PrepareRequest(client_, request_, url_);
+
+                    var response_ = await client_.SendAsync(request_, System.Net.Http.HttpCompletionOption.ResponseHeadersRead, cancellationToken).ConfigureAwait(false);
+                    var disposeResponse_ = true;
+                    try
+                    {
+                        var headers_ = new System.Collections.Generic.Dictionary<string, System.Collections.Generic.IEnumerable<string>>();
+                        foreach (var item_ in response_.Headers)
+                            headers_[item_.Key] = item_.Value;
+                        if (response_.Content != null && response_.Content.Headers != null)
+                        {
+                            foreach (var item_ in response_.Content.Headers)
+                                headers_[item_.Key] = item_.Value;
+                        }
+
+                        ProcessResponse(client_, response_);
+
+                        var status_ = (int)response_.StatusCode;
+                        if (status_ == 204)
+                        {
+                            return;
+                        }
+                        else
+                        {
+                            var responseData_ = response_.Content == null ? null : await ReadAsStringAsync(response_.Content, cancellationToken).ConfigureAwait(false);
+                            throw new ApiException("The HTTP status code of the response was not expected (" + status_ + ").", status_, responseData_, headers_, null);
+                        }
+                    }
+                    finally
+                    {
+                        if (disposeResponse_)
+                            response_.Dispose();
+                    }
+                }
+            }
+            finally
+            {
+                if (disposeClient_)
+                    client_.Dispose();
+            }
+        }
+
+        /// <summary>
+        /// Gets a list of CourtRentalShares by group id
+        /// </summary>
+        /// <remarks>
+        /// Gets a list of CourtRentalShares with pagination and filtering support
+        /// </remarks>
+        /// <param name="version">The requested API version</param>
+        /// <returns>OK</returns>
+        /// <exception cref="ApiException">A server side error occurred.</exception>
+        public virtual System.Threading.Tasks.Task<CourtRentalShareResponsePagedList> GetCourtRentalSharesByCourtRentalIdEndpointAsync(string version, System.Guid courtRentalId, GetCourtRentalSharesByCourtRentalIdCommand body)
+        {
+            return GetCourtRentalSharesByCourtRentalIdEndpointAsync(version, courtRentalId, body, System.Threading.CancellationToken.None);
+        }
+
+        /// <param name="cancellationToken">A cancellation token that can be used by other objects or threads to receive notice of cancellation.</param>
+        /// <summary>
+        /// Gets a list of CourtRentalShares by group id
+        /// </summary>
+        /// <remarks>
+        /// Gets a list of CourtRentalShares with pagination and filtering support
+        /// </remarks>
+        /// <param name="version">The requested API version</param>
+        /// <returns>OK</returns>
+        /// <exception cref="ApiException">A server side error occurred.</exception>
+        public virtual async System.Threading.Tasks.Task<CourtRentalShareResponsePagedList> GetCourtRentalSharesByCourtRentalIdEndpointAsync(string version, System.Guid courtRentalId, GetCourtRentalSharesByCourtRentalIdCommand body, System.Threading.CancellationToken cancellationToken)
+        {
+            if (version == null)
+                throw new System.ArgumentNullException("version");
+
+            if (courtRentalId == null)
+                throw new System.ArgumentNullException("courtRentalId");
+
+            if (body == null)
+                throw new System.ArgumentNullException("body");
+
+            var client_ = _httpClient;
+            var disposeClient_ = false;
+            try
+            {
+                using (var request_ = new System.Net.Http.HttpRequestMessage())
+                {
+                    var json_ = System.Text.Json.JsonSerializer.SerializeToUtf8Bytes(body, JsonSerializerSettings);
+                    var content_ = new System.Net.Http.ByteArrayContent(json_);
+                    content_.Headers.ContentType = System.Net.Http.Headers.MediaTypeHeaderValue.Parse("application/json");
+                    request_.Content = content_;
+                    request_.Method = new System.Net.Http.HttpMethod("POST");
+                    request_.Headers.Accept.Add(System.Net.Http.Headers.MediaTypeWithQualityHeaderValue.Parse("application/json"));
+
+                    var urlBuilder_ = new System.Text.StringBuilder();
+                
+                    // Operation Path: "api/v{version}/booking/courtrentalshares/{courtRentalId}/shares"
+                    urlBuilder_.Append("api/v");
+                    urlBuilder_.Append(System.Uri.EscapeDataString(ConvertToString(version, System.Globalization.CultureInfo.InvariantCulture)));
+                    urlBuilder_.Append("/booking/courtrentalshares/");
+                    urlBuilder_.Append(System.Uri.EscapeDataString(ConvertToString(courtRentalId, System.Globalization.CultureInfo.InvariantCulture)));
+                    urlBuilder_.Append("/shares");
+
+                    PrepareRequest(client_, request_, urlBuilder_);
+
+                    var url_ = urlBuilder_.ToString();
+                    request_.RequestUri = new System.Uri(url_, System.UriKind.RelativeOrAbsolute);
+
+                    PrepareRequest(client_, request_, url_);
+
+                    var response_ = await client_.SendAsync(request_, System.Net.Http.HttpCompletionOption.ResponseHeadersRead, cancellationToken).ConfigureAwait(false);
+                    var disposeResponse_ = true;
+                    try
+                    {
+                        var headers_ = new System.Collections.Generic.Dictionary<string, System.Collections.Generic.IEnumerable<string>>();
+                        foreach (var item_ in response_.Headers)
+                            headers_[item_.Key] = item_.Value;
+                        if (response_.Content != null && response_.Content.Headers != null)
+                        {
+                            foreach (var item_ in response_.Content.Headers)
+                                headers_[item_.Key] = item_.Value;
+                        }
+
+                        ProcessResponse(client_, response_);
+
+                        var status_ = (int)response_.StatusCode;
+                        if (status_ == 200)
+                        {
+                            var objectResponse_ = await ReadObjectResponseAsync<CourtRentalShareResponsePagedList>(response_, headers_, cancellationToken).ConfigureAwait(false);
+                            if (objectResponse_.Object == null)
+                            {
+                                throw new ApiException("Response was null which was not expected.", status_, objectResponse_.Text, headers_, null);
+                            }
+                            return objectResponse_.Object;
+                        }
+                        else
+                        {
+                            var responseData_ = response_.Content == null ? null : await ReadAsStringAsync(response_.Content, cancellationToken).ConfigureAwait(false);
+                            throw new ApiException("The HTTP status code of the response was not expected (" + status_ + ").", status_, responseData_, headers_, null);
+                        }
+                    }
+                    finally
+                    {
+                        if (disposeResponse_)
+                            response_.Dispose();
+                    }
+                }
+            }
+            finally
+            {
+                if (disposeClient_)
+                    client_.Dispose();
+            }
+        }
+
+        /// <summary>
+        /// Gets a list of CourtRentalShares
+        /// </summary>
+        /// <remarks>
+        /// Gets a list of CourtRentalShares with pagination and filtering support
+        /// </remarks>
+        /// <param name="version">The requested API version</param>
+        /// <returns>OK</returns>
+        /// <exception cref="ApiException">A server side error occurred.</exception>
+        public virtual System.Threading.Tasks.Task<CourtRentalShareResponsePagedList> SearchCourtRentalSharesEndpointAsync(string version, SearchCourtRentalSharesCommand body)
+        {
+            return SearchCourtRentalSharesEndpointAsync(version, body, System.Threading.CancellationToken.None);
+        }
+
+        /// <param name="cancellationToken">A cancellation token that can be used by other objects or threads to receive notice of cancellation.</param>
+        /// <summary>
+        /// Gets a list of CourtRentalShares
+        /// </summary>
+        /// <remarks>
+        /// Gets a list of CourtRentalShares with pagination and filtering support
+        /// </remarks>
+        /// <param name="version">The requested API version</param>
+        /// <returns>OK</returns>
+        /// <exception cref="ApiException">A server side error occurred.</exception>
+        public virtual async System.Threading.Tasks.Task<CourtRentalShareResponsePagedList> SearchCourtRentalSharesEndpointAsync(string version, SearchCourtRentalSharesCommand body, System.Threading.CancellationToken cancellationToken)
+        {
+            if (version == null)
+                throw new System.ArgumentNullException("version");
+
+            if (body == null)
+                throw new System.ArgumentNullException("body");
+
+            var client_ = _httpClient;
+            var disposeClient_ = false;
+            try
+            {
+                using (var request_ = new System.Net.Http.HttpRequestMessage())
+                {
+                    var json_ = System.Text.Json.JsonSerializer.SerializeToUtf8Bytes(body, JsonSerializerSettings);
+                    var content_ = new System.Net.Http.ByteArrayContent(json_);
+                    content_.Headers.ContentType = System.Net.Http.Headers.MediaTypeHeaderValue.Parse("application/json");
+                    request_.Content = content_;
+                    request_.Method = new System.Net.Http.HttpMethod("POST");
+                    request_.Headers.Accept.Add(System.Net.Http.Headers.MediaTypeWithQualityHeaderValue.Parse("application/json"));
+
+                    var urlBuilder_ = new System.Text.StringBuilder();
+                
+                    // Operation Path: "api/v{version}/booking/courtrentalshares/search"
+                    urlBuilder_.Append("api/v");
+                    urlBuilder_.Append(System.Uri.EscapeDataString(ConvertToString(version, System.Globalization.CultureInfo.InvariantCulture)));
+                    urlBuilder_.Append("/booking/courtrentalshares/search");
+
+                    PrepareRequest(client_, request_, urlBuilder_);
+
+                    var url_ = urlBuilder_.ToString();
+                    request_.RequestUri = new System.Uri(url_, System.UriKind.RelativeOrAbsolute);
+
+                    PrepareRequest(client_, request_, url_);
+
+                    var response_ = await client_.SendAsync(request_, System.Net.Http.HttpCompletionOption.ResponseHeadersRead, cancellationToken).ConfigureAwait(false);
+                    var disposeResponse_ = true;
+                    try
+                    {
+                        var headers_ = new System.Collections.Generic.Dictionary<string, System.Collections.Generic.IEnumerable<string>>();
+                        foreach (var item_ in response_.Headers)
+                            headers_[item_.Key] = item_.Value;
+                        if (response_.Content != null && response_.Content.Headers != null)
+                        {
+                            foreach (var item_ in response_.Content.Headers)
+                                headers_[item_.Key] = item_.Value;
+                        }
+
+                        ProcessResponse(client_, response_);
+
+                        var status_ = (int)response_.StatusCode;
+                        if (status_ == 200)
+                        {
+                            var objectResponse_ = await ReadObjectResponseAsync<CourtRentalShareResponsePagedList>(response_, headers_, cancellationToken).ConfigureAwait(false);
                             if (objectResponse_.Object == null)
                             {
                                 throw new ApiException("Response was null which was not expected.", status_, objectResponse_.Text, headers_, null);
@@ -3547,6 +4849,115 @@ namespace FSH.Starter.Blazor.Infrastructure.Api
         }
 
         /// <summary>
+        /// Gets a list of groupmembers by group id
+        /// </summary>
+        /// <remarks>
+        /// Gets a list of groupmembers with pagination and filtering support
+        /// </remarks>
+        /// <param name="version">The requested API version</param>
+        /// <returns>OK</returns>
+        /// <exception cref="ApiException">A server side error occurred.</exception>
+        public virtual System.Threading.Tasks.Task<GroupMemberResponsePagedList> GetGroupMembersByGroupIdEndpointAsync(string version, System.Guid groupId, GetGroupMembersByGroupIdCommand body)
+        {
+            return GetGroupMembersByGroupIdEndpointAsync(version, groupId, body, System.Threading.CancellationToken.None);
+        }
+
+        /// <param name="cancellationToken">A cancellation token that can be used by other objects or threads to receive notice of cancellation.</param>
+        /// <summary>
+        /// Gets a list of groupmembers by group id
+        /// </summary>
+        /// <remarks>
+        /// Gets a list of groupmembers with pagination and filtering support
+        /// </remarks>
+        /// <param name="version">The requested API version</param>
+        /// <returns>OK</returns>
+        /// <exception cref="ApiException">A server side error occurred.</exception>
+        public virtual async System.Threading.Tasks.Task<GroupMemberResponsePagedList> GetGroupMembersByGroupIdEndpointAsync(string version, System.Guid groupId, GetGroupMembersByGroupIdCommand body, System.Threading.CancellationToken cancellationToken)
+        {
+            if (version == null)
+                throw new System.ArgumentNullException("version");
+
+            if (groupId == null)
+                throw new System.ArgumentNullException("groupId");
+
+            if (body == null)
+                throw new System.ArgumentNullException("body");
+
+            var client_ = _httpClient;
+            var disposeClient_ = false;
+            try
+            {
+                using (var request_ = new System.Net.Http.HttpRequestMessage())
+                {
+                    var json_ = System.Text.Json.JsonSerializer.SerializeToUtf8Bytes(body, JsonSerializerSettings);
+                    var content_ = new System.Net.Http.ByteArrayContent(json_);
+                    content_.Headers.ContentType = System.Net.Http.Headers.MediaTypeHeaderValue.Parse("application/json");
+                    request_.Content = content_;
+                    request_.Method = new System.Net.Http.HttpMethod("POST");
+                    request_.Headers.Accept.Add(System.Net.Http.Headers.MediaTypeWithQualityHeaderValue.Parse("application/json"));
+
+                    var urlBuilder_ = new System.Text.StringBuilder();
+                
+                    // Operation Path: "api/v{version}/booking/groupmembers/{groupId}/members"
+                    urlBuilder_.Append("api/v");
+                    urlBuilder_.Append(System.Uri.EscapeDataString(ConvertToString(version, System.Globalization.CultureInfo.InvariantCulture)));
+                    urlBuilder_.Append("/booking/groupmembers/");
+                    urlBuilder_.Append(System.Uri.EscapeDataString(ConvertToString(groupId, System.Globalization.CultureInfo.InvariantCulture)));
+                    urlBuilder_.Append("/members");
+
+                    PrepareRequest(client_, request_, urlBuilder_);
+
+                    var url_ = urlBuilder_.ToString();
+                    request_.RequestUri = new System.Uri(url_, System.UriKind.RelativeOrAbsolute);
+
+                    PrepareRequest(client_, request_, url_);
+
+                    var response_ = await client_.SendAsync(request_, System.Net.Http.HttpCompletionOption.ResponseHeadersRead, cancellationToken).ConfigureAwait(false);
+                    var disposeResponse_ = true;
+                    try
+                    {
+                        var headers_ = new System.Collections.Generic.Dictionary<string, System.Collections.Generic.IEnumerable<string>>();
+                        foreach (var item_ in response_.Headers)
+                            headers_[item_.Key] = item_.Value;
+                        if (response_.Content != null && response_.Content.Headers != null)
+                        {
+                            foreach (var item_ in response_.Content.Headers)
+                                headers_[item_.Key] = item_.Value;
+                        }
+
+                        ProcessResponse(client_, response_);
+
+                        var status_ = (int)response_.StatusCode;
+                        if (status_ == 200)
+                        {
+                            var objectResponse_ = await ReadObjectResponseAsync<GroupMemberResponsePagedList>(response_, headers_, cancellationToken).ConfigureAwait(false);
+                            if (objectResponse_.Object == null)
+                            {
+                                throw new ApiException("Response was null which was not expected.", status_, objectResponse_.Text, headers_, null);
+                            }
+                            return objectResponse_.Object;
+                        }
+                        else
+                        {
+                            var responseData_ = response_.Content == null ? null : await ReadAsStringAsync(response_.Content, cancellationToken).ConfigureAwait(false);
+                            throw new ApiException("The HTTP status code of the response was not expected (" + status_ + ").", status_, responseData_, headers_, null);
+                        }
+                    }
+                    finally
+                    {
+                        if (disposeResponse_)
+                            response_.Dispose();
+                    }
+                }
+            }
+            finally
+            {
+                if (disposeClient_)
+                    client_.Dispose();
+            }
+        }
+
+        /// <summary>
         /// creates a group
         /// </summary>
         /// <remarks>
@@ -4059,30 +5470,30 @@ namespace FSH.Starter.Blazor.Infrastructure.Api
         }
 
         /// <summary>
-        /// creates a product
+        /// creates a Receipt
         /// </summary>
         /// <remarks>
-        /// creates a product
+        /// creates a Receipt
         /// </remarks>
         /// <param name="version">The requested API version</param>
         /// <returns>OK</returns>
         /// <exception cref="ApiException">A server side error occurred.</exception>
-        public virtual System.Threading.Tasks.Task<CreateProductResponse> CreateProductEndpointAsync(string version, CreateProductCommand body)
+        public virtual System.Threading.Tasks.Task<CreateReceiptResponse> CreateReceiptEndpointAsync(string version, CreateReceiptCommand body)
         {
-            return CreateProductEndpointAsync(version, body, System.Threading.CancellationToken.None);
+            return CreateReceiptEndpointAsync(version, body, System.Threading.CancellationToken.None);
         }
 
         /// <param name="cancellationToken">A cancellation token that can be used by other objects or threads to receive notice of cancellation.</param>
         /// <summary>
-        /// creates a product
+        /// creates a Receipt
         /// </summary>
         /// <remarks>
-        /// creates a product
+        /// creates a Receipt
         /// </remarks>
         /// <param name="version">The requested API version</param>
         /// <returns>OK</returns>
         /// <exception cref="ApiException">A server side error occurred.</exception>
-        public virtual async System.Threading.Tasks.Task<CreateProductResponse> CreateProductEndpointAsync(string version, CreateProductCommand body, System.Threading.CancellationToken cancellationToken)
+        public virtual async System.Threading.Tasks.Task<CreateReceiptResponse> CreateReceiptEndpointAsync(string version, CreateReceiptCommand body, System.Threading.CancellationToken cancellationToken)
         {
             if (version == null)
                 throw new System.ArgumentNullException("version");
@@ -4105,10 +5516,10 @@ namespace FSH.Starter.Blazor.Infrastructure.Api
 
                     var urlBuilder_ = new System.Text.StringBuilder();
                 
-                    // Operation Path: "api/v{version}/catalog/products"
+                    // Operation Path: "api/v{version}/booking/receipts"
                     urlBuilder_.Append("api/v");
                     urlBuilder_.Append(System.Uri.EscapeDataString(ConvertToString(version, System.Globalization.CultureInfo.InvariantCulture)));
-                    urlBuilder_.Append("/catalog/products");
+                    urlBuilder_.Append("/booking/receipts");
 
                     PrepareRequest(client_, request_, urlBuilder_);
 
@@ -4135,7 +5546,7 @@ namespace FSH.Starter.Blazor.Infrastructure.Api
                         var status_ = (int)response_.StatusCode;
                         if (status_ == 200)
                         {
-                            var objectResponse_ = await ReadObjectResponseAsync<CreateProductResponse>(response_, headers_, cancellationToken).ConfigureAwait(false);
+                            var objectResponse_ = await ReadObjectResponseAsync<CreateReceiptResponse>(response_, headers_, cancellationToken).ConfigureAwait(false);
                             if (objectResponse_.Object == null)
                             {
                                 throw new ApiException("Response was null which was not expected.", status_, objectResponse_.Text, headers_, null);
@@ -4163,30 +5574,30 @@ namespace FSH.Starter.Blazor.Infrastructure.Api
         }
 
         /// <summary>
-        /// gets product by id
+        /// gets Receipt by id
         /// </summary>
         /// <remarks>
-        /// gets prodct by id
+        /// gets Receipt by id
         /// </remarks>
         /// <param name="version">The requested API version</param>
         /// <returns>OK</returns>
         /// <exception cref="ApiException">A server side error occurred.</exception>
-        public virtual System.Threading.Tasks.Task<ProductResponse> GetProductEndpointAsync(string version, System.Guid id)
+        public virtual System.Threading.Tasks.Task<ReceiptResponse> GetReceiptEndpointAsync(string version, System.Guid id)
         {
-            return GetProductEndpointAsync(version, id, System.Threading.CancellationToken.None);
+            return GetReceiptEndpointAsync(version, id, System.Threading.CancellationToken.None);
         }
 
         /// <param name="cancellationToken">A cancellation token that can be used by other objects or threads to receive notice of cancellation.</param>
         /// <summary>
-        /// gets product by id
+        /// gets Receipt by id
         /// </summary>
         /// <remarks>
-        /// gets prodct by id
+        /// gets Receipt by id
         /// </remarks>
         /// <param name="version">The requested API version</param>
         /// <returns>OK</returns>
         /// <exception cref="ApiException">A server side error occurred.</exception>
-        public virtual async System.Threading.Tasks.Task<ProductResponse> GetProductEndpointAsync(string version, System.Guid id, System.Threading.CancellationToken cancellationToken)
+        public virtual async System.Threading.Tasks.Task<ReceiptResponse> GetReceiptEndpointAsync(string version, System.Guid id, System.Threading.CancellationToken cancellationToken)
         {
             if (version == null)
                 throw new System.ArgumentNullException("version");
@@ -4205,10 +5616,10 @@ namespace FSH.Starter.Blazor.Infrastructure.Api
 
                     var urlBuilder_ = new System.Text.StringBuilder();
                 
-                    // Operation Path: "api/v{version}/catalog/products/{id}"
+                    // Operation Path: "api/v{version}/booking/receipts/{id}"
                     urlBuilder_.Append("api/v");
                     urlBuilder_.Append(System.Uri.EscapeDataString(ConvertToString(version, System.Globalization.CultureInfo.InvariantCulture)));
-                    urlBuilder_.Append("/catalog/products/");
+                    urlBuilder_.Append("/booking/receipts/");
                     urlBuilder_.Append(System.Uri.EscapeDataString(ConvertToString(id, System.Globalization.CultureInfo.InvariantCulture)));
 
                     PrepareRequest(client_, request_, urlBuilder_);
@@ -4236,7 +5647,7 @@ namespace FSH.Starter.Blazor.Infrastructure.Api
                         var status_ = (int)response_.StatusCode;
                         if (status_ == 200)
                         {
-                            var objectResponse_ = await ReadObjectResponseAsync<ProductResponse>(response_, headers_, cancellationToken).ConfigureAwait(false);
+                            var objectResponse_ = await ReadObjectResponseAsync<ReceiptResponse>(response_, headers_, cancellationToken).ConfigureAwait(false);
                             if (objectResponse_.Object == null)
                             {
                                 throw new ApiException("Response was null which was not expected.", status_, objectResponse_.Text, headers_, null);
@@ -4264,30 +5675,30 @@ namespace FSH.Starter.Blazor.Infrastructure.Api
         }
 
         /// <summary>
-        /// update a product
+        /// update a Receipt
         /// </summary>
         /// <remarks>
-        /// update a product
+        /// update a Receipt
         /// </remarks>
         /// <param name="version">The requested API version</param>
         /// <returns>OK</returns>
         /// <exception cref="ApiException">A server side error occurred.</exception>
-        public virtual System.Threading.Tasks.Task<UpdateProductResponse> UpdateProductEndpointAsync(string version, System.Guid id, UpdateProductCommand body)
+        public virtual System.Threading.Tasks.Task<UpdateReceiptResponse> UpdateReceiptEndpointAsync(string version, System.Guid id, UpdateReceiptCommand body)
         {
-            return UpdateProductEndpointAsync(version, id, body, System.Threading.CancellationToken.None);
+            return UpdateReceiptEndpointAsync(version, id, body, System.Threading.CancellationToken.None);
         }
 
         /// <param name="cancellationToken">A cancellation token that can be used by other objects or threads to receive notice of cancellation.</param>
         /// <summary>
-        /// update a product
+        /// update a Receipt
         /// </summary>
         /// <remarks>
-        /// update a product
+        /// update a Receipt
         /// </remarks>
         /// <param name="version">The requested API version</param>
         /// <returns>OK</returns>
         /// <exception cref="ApiException">A server side error occurred.</exception>
-        public virtual async System.Threading.Tasks.Task<UpdateProductResponse> UpdateProductEndpointAsync(string version, System.Guid id, UpdateProductCommand body, System.Threading.CancellationToken cancellationToken)
+        public virtual async System.Threading.Tasks.Task<UpdateReceiptResponse> UpdateReceiptEndpointAsync(string version, System.Guid id, UpdateReceiptCommand body, System.Threading.CancellationToken cancellationToken)
         {
             if (version == null)
                 throw new System.ArgumentNullException("version");
@@ -4313,10 +5724,10 @@ namespace FSH.Starter.Blazor.Infrastructure.Api
 
                     var urlBuilder_ = new System.Text.StringBuilder();
                 
-                    // Operation Path: "api/v{version}/catalog/products/{id}"
+                    // Operation Path: "api/v{version}/booking/receipts/{id}"
                     urlBuilder_.Append("api/v");
                     urlBuilder_.Append(System.Uri.EscapeDataString(ConvertToString(version, System.Globalization.CultureInfo.InvariantCulture)));
-                    urlBuilder_.Append("/catalog/products/");
+                    urlBuilder_.Append("/booking/receipts/");
                     urlBuilder_.Append(System.Uri.EscapeDataString(ConvertToString(id, System.Globalization.CultureInfo.InvariantCulture)));
 
                     PrepareRequest(client_, request_, urlBuilder_);
@@ -4344,7 +5755,7 @@ namespace FSH.Starter.Blazor.Infrastructure.Api
                         var status_ = (int)response_.StatusCode;
                         if (status_ == 200)
                         {
-                            var objectResponse_ = await ReadObjectResponseAsync<UpdateProductResponse>(response_, headers_, cancellationToken).ConfigureAwait(false);
+                            var objectResponse_ = await ReadObjectResponseAsync<UpdateReceiptResponse>(response_, headers_, cancellationToken).ConfigureAwait(false);
                             if (objectResponse_.Object == null)
                             {
                                 throw new ApiException("Response was null which was not expected.", status_, objectResponse_.Text, headers_, null);
@@ -4372,30 +5783,30 @@ namespace FSH.Starter.Blazor.Infrastructure.Api
         }
 
         /// <summary>
-        /// deletes product by id
+        /// deletes Receipt by id
         /// </summary>
         /// <remarks>
-        /// deletes product by id
+        /// deletes Receipt by id
         /// </remarks>
         /// <param name="version">The requested API version</param>
         /// <returns>No Content</returns>
         /// <exception cref="ApiException">A server side error occurred.</exception>
-        public virtual System.Threading.Tasks.Task DeleteProductEndpointAsync(string version, System.Guid id)
+        public virtual System.Threading.Tasks.Task DeleteReceiptEndpointAsync(string version, System.Guid id)
         {
-            return DeleteProductEndpointAsync(version, id, System.Threading.CancellationToken.None);
+            return DeleteReceiptEndpointAsync(version, id, System.Threading.CancellationToken.None);
         }
 
         /// <param name="cancellationToken">A cancellation token that can be used by other objects or threads to receive notice of cancellation.</param>
         /// <summary>
-        /// deletes product by id
+        /// deletes Receipt by id
         /// </summary>
         /// <remarks>
-        /// deletes product by id
+        /// deletes Receipt by id
         /// </remarks>
         /// <param name="version">The requested API version</param>
         /// <returns>No Content</returns>
         /// <exception cref="ApiException">A server side error occurred.</exception>
-        public virtual async System.Threading.Tasks.Task DeleteProductEndpointAsync(string version, System.Guid id, System.Threading.CancellationToken cancellationToken)
+        public virtual async System.Threading.Tasks.Task DeleteReceiptEndpointAsync(string version, System.Guid id, System.Threading.CancellationToken cancellationToken)
         {
             if (version == null)
                 throw new System.ArgumentNullException("version");
@@ -4413,10 +5824,10 @@ namespace FSH.Starter.Blazor.Infrastructure.Api
 
                     var urlBuilder_ = new System.Text.StringBuilder();
                 
-                    // Operation Path: "api/v{version}/catalog/products/{id}"
+                    // Operation Path: "api/v{version}/booking/receipts/{id}"
                     urlBuilder_.Append("api/v");
                     urlBuilder_.Append(System.Uri.EscapeDataString(ConvertToString(version, System.Globalization.CultureInfo.InvariantCulture)));
-                    urlBuilder_.Append("/catalog/products/");
+                    urlBuilder_.Append("/booking/receipts/");
                     urlBuilder_.Append(System.Uri.EscapeDataString(ConvertToString(id, System.Globalization.CultureInfo.InvariantCulture)));
 
                     PrepareRequest(client_, request_, urlBuilder_);
@@ -4467,30 +5878,30 @@ namespace FSH.Starter.Blazor.Infrastructure.Api
         }
 
         /// <summary>
-        /// Gets a list of products
+        /// Gets a list of Receipts
         /// </summary>
         /// <remarks>
-        /// Gets a list of products with pagination and filtering support
+        /// Gets a list of Receipts with pagination and filtering support
         /// </remarks>
         /// <param name="version">The requested API version</param>
         /// <returns>OK</returns>
         /// <exception cref="ApiException">A server side error occurred.</exception>
-        public virtual System.Threading.Tasks.Task<ProductResponsePagedList> SearchProductsEndpointAsync(string version, SearchProductsCommand body)
+        public virtual System.Threading.Tasks.Task<ReceiptResponsePagedList> SearchReceiptsEndpointAsync(string version, SearchReceiptsCommand body)
         {
-            return SearchProductsEndpointAsync(version, body, System.Threading.CancellationToken.None);
+            return SearchReceiptsEndpointAsync(version, body, System.Threading.CancellationToken.None);
         }
 
         /// <param name="cancellationToken">A cancellation token that can be used by other objects or threads to receive notice of cancellation.</param>
         /// <summary>
-        /// Gets a list of products
+        /// Gets a list of Receipts
         /// </summary>
         /// <remarks>
-        /// Gets a list of products with pagination and filtering support
+        /// Gets a list of Receipts with pagination and filtering support
         /// </remarks>
         /// <param name="version">The requested API version</param>
         /// <returns>OK</returns>
         /// <exception cref="ApiException">A server side error occurred.</exception>
-        public virtual async System.Threading.Tasks.Task<ProductResponsePagedList> SearchProductsEndpointAsync(string version, SearchProductsCommand body, System.Threading.CancellationToken cancellationToken)
+        public virtual async System.Threading.Tasks.Task<ReceiptResponsePagedList> SearchReceiptsEndpointAsync(string version, SearchReceiptsCommand body, System.Threading.CancellationToken cancellationToken)
         {
             if (version == null)
                 throw new System.ArgumentNullException("version");
@@ -4513,10 +5924,10 @@ namespace FSH.Starter.Blazor.Infrastructure.Api
 
                     var urlBuilder_ = new System.Text.StringBuilder();
                 
-                    // Operation Path: "api/v{version}/catalog/products/search"
+                    // Operation Path: "api/v{version}/booking/receipts/search"
                     urlBuilder_.Append("api/v");
                     urlBuilder_.Append(System.Uri.EscapeDataString(ConvertToString(version, System.Globalization.CultureInfo.InvariantCulture)));
-                    urlBuilder_.Append("/catalog/products/search");
+                    urlBuilder_.Append("/booking/receipts/search");
 
                     PrepareRequest(client_, request_, urlBuilder_);
 
@@ -4543,7 +5954,7 @@ namespace FSH.Starter.Blazor.Infrastructure.Api
                         var status_ = (int)response_.StatusCode;
                         if (status_ == 200)
                         {
-                            var objectResponse_ = await ReadObjectResponseAsync<ProductResponsePagedList>(response_, headers_, cancellationToken).ConfigureAwait(false);
+                            var objectResponse_ = await ReadObjectResponseAsync<ReceiptResponsePagedList>(response_, headers_, cancellationToken).ConfigureAwait(false);
                             if (objectResponse_.Object == null)
                             {
                                 throw new ApiException("Response was null which was not expected.", status_, objectResponse_.Text, headers_, null);
@@ -8100,48 +9511,6 @@ namespace FSH.Starter.Blazor.Infrastructure.Api
     }
 
     [System.CodeDom.Compiler.GeneratedCode("NJsonSchema", "14.6.1.0 (NJsonSchema v11.5.1.0 (Newtonsoft.Json v13.0.0.0))")]
-    public partial class BrandResponse
-    {
-
-        [System.Text.Json.Serialization.JsonPropertyName("id")]
-        public System.Guid? Id { get; set; } = default!;
-
-        [System.Text.Json.Serialization.JsonPropertyName("name")]
-        public string? Name { get; set; } = default!;
-
-        [System.Text.Json.Serialization.JsonPropertyName("description")]
-        public string? Description { get; set; } = default!;
-
-    }
-
-    [System.CodeDom.Compiler.GeneratedCode("NJsonSchema", "14.6.1.0 (NJsonSchema v11.5.1.0 (Newtonsoft.Json v13.0.0.0))")]
-    public partial class BrandResponsePagedList
-    {
-
-        [System.Text.Json.Serialization.JsonPropertyName("items")]
-        public System.Collections.Generic.ICollection<BrandResponse>? Items { get; set; } = default!;
-
-        [System.Text.Json.Serialization.JsonPropertyName("pageNumber")]
-        public int PageNumber { get; set; } = default!;
-
-        [System.Text.Json.Serialization.JsonPropertyName("pageSize")]
-        public int PageSize { get; set; } = default!;
-
-        [System.Text.Json.Serialization.JsonPropertyName("totalCount")]
-        public int TotalCount { get; set; } = default!;
-
-        [System.Text.Json.Serialization.JsonPropertyName("totalPages")]
-        public int TotalPages { get; set; } = default!;
-
-        [System.Text.Json.Serialization.JsonPropertyName("hasPrevious")]
-        public bool HasPrevious { get; set; } = default!;
-
-        [System.Text.Json.Serialization.JsonPropertyName("hasNext")]
-        public bool HasNext { get; set; } = default!;
-
-    }
-
-    [System.CodeDom.Compiler.GeneratedCode("NJsonSchema", "14.6.1.0 (NJsonSchema v11.5.1.0 (Newtonsoft.Json v13.0.0.0))")]
     public partial class ChangePasswordCommand
     {
 
@@ -8163,17 +9532,38 @@ namespace FSH.Starter.Blazor.Infrastructure.Api
         [System.Text.Json.Serialization.JsonPropertyName("id")]
         public System.Guid? Id { get; set; } = default!;
 
-        [System.Text.Json.Serialization.JsonPropertyName("name")]
-        public string? Name { get; set; } = default!;
+        [System.Text.Json.Serialization.JsonPropertyName("startDate")]
+        public System.DateTime StartDate { get; set; } = default!;
+
+        [System.Text.Json.Serialization.JsonPropertyName("startTime")]
+        public string StartTime { get; set; } = default!;
 
         [System.Text.Json.Serialization.JsonPropertyName("description")]
         public string? Description { get; set; } = default!;
 
-        [System.Text.Json.Serialization.JsonPropertyName("price")]
-        public double Price { get; set; } = default!;
+        [System.Text.Json.Serialization.JsonPropertyName("endDate")]
+        public System.DateTime EndDate { get; set; } = default!;
 
-        [System.Text.Json.Serialization.JsonPropertyName("group")]
-        public GroupResponse Group { get; set; } = default!;
+        [System.Text.Json.Serialization.JsonPropertyName("weekday")]
+        public string? Weekday { get; set; } = default!;
+
+        [System.Text.Json.Serialization.JsonPropertyName("amount")]
+        public double Amount { get; set; } = default!;
+
+        [System.Text.Json.Serialization.JsonPropertyName("discount")]
+        public double Discount { get; set; } = default!;
+
+        [System.Text.Json.Serialization.JsonPropertyName("duration")]
+        public int Duration { get; set; } = default!;
+
+        [System.Text.Json.Serialization.JsonPropertyName("court")]
+        public int Court { get; set; } = default!;
+
+        [System.Text.Json.Serialization.JsonPropertyName("courtRentalShares")]
+        public System.Collections.Generic.ICollection<CourtRentalShareResponse>? CourtRentalShares { get; set; } = default!;
+
+        [System.Text.Json.Serialization.JsonPropertyName("groupId")]
+        public System.Guid? GroupId { get; set; } = default!;
 
     }
 
@@ -8205,23 +9595,110 @@ namespace FSH.Starter.Blazor.Infrastructure.Api
     }
 
     [System.CodeDom.Compiler.GeneratedCode("NJsonSchema", "14.6.1.0 (NJsonSchema v11.5.1.0 (Newtonsoft.Json v13.0.0.0))")]
-    public partial class CreateBrandCommand
-    {
-
-        [System.Text.Json.Serialization.JsonPropertyName("name")]
-        public string? Name { get; set; } = "Sample Brand";
-
-        [System.Text.Json.Serialization.JsonPropertyName("description")]
-        public string? Description { get; set; } = "Descriptive Description";
-
-    }
-
-    [System.CodeDom.Compiler.GeneratedCode("NJsonSchema", "14.6.1.0 (NJsonSchema v11.5.1.0 (Newtonsoft.Json v13.0.0.0))")]
-    public partial class CreateBrandResponse
+    public partial class CourtRentalSessionResponse
     {
 
         [System.Text.Json.Serialization.JsonPropertyName("id")]
         public System.Guid? Id { get; set; } = default!;
+
+        [System.Text.Json.Serialization.JsonPropertyName("startDate")]
+        public System.DateTime StartDate { get; set; } = default!;
+
+        [System.Text.Json.Serialization.JsonPropertyName("endDate")]
+        public System.DateTime EndDate { get; set; } = default!;
+
+        [System.Text.Json.Serialization.JsonPropertyName("court")]
+        public int Court { get; set; } = default!;
+
+        [System.Text.Json.Serialization.JsonPropertyName("courtRental")]
+        public CourtRentalResponse CourtRental { get; set; } = default!;
+
+    }
+
+    [System.CodeDom.Compiler.GeneratedCode("NJsonSchema", "14.6.1.0 (NJsonSchema v11.5.1.0 (Newtonsoft.Json v13.0.0.0))")]
+    public partial class CourtRentalSessionResponsePagedList
+    {
+
+        [System.Text.Json.Serialization.JsonPropertyName("items")]
+        public System.Collections.Generic.ICollection<CourtRentalSessionResponse>? Items { get; set; } = default!;
+
+        [System.Text.Json.Serialization.JsonPropertyName("pageNumber")]
+        public int PageNumber { get; set; } = default!;
+
+        [System.Text.Json.Serialization.JsonPropertyName("pageSize")]
+        public int PageSize { get; set; } = default!;
+
+        [System.Text.Json.Serialization.JsonPropertyName("totalCount")]
+        public int TotalCount { get; set; } = default!;
+
+        [System.Text.Json.Serialization.JsonPropertyName("totalPages")]
+        public int TotalPages { get; set; } = default!;
+
+        [System.Text.Json.Serialization.JsonPropertyName("hasPrevious")]
+        public bool HasPrevious { get; set; } = default!;
+
+        [System.Text.Json.Serialization.JsonPropertyName("hasNext")]
+        public bool HasNext { get; set; } = default!;
+
+    }
+
+    [System.CodeDom.Compiler.GeneratedCode("NJsonSchema", "14.6.1.0 (NJsonSchema v11.5.1.0 (Newtonsoft.Json v13.0.0.0))")]
+    public partial class CourtRentalShareResponse
+    {
+
+        [System.Text.Json.Serialization.JsonPropertyName("id")]
+        public System.Guid? Id { get; set; } = default!;
+
+        [System.Text.Json.Serialization.JsonPropertyName("customer")]
+        public CustomerResponse Customer { get; set; } = default!;
+
+        [System.Text.Json.Serialization.JsonPropertyName("amountTotal")]
+        public double AmountTotal { get; set; } = default!;
+
+        [System.Text.Json.Serialization.JsonPropertyName("amountPaid")]
+        public double AmountPaid { get; set; } = default!;
+
+        [System.Text.Json.Serialization.JsonPropertyName("discount")]
+        public double Discount { get; set; } = default!;
+
+        [System.Text.Json.Serialization.JsonPropertyName("externalReference")]
+        public string? ExternalReference { get; set; } = default!;
+
+        [System.Text.Json.Serialization.JsonPropertyName("isPaid")]
+        public bool IsPaid { get; set; } = default!;
+
+        [System.Text.Json.Serialization.JsonPropertyName("paidDate")]
+        public System.DateTime PaidDate { get; set; } = default!;
+
+        [System.Text.Json.Serialization.JsonPropertyName("dueDate")]
+        public System.DateTime DueDate { get; set; } = default!;
+
+    }
+
+    [System.CodeDom.Compiler.GeneratedCode("NJsonSchema", "14.6.1.0 (NJsonSchema v11.5.1.0 (Newtonsoft.Json v13.0.0.0))")]
+    public partial class CourtRentalShareResponsePagedList
+    {
+
+        [System.Text.Json.Serialization.JsonPropertyName("items")]
+        public System.Collections.Generic.ICollection<CourtRentalShareResponse>? Items { get; set; } = default!;
+
+        [System.Text.Json.Serialization.JsonPropertyName("pageNumber")]
+        public int PageNumber { get; set; } = default!;
+
+        [System.Text.Json.Serialization.JsonPropertyName("pageSize")]
+        public int PageSize { get; set; } = default!;
+
+        [System.Text.Json.Serialization.JsonPropertyName("totalCount")]
+        public int TotalCount { get; set; } = default!;
+
+        [System.Text.Json.Serialization.JsonPropertyName("totalPages")]
+        public int TotalPages { get; set; } = default!;
+
+        [System.Text.Json.Serialization.JsonPropertyName("hasPrevious")]
+        public bool HasPrevious { get; set; } = default!;
+
+        [System.Text.Json.Serialization.JsonPropertyName("hasNext")]
+        public bool HasNext { get; set; } = default!;
 
     }
 
@@ -8229,14 +9706,29 @@ namespace FSH.Starter.Blazor.Infrastructure.Api
     public partial class CreateCourtRentalCommand
     {
 
-        [System.Text.Json.Serialization.JsonPropertyName("name")]
-        public string? Name { get; set; } = "Sample CourtRental";
+        [System.Text.Json.Serialization.JsonPropertyName("startDate")]
+        public System.DateTime StartDate { get; set; } = System.DateTime.Parse("2025-09-30");
 
-        [System.Text.Json.Serialization.JsonPropertyName("price")]
-        public double Price { get; set; } = 10D;
+        [System.Text.Json.Serialization.JsonPropertyName("startTime")]
+        public string StartTime { get; set; } = "10:00:00";
 
-        [System.Text.Json.Serialization.JsonPropertyName("description")]
-        public string? Description { get; set; } = "Descriptive Description";
+        [System.Text.Json.Serialization.JsonPropertyName("endDate")]
+        public System.DateTime EndDate { get; set; } = System.DateTime.Parse("2026-05-31");
+
+        [System.Text.Json.Serialization.JsonPropertyName("weekday")]
+        public string? Weekday { get; set; } = "Monday";
+
+        [System.Text.Json.Serialization.JsonPropertyName("amount")]
+        public double Amount { get; set; } = 10D;
+
+        [System.Text.Json.Serialization.JsonPropertyName("discount")]
+        public double Discount { get; set; } = 0D;
+
+        [System.Text.Json.Serialization.JsonPropertyName("duration")]
+        public int Duration { get; set; } = 0;
+
+        [System.Text.Json.Serialization.JsonPropertyName("court")]
+        public int Court { get; set; } = 1;
 
         [System.Text.Json.Serialization.JsonPropertyName("groupId")]
         public System.Guid? GroupId { get; set; } = default!;
@@ -8253,20 +9745,101 @@ namespace FSH.Starter.Blazor.Infrastructure.Api
     }
 
     [System.CodeDom.Compiler.GeneratedCode("NJsonSchema", "14.6.1.0 (NJsonSchema v11.5.1.0 (Newtonsoft.Json v13.0.0.0))")]
+    public partial class CreateCourtRentalSessionCommand
+    {
+
+        [System.Text.Json.Serialization.JsonPropertyName("startDate")]
+        public System.DateTime StartDate { get; set; } = System.DateTime.Parse("");
+
+        [System.Text.Json.Serialization.JsonPropertyName("endDate")]
+        public System.DateTime EndDate { get; set; } = System.DateTime.Parse("");
+
+        [System.Text.Json.Serialization.JsonPropertyName("court")]
+        public int Court { get; set; } = 1;
+
+        [System.Text.Json.Serialization.JsonPropertyName("courtRentalId")]
+        public System.Guid? CourtRentalId { get; set; } = default!;
+
+    }
+
+    [System.CodeDom.Compiler.GeneratedCode("NJsonSchema", "14.6.1.0 (NJsonSchema v11.5.1.0 (Newtonsoft.Json v13.0.0.0))")]
+    public partial class CreateCourtRentalSessionResponse
+    {
+
+        [System.Text.Json.Serialization.JsonPropertyName("id")]
+        public System.Guid? Id { get; set; } = default!;
+
+    }
+
+    [System.CodeDom.Compiler.GeneratedCode("NJsonSchema", "14.6.1.0 (NJsonSchema v11.5.1.0 (Newtonsoft.Json v13.0.0.0))")]
+    public partial class CreateCourtRentalShareCommand
+    {
+
+        [System.Text.Json.Serialization.JsonPropertyName("courtRentalId")]
+        public System.Guid CourtRentalId { get; set; } = default!;
+
+        [System.Text.Json.Serialization.JsonPropertyName("customerId")]
+        public System.Guid CustomerId { get; set; } = default!;
+
+        [System.Text.Json.Serialization.JsonPropertyName("amountTotal")]
+        public double AmountTotal { get; set; } = 0D;
+
+        [System.Text.Json.Serialization.JsonPropertyName("amountPaid")]
+        public double AmountPaid { get; set; } = 0D;
+
+        [System.Text.Json.Serialization.JsonPropertyName("discount")]
+        public double Discount { get; set; } = 0D;
+
+        [System.Text.Json.Serialization.JsonPropertyName("paidDate")]
+        public System.DateTime PaidDate { get; set; } = default!;
+
+        [System.Text.Json.Serialization.JsonPropertyName("dueDate")]
+        public System.DateTime DueDate { get; set; } = default!;
+
+        [System.Text.Json.Serialization.JsonPropertyName("isPaid")]
+        public bool IsPaid { get; set; } = false;
+
+        [System.Text.Json.Serialization.JsonPropertyName("externalReference")]
+        public string? ExternalReference { get; set; } = default!;
+
+    }
+
+    [System.CodeDom.Compiler.GeneratedCode("NJsonSchema", "14.6.1.0 (NJsonSchema v11.5.1.0 (Newtonsoft.Json v13.0.0.0))")]
+    public partial class CreateCourtRentalShareResponse
+    {
+
+        [System.Text.Json.Serialization.JsonPropertyName("id")]
+        public System.Guid? Id { get; set; } = default!;
+
+    }
+
+    [System.CodeDom.Compiler.GeneratedCode("NJsonSchema", "14.6.1.0 (NJsonSchema v11.5.1.0 (Newtonsoft.Json v13.0.0.0))")]
     public partial class CreateCustomerCommand
     {
 
         [System.Text.Json.Serialization.JsonPropertyName("name")]
         public string? Name { get; set; } = "Sample Customer";
 
-        [System.Text.Json.Serialization.JsonPropertyName("price")]
-        public double Price { get; set; } = 10D;
+        [System.Text.Json.Serialization.JsonPropertyName("clubNumber")]
+        public string? ClubNumber { get; set; } = "";
 
-        [System.Text.Json.Serialization.JsonPropertyName("description")]
-        public string? Description { get; set; } = "Descriptive Description";
+        [System.Text.Json.Serialization.JsonPropertyName("ssn")]
+        public string? Ssn { get; set; } = "";
 
-        [System.Text.Json.Serialization.JsonPropertyName("groupId")]
-        public System.Guid? GroupId { get; set; } = default!;
+        [System.Text.Json.Serialization.JsonPropertyName("address")]
+        public string? Address { get; set; } = "";
+
+        [System.Text.Json.Serialization.JsonPropertyName("notes")]
+        public string? Notes { get; set; } = "";
+
+        [System.Text.Json.Serialization.JsonPropertyName("email")]
+        public string? Email { get; set; } = "";
+
+        [System.Text.Json.Serialization.JsonPropertyName("phoneNumber")]
+        public string? PhoneNumber { get; set; } = "";
+
+        [System.Text.Json.Serialization.JsonPropertyName("postalCode")]
+        public string? PostalCode { get; set; } = "";
 
     }
 
@@ -8307,11 +9880,11 @@ namespace FSH.Starter.Blazor.Infrastructure.Api
         [System.Text.Json.Serialization.JsonPropertyName("customerId")]
         public System.Guid CustomerId { get; set; } = default!;
 
-        [System.Text.Json.Serialization.JsonPropertyName("price")]
-        public double Price { get; set; } = 10D;
+        [System.Text.Json.Serialization.JsonPropertyName("amount")]
+        public double Amount { get; set; } = 10D;
 
-        [System.Text.Json.Serialization.JsonPropertyName("percentage")]
-        public double Percentage { get; set; } = 10D;
+        [System.Text.Json.Serialization.JsonPropertyName("discount")]
+        public double Discount { get; set; } = 10D;
 
         [System.Text.Json.Serialization.JsonPropertyName("isContact")]
         public bool IsContact { get; set; } = false;
@@ -8352,25 +9925,37 @@ namespace FSH.Starter.Blazor.Infrastructure.Api
     }
 
     [System.CodeDom.Compiler.GeneratedCode("NJsonSchema", "14.6.1.0 (NJsonSchema v11.5.1.0 (Newtonsoft.Json v13.0.0.0))")]
-    public partial class CreateProductCommand
+    public partial class CreateReceiptCommand
     {
 
-        [System.Text.Json.Serialization.JsonPropertyName("name")]
-        public string? Name { get; set; } = "Sample Product";
+        [System.Text.Json.Serialization.JsonPropertyName("groupMemberId")]
+        public System.Guid GroupMemberId { get; set; } = default!;
 
-        [System.Text.Json.Serialization.JsonPropertyName("price")]
-        public double Price { get; set; } = 10D;
+        [System.Text.Json.Serialization.JsonPropertyName("amountTotal")]
+        public double AmountTotal { get; set; } = 0D;
 
-        [System.Text.Json.Serialization.JsonPropertyName("description")]
-        public string? Description { get; set; } = "Descriptive Description";
+        [System.Text.Json.Serialization.JsonPropertyName("amountPaid")]
+        public double AmountPaid { get; set; } = 0D;
 
-        [System.Text.Json.Serialization.JsonPropertyName("brandId")]
-        public System.Guid? BrandId { get; set; } = default!;
+        [System.Text.Json.Serialization.JsonPropertyName("discount")]
+        public double Discount { get; set; } = 0D;
+
+        [System.Text.Json.Serialization.JsonPropertyName("receiptDate")]
+        public System.DateTime ReceiptDate { get; set; } = default!;
+
+        [System.Text.Json.Serialization.JsonPropertyName("dueDate")]
+        public System.DateTime DueDate { get; set; } = default!;
+
+        [System.Text.Json.Serialization.JsonPropertyName("isPaid")]
+        public bool IsPaid { get; set; } = false;
+
+        [System.Text.Json.Serialization.JsonPropertyName("externalReference")]
+        public string? ExternalReference { get; set; } = default!;
 
     }
 
     [System.CodeDom.Compiler.GeneratedCode("NJsonSchema", "14.6.1.0 (NJsonSchema v11.5.1.0 (Newtonsoft.Json v13.0.0.0))")]
-    public partial class CreateProductResponse
+    public partial class CreateReceiptResponse
     {
 
         [System.Text.Json.Serialization.JsonPropertyName("id")]
@@ -8390,6 +9975,9 @@ namespace FSH.Starter.Blazor.Infrastructure.Api
 
         [System.Text.Json.Serialization.JsonPropertyName("connectionString")]
         public string? ConnectionString { get; set; } = default!;
+
+        [System.Text.Json.Serialization.JsonPropertyName("externalIdentifier")]
+        public string? ExternalIdentifier { get; set; } = default!;
 
         [System.Text.Json.Serialization.JsonPropertyName("adminEmail")]
         public string? AdminEmail { get; set; } = default!;
@@ -8439,14 +10027,26 @@ namespace FSH.Starter.Blazor.Infrastructure.Api
         [System.Text.Json.Serialization.JsonPropertyName("name")]
         public string? Name { get; set; } = default!;
 
-        [System.Text.Json.Serialization.JsonPropertyName("description")]
-        public string? Description { get; set; } = default!;
+        [System.Text.Json.Serialization.JsonPropertyName("clubNumber")]
+        public string? ClubNumber { get; set; } = default!;
 
-        [System.Text.Json.Serialization.JsonPropertyName("price")]
-        public double Price { get; set; } = default!;
+        [System.Text.Json.Serialization.JsonPropertyName("ssn")]
+        public string? Ssn { get; set; } = default!;
 
-        [System.Text.Json.Serialization.JsonPropertyName("group")]
-        public GroupResponse Group { get; set; } = default!;
+        [System.Text.Json.Serialization.JsonPropertyName("address")]
+        public string? Address { get; set; } = default!;
+
+        [System.Text.Json.Serialization.JsonPropertyName("notes")]
+        public string? Notes { get; set; } = default!;
+
+        [System.Text.Json.Serialization.JsonPropertyName("email")]
+        public string? Email { get; set; } = default!;
+
+        [System.Text.Json.Serialization.JsonPropertyName("phoneNumber")]
+        public string? PhoneNumber { get; set; } = default!;
+
+        [System.Text.Json.Serialization.JsonPropertyName("postalCode")]
+        public string? PostalCode { get; set; } = default!;
 
     }
 
@@ -8532,6 +10132,114 @@ namespace FSH.Starter.Blazor.Infrastructure.Api
     }
 
     [System.CodeDom.Compiler.GeneratedCode("NJsonSchema", "14.6.1.0 (NJsonSchema v11.5.1.0 (Newtonsoft.Json v13.0.0.0))")]
+    public partial class GetCourtRentalSessionsByCourtRentalIdCommand
+    {
+
+        [System.Text.Json.Serialization.JsonPropertyName("advancedSearch")]
+        public Search AdvancedSearch { get; set; } = default!;
+
+        [System.Text.Json.Serialization.JsonPropertyName("keyword")]
+        public string? Keyword { get; set; } = default!;
+
+        [System.Text.Json.Serialization.JsonPropertyName("advancedFilter")]
+        public Filter AdvancedFilter { get; set; } = default!;
+
+        [System.Text.Json.Serialization.JsonPropertyName("pageNumber")]
+        public int PageNumber { get; set; } = default!;
+
+        [System.Text.Json.Serialization.JsonPropertyName("pageSize")]
+        public int PageSize { get; set; } = default!;
+
+        [System.Text.Json.Serialization.JsonPropertyName("orderBy")]
+        public System.Collections.Generic.ICollection<string>? OrderBy { get; set; } = default!;
+
+        [System.Text.Json.Serialization.JsonPropertyName("courtRentalId")]
+        public System.Guid CourtRentalId { get; set; } = default!;
+
+    }
+
+    [System.CodeDom.Compiler.GeneratedCode("NJsonSchema", "14.6.1.0 (NJsonSchema v11.5.1.0 (Newtonsoft.Json v13.0.0.0))")]
+    public partial class GetCourtRentalSharesByCourtRentalIdCommand
+    {
+
+        [System.Text.Json.Serialization.JsonPropertyName("advancedSearch")]
+        public Search AdvancedSearch { get; set; } = default!;
+
+        [System.Text.Json.Serialization.JsonPropertyName("keyword")]
+        public string? Keyword { get; set; } = default!;
+
+        [System.Text.Json.Serialization.JsonPropertyName("advancedFilter")]
+        public Filter AdvancedFilter { get; set; } = default!;
+
+        [System.Text.Json.Serialization.JsonPropertyName("pageNumber")]
+        public int PageNumber { get; set; } = default!;
+
+        [System.Text.Json.Serialization.JsonPropertyName("pageSize")]
+        public int PageSize { get; set; } = default!;
+
+        [System.Text.Json.Serialization.JsonPropertyName("orderBy")]
+        public System.Collections.Generic.ICollection<string>? OrderBy { get; set; } = default!;
+
+        [System.Text.Json.Serialization.JsonPropertyName("courtRentalId")]
+        public System.Guid CourtRentalId { get; set; } = default!;
+
+    }
+
+    [System.CodeDom.Compiler.GeneratedCode("NJsonSchema", "14.6.1.0 (NJsonSchema v11.5.1.0 (Newtonsoft.Json v13.0.0.0))")]
+    public partial class GetCourtRentalsByGroupIdCommand
+    {
+
+        [System.Text.Json.Serialization.JsonPropertyName("advancedSearch")]
+        public Search AdvancedSearch { get; set; } = default!;
+
+        [System.Text.Json.Serialization.JsonPropertyName("keyword")]
+        public string? Keyword { get; set; } = default!;
+
+        [System.Text.Json.Serialization.JsonPropertyName("advancedFilter")]
+        public Filter AdvancedFilter { get; set; } = default!;
+
+        [System.Text.Json.Serialization.JsonPropertyName("pageNumber")]
+        public int PageNumber { get; set; } = default!;
+
+        [System.Text.Json.Serialization.JsonPropertyName("pageSize")]
+        public int PageSize { get; set; } = default!;
+
+        [System.Text.Json.Serialization.JsonPropertyName("orderBy")]
+        public System.Collections.Generic.ICollection<string>? OrderBy { get; set; } = default!;
+
+        [System.Text.Json.Serialization.JsonPropertyName("groupId")]
+        public System.Guid GroupId { get; set; } = default!;
+
+    }
+
+    [System.CodeDom.Compiler.GeneratedCode("NJsonSchema", "14.6.1.0 (NJsonSchema v11.5.1.0 (Newtonsoft.Json v13.0.0.0))")]
+    public partial class GetGroupMembersByGroupIdCommand
+    {
+
+        [System.Text.Json.Serialization.JsonPropertyName("advancedSearch")]
+        public Search AdvancedSearch { get; set; } = default!;
+
+        [System.Text.Json.Serialization.JsonPropertyName("keyword")]
+        public string? Keyword { get; set; } = default!;
+
+        [System.Text.Json.Serialization.JsonPropertyName("advancedFilter")]
+        public Filter AdvancedFilter { get; set; } = default!;
+
+        [System.Text.Json.Serialization.JsonPropertyName("pageNumber")]
+        public int PageNumber { get; set; } = default!;
+
+        [System.Text.Json.Serialization.JsonPropertyName("pageSize")]
+        public int PageSize { get; set; } = default!;
+
+        [System.Text.Json.Serialization.JsonPropertyName("orderBy")]
+        public System.Collections.Generic.ICollection<string>? OrderBy { get; set; } = default!;
+
+        [System.Text.Json.Serialization.JsonPropertyName("groupId")]
+        public System.Guid GroupId { get; set; } = default!;
+
+    }
+
+    [System.CodeDom.Compiler.GeneratedCode("NJsonSchema", "14.6.1.0 (NJsonSchema v11.5.1.0 (Newtonsoft.Json v13.0.0.0))")]
     public partial class GetTodoResponse
     {
 
@@ -8559,11 +10267,17 @@ namespace FSH.Starter.Blazor.Infrastructure.Api
         [System.Text.Json.Serialization.JsonPropertyName("description")]
         public string? Description { get; set; } = default!;
 
-        [System.Text.Json.Serialization.JsonPropertyName("price")]
-        public double Price { get; set; } = default!;
+        [System.Text.Json.Serialization.JsonPropertyName("amount")]
+        public double Amount { get; set; } = default!;
+
+        [System.Text.Json.Serialization.JsonPropertyName("discount")]
+        public double Discount { get; set; } = default!;
 
         [System.Text.Json.Serialization.JsonPropertyName("group")]
         public GroupResponse Group { get; set; } = default!;
+
+        [System.Text.Json.Serialization.JsonPropertyName("customer")]
+        public CustomerResponse Customer { get; set; } = default!;
 
     }
 
@@ -8667,7 +10381,7 @@ namespace FSH.Starter.Blazor.Infrastructure.Api
     }
 
     [System.CodeDom.Compiler.GeneratedCode("NJsonSchema", "14.6.1.0 (NJsonSchema v11.5.1.0 (Newtonsoft.Json v13.0.0.0))")]
-    public partial class ProductResponse
+    public partial class ReceiptResponse
     {
 
         [System.Text.Json.Serialization.JsonPropertyName("id")]
@@ -8679,20 +10393,23 @@ namespace FSH.Starter.Blazor.Infrastructure.Api
         [System.Text.Json.Serialization.JsonPropertyName("description")]
         public string? Description { get; set; } = default!;
 
-        [System.Text.Json.Serialization.JsonPropertyName("price")]
-        public double Price { get; set; } = default!;
+        [System.Text.Json.Serialization.JsonPropertyName("amount")]
+        public double Amount { get; set; } = default!;
 
-        [System.Text.Json.Serialization.JsonPropertyName("brand")]
-        public BrandResponse Brand { get; set; } = default!;
+        [System.Text.Json.Serialization.JsonPropertyName("discount")]
+        public double Discount { get; set; } = default!;
+
+        [System.Text.Json.Serialization.JsonPropertyName("group")]
+        public GroupResponse Group { get; set; } = default!;
 
     }
 
     [System.CodeDom.Compiler.GeneratedCode("NJsonSchema", "14.6.1.0 (NJsonSchema v11.5.1.0 (Newtonsoft.Json v13.0.0.0))")]
-    public partial class ProductResponsePagedList
+    public partial class ReceiptResponsePagedList
     {
 
         [System.Text.Json.Serialization.JsonPropertyName("items")]
-        public System.Collections.Generic.ICollection<ProductResponse>? Items { get; set; } = default!;
+        public System.Collections.Generic.ICollection<ReceiptResponse>? Items { get; set; } = default!;
 
         [System.Text.Json.Serialization.JsonPropertyName("pageNumber")]
         public int PageNumber { get; set; } = default!;
@@ -8808,7 +10525,7 @@ namespace FSH.Starter.Blazor.Infrastructure.Api
     }
 
     [System.CodeDom.Compiler.GeneratedCode("NJsonSchema", "14.6.1.0 (NJsonSchema v11.5.1.0 (Newtonsoft.Json v13.0.0.0))")]
-    public partial class SearchBrandsCommand
+    public partial class SearchCourtRentalSessionsByDateCourtCommand
     {
 
         [System.Text.Json.Serialization.JsonPropertyName("advancedSearch")]
@@ -8829,11 +10546,122 @@ namespace FSH.Starter.Blazor.Infrastructure.Api
         [System.Text.Json.Serialization.JsonPropertyName("orderBy")]
         public System.Collections.Generic.ICollection<string>? OrderBy { get; set; } = default!;
 
-        [System.Text.Json.Serialization.JsonPropertyName("name")]
-        public string? Name { get; set; } = default!;
+        [System.Text.Json.Serialization.JsonPropertyName("startDate")]
+        public System.DateTime? StartDate { get; set; } = default!;
 
-        [System.Text.Json.Serialization.JsonPropertyName("description")]
-        public string? Description { get; set; } = default!;
+        [System.Text.Json.Serialization.JsonPropertyName("endDate")]
+        public System.DateTime? EndDate { get; set; } = default!;
+
+        [System.Text.Json.Serialization.JsonPropertyName("courtFrom")]
+        public int? CourtFrom { get; set; } = default!;
+
+        [System.Text.Json.Serialization.JsonPropertyName("courtTo")]
+        public int? CourtTo { get; set; } = default!;
+
+    }
+
+    [System.CodeDom.Compiler.GeneratedCode("NJsonSchema", "14.6.1.0 (NJsonSchema v11.5.1.0 (Newtonsoft.Json v13.0.0.0))")]
+    public partial class SearchCourtRentalSessionsCommand
+    {
+
+        [System.Text.Json.Serialization.JsonPropertyName("advancedSearch")]
+        public Search AdvancedSearch { get; set; } = default!;
+
+        [System.Text.Json.Serialization.JsonPropertyName("keyword")]
+        public string? Keyword { get; set; } = default!;
+
+        [System.Text.Json.Serialization.JsonPropertyName("advancedFilter")]
+        public Filter AdvancedFilter { get; set; } = default!;
+
+        [System.Text.Json.Serialization.JsonPropertyName("pageNumber")]
+        public int PageNumber { get; set; } = default!;
+
+        [System.Text.Json.Serialization.JsonPropertyName("pageSize")]
+        public int PageSize { get; set; } = default!;
+
+        [System.Text.Json.Serialization.JsonPropertyName("orderBy")]
+        public System.Collections.Generic.ICollection<string>? OrderBy { get; set; } = default!;
+
+        [System.Text.Json.Serialization.JsonPropertyName("courtRentalId")]
+        public System.Guid? CourtRentalId { get; set; } = default!;
+
+    }
+
+    [System.CodeDom.Compiler.GeneratedCode("NJsonSchema", "14.6.1.0 (NJsonSchema v11.5.1.0 (Newtonsoft.Json v13.0.0.0))")]
+    public partial class SearchCourtRentalSharesCommand
+    {
+
+        [System.Text.Json.Serialization.JsonPropertyName("advancedSearch")]
+        public Search AdvancedSearch { get; set; } = default!;
+
+        [System.Text.Json.Serialization.JsonPropertyName("keyword")]
+        public string? Keyword { get; set; } = default!;
+
+        [System.Text.Json.Serialization.JsonPropertyName("advancedFilter")]
+        public Filter AdvancedFilter { get; set; } = default!;
+
+        [System.Text.Json.Serialization.JsonPropertyName("pageNumber")]
+        public int PageNumber { get; set; } = default!;
+
+        [System.Text.Json.Serialization.JsonPropertyName("pageSize")]
+        public int PageSize { get; set; } = default!;
+
+        [System.Text.Json.Serialization.JsonPropertyName("orderBy")]
+        public System.Collections.Generic.ICollection<string>? OrderBy { get; set; } = default!;
+
+        [System.Text.Json.Serialization.JsonPropertyName("groupId")]
+        public System.Guid? GroupId { get; set; } = default!;
+
+        [System.Text.Json.Serialization.JsonPropertyName("customerId")]
+        public System.Guid? CustomerId { get; set; } = default!;
+
+        [System.Text.Json.Serialization.JsonPropertyName("minimumRate")]
+        public double? MinimumRate { get; set; } = default!;
+
+        [System.Text.Json.Serialization.JsonPropertyName("maximumRate")]
+        public double? MaximumRate { get; set; } = default!;
+
+    }
+
+    [System.CodeDom.Compiler.GeneratedCode("NJsonSchema", "14.6.1.0 (NJsonSchema v11.5.1.0 (Newtonsoft.Json v13.0.0.0))")]
+    public partial class SearchCourtRentalsByHouseDayTimeCourtCommand
+    {
+
+        [System.Text.Json.Serialization.JsonPropertyName("advancedSearch")]
+        public Search AdvancedSearch { get; set; } = default!;
+
+        [System.Text.Json.Serialization.JsonPropertyName("keyword")]
+        public string? Keyword { get; set; } = default!;
+
+        [System.Text.Json.Serialization.JsonPropertyName("advancedFilter")]
+        public Filter AdvancedFilter { get; set; } = default!;
+
+        [System.Text.Json.Serialization.JsonPropertyName("pageNumber")]
+        public int PageNumber { get; set; } = default!;
+
+        [System.Text.Json.Serialization.JsonPropertyName("pageSize")]
+        public int PageSize { get; set; } = default!;
+
+        [System.Text.Json.Serialization.JsonPropertyName("orderBy")]
+        public System.Collections.Generic.ICollection<string>? OrderBy { get; set; } = default!;
+
+        [System.Text.Json.Serialization.JsonPropertyName("startDate")]
+        public System.DateTime? StartDate { get; set; } = default!;
+
+        [System.Text.Json.Serialization.JsonPropertyName("endDate")]
+        public System.DateTime? EndDate { get; set; } = default!;
+
+        [System.Text.Json.Serialization.JsonPropertyName("weekday")]
+        public string? Weekday { get; set; } = default!;
+
+        [System.Text.Json.Serialization.JsonPropertyName("startTime")]
+        public string? StartTime { get; set; } = default!;
+
+        [System.Text.Json.Serialization.JsonPropertyName("courtFrom")]
+        public int? CourtFrom { get; set; } = default!;
+
+        [System.Text.Json.Serialization.JsonPropertyName("courtTo")]
+        public int? CourtTo { get; set; } = default!;
 
     }
 
@@ -8895,11 +10723,8 @@ namespace FSH.Starter.Blazor.Infrastructure.Api
         [System.Text.Json.Serialization.JsonPropertyName("groupId")]
         public System.Guid? GroupId { get; set; } = default!;
 
-        [System.Text.Json.Serialization.JsonPropertyName("minimumRate")]
-        public double? MinimumRate { get; set; } = default!;
-
-        [System.Text.Json.Serialization.JsonPropertyName("maximumRate")]
-        public double? MaximumRate { get; set; } = default!;
+        [System.Text.Json.Serialization.JsonPropertyName("searchText")]
+        public string? SearchText { get; set; } = default!;
 
     }
 
@@ -8976,7 +10801,7 @@ namespace FSH.Starter.Blazor.Infrastructure.Api
     }
 
     [System.CodeDom.Compiler.GeneratedCode("NJsonSchema", "14.6.1.0 (NJsonSchema v11.5.1.0 (Newtonsoft.Json v13.0.0.0))")]
-    public partial class SearchProductsCommand
+    public partial class SearchReceiptsCommand
     {
 
         [System.Text.Json.Serialization.JsonPropertyName("advancedSearch")]
@@ -8997,8 +10822,11 @@ namespace FSH.Starter.Blazor.Infrastructure.Api
         [System.Text.Json.Serialization.JsonPropertyName("orderBy")]
         public System.Collections.Generic.ICollection<string>? OrderBy { get; set; } = default!;
 
-        [System.Text.Json.Serialization.JsonPropertyName("brandId")]
-        public System.Guid? BrandId { get; set; } = default!;
+        [System.Text.Json.Serialization.JsonPropertyName("groupId")]
+        public System.Guid? GroupId { get; set; } = default!;
+
+        [System.Text.Json.Serialization.JsonPropertyName("customerId")]
+        public System.Guid? CustomerId { get; set; } = default!;
 
         [System.Text.Json.Serialization.JsonPropertyName("minimumRate")]
         public double? MinimumRate { get; set; } = default!;
@@ -9020,6 +10848,9 @@ namespace FSH.Starter.Blazor.Infrastructure.Api
 
         [System.Text.Json.Serialization.JsonPropertyName("connectionString")]
         public string? ConnectionString { get; set; } = default!;
+
+        [System.Text.Json.Serialization.JsonPropertyName("externalIdentifier")]
+        public string? ExternalIdentifier { get; set; } = default!;
 
         [System.Text.Json.Serialization.JsonPropertyName("adminEmail")]
         public string? AdminEmail { get; set; } = default!;
@@ -9117,44 +10948,35 @@ namespace FSH.Starter.Blazor.Infrastructure.Api
     }
 
     [System.CodeDom.Compiler.GeneratedCode("NJsonSchema", "14.6.1.0 (NJsonSchema v11.5.1.0 (Newtonsoft.Json v13.0.0.0))")]
-    public partial class UpdateBrandCommand
-    {
-
-        [System.Text.Json.Serialization.JsonPropertyName("id")]
-        public System.Guid Id { get; set; } = default!;
-
-        [System.Text.Json.Serialization.JsonPropertyName("name")]
-        public string? Name { get; set; } = default!;
-
-        [System.Text.Json.Serialization.JsonPropertyName("description")]
-        public string? Description { get; set; } = default!;
-
-    }
-
-    [System.CodeDom.Compiler.GeneratedCode("NJsonSchema", "14.6.1.0 (NJsonSchema v11.5.1.0 (Newtonsoft.Json v13.0.0.0))")]
-    public partial class UpdateBrandResponse
-    {
-
-        [System.Text.Json.Serialization.JsonPropertyName("id")]
-        public System.Guid? Id { get; set; } = default!;
-
-    }
-
-    [System.CodeDom.Compiler.GeneratedCode("NJsonSchema", "14.6.1.0 (NJsonSchema v11.5.1.0 (Newtonsoft.Json v13.0.0.0))")]
     public partial class UpdateCourtRentalCommand
     {
 
         [System.Text.Json.Serialization.JsonPropertyName("id")]
         public System.Guid Id { get; set; } = default!;
 
-        [System.Text.Json.Serialization.JsonPropertyName("name")]
-        public string? Name { get; set; } = default!;
+        [System.Text.Json.Serialization.JsonPropertyName("startDate")]
+        public System.DateTime? StartDate { get; set; } = default!;
 
-        [System.Text.Json.Serialization.JsonPropertyName("price")]
-        public double Price { get; set; } = default!;
+        [System.Text.Json.Serialization.JsonPropertyName("startTime")]
+        public string? StartTime { get; set; } = default!;
 
-        [System.Text.Json.Serialization.JsonPropertyName("description")]
-        public string? Description { get; set; } = default!;
+        [System.Text.Json.Serialization.JsonPropertyName("endDate")]
+        public System.DateTime? EndDate { get; set; } = default!;
+
+        [System.Text.Json.Serialization.JsonPropertyName("weekday")]
+        public string? Weekday { get; set; } = default!;
+
+        [System.Text.Json.Serialization.JsonPropertyName("amount")]
+        public double Amount { get; set; } = default!;
+
+        [System.Text.Json.Serialization.JsonPropertyName("discount")]
+        public double Discount { get; set; } = default!;
+
+        [System.Text.Json.Serialization.JsonPropertyName("duration")]
+        public int? Duration { get; set; } = default!;
+
+        [System.Text.Json.Serialization.JsonPropertyName("court")]
+        public int Court { get; set; } = default!;
 
         [System.Text.Json.Serialization.JsonPropertyName("groupId")]
         public System.Guid? GroupId { get; set; } = default!;
@@ -9163,6 +10985,81 @@ namespace FSH.Starter.Blazor.Infrastructure.Api
 
     [System.CodeDom.Compiler.GeneratedCode("NJsonSchema", "14.6.1.0 (NJsonSchema v11.5.1.0 (Newtonsoft.Json v13.0.0.0))")]
     public partial class UpdateCourtRentalResponse
+    {
+
+        [System.Text.Json.Serialization.JsonPropertyName("id")]
+        public System.Guid? Id { get; set; } = default!;
+
+    }
+
+    [System.CodeDom.Compiler.GeneratedCode("NJsonSchema", "14.6.1.0 (NJsonSchema v11.5.1.0 (Newtonsoft.Json v13.0.0.0))")]
+    public partial class UpdateCourtRentalSessionCommand
+    {
+
+        [System.Text.Json.Serialization.JsonPropertyName("id")]
+        public System.Guid Id { get; set; } = default!;
+
+        [System.Text.Json.Serialization.JsonPropertyName("startDate")]
+        public System.DateTime? StartDate { get; set; } = default!;
+
+        [System.Text.Json.Serialization.JsonPropertyName("endDate")]
+        public System.DateTime? EndDate { get; set; } = default!;
+
+        [System.Text.Json.Serialization.JsonPropertyName("court")]
+        public int Court { get; set; } = default!;
+
+        [System.Text.Json.Serialization.JsonPropertyName("courtRentalId")]
+        public System.Guid? CourtRentalId { get; set; } = default!;
+
+    }
+
+    [System.CodeDom.Compiler.GeneratedCode("NJsonSchema", "14.6.1.0 (NJsonSchema v11.5.1.0 (Newtonsoft.Json v13.0.0.0))")]
+    public partial class UpdateCourtRentalSessionResponse
+    {
+
+        [System.Text.Json.Serialization.JsonPropertyName("id")]
+        public System.Guid? Id { get; set; } = default!;
+
+    }
+
+    [System.CodeDom.Compiler.GeneratedCode("NJsonSchema", "14.6.1.0 (NJsonSchema v11.5.1.0 (Newtonsoft.Json v13.0.0.0))")]
+    public partial class UpdateCourtRentalShareCommand
+    {
+
+        [System.Text.Json.Serialization.JsonPropertyName("id")]
+        public System.Guid Id { get; set; } = default!;
+
+        [System.Text.Json.Serialization.JsonPropertyName("courtRentalId")]
+        public System.Guid CourtRentalId { get; set; } = default!;
+
+        [System.Text.Json.Serialization.JsonPropertyName("customerId")]
+        public System.Guid CustomerId { get; set; } = default!;
+
+        [System.Text.Json.Serialization.JsonPropertyName("amountTotal")]
+        public double? AmountTotal { get; set; } = default!;
+
+        [System.Text.Json.Serialization.JsonPropertyName("amountPaid")]
+        public double? AmountPaid { get; set; } = default!;
+
+        [System.Text.Json.Serialization.JsonPropertyName("discount")]
+        public double? Discount { get; set; } = default!;
+
+        [System.Text.Json.Serialization.JsonPropertyName("paidDate")]
+        public System.DateTime? PaidDate { get; set; } = default!;
+
+        [System.Text.Json.Serialization.JsonPropertyName("dueDate")]
+        public System.DateTime? DueDate { get; set; } = default!;
+
+        [System.Text.Json.Serialization.JsonPropertyName("isPaid")]
+        public bool? IsPaid { get; set; } = default!;
+
+        [System.Text.Json.Serialization.JsonPropertyName("externalReference")]
+        public string? ExternalReference { get; set; } = default!;
+
+    }
+
+    [System.CodeDom.Compiler.GeneratedCode("NJsonSchema", "14.6.1.0 (NJsonSchema v11.5.1.0 (Newtonsoft.Json v13.0.0.0))")]
+    public partial class UpdateCourtRentalShareResponse
     {
 
         [System.Text.Json.Serialization.JsonPropertyName("id")]
@@ -9180,14 +11077,26 @@ namespace FSH.Starter.Blazor.Infrastructure.Api
         [System.Text.Json.Serialization.JsonPropertyName("name")]
         public string? Name { get; set; } = default!;
 
-        [System.Text.Json.Serialization.JsonPropertyName("price")]
-        public double Price { get; set; } = default!;
+        [System.Text.Json.Serialization.JsonPropertyName("clubNumber")]
+        public string? ClubNumber { get; set; } = default!;
 
-        [System.Text.Json.Serialization.JsonPropertyName("description")]
-        public string? Description { get; set; } = default!;
+        [System.Text.Json.Serialization.JsonPropertyName("ssn")]
+        public string? Ssn { get; set; } = default!;
 
-        [System.Text.Json.Serialization.JsonPropertyName("groupId")]
-        public System.Guid? GroupId { get; set; } = default!;
+        [System.Text.Json.Serialization.JsonPropertyName("address")]
+        public string? Address { get; set; } = default!;
+
+        [System.Text.Json.Serialization.JsonPropertyName("notes")]
+        public string? Notes { get; set; } = default!;
+
+        [System.Text.Json.Serialization.JsonPropertyName("email")]
+        public string? Email { get; set; } = default!;
+
+        [System.Text.Json.Serialization.JsonPropertyName("phoneNumber")]
+        public string? PhoneNumber { get; set; } = default!;
+
+        [System.Text.Json.Serialization.JsonPropertyName("postalCode")]
+        public string? PostalCode { get; set; } = default!;
 
     }
 
@@ -9234,11 +11143,11 @@ namespace FSH.Starter.Blazor.Infrastructure.Api
         [System.Text.Json.Serialization.JsonPropertyName("customerId")]
         public System.Guid CustomerId { get; set; } = default!;
 
-        [System.Text.Json.Serialization.JsonPropertyName("price")]
-        public double Price { get; set; } = default!;
+        [System.Text.Json.Serialization.JsonPropertyName("amount")]
+        public double Amount { get; set; } = default!;
 
-        [System.Text.Json.Serialization.JsonPropertyName("percentage")]
-        public double Percentage { get; set; } = default!;
+        [System.Text.Json.Serialization.JsonPropertyName("discount")]
+        public double Discount { get; set; } = default!;
 
         [System.Text.Json.Serialization.JsonPropertyName("isContact")]
         public bool IsContact { get; set; } = default!;
@@ -9276,28 +11185,40 @@ namespace FSH.Starter.Blazor.Infrastructure.Api
     }
 
     [System.CodeDom.Compiler.GeneratedCode("NJsonSchema", "14.6.1.0 (NJsonSchema v11.5.1.0 (Newtonsoft.Json v13.0.0.0))")]
-    public partial class UpdateProductCommand
+    public partial class UpdateReceiptCommand
     {
 
         [System.Text.Json.Serialization.JsonPropertyName("id")]
         public System.Guid Id { get; set; } = default!;
 
-        [System.Text.Json.Serialization.JsonPropertyName("name")]
-        public string? Name { get; set; } = default!;
+        [System.Text.Json.Serialization.JsonPropertyName("groupMemberId")]
+        public System.Guid GroupMemberId { get; set; } = default!;
 
-        [System.Text.Json.Serialization.JsonPropertyName("price")]
-        public double Price { get; set; } = default!;
+        [System.Text.Json.Serialization.JsonPropertyName("amountTotal")]
+        public double? AmountTotal { get; set; } = default!;
 
-        [System.Text.Json.Serialization.JsonPropertyName("description")]
-        public string? Description { get; set; } = default!;
+        [System.Text.Json.Serialization.JsonPropertyName("amountPaid")]
+        public double? AmountPaid { get; set; } = default!;
 
-        [System.Text.Json.Serialization.JsonPropertyName("brandId")]
-        public System.Guid? BrandId { get; set; } = default!;
+        [System.Text.Json.Serialization.JsonPropertyName("discount")]
+        public double? Discount { get; set; } = default!;
+
+        [System.Text.Json.Serialization.JsonPropertyName("receiptDate")]
+        public System.DateTime? ReceiptDate { get; set; } = default!;
+
+        [System.Text.Json.Serialization.JsonPropertyName("dueDate")]
+        public System.DateTime? DueDate { get; set; } = default!;
+
+        [System.Text.Json.Serialization.JsonPropertyName("isPaid")]
+        public bool? IsPaid { get; set; } = default!;
+
+        [System.Text.Json.Serialization.JsonPropertyName("externalReference")]
+        public string? ExternalReference { get; set; } = default!;
 
     }
 
     [System.CodeDom.Compiler.GeneratedCode("NJsonSchema", "14.6.1.0 (NJsonSchema v11.5.1.0 (Newtonsoft.Json v13.0.0.0))")]
-    public partial class UpdateProductResponse
+    public partial class UpdateReceiptResponse
     {
 
         [System.Text.Json.Serialization.JsonPropertyName("id")]

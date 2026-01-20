@@ -1,0 +1,11 @@
+generatorOptions:
+  disableNameSuffixHash: true
+
+secretGenerator:
+- name: core-rabbitmq
+  envs:
+  - ./core-rabbitmq.env
+
+- name: cashflow-assistant-rabbitmq
+  envs:
+  - ./cashflow-assistant-rabbitmq.env

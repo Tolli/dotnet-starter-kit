@@ -36,6 +36,10 @@ namespace FSH.Starter.WebApi.Migrations.MSSQL.Tenant
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
+                    b.Property<string>("ExternalIdentifier")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
                     b.Property<string>("Identifier")
                         .IsRequired()
                         .HasColumnType("nvarchar(450)");

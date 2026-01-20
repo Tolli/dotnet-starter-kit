@@ -1,0 +1,9 @@
+externalAccess:
+  enabled: true
+  # autoDiscovery:
+  #   enabled: true
+  controller:
+    service:
+      type: LoadBalancer
+      loadBalancerIPs: [ 127.0.0.1 ]
+      # nodePorts: [30094]

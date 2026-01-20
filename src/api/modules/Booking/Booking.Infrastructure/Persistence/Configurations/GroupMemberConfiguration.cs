@@ -10,8 +10,8 @@ internal sealed class GroupMemberConfiguration : IEntityTypeConfiguration<GroupM
     {
         builder.IsMultiTenant();
         builder.HasKey(x => x.Id);
-        builder.Property(x => x.Price).HasPrecision(18, 2);
-        builder.Property(x => x.Percentage).HasPrecision(8, 5);
+        builder.Property(x => x.Amount).HasPrecision(18, 2);
+        builder.Property(x => x.Discount).HasPrecision(18, 2);
         builder.HasOne(x => x.Customer).WithMany(c => c.Groups).HasForeignKey(x => x.CustomerId).OnDelete(DeleteBehavior.Cascade);
         builder.HasOne(x => x.Group).WithMany(g => g.Members).HasForeignKey(x => x.GroupId).OnDelete(DeleteBehavior.Cascade);
     }

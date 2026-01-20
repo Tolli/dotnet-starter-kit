@@ -10,7 +10,5 @@ public class SearchCustomerSpecs : EntitiesByPaginationFilterSpec<Customer, Cust
     public SearchCustomerSpecs(SearchCustomersCommand command)
         : base(command) =>
         Query
-            .OrderBy(c => c.Name, !command.HasOrderBy())
-            .Where(p => p.Price >= command.MinimumRate!.Value, command.MinimumRate.HasValue)
-            .Where(p => p.Price <= command.MaximumRate!.Value, command.MaximumRate.HasValue);
+            .OrderBy(c => c.Name, !command.HasOrderBy());
 }

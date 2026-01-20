@@ -19,7 +19,7 @@ public static class Extensions
         //define module assemblies
         var assemblies = new Assembly[]
         {
-            typeof(CatalogMetadata).Assembly,
+            //typeof(CatalogMetadata).Assembly,
             typeof(TodoModule).Assembly,
             typeof(BookingMetadata).Assembly
         };
@@ -34,14 +34,14 @@ public static class Extensions
         });
 
         //register module services
-        builder.RegisterCatalogServices();
+        //builder.RegisterCatalogServices();
         builder.RegisterTodoServices();
         builder.RegisterBookingServices();
 
         //add carter endpoint modules
         builder.Services.AddCarter(configurator: config =>
         {
-            config.WithModule<CatalogModule.Endpoints>();
+            //config.WithModule<CatalogModule.Endpoints>();
             config.WithModule<TodoModule.Endpoints>();
             config.WithModule<BookingModule.Endpoints>();
         });

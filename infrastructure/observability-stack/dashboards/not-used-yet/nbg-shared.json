@@ -1,0 +1,4657 @@
+{
+  "annotations": {
+    "list": [
+      {
+        "builtIn": 1,
+        "datasource": "-- Grafana --",
+        "enable": true,
+        "hide": true,
+        "iconColor": "rgba(0, 211, 255, 1)",
+        "name": "Annotations & Alerts",
+        "type": "dashboard"
+      }
+    ]
+  },
+  "editable": true,
+  "gnetId": null,
+  "graphTooltip": 0,
+  "id": 24,
+  "links": [],
+  "panels": [
+    {
+      "cacheTimeout": null,
+      "colorBackground": false,
+      "colorValue": true,
+      "colors": [
+        "rgba(139, 139, 139, 1)",
+        "rgba(139, 139, 139, 1)",
+        "rgba(63, 104, 51, 1)"
+      ],
+      "datasource": "Azure Monitor",
+      "decimals": 2,
+      "editable": true,
+      "error": false,
+      "fieldConfig": {
+        "defaults": {
+          "custom": {}
+        },
+        "overrides": []
+      },
+      "format": "percent",
+      "gauge": {
+        "maxValue": 100,
+        "minValue": 0,
+        "show": false,
+        "thresholdLabels": false,
+        "thresholdMarkers": true
+      },
+      "gridPos": {
+        "h": 3,
+        "w": 3,
+        "x": 0,
+        "y": 0
+      },
+      "id": 80,
+      "interval": null,
+      "links": [],
+      "mappingType": 1,
+      "mappingTypes": [
+        {
+          "name": "value to text",
+          "value": 1
+        },
+        {
+          "name": "range to text",
+          "value": 2
+        }
+      ],
+      "maxDataPoints": 32000,
+      "nullPointMode": "connected",
+      "nullText": null,
+      "postfix": "",
+      "postfixFontSize": "50%",
+      "prefix": "",
+      "prefixFontSize": "50%",
+      "rangeMaps": [
+        {
+          "from": "null",
+          "text": "N/A",
+          "to": "null"
+        }
+      ],
+      "sparkline": {
+        "fillColor": "rgba(255, 255, 255, 0)",
+        "full": false,
+        "lineColor": "rgb(110, 208, 224)",
+        "show": false
+      },
+      "tableColumn": "",
+      "targets": [
+        {
+          "appInsights": {
+            "aggOptions": [
+              "avg",
+              "count"
+            ],
+            "aggregation": "avg",
+            "dimension": [],
+            "dimensions": [
+              "availabilityResult/name",
+              "availabilityResult/location",
+              "availabilityResult/success",
+              "operation/name",
+              "operation/synthetic",
+              "operation/syntheticSource",
+              "user/authenticated",
+              "application/version",
+              "client/type",
+              "client/model",
+              "client/os",
+              "client/city",
+              "client/stateOrProvince",
+              "client/countryOrRegion",
+              "client/browser",
+              "cloud/roleName",
+              "cloud/roleInstance",
+              "customDimensions/FullTestResultAvailable",
+              "customDimensions/WebtestArmResourceName",
+              "customDimensions/SyntheticMonitorId",
+              "customDimensions/WebtestLocationId",
+              "customDimensions/SourceId"
+            ],
+            "metricName": "availabilityResults/availabilityPercentage",
+            "rawQuery": false,
+            "rawQueryString": "",
+            "spliton": "",
+            "timeColumn": "timestamp",
+            "timeGrain": "auto",
+            "timeGrainType": "auto",
+            "valueColumn": "",
+            "yaxis": ""
+          },
+          "azureLogAnalytics": {
+            "query": "//change this example to create your own time series query\n<table name>                                                              //the table to query (e.g. Usage, Heartbeat, Perf)\n| where $__timeFilter(TimeGenerated)                                      //this is a macro used to show the full chart’s time range, choose the datetime column here\n| summarize count() by <group by column>, bin(TimeGenerated, $__interval) //change “group by column” to a column in your table, such as “Computer”. The $__interval macro is used to auto-select the time grain. Can also use 1h, 5m etc.\n| order by TimeGenerated asc",
+            "resultFormat": "time_series",
+            "workspace": ""
+          },
+          "azureMonitor": {
+            "aggOptions": [],
+            "dimensionFilter": "*",
+            "dimensionFilters": [],
+            "metricDefinition": "select",
+            "metricName": "select",
+            "metricNamespace": "select",
+            "resourceGroup": "select",
+            "resourceName": "select",
+            "timeGrain": "auto",
+            "timeGrains": [],
+            "top": "10"
+          },
+          "insightsAnalytics": {
+            "query": "",
+            "resultFormat": "time_series"
+          },
+          "queryType": "Application Insights",
+          "refId": "A",
+          "subscription": "92fde89a-451b-4735-bb8e-44860aac0c43"
+        }
+      ],
+      "thresholds": "100,100",
+      "title": "NBG API UPTIME",
+      "type": "singlestat",
+      "valueFontSize": "80%",
+      "valueMaps": [
+        {
+          "op": "=",
+          "text": "N/A",
+          "value": "null"
+        }
+      ],
+      "valueName": "avg"
+    },
+    {
+      "cacheTimeout": null,
+      "colorBackground": true,
+      "colorPostfix": false,
+      "colorPrefix": false,
+      "colorValue": false,
+      "colors": [
+        "#299c46",
+        "#C4162A",
+        "#C4162A"
+      ],
+      "datasource": "PRTG",
+      "fieldConfig": {
+        "defaults": {
+          "custom": {}
+        },
+        "overrides": []
+      },
+      "format": "none",
+      "gauge": {
+        "maxValue": 100,
+        "minValue": 0,
+        "show": false,
+        "thresholdLabels": false,
+        "thresholdMarkers": true
+      },
+      "gridPos": {
+        "h": 3,
+        "w": 3,
+        "x": 3,
+        "y": 0
+      },
+      "id": 33,
+      "interval": null,
+      "links": [],
+      "mappingType": 1,
+      "mappingTypes": [
+        {
+          "name": "value to text",
+          "value": 1
+        },
+        {
+          "name": "range to text",
+          "value": 2
+        }
+      ],
+      "maxDataPoints": 100,
+      "nullPointMode": "connected",
+      "nullText": null,
+      "postfix": "",
+      "postfixFontSize": "50%",
+      "prefix": "",
+      "prefixFontSize": "50%",
+      "rangeMaps": [
+        {
+          "from": "null",
+          "text": "N/A",
+          "to": "null"
+        }
+      ],
+      "sparkline": {
+        "fillColor": "rgba(31, 118, 189, 0.18)",
+        "full": false,
+        "lineColor": "rgb(31, 120, 193)",
+        "show": false,
+        "ymax": null,
+        "ymin": null
+      },
+      "tableColumn": "",
+      "targets": [
+        {
+          "channel": {
+            "name": ""
+          },
+          "device": {
+            "name": "*"
+          },
+          "errors": {},
+          "functions": [],
+          "group": {
+            "name": "Root"
+          },
+          "options": {
+            "includeDeviceName": false,
+            "includeSensorName": false,
+            "mode": {
+              "name": "Text",
+              "value": 2
+            },
+            "textProperty": {
+              "name": "status",
+              "visible_name": "Status"
+            },
+            "textValueFrom": {
+              "name": "sensor",
+              "visible_name": "Sensor"
+            }
+          },
+          "raw": {
+            "queryString": "",
+            "uri": ""
+          },
+          "refId": "A",
+          "sensor": {
+            "name": "api.meniganbg.net-Internal"
+          }
+        }
+      ],
+      "thresholds": "4",
+      "timeFrom": null,
+      "timeShift": null,
+      "title": "API Status (internal)",
+      "type": "singlestat",
+      "valueFontSize": "80%",
+      "valueMaps": [
+        {
+          "op": "=",
+          "text": "UP",
+          "value": "3"
+        },
+        {
+          "op": "=",
+          "text": "DOWN",
+          "value": "5"
+        },
+        {
+          "op": "=",
+          "text": "UNUSUAL",
+          "value": "10"
+        }
+      ],
+      "valueName": "current"
+    },
+    {
+      "cacheTimeout": null,
+      "colorBackground": true,
+      "colorPostfix": false,
+      "colorPrefix": false,
+      "colorValue": false,
+      "colors": [
+        "#299c46",
+        "#C4162A",
+        "#C4162A"
+      ],
+      "datasource": "PRTG",
+      "fieldConfig": {
+        "defaults": {
+          "custom": {}
+        },
+        "overrides": []
+      },
+      "format": "none",
+      "gauge": {
+        "maxValue": 100,
+        "minValue": 0,
+        "show": false,
+        "thresholdLabels": false,
+        "thresholdMarkers": true
+      },
+      "gridPos": {
+        "h": 3,
+        "w": 3,
+        "x": 6,
+        "y": 0
+      },
+      "id": 34,
+      "interval": null,
+      "links": [],
+      "mappingType": 1,
+      "mappingTypes": [
+        {
+          "name": "value to text",
+          "value": 1
+        },
+        {
+          "name": "range to text",
+          "value": 2
+        }
+      ],
+      "maxDataPoints": 100,
+      "nullPointMode": "connected",
+      "nullText": null,
+      "postfix": "",
+      "postfixFontSize": "50%",
+      "prefix": "",
+      "prefixFontSize": "50%",
+      "rangeMaps": [
+        {
+          "from": "null",
+          "text": "N/A",
+          "to": "null"
+        }
+      ],
+      "sparkline": {
+        "fillColor": "rgba(31, 118, 189, 0.18)",
+        "full": false,
+        "lineColor": "rgb(31, 120, 193)",
+        "show": false,
+        "ymax": null,
+        "ymin": null
+      },
+      "tableColumn": "",
+      "targets": [
+        {
+          "channel": {
+            "name": ""
+          },
+          "device": {
+            "name": "*"
+          },
+          "errors": {},
+          "functions": [],
+          "group": {
+            "name": "Root"
+          },
+          "options": {
+            "includeDeviceName": false,
+            "includeSensorName": false,
+            "mode": {
+              "name": "Text",
+              "value": 2
+            },
+            "textProperty": {
+              "name": "status",
+              "visible_name": "Status"
+            },
+            "textValueFrom": {
+              "name": "sensor",
+              "visible_name": "Sensor"
+            }
+          },
+          "raw": {
+            "queryString": "",
+            "uri": ""
+          },
+          "refId": "A",
+          "sensor": {
+            "name": "api.meniganbg.com-External"
+          }
+        }
+      ],
+      "thresholds": "4",
+      "timeFrom": null,
+      "timeShift": null,
+      "title": "API Status (External)",
+      "type": "singlestat",
+      "valueFontSize": "80%",
+      "valueMaps": [
+        {
+          "op": "=",
+          "text": "UP",
+          "value": "3"
+        },
+        {
+          "op": "=",
+          "text": "DOWN",
+          "value": "5"
+        },
+        {
+          "op": "=",
+          "text": "UNUSUAL",
+          "value": "10"
+        }
+      ],
+      "valueName": "current"
+    },
+    {
+      "cacheTimeout": null,
+      "colorBackground": true,
+      "colorPostfix": false,
+      "colorPrefix": false,
+      "colorValue": false,
+      "colors": [
+        "#299c46",
+        "#C4162A",
+        "#C4162A"
+      ],
+      "datasource": "PRTG",
+      "fieldConfig": {
+        "defaults": {
+          "custom": {}
+        },
+        "overrides": []
+      },
+      "format": "none",
+      "gauge": {
+        "maxValue": 100,
+        "minValue": 0,
+        "show": false,
+        "thresholdLabels": false,
+        "thresholdMarkers": true
+      },
+      "gridPos": {
+        "h": 3,
+        "w": 3,
+        "x": 9,
+        "y": 0
+      },
+      "id": 39,
+      "interval": null,
+      "links": [],
+      "mappingType": 1,
+      "mappingTypes": [
+        {
+          "name": "value to text",
+          "value": 1
+        },
+        {
+          "name": "range to text",
+          "value": 2
+        }
+      ],
+      "maxDataPoints": 100,
+      "nullPointMode": "connected",
+      "nullText": null,
+      "postfix": "",
+      "postfixFontSize": "50%",
+      "prefix": "",
+      "prefixFontSize": "50%",
+      "rangeMaps": [
+        {
+          "from": "null",
+          "text": "N/A",
+          "to": "null"
+        }
+      ],
+      "sparkline": {
+        "fillColor": "rgba(31, 118, 189, 0.18)",
+        "full": false,
+        "lineColor": "rgb(31, 120, 193)",
+        "show": false,
+        "ymax": null,
+        "ymin": null
+      },
+      "tableColumn": "",
+      "targets": [
+        {
+          "channel": {
+            "name": ""
+          },
+          "device": {
+            "name": "*"
+          },
+          "errors": {},
+          "functions": [],
+          "group": {
+            "name": "Root"
+          },
+          "options": {
+            "includeDeviceName": false,
+            "includeSensorName": false,
+            "mode": {
+              "name": "Text",
+              "value": 2
+            },
+            "textProperty": {
+              "name": "status",
+              "visible_name": "Status"
+            },
+            "textValueFrom": {
+              "name": "sensor",
+              "visible_name": "Sensor"
+            }
+          },
+          "raw": {
+            "queryString": "",
+            "uri": ""
+          },
+          "refId": "A",
+          "sensor": {
+            "name": "adminweb-internal"
+          }
+        }
+      ],
+      "thresholds": "4",
+      "timeFrom": null,
+      "timeShift": null,
+      "title": "Admin Web Status (Internal)",
+      "type": "singlestat",
+      "valueFontSize": "80%",
+      "valueMaps": [
+        {
+          "op": "=",
+          "text": "UP",
+          "value": "3"
+        },
+        {
+          "op": "=",
+          "text": "DOWN",
+          "value": "5"
+        },
+        {
+          "op": "=",
+          "text": "UNUSUAL",
+          "value": "10"
+        }
+      ],
+      "valueName": "current"
+    },
+    {
+      "cacheTimeout": null,
+      "colorBackground": true,
+      "colorPostfix": false,
+      "colorPrefix": false,
+      "colorValue": false,
+      "colors": [
+        "#299c46",
+        "#C4162A",
+        "#C4162A"
+      ],
+      "datasource": "PRTG",
+      "fieldConfig": {
+        "defaults": {
+          "custom": {}
+        },
+        "overrides": []
+      },
+      "format": "none",
+      "gauge": {
+        "maxValue": 100,
+        "minValue": 0,
+        "show": false,
+        "thresholdLabels": false,
+        "thresholdMarkers": true
+      },
+      "gridPos": {
+        "h": 3,
+        "w": 3,
+        "x": 12,
+        "y": 0
+      },
+      "id": 45,
+      "interval": null,
+      "links": [],
+      "mappingType": 1,
+      "mappingTypes": [
+        {
+          "name": "value to text",
+          "value": 1
+        },
+        {
+          "name": "range to text",
+          "value": 2
+        }
+      ],
+      "maxDataPoints": 100,
+      "nullPointMode": "connected",
+      "nullText": null,
+      "postfix": "",
+      "postfixFontSize": "50%",
+      "prefix": "",
+      "prefixFontSize": "50%",
+      "rangeMaps": [
+        {
+          "from": "null",
+          "text": "N/A",
+          "to": "null"
+        }
+      ],
+      "sparkline": {
+        "fillColor": "rgba(31, 118, 189, 0.18)",
+        "full": false,
+        "lineColor": "rgb(31, 120, 193)",
+        "show": false,
+        "ymax": null,
+        "ymin": null
+      },
+      "tableColumn": "",
+      "targets": [
+        {
+          "channel": {
+            "name": ""
+          },
+          "device": {
+            "name": "NBG-HUBSVC-01"
+          },
+          "errors": {},
+          "functions": [],
+          "group": {
+            "name": "*"
+          },
+          "options": {
+            "includeDeviceName": false,
+            "includeSensorName": false,
+            "mode": {
+              "name": "Text",
+              "value": 2
+            },
+            "textProperty": {
+              "name": "status",
+              "visible_name": "Status"
+            },
+            "textValueFrom": {
+              "name": "sensor",
+              "visible_name": "Sensor"
+            }
+          },
+          "raw": {
+            "queryString": "",
+            "uri": ""
+          },
+          "refId": "A",
+          "sensor": {
+            "name": "Service: Meniga MMS Scheduler"
+          }
+        }
+      ],
+      "thresholds": "4",
+      "timeFrom": null,
+      "timeShift": null,
+      "title": "Meniga MMS Scheduler",
+      "type": "singlestat",
+      "valueFontSize": "80%",
+      "valueMaps": [
+        {
+          "op": "=",
+          "text": "UP",
+          "value": "3"
+        },
+        {
+          "op": "=",
+          "text": "DOWN",
+          "value": "5"
+        },
+        {
+          "op": "=",
+          "text": "UNUSUAL",
+          "value": "10"
+        }
+      ],
+      "valueName": "current"
+    },
+    {
+      "cacheTimeout": null,
+      "colorBackground": true,
+      "colorPostfix": false,
+      "colorPrefix": false,
+      "colorValue": false,
+      "colors": [
+        "#299c46",
+        "#C4162A",
+        "#C4162A"
+      ],
+      "datasource": "PRTG",
+      "fieldConfig": {
+        "defaults": {
+          "custom": {}
+        },
+        "overrides": []
+      },
+      "format": "none",
+      "gauge": {
+        "maxValue": 100,
+        "minValue": 0,
+        "show": false,
+        "thresholdLabels": false,
+        "thresholdMarkers": true
+      },
+      "gridPos": {
+        "h": 3,
+        "w": 3,
+        "x": 15,
+        "y": 0
+      },
+      "id": 47,
+      "interval": null,
+      "links": [],
+      "mappingType": 1,
+      "mappingTypes": [
+        {
+          "name": "value to text",
+          "value": 1
+        },
+        {
+          "name": "range to text",
+          "value": 2
+        }
+      ],
+      "maxDataPoints": 100,
+      "nullPointMode": "connected",
+      "nullText": null,
+      "postfix": "",
+      "postfixFontSize": "50%",
+      "prefix": "",
+      "prefixFontSize": "50%",
+      "rangeMaps": [
+        {
+          "from": "null",
+          "text": "N/A",
+          "to": "null"
+        }
+      ],
+      "sparkline": {
+        "fillColor": "rgba(31, 118, 189, 0.18)",
+        "full": false,
+        "lineColor": "rgb(31, 120, 193)",
+        "show": false,
+        "ymax": null,
+        "ymin": null
+      },
+      "tableColumn": "",
+      "targets": [
+        {
+          "channel": {
+            "name": ""
+          },
+          "device": {
+            "name": "NBG-HUBSVC-01"
+          },
+          "errors": {},
+          "functions": [],
+          "group": {
+            "name": "*"
+          },
+          "options": {
+            "includeDeviceName": false,
+            "includeSensorName": false,
+            "mode": {
+              "name": "Text",
+              "value": 2
+            },
+            "textProperty": {
+              "name": "status",
+              "visible_name": "Status"
+            },
+            "textValueFrom": {
+              "name": "sensor",
+              "visible_name": "Sensor"
+            }
+          },
+          "raw": {
+            "queryString": "",
+            "uri": ""
+          },
+          "refId": "A",
+          "sensor": {
+            "name": "Service: Meniga Scheduled Events Service"
+          }
+        }
+      ],
+      "thresholds": "4",
+      "timeFrom": null,
+      "timeShift": null,
+      "title": " Scheduled Events Service",
+      "type": "singlestat",
+      "valueFontSize": "80%",
+      "valueMaps": [
+        {
+          "op": "=",
+          "text": "UP",
+          "value": "3"
+        },
+        {
+          "op": "=",
+          "text": "DOWN",
+          "value": "5"
+        },
+        {
+          "op": "=",
+          "text": "UNUSUAL",
+          "value": "10"
+        }
+      ],
+      "valueName": "current"
+    },
+    {
+      "cacheTimeout": null,
+      "colorBackground": true,
+      "colorPostfix": false,
+      "colorPrefix": false,
+      "colorValue": false,
+      "colors": [
+        "#299c46",
+        "#C4162A",
+        "#C4162A"
+      ],
+      "datasource": "PRTG",
+      "fieldConfig": {
+        "defaults": {
+          "custom": {}
+        },
+        "overrides": []
+      },
+      "format": "none",
+      "gauge": {
+        "maxValue": 100,
+        "minValue": 0,
+        "show": false,
+        "thresholdLabels": false,
+        "thresholdMarkers": true
+      },
+      "gridPos": {
+        "h": 3,
+        "w": 4,
+        "x": 18,
+        "y": 0
+      },
+      "id": 46,
+      "interval": null,
+      "links": [],
+      "mappingType": 1,
+      "mappingTypes": [
+        {
+          "name": "value to text",
+          "value": 1
+        },
+        {
+          "name": "range to text",
+          "value": 2
+        }
+      ],
+      "maxDataPoints": 100,
+      "nullPointMode": "connected",
+      "nullText": null,
+      "postfix": "",
+      "postfixFontSize": "50%",
+      "prefix": "",
+      "prefixFontSize": "50%",
+      "rangeMaps": [
+        {
+          "from": "null",
+          "text": "N/A",
+          "to": "null"
+        }
+      ],
+      "sparkline": {
+        "fillColor": "rgba(31, 118, 189, 0.18)",
+        "full": false,
+        "lineColor": "rgb(31, 120, 193)",
+        "show": false,
+        "ymax": null,
+        "ymin": null
+      },
+      "tableColumn": "",
+      "targets": [
+        {
+          "channel": {
+            "name": ""
+          },
+          "device": {
+            "name": "NBG-HUBSVC-01"
+          },
+          "errors": {},
+          "functions": [],
+          "group": {
+            "name": "*"
+          },
+          "options": {
+            "includeDeviceName": false,
+            "includeSensorName": false,
+            "mode": {
+              "name": "Text",
+              "value": 2
+            },
+            "textProperty": {
+              "name": "status",
+              "visible_name": "Status"
+            },
+            "textValueFrom": {
+              "name": "sensor",
+              "visible_name": "Sensor"
+            }
+          },
+          "raw": {
+            "queryString": "",
+            "uri": ""
+          },
+          "refId": "A",
+          "sensor": {
+            "name": "Service: Meniga Notifications Dispatcher Service"
+          }
+        }
+      ],
+      "thresholds": "4",
+      "timeFrom": null,
+      "timeShift": null,
+      "title": "Meniga Notifications Dispatcher Service",
+      "type": "singlestat",
+      "valueFontSize": "80%",
+      "valueMaps": [
+        {
+          "op": "=",
+          "text": "UP",
+          "value": "3"
+        },
+        {
+          "op": "=",
+          "text": "DOWN",
+          "value": "5"
+        },
+        {
+          "op": "=",
+          "text": "UNUSUAL",
+          "value": "10"
+        }
+      ],
+      "valueName": "current"
+    },
+    {
+      "cacheTimeout": null,
+      "colorBackground": false,
+      "colorValue": false,
+      "colors": [
+        "#299c46",
+        "rgba(237, 129, 40, 0.89)",
+        "#d44a3a"
+      ],
+      "datasource": "NBG-SQL-MI-02",
+      "fieldConfig": {
+        "defaults": {
+          "custom": {}
+        },
+        "overrides": []
+      },
+      "format": "none",
+      "gauge": {
+        "maxValue": 100,
+        "minValue": 0,
+        "show": false,
+        "thresholdLabels": false,
+        "thresholdMarkers": true
+      },
+      "gridPos": {
+        "h": 3,
+        "w": 4,
+        "x": 0,
+        "y": 3
+      },
+      "id": 50,
+      "interval": null,
+      "links": [],
+      "mappingType": 1,
+      "mappingTypes": [
+        {
+          "name": "value to text",
+          "value": 1
+        },
+        {
+          "name": "range to text",
+          "value": 2
+        }
+      ],
+      "maxDataPoints": 100,
+      "nullPointMode": "connected",
+      "nullText": null,
+      "postfix": "",
+      "postfixFontSize": "50%",
+      "prefix": "",
+      "prefixFontSize": "50%",
+      "rangeMaps": [
+        {
+          "from": "null",
+          "text": "N/A",
+          "to": "null"
+        }
+      ],
+      "sparkline": {
+        "fillColor": "rgba(31, 118, 189, 0.18)",
+        "full": false,
+        "lineColor": "rgb(31, 120, 193)",
+        "show": false,
+        "ymax": null,
+        "ymin": null
+      },
+      "tableColumn": "",
+      "targets": [
+        {
+          "alias": "",
+          "format": "table",
+          "rawSql": "select * from [total_users_in_database];",
+          "refId": "A"
+        }
+      ],
+      "thresholds": "",
+      "timeFrom": null,
+      "timeShift": null,
+      "title": "Total Users In the database",
+      "type": "singlestat",
+      "valueFontSize": "80%",
+      "valueMaps": [
+        {
+          "op": "=",
+          "text": "N/A",
+          "value": "null"
+        }
+      ],
+      "valueName": "avg"
+    },
+    {
+      "cacheTimeout": null,
+      "colorBackground": false,
+      "colorValue": false,
+      "colors": [
+        "#299c46",
+        "rgba(237, 129, 40, 0.89)",
+        "#d44a3a"
+      ],
+      "datasource": "NBG-SQL-MI-02",
+      "fieldConfig": {
+        "defaults": {
+          "custom": {}
+        },
+        "overrides": []
+      },
+      "format": "none",
+      "gauge": {
+        "maxValue": 100,
+        "minValue": 0,
+        "show": false,
+        "thresholdLabels": false,
+        "thresholdMarkers": true
+      },
+      "gridPos": {
+        "h": 3,
+        "w": 5,
+        "x": 4,
+        "y": 3
+      },
+      "id": 13,
+      "interval": null,
+      "links": [],
+      "mappingType": 1,
+      "mappingTypes": [
+        {
+          "name": "value to text",
+          "value": 1
+        },
+        {
+          "name": "range to text",
+          "value": 2
+        }
+      ],
+      "maxDataPoints": 100,
+      "nullPointMode": "connected",
+      "nullText": null,
+      "postfix": "",
+      "postfixFontSize": "50%",
+      "prefix": "",
+      "prefixFontSize": "50%",
+      "rangeMaps": [
+        {
+          "from": "null",
+          "text": "N/A",
+          "to": "null"
+        }
+      ],
+      "sparkline": {
+        "fillColor": "rgba(31, 118, 189, 0.18)",
+        "full": false,
+        "lineColor": "rgb(31, 120, 193)",
+        "show": false,
+        "ymax": null,
+        "ymin": null
+      },
+      "tableColumn": "",
+      "targets": [
+        {
+          "alias": "",
+          "format": "table",
+          "rawSql": "select * from [new_users_registered_today];",
+          "refId": "A"
+        }
+      ],
+      "thresholds": "",
+      "timeFrom": null,
+      "timeShift": null,
+      "title": "New users registered today on database",
+      "type": "singlestat",
+      "valueFontSize": "80%",
+      "valueMaps": [
+        {
+          "op": "=",
+          "text": "N/A",
+          "value": "null"
+        }
+      ],
+      "valueName": "avg"
+    },
+    {
+      "cacheTimeout": null,
+      "colorBackground": false,
+      "colorValue": false,
+      "colors": [
+        "#299c46",
+        "rgba(237, 129, 40, 0.89)",
+        "#d44a3a"
+      ],
+      "datasource": "NBG-SQL-MI-02",
+      "fieldConfig": {
+        "defaults": {
+          "custom": {}
+        },
+        "overrides": []
+      },
+      "format": "none",
+      "gauge": {
+        "maxValue": 100,
+        "minValue": 0,
+        "show": false,
+        "thresholdLabels": false,
+        "thresholdMarkers": true
+      },
+      "gridPos": {
+        "h": 3,
+        "w": 5,
+        "x": 9,
+        "y": 3
+      },
+      "id": 12,
+      "interval": null,
+      "links": [],
+      "mappingType": 1,
+      "mappingTypes": [
+        {
+          "name": "value to text",
+          "value": 1
+        },
+        {
+          "name": "range to text",
+          "value": 2
+        }
+      ],
+      "maxDataPoints": 100,
+      "nullPointMode": "connected",
+      "nullText": null,
+      "postfix": "",
+      "postfixFontSize": "50%",
+      "prefix": "",
+      "prefixFontSize": "50%",
+      "rangeMaps": [
+        {
+          "from": "null",
+          "text": "N/A",
+          "to": "null"
+        }
+      ],
+      "sparkline": {
+        "fillColor": "rgba(31, 118, 189, 0.18)",
+        "full": false,
+        "lineColor": "rgb(31, 120, 193)",
+        "show": false,
+        "ymax": null,
+        "ymin": null
+      },
+      "tableColumn": "",
+      "targets": [
+        {
+          "alias": "",
+          "format": "table",
+          "rawSql": "select * from [total_users_active_last_week];",
+          "refId": "A"
+        }
+      ],
+      "thresholds": "",
+      "timeFrom": null,
+      "timeShift": null,
+      "title": "Total Users In the database (active in last week)",
+      "type": "singlestat",
+      "valueFontSize": "80%",
+      "valueMaps": [
+        {
+          "op": "=",
+          "text": "N/A",
+          "value": "null"
+        }
+      ],
+      "valueName": "avg"
+    },
+    {
+      "cacheTimeout": null,
+      "colorBackground": false,
+      "colorValue": false,
+      "colors": [
+        "#299c46",
+        "rgba(237, 129, 40, 0.89)",
+        "#d44a3a"
+      ],
+      "datasource": "NBG-SQL-MI-02",
+      "fieldConfig": {
+        "defaults": {
+          "custom": {}
+        },
+        "overrides": []
+      },
+      "format": "none",
+      "gauge": {
+        "maxValue": 100,
+        "minValue": 0,
+        "show": false,
+        "thresholdLabels": false,
+        "thresholdMarkers": true
+      },
+      "gridPos": {
+        "h": 3,
+        "w": 5,
+        "x": 14,
+        "y": 3
+      },
+      "id": 48,
+      "interval": null,
+      "links": [],
+      "mappingType": 1,
+      "mappingTypes": [
+        {
+          "name": "value to text",
+          "value": 1
+        },
+        {
+          "name": "range to text",
+          "value": 2
+        }
+      ],
+      "maxDataPoints": 100,
+      "nullPointMode": "connected",
+      "nullText": null,
+      "postfix": "",
+      "postfixFontSize": "50%",
+      "prefix": "",
+      "prefixFontSize": "50%",
+      "rangeMaps": [
+        {
+          "from": "null",
+          "text": "N/A",
+          "to": "null"
+        }
+      ],
+      "sparkline": {
+        "fillColor": "rgba(31, 118, 189, 0.18)",
+        "full": false,
+        "lineColor": "rgb(31, 120, 193)",
+        "show": false,
+        "ymax": null,
+        "ymin": null
+      },
+      "tableColumn": "",
+      "targets": [
+        {
+          "alias": "",
+          "format": "table",
+          "rawSql": "select * from [total_users_active_last_month];",
+          "refId": "A"
+        }
+      ],
+      "thresholds": "",
+      "timeFrom": null,
+      "timeShift": null,
+      "title": "Total Users In the database (active in last month)",
+      "type": "singlestat",
+      "valueFontSize": "80%",
+      "valueMaps": [
+        {
+          "op": "=",
+          "text": "N/A",
+          "value": "null"
+        }
+      ],
+      "valueName": "avg"
+    },
+    {
+      "cacheTimeout": null,
+      "colorBackground": false,
+      "colorPostfix": false,
+      "colorPrefix": false,
+      "colorValue": false,
+      "colors": [
+        "#299c46",
+        "rgba(237, 129, 40, 0.89)",
+        "#d44a3a"
+      ],
+      "datasource": "NBG-SQL-MI-02",
+      "decimals": null,
+      "fieldConfig": {
+        "defaults": {
+          "custom": {}
+        },
+        "overrides": []
+      },
+      "format": "none",
+      "gauge": {
+        "maxValue": 100,
+        "minValue": 0,
+        "show": false,
+        "thresholdLabels": false,
+        "thresholdMarkers": true
+      },
+      "gridPos": {
+        "h": 3,
+        "w": 4,
+        "x": 0,
+        "y": 6
+      },
+      "id": 10,
+      "interval": null,
+      "links": [],
+      "mappingType": 1,
+      "mappingTypes": [
+        {
+          "name": "value to text",
+          "value": 1
+        },
+        {
+          "name": "range to text",
+          "value": 2
+        }
+      ],
+      "maxDataPoints": 100,
+      "nullPointMode": "connected",
+      "nullText": null,
+      "postfix": "",
+      "postfixFontSize": "50%",
+      "prefix": "",
+      "prefixFontSize": "50%",
+      "rangeMaps": [
+        {
+          "from": "null",
+          "text": "N/A",
+          "to": "null"
+        }
+      ],
+      "sparkline": {
+        "fillColor": "rgba(31, 118, 189, 0.18)",
+        "full": false,
+        "lineColor": "rgb(31, 120, 193)",
+        "show": false,
+        "ymax": null,
+        "ymin": null
+      },
+      "tableColumn": "",
+      "targets": [
+        {
+          "alias": "",
+          "format": "table",
+          "rawSql": "select * from [total_bank_accounts_connected];",
+          "refId": "A"
+        }
+      ],
+      "thresholds": "",
+      "timeFrom": null,
+      "timeShift": null,
+      "title": "Total Bank Accounts Connected",
+      "type": "singlestat",
+      "valueFontSize": "80%",
+      "valueMaps": [
+        {
+          "op": "=",
+          "text": "N/A",
+          "value": "null"
+        }
+      ],
+      "valueName": "avg"
+    },
+    {
+      "cacheTimeout": null,
+      "colorBackground": false,
+      "colorValue": false,
+      "colors": [
+        "#299c46",
+        "rgba(237, 129, 40, 0.89)",
+        "#d44a3a"
+      ],
+      "datasource": "Azure Monitor",
+      "fieldConfig": {
+        "defaults": {
+          "custom": {}
+        },
+        "overrides": []
+      },
+      "format": "none",
+      "gauge": {
+        "maxValue": 100,
+        "minValue": 0,
+        "show": false,
+        "thresholdLabels": false,
+        "thresholdMarkers": true
+      },
+      "gridPos": {
+        "h": 3,
+        "w": 5,
+        "x": 4,
+        "y": 6
+      },
+      "id": 36,
+      "interval": null,
+      "links": [],
+      "mappingType": 1,
+      "mappingTypes": [
+        {
+          "name": "value to text",
+          "value": 1
+        },
+        {
+          "name": "range to text",
+          "value": 2
+        }
+      ],
+      "maxDataPoints": 100,
+      "nullPointMode": "connected",
+      "nullText": null,
+      "postfix": "",
+      "postfixFontSize": "50%",
+      "prefix": "",
+      "prefixFontSize": "50%",
+      "rangeMaps": [
+        {
+          "from": "null",
+          "text": "N/A",
+          "to": "null"
+        }
+      ],
+      "sparkline": {
+        "fillColor": "rgba(31, 118, 189, 0.18)",
+        "full": false,
+        "lineColor": "rgb(31, 120, 193)",
+        "show": true,
+        "ymax": null,
+        "ymin": null
+      },
+      "tableColumn": "",
+      "targets": [
+        {
+          "appInsights": {
+            "aggOptions": [
+              "sum"
+            ],
+            "aggregation": "sum",
+            "dimension": [],
+            "dimensionFilter": "contains(request/name, '/user/v1/waiz/me/register') and request/resultCode eq 204",
+            "dimensions": [
+              "request/source",
+              "request/name",
+              "request/urlHost",
+              "request/urlPath",
+              "request/success",
+              "request/resultCode",
+              "request/performanceBucket",
+              "operation/name",
+              "operation/synthetic",
+              "operation/syntheticSource",
+              "user/authenticated",
+              "application/version",
+              "client/type",
+              "client/model",
+              "client/os",
+              "client/city",
+              "client/stateOrProvince",
+              "client/countryOrRegion",
+              "client/browser",
+              "cloud/roleName",
+              "cloud/roleInstance",
+              "customDimensions/_MS.ProcessedByMetricExtractors",
+              "customDimensions/AI internal"
+            ],
+            "metricName": "requests/count",
+            "rawQuery": false,
+            "rawQueryString": "",
+            "spliton": "",
+            "timeColumn": "timestamp",
+            "timeGrain": "P1D",
+            "timeGrainCount": "",
+            "timeGrainType": "auto",
+            "timeGrainUnit": "",
+            "yaxis": ""
+          },
+          "azureLogAnalytics": {
+            "query": "//change this example to create your own time series query\n<table name>                                                              //the table to query (e.g. Usage, Heartbeat, Perf)\n| where $__timeFilter(TimeGenerated)                                      //this is a macro used to show the full chart’s time range, choose the datetime column here\n| summarize count() by <group by column>, bin(TimeGenerated, $__interval) //change “group by column” to a column in your table, such as “Computer”. The $__interval macro is used to auto-select the time grain. Can also use 1h, 5m etc.\n| order by TimeGenerated asc",
+            "resultFormat": "time_series",
+            "workspace": ""
+          },
+          "azureMonitor": {
+            "aggOptions": [],
+            "dimensionFilter": "*",
+            "dimensionFilters": [],
+            "metricDefinition": "select",
+            "metricName": "select",
+            "metricNamespace": "select",
+            "resourceGroup": "select",
+            "resourceName": "select",
+            "timeGrain": "auto",
+            "timeGrains": [],
+            "top": "10"
+          },
+          "insightsAnalytics": {
+            "query": "",
+            "resultFormat": "time_series"
+          },
+          "queryType": "Application Insights",
+          "refId": "A",
+          "subscription": "92fde89a-451b-4735-bb8e-44860aac0c43"
+        }
+      ],
+      "thresholds": "",
+      "timeFrom": null,
+      "timeShift": null,
+      "title": "New B2C user accounts created",
+      "type": "singlestat",
+      "valueFontSize": "80%",
+      "valueMaps": [
+        {
+          "op": "=",
+          "text": "N/A",
+          "value": "null"
+        }
+      ],
+      "valueName": "total"
+    },
+    {
+      "bgColor": null,
+      "clockType": "24 hour",
+      "countdownSettings": {
+        "customFormat": null,
+        "endCountdownTime": "2020-03-26T12:54:00.000Z",
+        "endText": "00:00:00"
+      },
+      "datasource": null,
+      "dateSettings": {
+        "dateFormat": "YYYY-MM-DD",
+        "fontSize": "20px",
+        "fontWeight": "normal",
+        "showDate": false
+      },
+      "fieldConfig": {
+        "defaults": {
+          "custom": {}
+        },
+        "overrides": []
+      },
+      "gridPos": {
+        "h": 3,
+        "w": 11,
+        "x": 9,
+        "y": 6
+      },
+      "id": 58,
+      "mode": "time",
+      "refreshSettings": {
+        "syncWithDashboard": false
+      },
+      "targets": [
+        {
+          "groupBy": [
+            {
+              "params": [
+                "$__interval"
+              ],
+              "type": "time"
+            },
+            {
+              "params": [
+                "null"
+              ],
+              "type": "fill"
+            }
+          ],
+          "orderByTime": "ASC",
+          "policy": "default",
+          "refId": "A",
+          "resultFormat": "time_series",
+          "select": [
+            [
+              {
+                "params": [
+                  "value"
+                ],
+                "type": "field"
+              },
+              {
+                "params": [],
+                "type": "mean"
+              }
+            ]
+          ],
+          "tags": []
+        }
+      ],
+      "timeFrom": null,
+      "timeSettings": {
+        "customFormat": "HH:mm:ss",
+        "fontSize": "60px",
+        "fontWeight": "normal"
+      },
+      "timeShift": null,
+      "timezone": "Europe/Athens",
+      "timezoneSettings": {
+        "fontSize": "12px",
+        "fontWeight": "normal",
+        "showTimezone": true,
+        "zoneFormat": "offsetAbbv"
+      },
+      "title": "Current Time",
+      "type": "grafana-clock-panel"
+    },
+    {
+      "columns": [],
+      "datasource": "NBG-SQL-MI-02",
+      "fieldConfig": {
+        "defaults": {
+          "custom": {}
+        },
+        "overrides": []
+      },
+      "fontSize": "100%",
+      "gridPos": {
+        "h": 7,
+        "w": 6,
+        "x": 0,
+        "y": 9
+      },
+      "id": 52,
+      "pageSize": null,
+      "scroll": true,
+      "showHeader": true,
+      "sort": {
+        "col": 1,
+        "desc": true
+      },
+      "styles": [
+        {
+          "alias": "Time",
+          "align": "auto",
+          "dateFormat": "YYYY-MM-DD HH:mm:ss",
+          "pattern": "Time",
+          "type": "date"
+        },
+        {
+          "alias": "",
+          "align": "auto",
+          "colorMode": null,
+          "colors": [
+            "rgba(245, 54, 54, 0.9)",
+            "rgba(237, 129, 40, 0.89)",
+            "rgba(50, 172, 45, 0.97)"
+          ],
+          "decimals": 3,
+          "pattern": "/.*/",
+          "thresholds": [],
+          "type": "number",
+          "unit": "short"
+        }
+      ],
+      "targets": [
+        {
+          "alias": "",
+          "format": "table",
+          "rawSql": "select * from [total_bank_accounts_connected_per_bank];",
+          "refId": "A"
+        }
+      ],
+      "timeFrom": null,
+      "timeShift": null,
+      "title": "Total bank account connected per bank",
+      "transform": "table",
+      "type": "table-old"
+    },
+    {
+      "columns": [],
+      "datasource": "NBG-SQL-MI-02",
+      "fieldConfig": {
+        "defaults": {
+          "custom": {}
+        },
+        "overrides": []
+      },
+      "fontSize": "100%",
+      "gridPos": {
+        "h": 7,
+        "w": 7,
+        "x": 6,
+        "y": 9
+      },
+      "id": 54,
+      "pageSize": null,
+      "scroll": true,
+      "showHeader": true,
+      "sort": {
+        "col": 1,
+        "desc": true
+      },
+      "styles": [
+        {
+          "alias": "Time",
+          "align": "auto",
+          "dateFormat": "YYYY-MM-DD HH:mm:ss",
+          "pattern": "Time",
+          "type": "date"
+        },
+        {
+          "alias": "",
+          "align": "auto",
+          "colorMode": null,
+          "colors": [
+            "rgba(245, 54, 54, 0.9)",
+            "rgba(237, 129, 40, 0.89)",
+            "rgba(50, 172, 45, 0.97)"
+          ],
+          "decimals": 3,
+          "pattern": "/.*/",
+          "thresholds": [],
+          "type": "number",
+          "unit": "short"
+        }
+      ],
+      "targets": [
+        {
+          "alias": "",
+          "format": "table",
+          "rawSql": "select * from [total_bank_accounts_connected_per_bank_active_user_last_week];",
+          "refId": "A"
+        }
+      ],
+      "timeFrom": null,
+      "timeShift": null,
+      "title": "Total bank account connected per bank with active user in last week",
+      "transform": "table",
+      "type": "table-old"
+    },
+    {
+      "columns": [],
+      "datasource": "NBG-SQL-MI-02",
+      "fieldConfig": {
+        "defaults": {
+          "custom": {}
+        },
+        "overrides": []
+      },
+      "fontSize": "100%",
+      "gridPos": {
+        "h": 7,
+        "w": 7,
+        "x": 13,
+        "y": 9
+      },
+      "id": 53,
+      "pageSize": null,
+      "scroll": true,
+      "showHeader": true,
+      "sort": {
+        "col": 1,
+        "desc": true
+      },
+      "styles": [
+        {
+          "alias": "Time",
+          "align": "auto",
+          "dateFormat": "YYYY-MM-DD HH:mm:ss",
+          "pattern": "Time",
+          "type": "date"
+        },
+        {
+          "alias": "",
+          "align": "auto",
+          "colorMode": null,
+          "colors": [
+            "rgba(245, 54, 54, 0.9)",
+            "rgba(237, 129, 40, 0.89)",
+            "rgba(50, 172, 45, 0.97)"
+          ],
+          "decimals": 3,
+          "pattern": "/.*/",
+          "thresholds": [],
+          "type": "number",
+          "unit": "short"
+        }
+      ],
+      "targets": [
+        {
+          "alias": "",
+          "format": "table",
+          "rawSql": "select * from [total_bank_accounts_connected_per_bank_active_user_last_month];",
+          "refId": "A"
+        }
+      ],
+      "timeFrom": null,
+      "timeShift": null,
+      "title": "Total bank account connected per bank with active user in last month",
+      "transform": "table",
+      "type": "table-old"
+    },
+    {
+      "aliasColors": {},
+      "bars": false,
+      "dashLength": 10,
+      "dashes": false,
+      "datasource": "Azure Monitor",
+      "fieldConfig": {
+        "defaults": {
+          "custom": {},
+          "links": []
+        },
+        "overrides": []
+      },
+      "fill": 1,
+      "fillGradient": 0,
+      "gridPos": {
+        "h": 9,
+        "w": 10,
+        "x": 0,
+        "y": 16
+      },
+      "hiddenSeries": false,
+      "id": 8,
+      "legend": {
+        "avg": false,
+        "current": false,
+        "max": false,
+        "min": false,
+        "show": false,
+        "total": false,
+        "values": false
+      },
+      "lines": true,
+      "linewidth": 1,
+      "nullPointMode": "null",
+      "percentage": false,
+      "pluginVersion": "7.1.3",
+      "pointradius": 2,
+      "points": false,
+      "renderer": "flot",
+      "seriesOverrides": [],
+      "spaceLength": 10,
+      "stack": false,
+      "steppedLine": false,
+      "targets": [
+        {
+          "appInsights": {
+            "aggOptions": [
+              "sum"
+            ],
+            "aggregation": "sum",
+            "filter": "request/urlHost",
+            "groupBy": "request/urlHost",
+            "groupByOptions": [
+              "request/source",
+              "request/name",
+              "request/urlHost",
+              "request/urlPath",
+              "request/success",
+              "request/resultCode",
+              "request/performanceBucket",
+              "operation/name",
+              "operation/synthetic",
+              "operation/syntheticSource",
+              "user/authenticated",
+              "application/version",
+              "client/type",
+              "client/model",
+              "client/os",
+              "client/city",
+              "client/stateOrProvince",
+              "client/countryOrRegion",
+              "client/browser",
+              "cloud/roleName",
+              "cloud/roleInstance",
+              "customDimensions/AI internal",
+              "customDimensions/_MS.ProcessedByMetricExtractors"
+            ],
+            "metricName": "requests/count",
+            "rawQuery": false,
+            "rawQueryString": "",
+            "spliton": "",
+            "timeGrainType": "auto",
+            "xaxis": "timestamp",
+            "yaxis": ""
+          },
+          "azureLogAnalytics": {
+            "query": "//change this example to create your own time series query\n<table name>                                                              //the table to query (e.g. Usage, Heartbeat, Perf)\n| where $__timeFilter(TimeGenerated)                                      //this is a macro used to show the full chart’s time range, choose the datetime column here\n| summarize count() by <group by column>, bin(TimeGenerated, $__interval) //change “group by column” to a column in your table, such as “Computer”. The $__interval macro is used to auto-select the time grain. Can also use 1h, 5m etc.\n| order by TimeGenerated asc",
+            "resultFormat": "time_series",
+            "workspace": "163f8b4b-8385-41b4-a35f-360619c61573"
+          },
+          "azureMonitor": {
+            "aggOptions": [
+              "None",
+              "Average",
+              "Minimum",
+              "Maximum",
+              "Total",
+              "Count"
+            ],
+            "aggregation": "Total",
+            "allowedTimeGrainsMs": [
+              60000,
+              300000,
+              900000,
+              1800000,
+              3600000,
+              21600000,
+              43200000,
+              86400000
+            ],
+            "dimension": "None",
+            "dimensionFilter": "*",
+            "dimensions": [
+              {
+                "text": "None",
+                "value": "None"
+              },
+              {
+                "text": "Instance",
+                "value": "Instance"
+              }
+            ],
+            "metricDefinition": "Microsoft.Web/sites",
+            "metricName": "Requests",
+            "resourceGroup": "NBG-PRD-RG",
+            "resourceName": "NBG-UserApiProxy",
+            "timeGrain": "auto",
+            "timeGrains": [
+              {
+                "text": "auto",
+                "value": "auto"
+              },
+              {
+                "text": "1 minute",
+                "value": "PT1M"
+              },
+              {
+                "text": "5 minutes",
+                "value": "PT5M"
+              },
+              {
+                "text": "15 minutes",
+                "value": "PT15M"
+              },
+              {
+                "text": "30 minutes",
+                "value": "PT30M"
+              },
+              {
+                "text": "1 hour",
+                "value": "PT1H"
+              },
+              {
+                "text": "6 hours",
+                "value": "PT6H"
+              },
+              {
+                "text": "12 hours",
+                "value": "PT12H"
+              },
+              {
+                "text": "1 day",
+                "value": "P1D"
+              }
+            ]
+          },
+          "queryType": "Azure Monitor",
+          "refId": "A",
+          "subscription": "92fde89a-451b-4735-bb8e-44860aac0c43"
+        }
+      ],
+      "thresholds": [],
+      "timeFrom": null,
+      "timeRegions": [],
+      "timeShift": null,
+      "title": "API Request Rate",
+      "tooltip": {
+        "shared": true,
+        "sort": 0,
+        "value_type": "individual"
+      },
+      "type": "graph",
+      "xaxis": {
+        "buckets": null,
+        "mode": "time",
+        "name": null,
+        "show": true,
+        "values": []
+      },
+      "yaxes": [
+        {
+          "format": "short",
+          "label": null,
+          "logBase": 1,
+          "max": null,
+          "min": null,
+          "show": true
+        },
+        {
+          "format": "short",
+          "label": null,
+          "logBase": 1,
+          "max": null,
+          "min": null,
+          "show": true
+        }
+      ],
+      "yaxis": {
+        "align": false,
+        "alignLevel": null
+      }
+    },
+    {
+      "datasource": "Azure Monitor",
+      "fieldConfig": {
+        "defaults": {
+          "color": {
+            "mode": "thresholds"
+          },
+          "custom": {},
+          "mappings": [
+            {
+              "from": "40",
+              "id": 2,
+              "operator": "",
+              "text": "MEDIUM",
+              "to": "74",
+              "type": 2,
+              "value": ""
+            },
+            {
+              "from": "75",
+              "id": 3,
+              "operator": "",
+              "text": "HIGH",
+              "to": "89",
+              "type": 2,
+              "value": ""
+            },
+            {
+              "from": "90",
+              "id": 4,
+              "operator": "",
+              "text": "VERY HIGH",
+              "to": "100",
+              "type": 2,
+              "value": ""
+            },
+            {
+              "from": "0",
+              "id": 5,
+              "operator": "",
+              "text": "LOW",
+              "to": "39",
+              "type": 2,
+              "value": ""
+            }
+          ],
+          "max": 100,
+          "min": 0,
+          "thresholds": {
+            "mode": "absolute",
+            "steps": [
+              {
+                "color": "green",
+                "value": null
+              },
+              {
+                "color": "#EAB839",
+                "value": 40
+              },
+              {
+                "color": "red",
+                "value": 90
+              }
+            ]
+          },
+          "unit": "percent"
+        },
+        "overrides": []
+      },
+      "gridPos": {
+        "h": 7,
+        "w": 10,
+        "x": 10,
+        "y": 16
+      },
+      "id": 6,
+      "options": {
+        "displayMode": "gradient",
+        "orientation": "horizontal",
+        "reduceOptions": {
+          "calcs": [
+            "mean"
+          ],
+          "fields": "",
+          "values": false
+        },
+        "showUnfilled": true
+      },
+      "pluginVersion": "7.1.3",
+      "targets": [
+        {
+          "appInsights": {
+            "groupBy": "none",
+            "metricName": "select",
+            "rawQuery": false,
+            "rawQueryString": "",
+            "spliton": "",
+            "timeGrainType": "auto",
+            "xaxis": "timestamp",
+            "yaxis": ""
+          },
+          "azureLogAnalytics": {
+            "query": "//change this example to create your own time series query\n<table name>                                                              //the table to query (e.g. Usage, Heartbeat, Perf)\n| where $__timeFilter(TimeGenerated)                                      //this is a macro used to show the full chart’s time range, choose the datetime column here\n| summarize count() by <group by column>, bin(TimeGenerated, $__interval) //change “group by column” to a column in your table, such as “Computer”. The $__interval macro is used to auto-select the time grain. Can also use 1h, 5m etc.\n| order by TimeGenerated asc",
+            "resultFormat": "time_series"
+          },
+          "azureMonitor": {
+            "aggOptions": [
+              "None",
+              "Average",
+              "Minimum",
+              "Maximum",
+              "Total",
+              "Count"
+            ],
+            "aggregation": "Average",
+            "alias": "Front End Webapp Plan",
+            "allowedTimeGrainsMs": [
+              60000,
+              300000,
+              900000,
+              1800000,
+              3600000,
+              21600000,
+              43200000,
+              86400000
+            ],
+            "dimension": "None",
+            "dimensionFilter": "*",
+            "dimensions": [
+              {
+                "text": "None",
+                "value": "None"
+              },
+              {
+                "text": "Instance",
+                "value": "Instance"
+              }
+            ],
+            "metricDefinition": "Microsoft.Web/serverFarms",
+            "metricName": "CpuPercentage",
+            "resourceGroup": "NBG-PRD-RG",
+            "resourceName": "NBG-ASE-01-BANK-SVC-FE-PLAN",
+            "timeGrain": "auto",
+            "timeGrains": [
+              {
+                "text": "auto",
+                "value": "auto"
+              },
+              {
+                "text": "1 minute",
+                "value": "PT1M"
+              },
+              {
+                "text": "5 minutes",
+                "value": "PT5M"
+              },
+              {
+                "text": "15 minutes",
+                "value": "PT15M"
+              },
+              {
+                "text": "30 minutes",
+                "value": "PT30M"
+              },
+              {
+                "text": "1 hour",
+                "value": "PT1H"
+              },
+              {
+                "text": "6 hours",
+                "value": "PT6H"
+              },
+              {
+                "text": "12 hours",
+                "value": "PT12H"
+              },
+              {
+                "text": "1 day",
+                "value": "P1D"
+              }
+            ]
+          },
+          "queryType": "Azure Monitor",
+          "refId": "A",
+          "subscription": "92fde89a-451b-4735-bb8e-44860aac0c43"
+        },
+        {
+          "appInsights": {
+            "groupBy": "none",
+            "metricName": "select",
+            "rawQuery": false,
+            "rawQueryString": "",
+            "spliton": "",
+            "timeGrainType": "auto",
+            "xaxis": "timestamp",
+            "yaxis": ""
+          },
+          "azureLogAnalytics": {
+            "query": "//change this example to create your own time series query\n<table name>                                                              //the table to query (e.g. Usage, Heartbeat, Perf)\n| where $__timeFilter(TimeGenerated)                                      //this is a macro used to show the full chart’s time range, choose the datetime column here\n| summarize count() by <group by column>, bin(TimeGenerated, $__interval) //change “group by column” to a column in your table, such as “Computer”. The $__interval macro is used to auto-select the time grain. Can also use 1h, 5m etc.\n| order by TimeGenerated asc",
+            "resultFormat": "time_series"
+          },
+          "azureMonitor": {
+            "aggOptions": [
+              "None",
+              "Average",
+              "Minimum",
+              "Maximum",
+              "Total",
+              "Count"
+            ],
+            "aggregation": "Average",
+            "alias": "Back End Webapp Plan (meniga service)",
+            "allowedTimeGrainsMs": [
+              60000,
+              300000,
+              900000,
+              1800000,
+              3600000,
+              21600000,
+              43200000,
+              86400000
+            ],
+            "dimension": "None",
+            "dimensionFilter": "*",
+            "dimensions": [
+              {
+                "text": "None",
+                "value": "None"
+              },
+              {
+                "text": "Instance",
+                "value": "Instance"
+              }
+            ],
+            "metricDefinition": "Microsoft.Web/serverFarms",
+            "metricName": "CpuPercentage",
+            "resourceGroup": "NBG-PRD-RG",
+            "resourceName": "NBG-ASE-02-BANK-SVC-BE-PLAN",
+            "timeGrain": "auto",
+            "timeGrains": [
+              {
+                "text": "auto",
+                "value": "auto"
+              },
+              {
+                "text": "1 minute",
+                "value": "PT1M"
+              },
+              {
+                "text": "5 minutes",
+                "value": "PT5M"
+              },
+              {
+                "text": "15 minutes",
+                "value": "PT15M"
+              },
+              {
+                "text": "30 minutes",
+                "value": "PT30M"
+              },
+              {
+                "text": "1 hour",
+                "value": "PT1H"
+              },
+              {
+                "text": "6 hours",
+                "value": "PT6H"
+              },
+              {
+                "text": "12 hours",
+                "value": "PT12H"
+              },
+              {
+                "text": "1 day",
+                "value": "P1D"
+              }
+            ]
+          },
+          "queryType": "Azure Monitor",
+          "refId": "B",
+          "subscription": "92fde89a-451b-4735-bb8e-44860aac0c43"
+        },
+        {
+          "appInsights": {
+            "groupBy": "none",
+            "metricName": "select",
+            "rawQuery": false,
+            "rawQueryString": "",
+            "spliton": "",
+            "timeGrainType": "auto",
+            "xaxis": "timestamp",
+            "yaxis": ""
+          },
+          "azureLogAnalytics": {
+            "query": "//change this example to create your own time series query\n<table name>                                                              //the table to query (e.g. Usage, Heartbeat, Perf)\n| where $__timeFilter(TimeGenerated)                                      //this is a macro used to show the full chart’s time range, choose the datetime column here\n| summarize count() by <group by column>, bin(TimeGenerated, $__interval) //change “group by column” to a column in your table, such as “Computer”. The $__interval macro is used to auto-select the time grain. Can also use 1h, 5m etc.\n| order by TimeGenerated asc",
+            "resultFormat": "time_series"
+          },
+          "azureMonitor": {
+            "aggOptions": [
+              "None",
+              "Average",
+              "Minimum",
+              "Maximum",
+              "Total",
+              "Count"
+            ],
+            "aggregation": "Average",
+            "alias": "Back End Windows Services",
+            "allowedTimeGrainsMs": [
+              60000,
+              300000,
+              900000,
+              1800000,
+              3600000,
+              21600000,
+              43200000,
+              86400000
+            ],
+            "dimension": "",
+            "dimensionFilter": "*",
+            "dimensions": [],
+            "metricDefinition": "Microsoft.Compute/virtualMachines",
+            "metricName": "Percentage CPU",
+            "resourceGroup": "NBG-PRD-RG",
+            "resourceName": "NBG-HUBSVC-01",
+            "timeGrain": "auto",
+            "timeGrains": [
+              {
+                "text": "auto",
+                "value": "auto"
+              },
+              {
+                "text": "1 minute",
+                "value": "PT1M"
+              },
+              {
+                "text": "5 minutes",
+                "value": "PT5M"
+              },
+              {
+                "text": "15 minutes",
+                "value": "PT15M"
+              },
+              {
+                "text": "30 minutes",
+                "value": "PT30M"
+              },
+              {
+                "text": "1 hour",
+                "value": "PT1H"
+              },
+              {
+                "text": "6 hours",
+                "value": "PT6H"
+              },
+              {
+                "text": "12 hours",
+                "value": "PT12H"
+              },
+              {
+                "text": "1 day",
+                "value": "P1D"
+              }
+            ]
+          },
+          "queryType": "Azure Monitor",
+          "refId": "C",
+          "subscription": "92fde89a-451b-4735-bb8e-44860aac0c43"
+        },
+        {
+          "appInsights": {
+            "groupBy": "none",
+            "metricName": "select",
+            "rawQuery": false,
+            "rawQueryString": "",
+            "spliton": "",
+            "timeGrainType": "auto",
+            "xaxis": "timestamp",
+            "yaxis": ""
+          },
+          "azureLogAnalytics": {
+            "query": "//change this example to create your own time series query\n<table name>                                                              //the table to query (e.g. Usage, Heartbeat, Perf)\n| where $__timeFilter(TimeGenerated)                                      //this is a macro used to show the full chart’s time range, choose the datetime column here\n| summarize count() by <group by column>, bin(TimeGenerated, $__interval) //change “group by column” to a column in your table, such as “Computer”. The $__interval macro is used to auto-select the time grain. Can also use 1h, 5m etc.\n| order by TimeGenerated asc",
+            "resultFormat": "time_series"
+          },
+          "azureMonitor": {
+            "aggOptions": [
+              "Average",
+              "Maximum",
+              "Minimum"
+            ],
+            "aggregation": "Average",
+            "alias": "User SQL database",
+            "allowedTimeGrainsMs": [
+              60000,
+              300000,
+              900000,
+              1800000,
+              3600000,
+              21600000,
+              43200000,
+              86400000
+            ],
+            "dimension": "",
+            "dimensionFilter": "*",
+            "dimensions": [],
+            "metricDefinition": "Microsoft.Sql/managedInstances",
+            "metricName": "avg_cpu_percent",
+            "resourceGroup": "NBG-PRD-RG",
+            "resourceName": "nbg-sql-mi-02",
+            "timeGrain": "auto",
+            "timeGrains": [
+              {
+                "text": "auto",
+                "value": "auto"
+              },
+              {
+                "text": "1 minute",
+                "value": "PT1M"
+              },
+              {
+                "text": "5 minutes",
+                "value": "PT5M"
+              },
+              {
+                "text": "15 minutes",
+                "value": "PT15M"
+              },
+              {
+                "text": "30 minutes",
+                "value": "PT30M"
+              },
+              {
+                "text": "1 hour",
+                "value": "PT1H"
+              },
+              {
+                "text": "6 hours",
+                "value": "PT6H"
+              },
+              {
+                "text": "12 hours",
+                "value": "PT12H"
+              },
+              {
+                "text": "1 day",
+                "value": "P1D"
+              }
+            ]
+          },
+          "queryType": "Azure Monitor",
+          "refId": "D",
+          "subscription": "92fde89a-451b-4735-bb8e-44860aac0c43"
+        }
+      ],
+      "timeFrom": null,
+      "timeShift": null,
+      "title": "Production Environment CPU Loads",
+      "type": "bargauge"
+    },
+    {
+      "alert": {
+        "alertRuleTags": {},
+        "conditions": [
+          {
+            "evaluator": {
+              "params": [
+                200
+              ],
+              "type": "gt"
+            },
+            "operator": {
+              "type": "and"
+            },
+            "query": {
+              "params": [
+                "A",
+                "5m",
+                "now"
+              ]
+            },
+            "reducer": {
+              "params": [],
+              "type": "count"
+            },
+            "type": "query"
+          }
+        ],
+        "executionErrorState": "alerting",
+        "for": "5m",
+        "frequency": "1m",
+        "handler": 1,
+        "message": "more than 200 new users created in 5min, please investigate",
+        "name": "Azure B2C Successful new user creation rate alert",
+        "noDataState": "no_data",
+        "notifications": [
+          {
+            "uid": "x3v03XvGk"
+          }
+        ]
+      },
+      "aliasColors": {},
+      "bars": false,
+      "dashLength": 10,
+      "dashes": false,
+      "datasource": "Azure Monitor",
+      "fieldConfig": {
+        "defaults": {
+          "custom": {},
+          "links": []
+        },
+        "overrides": []
+      },
+      "fill": 1,
+      "fillGradient": 0,
+      "gridPos": {
+        "h": 6,
+        "w": 10,
+        "x": 10,
+        "y": 23
+      },
+      "hiddenSeries": false,
+      "id": 38,
+      "legend": {
+        "avg": false,
+        "current": false,
+        "max": false,
+        "min": false,
+        "show": false,
+        "total": false,
+        "values": false
+      },
+      "lines": true,
+      "linewidth": 1,
+      "nullPointMode": "null",
+      "percentage": false,
+      "pluginVersion": "7.1.3",
+      "pointradius": 2,
+      "points": false,
+      "renderer": "flot",
+      "seriesOverrides": [],
+      "spaceLength": 10,
+      "stack": false,
+      "steppedLine": false,
+      "targets": [
+        {
+          "appInsights": {
+            "aggOptions": [
+              "sum"
+            ],
+            "aggregation": "sum",
+            "dimension": [],
+            "dimensionFilter": "contains(request/name, '/user/v1/waiz/me/register') and request/resultCode eq 204",
+            "dimensions": [
+              "request/source",
+              "request/name",
+              "request/urlHost",
+              "request/urlPath",
+              "request/success",
+              "request/resultCode",
+              "request/performanceBucket",
+              "operation/name",
+              "operation/synthetic",
+              "operation/syntheticSource",
+              "user/authenticated",
+              "application/version",
+              "client/type",
+              "client/model",
+              "client/os",
+              "client/city",
+              "client/stateOrProvince",
+              "client/countryOrRegion",
+              "client/browser",
+              "cloud/roleName",
+              "cloud/roleInstance",
+              "customDimensions/AI internal",
+              "customDimensions/_MS.ProcessedByMetricExtractors"
+            ],
+            "metricName": "requests/count",
+            "rawQuery": false,
+            "rawQueryString": "",
+            "spliton": "",
+            "timeColumn": "timestamp",
+            "timeGrain": "auto",
+            "timeGrainType": "auto",
+            "yaxis": ""
+          },
+          "azureLogAnalytics": {
+            "query": "//change this example to create your own time series query\n<table name>                                                              //the table to query (e.g. Usage, Heartbeat, Perf)\n| where $__timeFilter(TimeGenerated)                                      //this is a macro used to show the full chart’s time range, choose the datetime column here\n| summarize count() by <group by column>, bin(TimeGenerated, $__interval) //change “group by column” to a column in your table, such as “Computer”. The $__interval macro is used to auto-select the time grain. Can also use 1h, 5m etc.\n| order by TimeGenerated asc",
+            "resultFormat": "time_series",
+            "workspace": ""
+          },
+          "azureMonitor": {
+            "aggOptions": [],
+            "dimensionFilter": "*",
+            "dimensionFilters": [],
+            "metricDefinition": "select",
+            "metricName": "select",
+            "metricNamespace": "select",
+            "resourceGroup": "select",
+            "resourceName": "select",
+            "timeGrain": "auto",
+            "timeGrains": [],
+            "top": "10"
+          },
+          "insightsAnalytics": {
+            "query": "",
+            "resultFormat": "time_series"
+          },
+          "queryType": "Application Insights",
+          "refId": "A",
+          "subscription": "92fde89a-451b-4735-bb8e-44860aac0c43"
+        }
+      ],
+      "thresholds": [
+        {
+          "colorMode": "critical",
+          "fill": true,
+          "line": true,
+          "op": "gt",
+          "value": 200
+        }
+      ],
+      "timeFrom": null,
+      "timeRegions": [],
+      "timeShift": null,
+      "title": "Azure B2C Successful new user creation rate",
+      "tooltip": {
+        "shared": true,
+        "sort": 0,
+        "value_type": "individual"
+      },
+      "type": "graph",
+      "xaxis": {
+        "buckets": null,
+        "mode": "time",
+        "name": null,
+        "show": true,
+        "values": []
+      },
+      "yaxes": [
+        {
+          "format": "short",
+          "label": "Azure B2C users",
+          "logBase": 1,
+          "max": null,
+          "min": null,
+          "show": true
+        },
+        {
+          "format": "short",
+          "label": null,
+          "logBase": 1,
+          "max": null,
+          "min": null,
+          "show": true
+        }
+      ],
+      "yaxis": {
+        "align": false,
+        "alignLevel": null
+      }
+    },
+    {
+      "datasource": "Azure Monitor",
+      "fieldConfig": {
+        "defaults": {
+          "custom": {},
+          "mappings": [],
+          "thresholds": {
+            "mode": "absolute",
+            "steps": [
+              {
+                "color": "green",
+                "value": null
+              },
+              {
+                "color": "red",
+                "value": 10000
+              }
+            ]
+          },
+          "unit": "ms"
+        },
+        "overrides": []
+      },
+      "gridPos": {
+        "h": 3,
+        "w": 10,
+        "x": 0,
+        "y": 25
+      },
+      "id": 70,
+      "options": {
+        "colorMode": "value",
+        "graphMode": "area",
+        "justifyMode": "auto",
+        "orientation": "auto",
+        "reduceOptions": {
+          "calcs": [
+            "mean"
+          ],
+          "fields": "",
+          "values": false
+        },
+        "textMode": "auto"
+      },
+      "pluginVersion": "7.1.3",
+      "targets": [
+        {
+          "appInsights": {
+            "aggOptions": [
+              "avg",
+              "min",
+              "max",
+              "sum",
+              "count"
+            ],
+            "aggregation": "avg",
+            "dimension": [],
+            "dimensionFilter": "contains(dependency/name, 'user/v1/providers/ah')",
+            "dimensions": [
+              "dependency/target",
+              "dependency/type",
+              "dependency/name",
+              "dependency/success",
+              "dependency/resultCode",
+              "dependency/performanceBucket",
+              "operation/name",
+              "operation/synthetic",
+              "operation/syntheticSource",
+              "user/authenticated",
+              "application/version",
+              "client/type",
+              "client/model",
+              "client/os",
+              "client/city",
+              "client/stateOrProvince",
+              "client/countryOrRegion",
+              "client/browser",
+              "cloud/roleName",
+              "cloud/roleInstance",
+              "customDimensions/_MS.ProcessedByMetricExtractors",
+              "customDimensions/ErrorMessage"
+            ],
+            "metricName": "dependencies/duration",
+            "rawQuery": false,
+            "rawQueryString": "",
+            "timeColumn": "timestamp",
+            "timeGrain": "auto",
+            "valueColumn": ""
+          },
+          "azureLogAnalytics": {
+            "query": "//change this example to create your own time series query\n<table name>                                                              //the table to query (e.g. Usage, Heartbeat, Perf)\n| where $__timeFilter(TimeGenerated)                                      //this is a macro used to show the full chart’s time range, choose the datetime column here\n| summarize count() by <group by column>, bin(TimeGenerated, $__interval) //change “group by column” to a column in your table, such as “Computer”. The $__interval macro is used to auto-select the time grain. Can also use 1h, 5m etc.\n| order by TimeGenerated asc",
+            "resultFormat": "time_series",
+            "workspace": "163f8b4b-8385-41b4-a35f-360619c61573"
+          },
+          "azureMonitor": {
+            "aggOptions": [],
+            "dimensionFilter": "*",
+            "dimensionFilters": [],
+            "metricDefinition": "select",
+            "metricName": "select",
+            "metricNamespace": "select",
+            "resourceGroup": "select",
+            "resourceName": "select",
+            "timeGrain": "auto",
+            "timeGrains": [],
+            "top": "10"
+          },
+          "insightsAnalytics": {
+            "query": "",
+            "resultFormat": "time_series"
+          },
+          "queryType": "Application Insights",
+          "refId": "A",
+          "subscription": "92fde89a-451b-4735-bb8e-44860aac0c43"
+        }
+      ],
+      "timeFrom": null,
+      "timeShift": null,
+      "title": "Average Eurobits aggregation request",
+      "type": "stat"
+    },
+    {
+      "datasource": "Azure Monitor",
+      "fieldConfig": {
+        "defaults": {
+          "custom": {},
+          "mappings": [],
+          "thresholds": {
+            "mode": "absolute",
+            "steps": [
+              {
+                "color": "green",
+                "value": null
+              },
+              {
+                "color": "red",
+                "value": 10000
+              }
+            ]
+          },
+          "unit": "ms"
+        },
+        "overrides": []
+      },
+      "gridPos": {
+        "h": 3,
+        "w": 10,
+        "x": 0,
+        "y": 28
+      },
+      "id": 72,
+      "options": {
+        "colorMode": "value",
+        "graphMode": "area",
+        "justifyMode": "auto",
+        "orientation": "auto",
+        "reduceOptions": {
+          "calcs": [
+            "mean"
+          ],
+          "fields": "",
+          "values": false
+        },
+        "textMode": "auto"
+      },
+      "pluginVersion": "7.1.3",
+      "targets": [
+        {
+          "appInsights": {
+            "aggOptions": [
+              "avg",
+              "min",
+              "max",
+              "sum",
+              "count"
+            ],
+            "aggregation": "avg",
+            "dimension": [],
+            "dimensionFilter": "contains(dependency/name, 'ah-piraeus-gr')",
+            "dimensions": [
+              "dependency/target",
+              "dependency/type",
+              "dependency/name",
+              "dependency/success",
+              "dependency/resultCode",
+              "dependency/performanceBucket",
+              "operation/name",
+              "operation/synthetic",
+              "operation/syntheticSource",
+              "user/authenticated",
+              "application/version",
+              "client/type",
+              "client/model",
+              "client/os",
+              "client/city",
+              "client/stateOrProvince",
+              "client/countryOrRegion",
+              "client/browser",
+              "cloud/roleName",
+              "cloud/roleInstance",
+              "customDimensions/ErrorMessage",
+              "customDimensions/_MS.ProcessedByMetricExtractors"
+            ],
+            "metricName": "dependencies/duration",
+            "rawQuery": false,
+            "rawQueryString": "",
+            "timeColumn": "timestamp",
+            "timeGrain": "auto",
+            "valueColumn": ""
+          },
+          "azureLogAnalytics": {
+            "query": "//change this example to create your own time series query\n<table name>                                                              //the table to query (e.g. Usage, Heartbeat, Perf)\n| where $__timeFilter(TimeGenerated)                                      //this is a macro used to show the full chart’s time range, choose the datetime column here\n| summarize count() by <group by column>, bin(TimeGenerated, $__interval) //change “group by column” to a column in your table, such as “Computer”. The $__interval macro is used to auto-select the time grain. Can also use 1h, 5m etc.\n| order by TimeGenerated asc",
+            "resultFormat": "time_series",
+            "workspace": "163f8b4b-8385-41b4-a35f-360619c61573"
+          },
+          "azureMonitor": {
+            "aggOptions": [],
+            "dimensionFilter": "*",
+            "dimensionFilters": [],
+            "metricDefinition": "select",
+            "metricName": "select",
+            "metricNamespace": "select",
+            "resourceGroup": "select",
+            "resourceName": "select",
+            "timeGrain": "auto",
+            "timeGrains": [],
+            "top": "10"
+          },
+          "insightsAnalytics": {
+            "query": "",
+            "resultFormat": "time_series"
+          },
+          "queryType": "Application Insights",
+          "refId": "A",
+          "subscription": "92fde89a-451b-4735-bb8e-44860aac0c43"
+        }
+      ],
+      "timeFrom": null,
+      "timeShift": null,
+      "title": "Average AHUB-Eurobits ah-piraeus-gr aggregation request",
+      "type": "stat"
+    },
+    {
+      "datasource": "Azure Monitor",
+      "fieldConfig": {
+        "defaults": {
+          "custom": {
+            "align": null
+          },
+          "mappings": [],
+          "thresholds": {
+            "mode": "absolute",
+            "steps": [
+              {
+                "color": "green",
+                "value": null
+              },
+              {
+                "color": "red",
+                "value": 80
+              }
+            ]
+          }
+        },
+        "overrides": []
+      },
+      "gridPos": {
+        "h": 7,
+        "w": 10,
+        "x": 10,
+        "y": 29
+      },
+      "id": 62,
+      "options": {
+        "showHeader": false,
+        "sortBy": [
+          {
+            "desc": true,
+            "displayName": "Total"
+          }
+        ]
+      },
+      "pluginVersion": "7.1.3",
+      "targets": [
+        {
+          "appInsights": {
+            "aggOptions": [
+              "sum"
+            ],
+            "aggregation": "sum",
+            "dimension": [
+              "client/city"
+            ],
+            "dimensions": [
+              "request/source",
+              "request/name",
+              "request/urlHost",
+              "request/urlPath",
+              "request/success",
+              "request/resultCode",
+              "request/performanceBucket",
+              "operation/name",
+              "operation/synthetic",
+              "operation/syntheticSource",
+              "user/authenticated",
+              "application/version",
+              "client/type",
+              "client/model",
+              "client/os",
+              "client/city",
+              "client/stateOrProvince",
+              "client/countryOrRegion",
+              "client/browser",
+              "cloud/roleName",
+              "cloud/roleInstance",
+              "customDimensions/_MS.ProcessedByMetricExtractors"
+            ],
+            "metricName": "requests/count",
+            "timeGrain": "auto"
+          },
+          "azureLogAnalytics": {
+            "query": "//change this example to create your own time series query\n<table name>                                                              //the table to query (e.g. Usage, Heartbeat, Perf)\n| where $__timeFilter(TimeGenerated)                                      //this is a macro used to show the full chart’s time range, choose the datetime column here\n| summarize count() by <group by column>, bin(TimeGenerated, $__interval) //change “group by column” to a column in your table, such as “Computer”. The $__interval macro is used to auto-select the time grain. Can also use 1h, 5m etc.\n| order by TimeGenerated asc",
+            "resultFormat": "time_series",
+            "workspace": ""
+          },
+          "azureMonitor": {
+            "aggOptions": [],
+            "dimensionFilter": "*",
+            "dimensionFilters": [],
+            "metricDefinition": "select",
+            "metricName": "select",
+            "metricNamespace": "select",
+            "resourceGroup": "select",
+            "resourceName": "select",
+            "timeGrain": "auto",
+            "timeGrains": [],
+            "top": "10"
+          },
+          "insightsAnalytics": {
+            "query": "",
+            "resultFormat": "time_series"
+          },
+          "queryType": "Application Insights",
+          "refId": "A",
+          "subscription": "92fde89a-451b-4735-bb8e-44860aac0c43"
+        }
+      ],
+      "timeFrom": null,
+      "timeShift": null,
+      "title": "Request Count by City",
+      "transformations": [
+        {
+          "id": "reduce",
+          "options": {
+            "reducers": [
+              "sum"
+            ]
+          }
+        }
+      ],
+      "type": "table"
+    },
+    {
+      "datasource": "Azure Monitor",
+      "fieldConfig": {
+        "defaults": {
+          "custom": {},
+          "mappings": [],
+          "thresholds": {
+            "mode": "absolute",
+            "steps": [
+              {
+                "color": "green",
+                "value": null
+              },
+              {
+                "color": "red",
+                "value": 10000
+              }
+            ]
+          },
+          "unit": "ms"
+        },
+        "overrides": []
+      },
+      "gridPos": {
+        "h": 3,
+        "w": 10,
+        "x": 0,
+        "y": 31
+      },
+      "id": 74,
+      "options": {
+        "colorMode": "value",
+        "graphMode": "area",
+        "justifyMode": "auto",
+        "orientation": "auto",
+        "reduceOptions": {
+          "calcs": [
+            "mean"
+          ],
+          "fields": "",
+          "values": false
+        },
+        "textMode": "auto"
+      },
+      "pluginVersion": "7.1.3",
+      "targets": [
+        {
+          "appInsights": {
+            "aggOptions": [
+              "avg",
+              "min",
+              "max",
+              "sum",
+              "count"
+            ],
+            "aggregation": "avg",
+            "dimension": [],
+            "dimensionFilter": "contains(dependency/name, 'ah-alphabank-gr')",
+            "dimensions": [
+              "dependency/target",
+              "dependency/type",
+              "dependency/name",
+              "dependency/success",
+              "dependency/resultCode",
+              "dependency/performanceBucket",
+              "operation/name",
+              "operation/synthetic",
+              "operation/syntheticSource",
+              "user/authenticated",
+              "application/version",
+              "client/type",
+              "client/model",
+              "client/os",
+              "client/city",
+              "client/stateOrProvince",
+              "client/countryOrRegion",
+              "client/browser",
+              "cloud/roleName",
+              "cloud/roleInstance",
+              "customDimensions/_MS.ProcessedByMetricExtractors",
+              "customDimensions/ErrorMessage"
+            ],
+            "metricName": "dependencies/duration",
+            "rawQuery": false,
+            "rawQueryString": "",
+            "timeColumn": "timestamp",
+            "timeGrain": "auto",
+            "valueColumn": ""
+          },
+          "azureLogAnalytics": {
+            "query": "//change this example to create your own time series query\n<table name>                                                              //the table to query (e.g. Usage, Heartbeat, Perf)\n| where $__timeFilter(TimeGenerated)                                      //this is a macro used to show the full chart’s time range, choose the datetime column here\n| summarize count() by <group by column>, bin(TimeGenerated, $__interval) //change “group by column” to a column in your table, such as “Computer”. The $__interval macro is used to auto-select the time grain. Can also use 1h, 5m etc.\n| order by TimeGenerated asc",
+            "resultFormat": "time_series",
+            "workspace": "163f8b4b-8385-41b4-a35f-360619c61573"
+          },
+          "azureMonitor": {
+            "aggOptions": [],
+            "dimensionFilter": "*",
+            "dimensionFilters": [],
+            "metricDefinition": "select",
+            "metricName": "select",
+            "metricNamespace": "select",
+            "resourceGroup": "select",
+            "resourceName": "select",
+            "timeGrain": "auto",
+            "timeGrains": [],
+            "top": "10"
+          },
+          "insightsAnalytics": {
+            "query": "",
+            "resultFormat": "time_series"
+          },
+          "queryType": "Application Insights",
+          "refId": "A",
+          "subscription": "92fde89a-451b-4735-bb8e-44860aac0c43"
+        }
+      ],
+      "timeFrom": null,
+      "timeShift": null,
+      "title": "Average AHUB-Eurobits ah-alphabank-gr aggregation request",
+      "type": "stat"
+    },
+    {
+      "datasource": "Azure Monitor",
+      "fieldConfig": {
+        "defaults": {
+          "custom": {},
+          "mappings": [],
+          "thresholds": {
+            "mode": "absolute",
+            "steps": [
+              {
+                "color": "green",
+                "value": null
+              },
+              {
+                "color": "red",
+                "value": 10000
+              }
+            ]
+          },
+          "unit": "ms"
+        },
+        "overrides": []
+      },
+      "gridPos": {
+        "h": 3,
+        "w": 10,
+        "x": 0,
+        "y": 34
+      },
+      "id": 76,
+      "options": {
+        "colorMode": "value",
+        "graphMode": "area",
+        "justifyMode": "auto",
+        "orientation": "auto",
+        "reduceOptions": {
+          "calcs": [
+            "mean"
+          ],
+          "fields": "",
+          "values": false
+        },
+        "textMode": "auto"
+      },
+      "pluginVersion": "7.1.3",
+      "targets": [
+        {
+          "appInsights": {
+            "aggOptions": [
+              "avg",
+              "min",
+              "max",
+              "sum",
+              "count"
+            ],
+            "aggregation": "avg",
+            "dimension": [],
+            "dimensionFilter": "contains(dependency/name, 'ah-eurobank-gr')",
+            "dimensions": [
+              "dependency/target",
+              "dependency/type",
+              "dependency/name",
+              "dependency/success",
+              "dependency/resultCode",
+              "dependency/performanceBucket",
+              "operation/name",
+              "operation/synthetic",
+              "operation/syntheticSource",
+              "user/authenticated",
+              "application/version",
+              "client/type",
+              "client/model",
+              "client/os",
+              "client/city",
+              "client/stateOrProvince",
+              "client/countryOrRegion",
+              "client/browser",
+              "cloud/roleName",
+              "cloud/roleInstance",
+              "customDimensions/_MS.ProcessedByMetricExtractors",
+              "customDimensions/ErrorMessage"
+            ],
+            "metricName": "dependencies/duration",
+            "rawQuery": false,
+            "rawQueryString": "",
+            "timeColumn": "timestamp",
+            "timeGrain": "auto",
+            "valueColumn": ""
+          },
+          "azureLogAnalytics": {
+            "query": "//change this example to create your own time series query\n<table name>                                                              //the table to query (e.g. Usage, Heartbeat, Perf)\n| where $__timeFilter(TimeGenerated)                                      //this is a macro used to show the full chart’s time range, choose the datetime column here\n| summarize count() by <group by column>, bin(TimeGenerated, $__interval) //change “group by column” to a column in your table, such as “Computer”. The $__interval macro is used to auto-select the time grain. Can also use 1h, 5m etc.\n| order by TimeGenerated asc",
+            "resultFormat": "time_series",
+            "workspace": "163f8b4b-8385-41b4-a35f-360619c61573"
+          },
+          "azureMonitor": {
+            "aggOptions": [],
+            "dimensionFilter": "*",
+            "dimensionFilters": [],
+            "metricDefinition": "select",
+            "metricName": "select",
+            "metricNamespace": "select",
+            "resourceGroup": "select",
+            "resourceName": "select",
+            "timeGrain": "auto",
+            "timeGrains": [],
+            "top": "10"
+          },
+          "insightsAnalytics": {
+            "query": "",
+            "resultFormat": "time_series"
+          },
+          "queryType": "Application Insights",
+          "refId": "A",
+          "subscription": "92fde89a-451b-4735-bb8e-44860aac0c43"
+        }
+      ],
+      "timeFrom": null,
+      "timeShift": null,
+      "title": "Average AHUB-Eurobits ah-eurobank-gr aggregation request",
+      "type": "stat"
+    },
+    {
+      "datasource": "Azure Monitor",
+      "fieldConfig": {
+        "defaults": {
+          "custom": {
+            "align": null
+          },
+          "mappings": [],
+          "thresholds": {
+            "mode": "absolute",
+            "steps": [
+              {
+                "color": "green",
+                "value": null
+              },
+              {
+                "color": "red",
+                "value": 80
+              }
+            ]
+          }
+        },
+        "overrides": []
+      },
+      "gridPos": {
+        "h": 7,
+        "w": 10,
+        "x": 10,
+        "y": 36
+      },
+      "id": 64,
+      "options": {
+        "showHeader": false,
+        "sortBy": [
+          {
+            "desc": true,
+            "displayName": "Total"
+          }
+        ]
+      },
+      "pluginVersion": "7.1.3",
+      "targets": [
+        {
+          "appInsights": {
+            "aggOptions": [
+              "sum"
+            ],
+            "aggregation": "sum",
+            "dimension": [
+              "client/countryOrRegion"
+            ],
+            "dimensions": [
+              "request/source",
+              "request/name",
+              "request/urlHost",
+              "request/urlPath",
+              "request/success",
+              "request/resultCode",
+              "request/performanceBucket",
+              "operation/name",
+              "operation/synthetic",
+              "operation/syntheticSource",
+              "user/authenticated",
+              "application/version",
+              "client/type",
+              "client/model",
+              "client/os",
+              "client/city",
+              "client/stateOrProvince",
+              "client/countryOrRegion",
+              "client/browser",
+              "cloud/roleName",
+              "cloud/roleInstance",
+              "customDimensions/_MS.ProcessedByMetricExtractors"
+            ],
+            "metricName": "requests/count",
+            "timeGrain": "auto"
+          },
+          "azureLogAnalytics": {
+            "query": "//change this example to create your own time series query\n<table name>                                                              //the table to query (e.g. Usage, Heartbeat, Perf)\n| where $__timeFilter(TimeGenerated)                                      //this is a macro used to show the full chart’s time range, choose the datetime column here\n| summarize count() by <group by column>, bin(TimeGenerated, $__interval) //change “group by column” to a column in your table, such as “Computer”. The $__interval macro is used to auto-select the time grain. Can also use 1h, 5m etc.\n| order by TimeGenerated asc",
+            "resultFormat": "time_series",
+            "workspace": ""
+          },
+          "azureMonitor": {
+            "aggOptions": [],
+            "dimensionFilter": "*",
+            "dimensionFilters": [],
+            "metricDefinition": "select",
+            "metricName": "select",
+            "metricNamespace": "select",
+            "resourceGroup": "select",
+            "resourceName": "select",
+            "timeGrain": "auto",
+            "timeGrains": [],
+            "top": "10"
+          },
+          "insightsAnalytics": {
+            "query": "",
+            "resultFormat": "time_series"
+          },
+          "queryType": "Application Insights",
+          "refId": "A",
+          "subscription": "92fde89a-451b-4735-bb8e-44860aac0c43"
+        }
+      ],
+      "timeFrom": null,
+      "timeShift": null,
+      "title": "Request Count by Country/region",
+      "transformations": [
+        {
+          "id": "reduce",
+          "options": {
+            "reducers": [
+              "sum"
+            ]
+          }
+        }
+      ],
+      "type": "table"
+    },
+    {
+      "cacheTimeout": null,
+      "colorBackground": false,
+      "colorValue": false,
+      "colors": [
+        "#299c46",
+        "rgba(237, 129, 40, 0.89)",
+        "#d44a3a"
+      ],
+      "datasource": "Azure Monitor",
+      "decimals": 2,
+      "fieldConfig": {
+        "defaults": {
+          "custom": {}
+        },
+        "overrides": []
+      },
+      "format": "ms",
+      "gauge": {
+        "maxValue": 100,
+        "minValue": 0,
+        "show": false,
+        "thresholdLabels": false,
+        "thresholdMarkers": true
+      },
+      "gridPos": {
+        "h": 2,
+        "w": 10,
+        "x": 0,
+        "y": 37
+      },
+      "id": 26,
+      "interval": null,
+      "links": [],
+      "mappingType": 1,
+      "mappingTypes": [
+        {
+          "name": "value to text",
+          "value": 1
+        },
+        {
+          "name": "range to text",
+          "value": 2
+        }
+      ],
+      "maxDataPoints": 100,
+      "nullPointMode": "connected",
+      "nullText": null,
+      "postfix": "",
+      "postfixFontSize": "50%",
+      "prefix": "",
+      "prefixFontSize": "50%",
+      "rangeMaps": [
+        {
+          "from": "null",
+          "text": "N/A",
+          "to": "null"
+        }
+      ],
+      "sparkline": {
+        "fillColor": "rgba(31, 118, 189, 0.18)",
+        "full": false,
+        "lineColor": "rgb(31, 120, 193)",
+        "show": true,
+        "ymax": null,
+        "ymin": null
+      },
+      "tableColumn": "",
+      "targets": [
+        {
+          "appInsights": {
+            "aggOptions": [
+              "avg",
+              "min",
+              "max",
+              "sum",
+              "count"
+            ],
+            "aggregation": "avg",
+            "dimension": [],
+            "dimensionFilter": "contains(dependency/name, 'GET /nbg/privateWS/api/robot/robotName/National')",
+            "dimensions": [
+              "dependency/target",
+              "dependency/type",
+              "dependency/name",
+              "dependency/success",
+              "dependency/resultCode",
+              "dependency/performanceBucket",
+              "operation/name",
+              "operation/synthetic",
+              "operation/syntheticSource",
+              "user/authenticated",
+              "application/version",
+              "client/type",
+              "client/model",
+              "client/os",
+              "client/city",
+              "client/stateOrProvince",
+              "client/countryOrRegion",
+              "client/browser",
+              "cloud/roleName",
+              "cloud/roleInstance",
+              "customDimensions/ErrorMessage",
+              "customDimensions/_MS.ProcessedByMetricExtractors"
+            ],
+            "metricName": "dependencies/duration",
+            "rawQuery": false,
+            "rawQueryString": "",
+            "spliton": "",
+            "timeColumn": "timestamp",
+            "timeGrain": "auto",
+            "timeGrainType": "auto",
+            "yaxis": ""
+          },
+          "azureLogAnalytics": {
+            "query": "//change this example to create your own time series query\n<table name>                                                              //the table to query (e.g. Usage, Heartbeat, Perf)\n| where $__timeFilter(TimeGenerated)                                      //this is a macro used to show the full chart’s time range, choose the datetime column here\n| summarize count() by <group by column>, bin(TimeGenerated, $__interval) //change “group by column” to a column in your table, such as “Computer”. The $__interval macro is used to auto-select the time grain. Can also use 1h, 5m etc.\n| order by TimeGenerated asc",
+            "resultFormat": "time_series",
+            "workspace": ""
+          },
+          "azureMonitor": {
+            "aggOptions": [],
+            "aggregation": "",
+            "dimension": "",
+            "dimensionFilter": "*",
+            "dimensionFilters": [],
+            "dimensions": [],
+            "metricDefinition": "select",
+            "metricName": "select",
+            "metricNamespace": "select",
+            "resourceGroup": "NBG-PRD-RG",
+            "resourceName": "select",
+            "timeGrain": "",
+            "timeGrains": [],
+            "top": "10"
+          },
+          "insightsAnalytics": {
+            "query": "",
+            "resultFormat": "time_series"
+          },
+          "queryType": "Application Insights",
+          "refId": "A",
+          "subscription": "92fde89a-451b-4735-bb8e-44860aac0c43"
+        }
+      ],
+      "thresholds": "",
+      "timeFrom": null,
+      "timeShift": null,
+      "title": "Avarage National Bank of Greece Robot response",
+      "type": "singlestat",
+      "valueFontSize": "80%",
+      "valueMaps": [
+        {
+          "op": "=",
+          "text": "N/A",
+          "value": "null"
+        }
+      ],
+      "valueName": "avg"
+    },
+    {
+      "cacheTimeout": null,
+      "colorBackground": false,
+      "colorValue": false,
+      "colors": [
+        "#299c46",
+        "rgba(237, 129, 40, 0.89)",
+        "#d44a3a"
+      ],
+      "datasource": "Azure Monitor",
+      "fieldConfig": {
+        "defaults": {
+          "custom": {}
+        },
+        "overrides": []
+      },
+      "format": "ms",
+      "gauge": {
+        "maxValue": 100,
+        "minValue": 0,
+        "show": false,
+        "thresholdLabels": false,
+        "thresholdMarkers": true
+      },
+      "gridPos": {
+        "h": 2,
+        "w": 5,
+        "x": 0,
+        "y": 39
+      },
+      "id": 24,
+      "interval": null,
+      "links": [],
+      "mappingType": 1,
+      "mappingTypes": [
+        {
+          "name": "value to text",
+          "value": 1
+        },
+        {
+          "name": "range to text",
+          "value": 2
+        }
+      ],
+      "maxDataPoints": 100,
+      "nullPointMode": "connected",
+      "nullText": null,
+      "postfix": "",
+      "postfixFontSize": "50%",
+      "prefix": "",
+      "prefixFontSize": "50%",
+      "rangeMaps": [
+        {
+          "from": "null",
+          "text": "N/A",
+          "to": "null"
+        }
+      ],
+      "sparkline": {
+        "fillColor": "rgba(31, 118, 189, 0.18)",
+        "full": false,
+        "lineColor": "rgb(31, 120, 193)",
+        "show": true
+      },
+      "tableColumn": "",
+      "targets": [
+        {
+          "appInsights": {
+            "aggOptions": [
+              "avg",
+              "min",
+              "max",
+              "sum",
+              "count"
+            ],
+            "aggregation": "avg",
+            "dimension": [],
+            "dimensionFilter": "operation/name eq 'GET /user/v1/feed'",
+            "dimensions": [
+              "request/source",
+              "request/name",
+              "request/urlHost",
+              "request/urlPath",
+              "request/success",
+              "request/resultCode",
+              "request/performanceBucket",
+              "operation/name",
+              "operation/synthetic",
+              "operation/syntheticSource",
+              "user/authenticated",
+              "application/version",
+              "client/type",
+              "client/model",
+              "client/os",
+              "client/city",
+              "client/stateOrProvince",
+              "client/countryOrRegion",
+              "client/browser",
+              "cloud/roleName",
+              "cloud/roleInstance",
+              "customDimensions/AI internal",
+              "customDimensions/_MS.ProcessedByMetricExtractors"
+            ],
+            "metricName": "requests/duration",
+            "rawQuery": false,
+            "rawQueryString": "",
+            "spliton": "",
+            "timeColumn": "timestamp",
+            "timeGrain": "auto",
+            "timeGrainType": "auto",
+            "yaxis": ""
+          },
+          "azureLogAnalytics": {
+            "query": "//change this example to create your own time series query\n<table name>                                                              //the table to query (e.g. Usage, Heartbeat, Perf)\n| where $__timeFilter(TimeGenerated)                                      //this is a macro used to show the full chart’s time range, choose the datetime column here\n| summarize count() by <group by column>, bin(TimeGenerated, $__interval) //change “group by column” to a column in your table, such as “Computer”. The $__interval macro is used to auto-select the time grain. Can also use 1h, 5m etc.\n| order by TimeGenerated asc",
+            "resultFormat": "time_series",
+            "workspace": ""
+          },
+          "azureMonitor": {
+            "aggOptions": [],
+            "dimensionFilter": "*",
+            "dimensionFilters": [],
+            "metricDefinition": "select",
+            "metricName": "select",
+            "metricNamespace": "select",
+            "resourceGroup": "select",
+            "resourceName": "select",
+            "timeGrain": "auto",
+            "timeGrains": [],
+            "top": "10"
+          },
+          "insightsAnalytics": {
+            "query": "",
+            "resultFormat": "time_series"
+          },
+          "queryType": "Application Insights",
+          "refId": "A",
+          "subscription": "92fde89a-451b-4735-bb8e-44860aac0c43"
+        }
+      ],
+      "thresholds": "",
+      "timeFrom": null,
+      "timeShift": null,
+      "title": "Average \"GET /user/v1/feed duration\"",
+      "type": "singlestat",
+      "valueFontSize": "80%",
+      "valueMaps": [
+        {
+          "op": "=",
+          "text": "N/A",
+          "value": "null"
+        }
+      ],
+      "valueName": "avg"
+    },
+    {
+      "cacheTimeout": null,
+      "colorBackground": false,
+      "colorValue": false,
+      "colors": [
+        "#299c46",
+        "rgba(237, 129, 40, 0.89)",
+        "#d44a3a"
+      ],
+      "datasource": "Azure Monitor",
+      "fieldConfig": {
+        "defaults": {
+          "custom": {}
+        },
+        "overrides": []
+      },
+      "format": "ms",
+      "gauge": {
+        "maxValue": 100,
+        "minValue": 0,
+        "show": false,
+        "thresholdLabels": false,
+        "thresholdMarkers": true
+      },
+      "gridPos": {
+        "h": 2,
+        "w": 5,
+        "x": 5,
+        "y": 39
+      },
+      "id": 56,
+      "interval": null,
+      "links": [],
+      "mappingType": 1,
+      "mappingTypes": [
+        {
+          "name": "value to text",
+          "value": 1
+        },
+        {
+          "name": "range to text",
+          "value": 2
+        }
+      ],
+      "maxDataPoints": 100,
+      "nullPointMode": "connected",
+      "nullText": null,
+      "postfix": "",
+      "postfixFontSize": "50%",
+      "prefix": "",
+      "prefixFontSize": "50%",
+      "rangeMaps": [
+        {
+          "from": "null",
+          "text": "N/A",
+          "to": "null"
+        }
+      ],
+      "sparkline": {
+        "fillColor": "rgba(31, 118, 189, 0.18)",
+        "full": false,
+        "lineColor": "rgb(31, 120, 193)",
+        "show": true
+      },
+      "tableColumn": "",
+      "targets": [
+        {
+          "appInsights": {
+            "aggOptions": [
+              "avg",
+              "min",
+              "max",
+              "sum",
+              "count"
+            ],
+            "aggregation": "avg",
+            "dimension": [],
+            "dimensionFilter": "operation/name eq 'GET /user/v1/transactions'",
+            "dimensions": [
+              "request/source",
+              "request/name",
+              "request/urlHost",
+              "request/urlPath",
+              "request/success",
+              "request/resultCode",
+              "request/performanceBucket",
+              "operation/name",
+              "operation/synthetic",
+              "operation/syntheticSource",
+              "user/authenticated",
+              "application/version",
+              "client/type",
+              "client/model",
+              "client/os",
+              "client/city",
+              "client/stateOrProvince",
+              "client/countryOrRegion",
+              "client/browser",
+              "cloud/roleName",
+              "cloud/roleInstance",
+              "customDimensions/AI internal",
+              "customDimensions/_MS.ProcessedByMetricExtractors"
+            ],
+            "metricName": "requests/duration",
+            "rawQuery": false,
+            "rawQueryString": "",
+            "spliton": "",
+            "timeColumn": "timestamp",
+            "timeGrain": "auto",
+            "timeGrainType": "auto",
+            "yaxis": ""
+          },
+          "azureLogAnalytics": {
+            "query": "//change this example to create your own time series query\n<table name>                                                              //the table to query (e.g. Usage, Heartbeat, Perf)\n| where $__timeFilter(TimeGenerated)                                      //this is a macro used to show the full chart’s time range, choose the datetime column here\n| summarize count() by <group by column>, bin(TimeGenerated, $__interval) //change “group by column” to a column in your table, such as “Computer”. The $__interval macro is used to auto-select the time grain. Can also use 1h, 5m etc.\n| order by TimeGenerated asc",
+            "resultFormat": "time_series",
+            "workspace": ""
+          },
+          "azureMonitor": {
+            "aggOptions": [],
+            "dimensionFilter": "*",
+            "dimensionFilters": [],
+            "metricDefinition": "select",
+            "metricName": "select",
+            "metricNamespace": "select",
+            "resourceGroup": "select",
+            "resourceName": "select",
+            "timeGrain": "auto",
+            "timeGrains": [],
+            "top": "10"
+          },
+          "insightsAnalytics": {
+            "query": "",
+            "resultFormat": "time_series"
+          },
+          "queryType": "Application Insights",
+          "refId": "A",
+          "subscription": "92fde89a-451b-4735-bb8e-44860aac0c43"
+        }
+      ],
+      "thresholds": "",
+      "timeFrom": null,
+      "timeShift": null,
+      "title": "Average  \"GET /user/v1/transactions\" duration",
+      "type": "singlestat",
+      "valueFontSize": "80%",
+      "valueMaps": [
+        {
+          "op": "=",
+          "text": "N/A",
+          "value": "null"
+        }
+      ],
+      "valueName": "avg"
+    },
+    {
+      "cacheTimeout": null,
+      "colorBackground": false,
+      "colorValue": false,
+      "colors": [
+        "#299c46",
+        "rgba(237, 129, 40, 0.89)",
+        "#d44a3a"
+      ],
+      "datasource": "Azure Monitor",
+      "fieldConfig": {
+        "defaults": {
+          "custom": {}
+        },
+        "overrides": []
+      },
+      "format": "ms",
+      "gauge": {
+        "maxValue": 100,
+        "minValue": 0,
+        "show": false,
+        "thresholdLabels": false,
+        "thresholdMarkers": true
+      },
+      "gridPos": {
+        "h": 2,
+        "w": 5,
+        "x": 0,
+        "y": 41
+      },
+      "id": 19,
+      "interval": null,
+      "links": [],
+      "mappingType": 1,
+      "mappingTypes": [
+        {
+          "name": "value to text",
+          "value": 1
+        },
+        {
+          "name": "range to text",
+          "value": 2
+        }
+      ],
+      "maxDataPoints": 100,
+      "nullPointMode": "connected",
+      "nullText": null,
+      "postfix": "",
+      "postfixFontSize": "50%",
+      "prefix": "",
+      "prefixFontSize": "50%",
+      "rangeMaps": [
+        {
+          "from": "null",
+          "text": "N/A",
+          "to": "null"
+        }
+      ],
+      "sparkline": {
+        "fillColor": "rgba(31, 118, 189, 0.18)",
+        "full": false,
+        "lineColor": "rgb(31, 120, 193)",
+        "show": true
+      },
+      "tableColumn": "",
+      "targets": [
+        {
+          "appInsights": {
+            "aggOptions": [
+              "avg",
+              "min",
+              "max",
+              "sum",
+              "count"
+            ],
+            "aggregation": "avg",
+            "dimension": [],
+            "dimensionFilter": "operation/name eq 'POST /user/v1/sync'",
+            "dimensions": [
+              "request/source",
+              "request/name",
+              "request/urlHost",
+              "request/urlPath",
+              "request/success",
+              "request/resultCode",
+              "request/performanceBucket",
+              "operation/name",
+              "operation/synthetic",
+              "operation/syntheticSource",
+              "user/authenticated",
+              "application/version",
+              "client/type",
+              "client/model",
+              "client/os",
+              "client/city",
+              "client/stateOrProvince",
+              "client/countryOrRegion",
+              "client/browser",
+              "cloud/roleName",
+              "cloud/roleInstance",
+              "customDimensions/_MS.ProcessedByMetricExtractors",
+              "customDimensions/AI internal"
+            ],
+            "metricName": "requests/duration",
+            "rawQuery": false,
+            "rawQueryString": "",
+            "spliton": "",
+            "timeColumn": "timestamp",
+            "timeGrain": "auto",
+            "timeGrainType": "auto",
+            "yaxis": ""
+          },
+          "azureLogAnalytics": {
+            "query": "//change this example to create your own time series query\n<table name>                                                              //the table to query (e.g. Usage, Heartbeat, Perf)\n| where $__timeFilter(TimeGenerated)                                      //this is a macro used to show the full chart’s time range, choose the datetime column here\n| summarize count() by <group by column>, bin(TimeGenerated, $__interval) //change “group by column” to a column in your table, such as “Computer”. The $__interval macro is used to auto-select the time grain. Can also use 1h, 5m etc.\n| order by TimeGenerated asc",
+            "resultFormat": "time_series",
+            "workspace": "163f8b4b-8385-41b4-a35f-360619c61573"
+          },
+          "azureMonitor": {
+            "aggOptions": [],
+            "dimensionFilter": "*",
+            "dimensionFilters": [],
+            "metricDefinition": "select",
+            "metricName": "select",
+            "metricNamespace": "select",
+            "resourceGroup": "select",
+            "resourceName": "select",
+            "timeGrain": "auto",
+            "timeGrains": [],
+            "top": "10"
+          },
+          "insightsAnalytics": {
+            "query": "",
+            "resultFormat": "time_series"
+          },
+          "queryType": "Application Insights",
+          "refId": "A",
+          "subscription": "92fde89a-451b-4735-bb8e-44860aac0c43"
+        }
+      ],
+      "thresholds": "",
+      "timeFrom": null,
+      "timeShift": null,
+      "title": "Average \"POST /user/v1/sync\" Duration",
+      "type": "singlestat",
+      "valueFontSize": "80%",
+      "valueMaps": [
+        {
+          "op": "=",
+          "text": "N/A",
+          "value": "null"
+        }
+      ],
+      "valueName": "avg"
+    },
+    {
+      "datasource": "Azure Monitor",
+      "description": "",
+      "fieldConfig": {
+        "defaults": {
+          "custom": {
+            "align": null,
+            "displayMode": "color-background"
+          },
+          "mappings": [],
+          "thresholds": {
+            "mode": "absolute",
+            "steps": [
+              {
+                "color": "green",
+                "value": null
+              },
+              {
+                "color": "red",
+                "value": 200
+              }
+            ]
+          }
+        },
+        "overrides": []
+      },
+      "gridPos": {
+        "h": 10,
+        "w": 10,
+        "x": 0,
+        "y": 43
+      },
+      "id": 66,
+      "options": {
+        "showHeader": true,
+        "sortBy": []
+      },
+      "pluginVersion": "7.1.3",
+      "targets": [
+        {
+          "appInsights": {
+            "aggOptions": [
+              "sum"
+            ],
+            "aggregation": "sum",
+            "dimension": [
+              "request/name"
+            ],
+            "dimensionFilter": "request/name ne 'GET /user/v1/terms/2' and request/name ne 'GET /user/v1/offers' and request/name ne 'GET /user/v1/reimbursementAccounts' and request/name ne 'GET /user/v1/merchants/0' and request/resultCode ne 400",
+            "dimensions": [
+              "request/source",
+              "request/name",
+              "request/urlHost",
+              "request/urlPath",
+              "request/success",
+              "request/resultCode",
+              "request/performanceBucket",
+              "operation/name",
+              "operation/synthetic",
+              "operation/syntheticSource",
+              "user/authenticated",
+              "application/version",
+              "client/type",
+              "client/model",
+              "client/os",
+              "client/city",
+              "client/stateOrProvince",
+              "client/countryOrRegion",
+              "client/browser",
+              "cloud/roleName",
+              "cloud/roleInstance",
+              "customDimensions/_MS.ProcessedByMetricExtractors"
+            ],
+            "metricName": "requests/failed",
+            "timeGrain": "auto"
+          },
+          "azureLogAnalytics": {
+            "query": "//change this example to create your own time series query\n<table name>                                                              //the table to query (e.g. Usage, Heartbeat, Perf)\n| where $__timeFilter(TimeGenerated)                                      //this is a macro used to show the full chart’s time range, choose the datetime column here\n| summarize count() by <group by column>, bin(TimeGenerated, $__interval) //change “group by column” to a column in your table, such as “Computer”. The $__interval macro is used to auto-select the time grain. Can also use 1h, 5m etc.\n| order by TimeGenerated asc",
+            "resultFormat": "time_series",
+            "workspace": ""
+          },
+          "azureMonitor": {
+            "aggOptions": [],
+            "dimensionFilter": "*",
+            "dimensionFilters": [],
+            "metricDefinition": "select",
+            "metricName": "select",
+            "metricNamespace": "select",
+            "resourceGroup": "select",
+            "resourceName": "select",
+            "timeGrain": "auto",
+            "timeGrains": [],
+            "top": "10"
+          },
+          "insightsAnalytics": {
+            "query": "",
+            "resultFormat": "time_series"
+          },
+          "queryType": "Application Insights",
+          "refId": "A",
+          "subscription": "92fde89a-451b-4735-bb8e-44860aac0c43"
+        }
+      ],
+      "timeFrom": null,
+      "timeShift": null,
+      "title": "Failed Request Count",
+      "transformations": [
+        {
+          "id": "reduce",
+          "options": {
+            "reducers": [
+              "sum"
+            ]
+          }
+        }
+      ],
+      "type": "table"
+    },
+    {
+      "datasource": "Azure Monitor (shared-appinsights-ahub)",
+      "fieldConfig": {
+        "defaults": {
+          "custom": {
+            "align": "left",
+            "displayMode": "color-background"
+          },
+          "mappings": [],
+          "thresholds": {
+            "mode": "absolute",
+            "steps": [
+              {
+                "color": "green",
+                "value": null
+              },
+              {
+                "color": "red",
+                "value": 1000
+              }
+            ]
+          }
+        },
+        "overrides": [
+          {
+            "matcher": {
+              "id": "byName",
+              "options": "Field"
+            },
+            "properties": [
+              {
+                "id": "custom.width",
+                "value": 518
+              }
+            ]
+          }
+        ]
+      },
+      "gridPos": {
+        "h": 12,
+        "w": 9,
+        "x": 10,
+        "y": 43
+      },
+      "id": 78,
+      "options": {
+        "showHeader": false,
+        "sortBy": [
+          {
+            "desc": true,
+            "displayName": "Total"
+          }
+        ]
+      },
+      "pluginVersion": "7.1.3",
+      "targets": [
+        {
+          "appInsights": {
+            "aggOptions": [
+              "sum"
+            ],
+            "aggregation": "sum",
+            "dimension": [
+              "request/name"
+            ],
+            "dimensionFilter": "request/resultCode ne 403 and request/resultCode ne 400",
+            "dimensions": [
+              "request/source",
+              "request/name",
+              "request/urlHost",
+              "request/urlPath",
+              "request/success",
+              "request/resultCode",
+              "request/performanceBucket",
+              "operation/name",
+              "operation/synthetic",
+              "operation/syntheticSource",
+              "user/authenticated",
+              "application/version",
+              "client/type",
+              "client/model",
+              "client/os",
+              "client/city",
+              "client/stateOrProvince",
+              "client/countryOrRegion",
+              "client/browser",
+              "cloud/roleName",
+              "cloud/roleInstance",
+              "customDimensions/_MS.ProcessedByMetricExtractors",
+              "customDimensions/AspNetCoreEnvironment"
+            ],
+            "metricName": "requests/failed",
+            "timeGrain": "auto"
+          },
+          "azureLogAnalytics": {
+            "query": "//change this example to create your own time series query\n<table name>                                                              //the table to query (e.g. Usage, Heartbeat, Perf)\n| where $__timeFilter(TimeGenerated)                                      //this is a macro used to show the full chart’s time range, choose the datetime column here\n| summarize count() by <group by column>, bin(TimeGenerated, $__interval) //change “group by column” to a column in your table, such as “Computer”. The $__interval macro is used to auto-select the time grain. Can also use 1h, 5m etc.\n| order by TimeGenerated asc",
+            "resultFormat": "time_series",
+            "workspace": "163f8b4b-8385-41b4-a35f-360619c61573"
+          },
+          "azureMonitor": {
+            "aggOptions": [],
+            "dimensionFilter": "*",
+            "dimensionFilters": [],
+            "metricDefinition": "select",
+            "metricName": "select",
+            "metricNamespace": "select",
+            "resourceGroup": "select",
+            "resourceName": "select",
+            "timeGrain": "auto",
+            "timeGrains": [],
+            "top": "10"
+          },
+          "insightsAnalytics": {
+            "query": "",
+            "resultFormat": "time_series"
+          },
+          "queryType": "Application Insights",
+          "refId": "A",
+          "subscription": "92fde89a-451b-4735-bb8e-44860aac0c43"
+        }
+      ],
+      "timeFrom": null,
+      "timeShift": null,
+      "title": "Failed  AH Request Counts",
+      "transformations": [
+        {
+          "id": "reduce",
+          "options": {
+            "reducers": [
+              "sum"
+            ]
+          }
+        }
+      ],
+      "type": "table"
+    },
+    {
+      "datasource": "Azure Monitor",
+      "fieldConfig": {
+        "defaults": {
+          "custom": {
+            "align": null,
+            "displayMode": "color-background"
+          },
+          "mappings": [],
+          "thresholds": {
+            "mode": "absolute",
+            "steps": [
+              {
+                "color": "green",
+                "value": null
+              },
+              {
+                "color": "red",
+                "value": 1000
+              }
+            ]
+          }
+        },
+        "overrides": []
+      },
+      "gridPos": {
+        "h": 8,
+        "w": 10,
+        "x": 0,
+        "y": 53
+      },
+      "id": 68,
+      "options": {
+        "showHeader": true,
+        "sortBy": [
+          {
+            "desc": true,
+            "displayName": "Total"
+          }
+        ]
+      },
+      "pluginVersion": "7.1.3",
+      "targets": [
+        {
+          "appInsights": {
+            "aggOptions": [
+              "sum"
+            ],
+            "aggregation": "sum",
+            "dimension": [
+              "dependency/name"
+            ],
+            "dimensionFilter": "dependency/resultCode ne 403 and dependency/resultCode ne 400",
+            "dimensions": [
+              "dependency/target",
+              "dependency/type",
+              "dependency/name",
+              "dependency/success",
+              "dependency/resultCode",
+              "dependency/performanceBucket",
+              "operation/name",
+              "operation/synthetic",
+              "operation/syntheticSource",
+              "user/authenticated",
+              "application/version",
+              "client/type",
+              "client/model",
+              "client/os",
+              "client/city",
+              "client/stateOrProvince",
+              "client/countryOrRegion",
+              "client/browser",
+              "cloud/roleName",
+              "cloud/roleInstance",
+              "customDimensions/_MS.ProcessedByMetricExtractors",
+              "customDimensions/ErrorMessage"
+            ],
+            "metricName": "dependencies/failed",
+            "timeGrain": "auto"
+          },
+          "azureLogAnalytics": {
+            "query": "//change this example to create your own time series query\n<table name>                                                              //the table to query (e.g. Usage, Heartbeat, Perf)\n| where $__timeFilter(TimeGenerated)                                      //this is a macro used to show the full chart’s time range, choose the datetime column here\n| summarize count() by <group by column>, bin(TimeGenerated, $__interval) //change “group by column” to a column in your table, such as “Computer”. The $__interval macro is used to auto-select the time grain. Can also use 1h, 5m etc.\n| order by TimeGenerated asc",
+            "resultFormat": "time_series",
+            "workspace": ""
+          },
+          "azureMonitor": {
+            "aggOptions": [],
+            "dimensionFilter": "*",
+            "dimensionFilters": [],
+            "metricDefinition": "select",
+            "metricName": "select",
+            "metricNamespace": "select",
+            "resourceGroup": "select",
+            "resourceName": "select",
+            "timeGrain": "auto",
+            "timeGrains": [],
+            "top": "10"
+          },
+          "insightsAnalytics": {
+            "query": "",
+            "resultFormat": "time_series"
+          },
+          "queryType": "Application Insights",
+          "refId": "A",
+          "subscription": "92fde89a-451b-4735-bb8e-44860aac0c43"
+        }
+      ],
+      "timeFrom": null,
+      "timeShift": null,
+      "title": "Failed Dependency Count",
+      "transformations": [
+        {
+          "id": "reduce",
+          "options": {
+            "reducers": [
+              "sum"
+            ]
+          }
+        }
+      ],
+      "type": "table"
+    },
+    {
+      "aliasColors": {},
+      "bars": false,
+      "dashLength": 10,
+      "dashes": false,
+      "datasource": "Azure Monitor",
+      "fieldConfig": {
+        "defaults": {
+          "custom": {},
+          "links": []
+        },
+        "overrides": []
+      },
+      "fill": 1,
+      "fillGradient": 0,
+      "gridPos": {
+        "h": 7,
+        "w": 10,
+        "x": 0,
+        "y": 61
+      },
+      "hiddenSeries": false,
+      "id": 41,
+      "legend": {
+        "avg": false,
+        "current": false,
+        "max": false,
+        "min": false,
+        "show": true,
+        "total": false,
+        "values": false
+      },
+      "lines": true,
+      "linewidth": 1,
+      "nullPointMode": "null",
+      "percentage": false,
+      "pluginVersion": "7.1.3",
+      "pointradius": 2,
+      "points": false,
+      "renderer": "flot",
+      "seriesOverrides": [],
+      "spaceLength": 10,
+      "stack": false,
+      "steppedLine": false,
+      "targets": [
+        {
+          "appInsights": {
+            "groupBy": "none",
+            "metricName": "select",
+            "rawQuery": false,
+            "rawQueryString": "",
+            "spliton": "",
+            "timeGrainType": "auto",
+            "xaxis": "timestamp",
+            "yaxis": ""
+          },
+          "azureLogAnalytics": {
+            "query": "//change this example to create your own time series query\n<table name>                                                              //the table to query (e.g. Usage, Heartbeat, Perf)\n| where $__timeFilter(TimeGenerated)                                      //this is a macro used to show the full chart’s time range, choose the datetime column here\n| summarize count() by <group by column>, bin(TimeGenerated, $__interval) //change “group by column” to a column in your table, such as “Computer”. The $__interval macro is used to auto-select the time grain. Can also use 1h, 5m etc.\n| order by TimeGenerated asc",
+            "resultFormat": "time_series"
+          },
+          "azureMonitor": {
+            "aggOptions": [
+              "None",
+              "Average",
+              "Minimum",
+              "Maximum",
+              "Total",
+              "Count"
+            ],
+            "aggregation": "Total",
+            "allowedTimeGrainsMs": [
+              60000,
+              300000,
+              900000,
+              1800000,
+              3600000,
+              21600000,
+              43200000,
+              86400000
+            ],
+            "dimension": "None",
+            "dimensionFilter": "*",
+            "dimensions": [
+              {
+                "text": "None",
+                "value": "None"
+              },
+              {
+                "text": "Instance",
+                "value": "Instance"
+              }
+            ],
+            "metricDefinition": "Microsoft.Web/sites",
+            "metricName": "Http5xx",
+            "resourceGroup": "NBG-PRD-RG",
+            "resourceName": "NBG-MenigaServices",
+            "timeGrain": "auto",
+            "timeGrains": [
+              {
+                "text": "auto",
+                "value": "auto"
+              },
+              {
+                "text": "1 minute",
+                "value": "PT1M"
+              },
+              {
+                "text": "5 minutes",
+                "value": "PT5M"
+              },
+              {
+                "text": "15 minutes",
+                "value": "PT15M"
+              },
+              {
+                "text": "30 minutes",
+                "value": "PT30M"
+              },
+              {
+                "text": "1 hour",
+                "value": "PT1H"
+              },
+              {
+                "text": "6 hours",
+                "value": "PT6H"
+              },
+              {
+                "text": "12 hours",
+                "value": "PT12H"
+              },
+              {
+                "text": "1 day",
+                "value": "P1D"
+              }
+            ]
+          },
+          "queryType": "Azure Monitor",
+          "refId": "A",
+          "subscription": "92fde89a-451b-4735-bb8e-44860aac0c43"
+        }
+      ],
+      "thresholds": [],
+      "timeFrom": null,
+      "timeRegions": [],
+      "timeShift": null,
+      "title": "Meniga Services http Error Rate",
+      "tooltip": {
+        "shared": true,
+        "sort": 0,
+        "value_type": "individual"
+      },
+      "type": "graph",
+      "xaxis": {
+        "buckets": null,
+        "mode": "time",
+        "name": null,
+        "show": true,
+        "values": []
+      },
+      "yaxes": [
+        {
+          "format": "short",
+          "label": null,
+          "logBase": 1,
+          "max": null,
+          "min": null,
+          "show": true
+        },
+        {
+          "format": "short",
+          "label": null,
+          "logBase": 1,
+          "max": null,
+          "min": null,
+          "show": true
+        }
+      ],
+      "yaxis": {
+        "align": false,
+        "alignLevel": null
+      }
+    }
+  ],
+  "refresh": false,
+  "schemaVersion": 26,
+  "style": "dark",
+  "tags": [],
+  "templating": {
+    "list": []
+  },
+  "time": {
+    "from": "now-6h",
+    "to": "now"
+  },
+  "timepicker": {
+    "refresh_intervals": [
+      "5s",
+      "10s",
+      "30s",
+      "1m",
+      "5m",
+      "15m",
+      "30m",
+      "1h",
+      "2h",
+      "1d"
+    ]
+  },
+  "timezone": "",
+  "title": "NBG-SHARED-DASH2",
+  "uid": "cS53zwuZz",
+  "version": 58
+}
