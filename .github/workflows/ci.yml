@@ -12,6 +12,7 @@ on:
 
 env:
   DOTNET_VERSION: '9.0.x'
+  SOLUTION_FILE: 'src/FSH.Starter.sln'
 
 jobs:
   build-and-test:
@@ -28,13 +29,13 @@ jobs:
         dotnet-version: ${{ env.DOTNET_VERSION }}
         
     - name: Restore dependencies
-      run: dotnet restore src/FSH.Starter.sln
+      run: dotnet restore ${{ env.SOLUTION_FILE }}
       
     - name: Build solution
-      run: dotnet build src/FSH.Starter.sln --configuration Release --no-restore
+      run: dotnet build ${{ env.SOLUTION_FILE }} --configuration Release --no-restore
       
     - name: Run tests
-      run: dotnet test src/FSH.Starter.sln --configuration Release --no-build --verbosity normal --collect:"XPlat Code Coverage"
+      run: dotnet test ${{ env.SOLUTION_FILE }} --configuration Release --no-build --verbosity normal --collect:"XPlat Code Coverage"
       
     - name: Upload coverage reports
       uses: codecov/codecov-action@v4
@@ -59,7 +60,7 @@ jobs:
         dotnet-version: ${{ env.DOTNET_VERSION }}
         
     - name: Restore dependencies
-      run: dotnet restore src/FSH.Starter.sln
+      run: dotnet restore ${{ env.SOLUTION_FILE }}
       
     - name: Build for analysis
-      run: dotnet build src/FSH.Starter.sln --configuration Release --no-restore
+      run: dotnet build ${{ env.SOLUTION_FILE }} --configuration Release --no-restore
