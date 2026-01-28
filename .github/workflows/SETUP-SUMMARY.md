@@ -69,9 +69,9 @@ chmod +x .github/workflows/setup-gcp.sh
 ### 3. Update Workflow Files
 Edit both `deploy-server.yml` and `deploy-client.yml`:
 ```yaml
-GKE_CLUSTER: your-cluster-name    # ?? UPDATE THIS
-GKE_ZONE: europe-west9-a          # ?? UPDATE THIS
-NAMESPACE: default                # ?? UPDATE if needed
+GKE_CLUSTER: default-klettagja-cluster    # ?? UPDATE THIS
+GKE_ZONE: europe-west9          # ?? UPDATE THIS
+NAMESPACE: tbr                # ?? UPDATE if needed
 ```
 
 ## ?? Quick Start

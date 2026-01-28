@@ -25,13 +25,13 @@ env:
   DOTNET_VERSION: '9.0.x'
   GCP_PROJECT_ID: main-project-483817
   GCP_REGION: europe-west9
-  GKE_CLUSTER: your-cluster-name  # UPDATE THIS
-  GKE_ZONE: europe-west9-a  # UPDATE THIS
+  GKE_CLUSTER: default-klettagja-cluster  # UPDATE THIS
+  GKE_ZONE: europe-west9  # UPDATE THIS
   GAR_LOCATION: europe-west9
   GAR_REPOSITORY: klettagja
   IMAGE_NAME: courtrental-server
   DEPLOYMENT_NAME: fsh-webapi
-  NAMESPACE: default  # UPDATE THIS if needed
+  NAMESPACE: tbr  # UPDATE THIS if needed
 
 jobs:
   build-and-push:

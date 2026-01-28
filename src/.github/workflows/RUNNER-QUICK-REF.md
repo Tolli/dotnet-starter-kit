@@ -6,7 +6,7 @@
 # 1. Update script parameters
 # Edit: setup-gke-runner.ps1
 # - $ClusterName = "your-cluster-name"
-# - $ClusterZone = "europe-west9-a"  
+# - $ClusterZone = "europe-west9"  
 # - $GitHubRepo = "Tolli/dotnet-starter-kit"
 
 # 2. Run setup
@@ -82,8 +82,8 @@ kubectl delete namespace actions-runner-system
 
 **GitHub-Hosted Cost:**
 ```
-Builds per day × Minutes per build × 30 days × $0.008/min
-Example: 200 × 12 × 30 × 0.008 = $576/month
+Builds per day ï¿½ Minutes per build ï¿½ 30 days ï¿½ $0.008/min
+Example: 200 ï¿½ 12 ï¿½ 30 ï¿½ 0.008 = $576/month
 ```
 
 **Self-Hosted Cost:**

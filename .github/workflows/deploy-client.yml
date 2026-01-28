@@ -26,7 +26,7 @@ env:
   GCP_PROJECT_ID: main-project-483817
   GCP_REGION: europe-west9
   GKE_CLUSTER: default-klettagja-cluster
-  GKE_ZONE: europe-west9-a
+  GKE_ZONE: europe-west9
   GAR_LOCATION: europe-west9
   GAR_REPOSITORY: klettagja
   IMAGE_NAME: courtrental-client

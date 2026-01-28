@@ -4,7 +4,7 @@
 param(
     [string]$ProjectId = "main-project-483817",
     [string]$ClusterName = "your-cluster-name",  # ?? UPDATE THIS
-    [string]$ClusterZone = "europe-west9-a",     # ?? UPDATE THIS
+    [string]$ClusterZone = "europe-west9",     # ?? UPDATE THIS
     [string]$Namespace = "actions-runner-system",
     [string]$GitHubRepo = "Tolli/dotnet-starter-kit"  # ?? UPDATE THIS
 )

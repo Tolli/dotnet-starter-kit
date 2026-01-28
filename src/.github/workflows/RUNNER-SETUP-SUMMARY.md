@@ -36,7 +36,7 @@ cd .github\workflows
 
 # Update these values in the script first:
 # - $ClusterName = "your-cluster-name"
-# - $ClusterZone = "europe-west9-a"
+# - $ClusterZone = "europe-west9"
 # - $GitHubRepo = "Tolli/dotnet-starter-kit"
 
 .\setup-gke-runner.ps1
@@ -139,9 +139,9 @@ jobs:
 
 | Scenario | GitHub-Hosted | Self-Hosted | Savings |
 |----------|--------------|-------------|---------|
-| **Small** (50 builds/day × 8 min) | $70/mo | $135/mo | -$65/mo ? |
-| **Medium** (200 builds/day × 12 min) | $422/mo | $185/mo | **$237/mo** ? |
-| **Large** (800 builds/day × 15 min) | $2,112/mo | $350/mo | **$1,762/mo** ?? |
+| **Small** (50 builds/day ï¿½ 8 min) | $70/mo | $135/mo | -$65/mo ? |
+| **Medium** (200 builds/day ï¿½ 12 min) | $422/mo | $185/mo | **$237/mo** ? |
+| **Large** (800 builds/day ï¿½ 15 min) | $2,112/mo | $350/mo | **$1,762/mo** ?? |
 
 **Self-hosted becomes cheaper at ~2,300 build minutes/month**
 

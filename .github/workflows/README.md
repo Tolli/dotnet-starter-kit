@@ -97,11 +97,11 @@ Edit the workflow files and update these variables:
 env:
   GCP_PROJECT_ID: main-project-483817        # Your GCP project
   GCP_REGION: europe-west9                   # Your region
-  GKE_CLUSTER: your-cluster-name             # ?? UPDATE THIS
-  GKE_ZONE: europe-west9-a                   # ?? UPDATE THIS
+  GKE_CLUSTER: default-klettagja-cluster             # ?? UPDATE THIS
+  GKE_ZONE: europe-west9                   # ?? UPDATE THIS
   GAR_LOCATION: europe-west9                 # Artifact Registry location
   GAR_REPOSITORY: klettagja                  # Your repository name
-  NAMESPACE: default                         # ?? UPDATE if using different namespace
+  NAMESPACE: tbr                         # ?? UPDATE if using different namespace
 ```
 
 ### Update Kubernetes Manifests
