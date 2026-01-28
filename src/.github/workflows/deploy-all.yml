@@ -1,0 +1,26 @@
+name: Full Deploy - Server and Client
+
+on:
+  workflow_dispatch:
+    inputs:
+      deploy_server:
+        description: 'Deploy Server'
+        required: true
+        default: true
+        type: boolean
+      deploy_client:
+        description: 'Deploy Client'
+        required: true
+        default: true
+        type: boolean
+
+jobs:
+  deploy-server:
+    if: ${{ github.event.inputs.deploy_server == 'true' }}
+    uses: ./.github/workflows/deploy-server.yml
+    secrets: inherit
+    
+  deploy-client:
+    if: ${{ github.event.inputs.deploy_client == 'true' }}
+    uses: ./.github/workflows/deploy-client.yml
+    secrets: inherit

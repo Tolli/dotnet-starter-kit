@@ -1,0 +1,16 @@
+﻿GitHub Actions Configuration for Workload Identity Federation
+==============================================================
+
+Add these secrets to your GitHub repository:
+https://github.com/Tolli/dotnet-starter-kit/settings/secrets/actions
+
+GCP_PROJECT_ID
+main-project-483817
+
+GCP_SERVICE_ACCOUNT
+github-actions@main-project-483817.iam.gserviceaccount.com
+
+GCP_WORKLOAD_IDENTITY_PROVIDER
+projects/956634112214/locations/global/workloadIdentityPools/github-pool/providers/github-provider
+
+==============================================================
