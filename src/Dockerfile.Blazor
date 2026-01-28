@@ -1,7 +1,6 @@
 # Build stage
 FROM mcr.microsoft.com/dotnet/sdk:9.0 AS build
 ARG BUILD_CONFIGURATION=Release
-WORKDIR /src
 
 # Copy project files for restore
 COPY ["apps/blazor/client/Directory.Packages.props", "apps/blazor/client/"]
