@@ -5,10 +5,10 @@ on:
     branches:
       - main
     paths:
-      - 'apps/blazor/**'
-      - 'Shared/**'
-      - 'Dockerfile.Blazor'
-      - 'k8s/blazor-*.yaml'
+      - 'src/apps/blazor/**'
+      - 'src/Shared/**'
+      - 'src/Dockerfile.Blazor'
+      - 'src/k8s/blazor-*.yaml'
       - '.github/workflows/deploy-client.yml'
   workflow_dispatch:
     inputs:
@@ -25,13 +25,13 @@ env:
   DOTNET_VERSION: '9.0.x'
   GCP_PROJECT_ID: main-project-483817
   GCP_REGION: europe-west9
-  GKE_CLUSTER: your-cluster-name  # UPDATE THIS
-  GKE_ZONE: europe-west9-a  # UPDATE THIS
+  GKE_CLUSTER: default-klettagja-cluster
+  GKE_ZONE: europe-west9-a
   GAR_LOCATION: europe-west9
   GAR_REPOSITORY: klettagja
   IMAGE_NAME: courtrental-client
-  DEPLOYMENT_NAME: fsh-blazor-client
-  NAMESPACE: default  # UPDATE THIS if needed
+  DEPLOYMENT_NAME: courtrental-client
+  NAMESPACE: tbr
 
 jobs:
   build-and-push:
@@ -79,7 +79,7 @@ jobs:
       uses: docker/build-push-action@v5
       with:
         context: .
-        file: ./Dockerfile.Blazor
+        file: ./src/Dockerfile.Blazor
         push: true
         tags: ${{ steps.meta.outputs.tags }}
         labels: ${{ steps.meta.outputs.labels }}
