@@ -10,6 +10,7 @@ COPY ["apps/blazor/infrastructure/Directory.Packages.props", "apps/blazor/infras
 COPY ["apps/blazor/infrastructure/Infrastructure.csproj", "apps/blazor/infrastructure/"]
 COPY ["apps/blazor/shared/Shared.csproj", "apps/blazor/shared/"]
 COPY ["Shared/Shared.csproj", "Shared/"]
+COPY ["apps/blazor/client/wwwroot/appsettings.Production.json", "apps/blazor/client/wwwroot/"]
 
 # Restore dependencies
 RUN dotnet restore "apps/blazor/client/Client.csproj"
