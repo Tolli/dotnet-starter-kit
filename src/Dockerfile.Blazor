@@ -30,9 +30,6 @@ WORKDIR /usr/share/nginx/html
 # Copy published Blazor WASM files
 COPY --from=build /app/publish/wwwroot .
 
-# Copy nginx configuration
-COPY apps/blazor/nginx.conf /etc/nginx/nginx.conf
-
 EXPOSE 80
 
 # Health check
