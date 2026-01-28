@@ -59,3 +59,21 @@
     </EditFormContent>
 
 </EntityTable>
+
+@code {
+
+
+    private RenderFragment<CustomerResponse> CourtsTemplate => customerresponse => __builder =>
+     {
+         <MudItem>
+             @{
+                 foreach (var share in customerresponse.CourtRentalShares)
+                 {
+                     <MudChip T="string" Variant="Variant.Outlined">@share.CourtRental.Weekday - @(share.AmountTotal - share.AmountPaid)</MudChip>
+                 }
+    
+         }
+
+         </MudItem>
+     };
+}

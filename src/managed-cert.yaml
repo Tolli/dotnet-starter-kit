@@ -1,0 +1,9 @@
+apiVersion: networking.gke.io/v1
+kind: ManagedCertificate
+metadata:
+  name: klettagja-managed-cert
+  namespace: ingress-nginx # Or the namespace of your Ingress
+spec:
+  domains:
+    - "tbr.tolli.com"
+    - "tbr-api.tolli.com"

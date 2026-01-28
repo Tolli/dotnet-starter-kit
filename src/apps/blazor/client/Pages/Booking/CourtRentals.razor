@@ -1,15 +1,66 @@
 ﻿@page "/booking/CourtRentals"
 
 <PageHeader Title="CourtRentals" Header="CourtRentals" SubHeader="Manage your CourtRentals." />
+<MudStack Row="true">
+    <MudSelect T="DayOfWeek?" Label="WeekDay" Placeholder="All days" @bind-Value="SelectedDayOfWeek">
+        <MudSelectItem T="DayOfWeek?" Value="null">All</MudSelectItem>
+        <MudSelectItem T="DayOfWeek?" Value="DayOfWeek.Monday">Monday</MudSelectItem>
+        <MudSelectItem T="DayOfWeek?" Value="DayOfWeek.Tuesday">Tuesday</MudSelectItem>
+        <MudSelectItem T="DayOfWeek?" Value="DayOfWeek.Wednesday">Wednesday</MudSelectItem>
+        <MudSelectItem T="DayOfWeek?" Value="DayOfWeek.Thursday">Thursday</MudSelectItem>
+        <MudSelectItem T="DayOfWeek?" Value="DayOfWeek.Friday">Friday</MudSelectItem>
+        <MudSelectItem T="DayOfWeek?" Value="DayOfWeek.Saturday">Saturday</MudSelectItem>
+        <MudSelectItem T="DayOfWeek?" Value="DayOfWeek.Sunday">Sunday</MudSelectItem>
+        </MudSelect>
+    <MudSelect T="int?" Label="Court From" Placeholder="All courts" @bind-Value="SelectedCourt">
+        <MudSelectItem T="int?" Value="null">All</MudSelectItem>
+        <MudSelectItem T="int?" Value="1">Court 1</MudSelectItem>
+        <MudSelectItem T="int?" Value="2">Court 2</MudSelectItem>
+        <MudSelectItem T="int?" Value="3">Court 3</MudSelectItem>
+        <MudSelectItem T="int?" Value="4">Court 4</MudSelectItem>
+        <MudSelectItem T="int?" Value="5">Court 5</MudSelectItem>
+        <MudSelectItem T="int?" Value="6">Court 6</MudSelectItem>
+        <MudSelectItem T="int?" Value="7">Court 7</MudSelectItem>
+        <MudSelectItem T="int?" Value="8">Court 8</MudSelectItem>
+        <MudSelectItem T="int?" Value="9">Court 9</MudSelectItem>
+        <MudSelectItem T="int?" Value="10">Court 10</MudSelectItem>
+        <MudSelectItem T="int?" Value="11">Court 11</MudSelectItem>
+        <MudSelectItem T="int?" Value="12">Court 12</MudSelectItem>
+        <MudSelectItem T="int?" Value="13">Court 13</MudSelectItem>
+        <MudSelectItem T="int?" Value="14">Court 14</MudSelectItem>
+        <MudSelectItem T="int?" Value="15">Court 15</MudSelectItem>
+        <MudSelectItem T="int?" Value="16">Court 16</MudSelectItem>
+        <MudSelectItem T="int?" Value="17">Court 17</MudSelectItem>
 
+    </MudSelect>    
+    <MudSelect T="TimeOnly"
+               Label="Start Time"
+               @bind-Value="StartTime">
+        <MudSelectItem Value="new TimeOnly(8, 0)">08:00</MudSelectItem>
+        <MudSelectItem Value="new TimeOnly(9, 0)">09:00</MudSelectItem>
+        <MudSelectItem Value="new TimeOnly(10, 0)">10:00</MudSelectItem>
+        <MudSelectItem Value="new TimeOnly(11, 0)">11:00</MudSelectItem>
+        <MudSelectItem Value="new TimeOnly(12, 0)">12:00</MudSelectItem>
+        <MudSelectItem Value="new TimeOnly(13, 0)">13:00</MudSelectItem>
+        <MudSelectItem Value="new TimeOnly(14, 0)">14:00</MudSelectItem>
+        <MudSelectItem Value="new TimeOnly(15, 0)">15:00</MudSelectItem>
+        <MudSelectItem Value="new TimeOnly(16, 0)">16:00</MudSelectItem>
+        <MudSelectItem Value="new TimeOnly(17, 0)">17:00</MudSelectItem>
+        <MudSelectItem Value="new TimeOnly(18, 0)">18:00</MudSelectItem>
+        <MudSelectItem Value="new TimeOnly(19, 0)">19:00</MudSelectItem>
+        <MudSelectItem Value="new TimeOnly(20, 0)">20:00</MudSelectItem>
+        <MudSelectItem Value="new TimeOnly(21, 0)">21:00</MudSelectItem>
+        <MudSelectItem Value="new TimeOnly(22, 0)">22:00</MudSelectItem>
+    </MudSelect>
+</MudStack>
 <EntityTable @ref="_table" TEntity="CourtRentalResponse" TId="Guid" TRequest="CourtRentalViewModel" Context="@Context">
     <ExtraActions>
         <MudMenuItem OnClick="(() => ManageShares(context.Id))">Manage Shares</MudMenuItem>
     </ExtraActions>
-    <AdvancedSearchContent>
+    @* <AdvancedSearchContent>
         <!-- Add any advanced search content here if needed -->
     </AdvancedSearchContent>
-
+ *@
     <EditFormContent>
         <MudTabs>
 
@@ -65,3 +116,21 @@
     </EditFormContent>
 
 </EntityTable>
+
+@code {
+
+
+    private RenderFragment<CourtRentalResponse> PlayersTemplate => rentalresponse => __builder =>
+     {
+         <MudItem>
+             @{
+                 foreach (var share in rentalresponse.CourtRentalShares)
+                 {
+                     <MudChip T="string" Variant="Variant.Outlined">@share.Customer.Name</MudChip>
+                 }
+
+             }
+
+         </MudItem>
+     };
+}

@@ -16,10 +16,11 @@ builder.AddContainer("prometheus", "prom/prometheus")
 //    .WithDataVolume()
 //    .AddDatabase("tbr");
 
-//var blazor = builder.AddProject<Projects.Client>("blazor");
 
 var api = builder.AddProject<Projects.Server>("webapi");
 //.WaitFor(database);
+
+var blazor = builder.AddProject<Projects.Client>("blazor");
 
 
 using var app = builder.Build();

@@ -1,13 +1,40 @@
-FROM mcr.microsoft.com/dotnet/sdk:9.0 AS build-env
-WORKDIR /app
+# Build stage
+FROM mcr.microsoft.com/dotnet/sdk:9.0 AS build
+ARG BUILD_CONFIGURATION=Release
+WORKDIR /src
 
-COPY . ./
-RUN dotnet publish ./apps/blazor/client/Client.csproj -c Release -o output
+# Copy project files for restore
+COPY ["apps/blazor/client/Directory.Packages.props", "apps/blazor/client/"]
+COPY ["apps/blazor/client/Client.csproj", "apps/blazor/client/"]
+COPY ["apps/blazor/infrastructure/Directory.Packages.props", "apps/blazor/infrastructure/"]
+COPY ["apps/blazor/infrastructure/Infrastructure.csproj", "apps/blazor/infrastructure/"]
+COPY ["apps/blazor/shared/Shared.csproj", "apps/blazor/shared/"]
+COPY ["Shared/Shared.csproj", "Shared/"]
 
-FROM nginx:alpine
+# Restore dependencies
+RUN dotnet restore "apps/blazor/client/Client.csproj"
+
+# Copy all source code
+COPY apps/blazor/ apps/blazor/
+COPY Shared/ Shared/
+COPY apps/blazor/client/wwwroot/appsettings.Production.json apps/blazor/client/wwwroot/appsettings.json
+
+# Build and publish
+WORKDIR "/src/apps/blazor/client"
+RUN dotnet publish "Client.csproj" -c $BUILD_CONFIGURATION -o /app/publish /p:UseAppHost=false
+
+# Runtime stage - nginx to serve static files
+FROM nginx:alpine AS final
 WORKDIR /usr/share/nginx/html
-COPY --from=build-env /app/output/wwwroot .
 
-COPY ./apps/blazor/nginx.conf /etc/nginx/nginx.conf
+# Copy published Blazor WASM files
+COPY --from=build /app/publish/wwwroot .
+
+# Copy nginx configuration
+COPY apps/blazor/nginx.conf /etc/nginx/nginx.conf
 
 EXPOSE 80
+
+# Health check
+HEALTHCHECK --interval=30s --timeout=3s --start-period=5s --retries=3 \
+  CMD wget --no-verbose --tries=1 --spider http://localhost/ || exit 1

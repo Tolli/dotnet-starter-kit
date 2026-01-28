@@ -1,5 +1,6 @@
-﻿@inherits MudCalendar<CalendarItem>
+﻿@using FSH.Starter.Blazor.Client.Pages.Booking
+@inherits MudCalendar<CourtViewItem>
 
 @code {
-
+    protected override RenderFragment RenderDayView => builder => { builder.OpenComponent(0, typeof(CustomDayView)); builder.CloseComponent(); };
 }

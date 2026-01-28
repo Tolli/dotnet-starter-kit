@@ -30,6 +30,7 @@ public partial class Customers
                 new(customer => customer.Address, "Address", "Address"),
                 new(customer => customer.PostalCode, "PostalCode", "PostalCode"),
                 new(customer => customer.Ssn, "Ssn", "Ssn"),
+                    new(customer => customer.CourtRentalShares, "Bookings", "Bookings", Template:CourtsTemplate),
 
             },
             enableAdvancedSearch: true,
@@ -52,6 +53,7 @@ public partial class Customers
 
     private void ManageReceipts(in Guid? customerId) =>
         Navigation.NavigateTo($"/booking/customers/{customerId}/receipts");
+
 }
 
 public class CustomerViewModel : UpdateCustomerCommand

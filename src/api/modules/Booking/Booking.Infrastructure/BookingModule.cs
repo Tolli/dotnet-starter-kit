@@ -21,6 +21,7 @@ public static class BookingModule
             var customerGroup = app.MapGroup("customers").WithTags("customers");
             customerGroup.MapCustomerCreationEndpoint();
             customerGroup.MapGetCustomerEndpoint();
+            //customerGroup.MapGetCustomerWithSharesEndpoint();
             customerGroup.MapGetCustomerListEndpoint();
             customerGroup.MapCustomerUpdateEndpoint();
             customerGroup.MapCustomerDeleteEndpoint();

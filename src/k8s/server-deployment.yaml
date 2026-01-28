@@ -1,0 +1,117 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: fsh-webapi
+  labels:
+    app: fsh-webapi
+    version: v1
+spec:
+  replicas: 2
+  selector:
+    matchLabels:
+      app: fsh-webapi
+  template:
+    metadata:
+      labels:
+        app: fsh-webapi
+        version: v1
+    spec:
+      containers:
+      - name: courtrental-server
+        image: europe-west9-docker.pkg.dev/main-project-483817/klettagja/courtrental-server:latest
+        imagePullPolicy: Always
+        ports:
+        - containerPort: 8080
+          name: http
+          protocol: TCP
+        env:
+        - name: ASPNETCORE_ENVIRONMENT
+          value: "Production"
+        - name: ASPNETCORE_HTTP_PORTS
+          value: "8080"
+        - name: DatabaseOptions__Provider
+          valueFrom:
+            configMapKeyRef:
+              name: fsh-webapi-config
+              key: database-provider
+        - name: DatabaseOptions__ConnectionString
+          valueFrom:
+            secretKeyRef:
+              name: fsh-webapi-secrets
+              key: database-connection-string
+        - name: JwtOptions__Key
+          valueFrom:
+            secretKeyRef:
+              name: fsh-webapi-secrets
+              key: jwt-key
+        - name: MailOptions__From
+          valueFrom:
+            configMapKeyRef:
+              name: fsh-webapi-config
+              key: mail-from
+        - name: MailOptions__Host
+          valueFrom:
+            configMapKeyRef:
+              name: fsh-webapi-config
+              key: mail-host
+        - name: MailOptions__Port
+          valueFrom:
+            configMapKeyRef:
+              name: fsh-webapi-config
+              key: mail-port
+        - name: MailOptions__UserName
+          valueFrom:
+            secretKeyRef:
+              name: fsh-webapi-secrets
+              key: mail-username
+        - name: MailOptions__Password
+          valueFrom:
+            secretKeyRef:
+              name: fsh-webapi-secrets
+              key: mail-password
+        - name: HangfireOptions__Username
+          valueFrom:
+            secretKeyRef:
+              name: fsh-webapi-secrets
+              key: hangfire-username
+        - name: HangfireOptions__Password
+          valueFrom:
+            secretKeyRef:
+              name: fsh-webapi-secrets
+              key: hangfire-password
+        - name: CacheOptions__Redis
+          valueFrom:
+            configMapKeyRef:
+              name: fsh-webapi-config
+              key: redis-connection
+              optional: true
+        - name: CorsOptions__AllowedOrigins__0
+          value: "https://tbr.tolli.com"
+        - name: CorsOptions__AllowedOrigins__1
+          value: "http://localhost:7100"
+        - name: CorsOptions__AllowedOrigins__2
+          value: "https://localhost:7100"
+        resources:
+          requests:
+            memory: "256Mi"
+            cpu: "100m"
+          limits:
+            memory: "512Mi"
+            cpu: "500m"
+        livenessProbe:
+          httpGet:
+            path: /health
+            port: 8080
+          initialDelaySeconds: 30
+          periodSeconds: 10
+          timeoutSeconds: 5
+          failureThreshold: 3
+        readinessProbe:
+          httpGet:
+            path: /alive
+            port: 8080
+          initialDelaySeconds: 10
+          periodSeconds: 5
+          timeoutSeconds: 3
+          failureThreshold: 3
+      restartPolicy: Always

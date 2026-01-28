@@ -1,0 +1,66 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: fsh-blazor-client
+  labels:
+    app: fsh-blazor-client
+    version: v1
+spec:
+  replicas: 2
+  selector:
+    matchLabels:
+      app: fsh-blazor-client
+  template:
+    metadata:
+      labels:
+        app: fsh-blazor-client
+        version: v1
+    spec:
+      containers:
+      - name: blazor-client
+        image: europe-west9-docker.pkg.dev/main-project-483817/klettagja/courtrental-client:latest
+        imagePullPolicy: Always
+        ports:
+        - containerPort: 80
+          name: http
+          protocol: TCP
+        env:
+        - name: ApiBaseUrl
+          valueFrom:
+            configMapKeyRef:
+              name: fsh-blazor-config
+              key: api-base-url
+        - name: NoonaApiBaseUrl
+          valueFrom:
+            secretKeyRef:
+              name: fsh-blazor-secrets
+              key: noona-api-base-url
+        - name: NoonaApiToken
+          valueFrom:
+            secretKeyRef:
+              name: fsh-blazor-secrets
+              key: noona-api-token
+        resources:
+          requests:
+            memory: "64Mi"
+            cpu: "50m"
+          limits:
+            memory: "128Mi"
+            cpu: "200m"
+        livenessProbe:
+          httpGet:
+            path: /health
+            port: 80
+          initialDelaySeconds: 10
+          periodSeconds: 10
+          timeoutSeconds: 3
+          failureThreshold: 3
+        readinessProbe:
+          httpGet:
+            path: /health
+            port: 80
+          initialDelaySeconds: 5
+          periodSeconds: 5
+          timeoutSeconds: 2
+          failureThreshold: 3
+      restartPolicy: Always

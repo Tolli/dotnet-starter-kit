@@ -9,6 +9,7 @@
     <IsPackable>true</IsPackable>
   </PropertyGroup>
   <ItemGroup>
+    <PackageVersion Include="FluentValidation" Version="12.1.1" />
     <PackageVersion Include="Heron.MudCalendar" Version="3.4.0" />
     <PackageVersion Include="Mapster" Version="7.4.0" />
     <PackageVersion Include="Radzen.Blazor" Version="8.1.8" />

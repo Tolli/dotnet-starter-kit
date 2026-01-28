@@ -1,0 +1,15 @@
+apiVersion: v1
+kind: Service
+metadata:
+  name: fsh-blazor-client
+  labels:
+    app: fsh-blazor-client
+spec:
+  type: ClusterIP
+  ports:
+  - port: 80
+    targetPort: 80
+    protocol: TCP
+    name: http
+  selector:
+    app: fsh-blazor-client

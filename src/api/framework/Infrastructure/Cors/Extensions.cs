@@ -10,11 +10,14 @@ public static class Extensions
     {
         var corsOptions = config.GetSection(nameof(CorsOptions)).Get<CorsOptions>();
         if (corsOptions == null) { return services; }
+        Console.WriteLine("CORS Origins: " + string.Join(", ", corsOptions.AllowedOrigins));
         return services.AddCors(opt =>
         opt.AddPolicy(CorsPolicy, policy =>
             policy.AllowAnyHeader()
+                .WithHeaders("tenant", "content-type", "authorization", "accept", "accept-language", "x-requested-with")
                 .AllowAnyMethod()
                 .AllowCredentials()
+                .WithExposedHeaders("tenant", "Content-Disposition")
                 .WithOrigins(corsOptions.AllowedOrigins.ToArray())));
     }
 

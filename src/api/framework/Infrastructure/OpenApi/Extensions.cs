@@ -56,7 +56,7 @@ public static class Extensions
     public static WebApplication UseOpenApi(this WebApplication app)
     {
         ArgumentNullException.ThrowIfNull(app);
-        if (app.Environment.IsDevelopment() || app.Environment.EnvironmentName == "docker")
+        if (app.Environment.IsDevelopment() || app.Environment.EnvironmentName == "docker" || app.Environment.IsProduction())
         {
             app.UseSwagger();
             app.UseSwaggerUI(options =>

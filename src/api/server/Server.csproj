@@ -6,7 +6,6 @@
   </PropertyGroup>
   <PropertyGroup>
     <ContainerRepository>webapi</ContainerRepository>
-    <PublishProfile>DefaultContainer</PublishProfile>
   </PropertyGroup>
   <ItemGroup>
     <PackageReference Include="Microsoft.CodeAnalysis.Workspaces.Common" />

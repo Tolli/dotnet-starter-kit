@@ -8,6 +8,7 @@ public class GetCustomerSpecs : Specification<Customer, CustomerResponse>
     public GetCustomerSpecs(Guid id)
     {
         Query
+            .Include(c => c.CourtRentalShares)
             .Where(p => p.Id == id);
     }
 }

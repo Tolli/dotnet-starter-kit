@@ -1,0 +1,9 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: fsh-blazor-config
+  labels:
+    app: fsh-blazor-client
+data:
+  api-base-url: "https://tbr-api.tolli.com"
+  environment: "Production"

@@ -1,0 +1,257 @@
+@page "/booking/courtrental/{Id}/edit"
+@using FSH.Starter.Shared.Authorization
+@* @attribute [Authorize(Policy = Permissions.CourtRentals.View)] *@
+
+<PageHeader Title="@_title" Header="Edit Court Rental" SubHeader="@_description" />
+
+@* @if (!_loaded)
+{
+    <MudProgressCircular Color="Color.Primary" Indeterminate="true" />
+}
+else
+{ *@
+    <MudCard>
+        <MudCardContent>
+            <MudForm @ref="_form" Model="@_model" Validation="@(_modelValidator.ValidateValue)">
+                <MudGrid>
+                    <MudItem xs="12" md="6">
+                        <MudTextField @bind-Value="_model.Court"
+                                      Label="Court"
+                                      For="@(() => _model.Court)"
+                                      Required="true"
+                                      Variant="Variant.Outlined" />
+                    </MudItem>
+                    <MudItem xs="12" md="6">
+                        <MudSelect @bind-Value="_model.Weekday"
+                                   Label="Weekday"
+                                   For="@(() => _model.Weekday)"
+                                   Required="true"
+                                   Variant="Variant.Outlined">
+                            <MudSelectItem Value="@("Monday")">Monday</MudSelectItem>
+                            <MudSelectItem Value="@("Tuesday")">Tuesday</MudSelectItem>
+                            <MudSelectItem Value="@("Wednesday")">Wednesday</MudSelectItem>
+                            <MudSelectItem Value="@("Thursday")">Thursday</MudSelectItem>
+                            <MudSelectItem Value="@("Friday")">Friday</MudSelectItem>
+                            <MudSelectItem Value="@("Saturday")">Saturday</MudSelectItem>
+                            <MudSelectItem Value="@("Sunday")">Sunday</MudSelectItem>
+                        </MudSelect>
+                    </MudItem>
+                    <MudItem xs="12" md="6">
+                        <MudTimePicker @bind-Time="_startTime"
+                                       Label="Start Time"
+                                       Editable="true"
+                                       Required="true"
+                                       Variant="Variant.Outlined" />
+                    </MudItem>
+                    <MudItem xs="12" md="6">
+                        <MudNumericField @bind-Value="_model.Duration"
+                                         Label="Duration (minutes)"
+                                         For="@(() => _model.Duration)"
+                                         Required="true"
+                                         Variant="Variant.Outlined" />
+                    </MudItem>
+                    <MudItem xs="12" md="6">
+                        <MudDatePicker @bind-Date="_startDate"
+                                       Label="Start Date"
+                                       DateFormat="dddd, MMM dd, yyyy"
+                                       Required="true"
+                                       Variant="Variant.Outlined" />
+                    </MudItem>
+                    <MudItem xs="12" md="6">
+                        <MudDatePicker @bind-Date="_endDate"
+                                       Label="End Date"
+                                       DateFormat="dddd, MMM dd, yyyy"
+                                       Required="true"
+                                       Variant="Variant.Outlined" />
+                    </MudItem>
+                    <MudItem xs="12" md="6">
+                        <MudNumericField @bind-Value="_model.Amount"
+                                         Label="Amount"
+                                         For="@(() => _model.Amount)"
+                                         Format="N2"
+                                         Variant="Variant.Outlined" />
+                    </MudItem>
+                    <MudItem xs="12" md="6">
+                        <MudNumericField @bind-Value="_model.Discount"
+                                         Label="Discount"
+                                         For="@(() => _model.Discount)"
+                                         Format="N2"
+                                         Variant="Variant.Outlined" />
+                    </MudItem>
+                </MudGrid>
+            </MudForm>
+        </MudCardContent>
+        <MudCardActions Class="d-flex justify-space-between pa-4">
+            <MudButton Variant="Variant.Filled"
+                       Color="Color.Default"
+                       StartIcon="@Icons.Material.Filled.ArrowBack"
+                       Href="/booking/courtrentalsearch">
+                Back
+            </MudButton>
+            <MudButton Variant="Variant.Filled"
+                       Color="Color.Primary"
+                       StartIcon="@Icons.Material.Filled.Save"
+                       OnClick="SaveCourtRentalAsync"
+                       Disabled="@(!_canEdit)">
+                Save Court Rental
+            </MudButton>
+        </MudCardActions>
+    </MudCard>
+
+    <MudDivider Class="my-6" />
+
+    <!-- Court Rental Shares Section -->
+    <MudCard>
+        <MudCardHeader>
+            <CardHeaderContent>
+                <MudText Typo="Typo.h6">Court Rental Shares</MudText>
+            </CardHeaderContent>
+            <CardHeaderActions>
+                @if (_canEdit)
+                {
+                    <MudButton Variant="Variant.Filled"
+                               Color="Color.Primary"
+                               StartIcon="@Icons.Material.Filled.Add"
+                               OnClick="AddNewShare"
+                               Size="Size.Small">
+                        Add Share
+                    </MudButton>
+                }
+            </CardHeaderActions>
+        </MudCardHeader>
+        <MudCardContent>
+            <MudTable Items="_shares"
+                      Hover="true"
+                      Bordered="true"
+                      Striped="true"
+                      Dense="true"
+                      Elevation="0">
+                <HeaderContent>
+                    <MudTh>Customer</MudTh>
+                    <MudTh>Club Number</MudTh>
+                    <MudTh>Amount Total</MudTh>
+                    <MudTh>Amount Paid</MudTh>
+                    <MudTh>Balance</MudTh>
+                    <MudTh Style="width: 120px;">Actions</MudTh>
+                </HeaderContent>
+                <RowTemplate>
+                    <MudTd DataLabel="Customer">
+                        @if (context.IsEditing && context.Customer.Id == null)
+                        {
+                            <MudAutocomplete T="CustomerResponse"
+                                             SearchFunc="SearchCustomer"
+                                             ToStringFunc="@(customer => customer is null ? null : $"{customer.Name} ({customer.Ssn})")"
+                                             @bind-Value="context.Customer"
+                                             Variant="Variant.Outlined"
+                                             Dense="true"
+                                             Margin="Margin.Dense" />
+                        }
+                        else
+                        {
+                            <MudText>@context.Customer.Name</MudText>
+                        }
+                    </MudTd>
+                    <MudTd DataLabel="Club Number">
+                        <MudText>@context.Customer.ClubNumber</MudText>
+                    </MudTd>
+                    <MudTd DataLabel="Amount Total">
+                        @if (context.IsEditing)
+                        {
+                            <MudNumericField @bind-Value="context.AmountTotal"
+                                             Format="N2"
+                                             Variant="Variant.Outlined"
+                                             Dense="true"
+                                             Margin="Margin.Dense" />
+                        }
+                        else
+                        {
+                            <MudText>@context.AmountTotal.ToString("C")</MudText>
+                        }
+                    </MudTd>
+                    <MudTd DataLabel="Amount Paid">
+                        @if (context.IsEditing)
+                        {
+                            <MudNumericField @bind-Value="context.AmountPaid"
+                                             Format="N2"
+                                             Variant="Variant.Outlined"
+                                             Dense="true"
+                                             Margin="Margin.Dense" />
+                        }
+                        else
+                        {
+                            <MudText>@context.AmountPaid.ToString("C")</MudText>
+                        }
+                    </MudTd>
+                    <MudTd DataLabel="Balance">
+                        @{
+                            var balance = context.AmountTotal - context.AmountPaid;
+                            <MudChip T="decimal" Color="@(balance > 0 ? Color.Warning : balance < 0 ? Color.Error : Color.Success)"
+                                     Size="Size.Small">
+                                @balance.ToString("C")
+                            </MudChip>
+                        }
+                    </MudTd>
+                    <MudTd DataLabel="Actions">
+                        <MudButtonGroup Variant="Variant.Outlined" Size="Size.Small">
+                            @if (context.IsEditing)
+                            {
+                                <MudIconButton Icon="@Icons.Material.Filled.Check"
+                                               Color="Color.Success"
+                                               OnClick="@(() => SaveShareAsync(context))"
+                                               Size="Size.Small" />
+                                <MudIconButton Icon="@Icons.Material.Filled.Close"
+                                               Color="Color.Default"
+                                               OnClick="@(() => CancelEditShare(context))"
+                                               Size="Size.Small" />
+                            }
+                            else
+                            {
+                                <MudIconButton Icon="@Icons.Material.Filled.Edit"
+                                               Color="Color.Primary"
+                                               OnClick="@(() => EditShare(context))"
+                                               Size="Size.Small"
+                                               Disabled="@(!_canEdit)" />
+                                <MudIconButton Icon="@Icons.Material.Filled.Delete"
+                                               Color="Color.Error"
+                                               OnClick="@(() => DeleteShareAsync(context))"
+                                               Size="Size.Small"
+                                               Disabled="@(!_canEdit)" />
+                            }
+                        </MudButtonGroup>
+                    </MudTd>
+                </RowTemplate>
+            </MudTable>
+
+            @if (_shares.Count == 0)
+            {
+                <MudAlert Severity="Severity.Info" Class="mt-4">
+                    No shares have been added yet. Click "Add Share" to add participants.
+                </MudAlert>
+            }
+        </MudCardContent>
+    </MudCard>
+
+    <!-- Summary Card -->
+    <MudCard Class="mt-4">
+        <MudCardContent>
+            <MudGrid>
+                <MudItem xs="12" sm="3">
+                    <MudText Typo="Typo.subtitle2" Color="Color.Primary">Total Amount</MudText>
+                    <MudText Typo="Typo.h6">@_shares.Sum(s => s.AmountTotal).ToString("C")</MudText>
+                </MudItem>
+                <MudItem xs="12" sm="3">
+                    <MudText Typo="Typo.subtitle2" Color="Color.Success">Total Paid</MudText>
+                    <MudText Typo="Typo.h6">@_shares.Sum(s => s.AmountPaid).ToString("C")</MudText>
+                </MudItem>
+                <MudItem xs="12" sm="3">
+                    <MudText Typo="Typo.subtitle2" Color="Color.Warning">Total Balance</MudText>
+                    <MudText Typo="Typo.h6">@(_shares.Sum(s => s.AmountTotal - s.AmountPaid).ToString("C"))</MudText>
+                </MudItem>
+                <MudItem xs="12" sm="3">
+                    <MudText Typo="Typo.subtitle2" Color="Color.Info">Participants</MudText>
+                    <MudText Typo="Typo.h6">@_shares.Count</MudText>
+                </MudItem>
+            </MudGrid>
+        </MudCardContent>
+    </MudCard>
+@* } *@

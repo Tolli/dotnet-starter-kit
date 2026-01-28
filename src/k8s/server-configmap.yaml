@@ -1,0 +1,15 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: fsh-webapi-config
+  labels:
+    app: fsh-webapi
+data:
+  database-provider: "mssql"
+  mail-from: "noreply@example.com"
+  mail-host: "smtp.example.com"
+  mail-port: "587"
+  redis-connection: ""
+  origin-url: "https://tbr-api.tolli.com"
+  allowed-origins: |
+    https://tbr.tolli.com

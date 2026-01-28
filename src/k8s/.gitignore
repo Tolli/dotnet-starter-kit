@@ -1,0 +1,13 @@
+# Kubernetes Deployment Files
+# These files contain sensitive information and should not be committed to version control
+
+# Ignore all secret files
+*-secret.yaml
+*-secrets.yaml
+
+# Ignore local overrides
+*.local.yaml
+values.local.yaml
+
+# Ignore generated files
+*.generated.yaml

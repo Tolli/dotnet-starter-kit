@@ -13,10 +13,55 @@ public partial class CourtRentals
 {
     [Inject]
     protected IApiClient _client { get; set; } = default!;
+    private DayOfWeek? _selectedDayOfWeek;
+    protected DayOfWeek? SelectedDayOfWeek
+    {
+        get { return _selectedDayOfWeek; }
+        set { 
+            if (_selectedDayOfWeek != value)
+            {
+                _selectedDayOfWeek = value;
+                _table.ReloadDataAsync();
+            }
+        }
+    }
+    private int? _selectedCourt;
+    protected int? SelectedCourt
+    {
+        get
+        {
+            return _selectedCourt;
+        }
+        set
+        {
+            if (_selectedCourt != value)
+            {
+                _selectedCourt = value;
+                _table.ReloadDataAsync();
+            }
+        }
+    }
 
+    private TimeOnly _startTime = new TimeOnly(08,00);
+    protected TimeOnly StartTime
+    {
+        get
+        {
+            return _startTime;
+        }
+        set
+        {
+            if(_startTime != value)
+            {
+                _startTime = value;
+                _table.ReloadDataAsync();
+            }
+        }
+    }
     protected EntityServerTableContext<CourtRentalResponse, Guid, CourtRentalViewModel> Context { get; set; } = default!;
 
     private EntityTable<CourtRentalResponse, Guid, CourtRentalViewModel> _table = default!;
+    
 
     private void ManageShares(in Guid? groupId) =>
         Navigation.NavigateTo($"/booking/courtrental/{groupId}/members");
@@ -33,17 +78,21 @@ public partial class CourtRentals
                 new(courtrental => courtrental.StartDate.ToString("dd/MM/yyyy"), "Start Date", "Start Date"),
                 new(courtrental => courtrental.StartDate.ToString("dd/MM/yyyy"), "End Date", "End Date"),
                 new(courtrental => courtrental.Duration, "Duration", "Duration"),
-                new(courtrental => courtrental.CourtRentalShares.Sum(x => x.AmountTotal), "Amount Total", "Amount Total"),
-                new(courtrental => courtrental.CourtRentalShares.Sum(x => x.AmountPaid), "Amount Paid", "Amount Paid"),
-                new(courtrental => courtrental.CourtRentalShares.Sum(x => x.AmountTotal - x.AmountPaid), "Amount Owed", "Amount Owed"),
-                new(courtrental => courtrental.Discount, "Discount", "Discount")
+                new(courtrental => (courtrental.CourtRentalShares?.Sum(x => x.AmountTotal) ?? 0), "Amount Total", "Amount Total"),
+                new(courtrental => (courtrental.CourtRentalShares?.Sum(x => x.AmountPaid) ?? 0), "Amount Paid", "Amount Paid"),
+                new(courtrental => (courtrental.CourtRentalShares?.Sum(x => x.AmountTotal - x.AmountPaid) ?? 0), "Amount Owed", "Amount Owed"),
+                new(courtrental => courtrental.Discount, "Discount", "Discount"),
+                new(courtrental => courtrental.CourtRentalShares, "Members", "Members", Template: PlayersTemplate)
             },
-            enableAdvancedSearch: true,
+            enableAdvancedSearch: false,
             idFunc: courtrental => courtrental.Id!.Value,
             hasExtraActionsFunc: () => true,
             searchFunc: async filter =>
             {
                 var courtrentalFilter = filter.Adapt<SearchCourtRentalsCommand>();
+                courtrentalFilter.Weekday = SelectedDayOfWeek.ToString();
+                courtrentalFilter.Court = SelectedCourt;
+                courtrentalFilter.FromTime = StartTime.ToString("HH:mm");
                 var result = await _client.SearchCourtRentalsEndpointAsync("1", courtrentalFilter);
                 return result.Adapt<PaginationResponse<CourtRentalResponse>>();
             },

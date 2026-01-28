@@ -1,61 +1,22 @@
 ﻿@page "/booking/CourtRentalSearch"
-
-@* <PageHeader Title="CourtRentals" Header="CourtRentals" SubHeader="Manage your CourtRentals." /> *@
+@using System.Globalization
 
     <MudStack Row="true">
     <MudDatePicker Color="Color.Primary" Label="Date" DateFormat="dddd, MMM dd, yyyy" @bind-Date="SelectionDate" />
 
         <MudSelect T="int" Label="Court" @bind-Value="SelectedCourt">
-            <MudSelectItem Value="1" >Court 1</MudSelectItem>
-            <MudSelectItem Value="2" >Court 2</MudSelectItem>
-            <MudSelectItem Value="3" >Court 3</MudSelectItem>
-            <MudSelectItem Value="4" >Court 4</MudSelectItem>
-            <MudSelectItem Value="5" >Court 5</MudSelectItem>
-            <MudSelectItem Value="6" >Court 6</MudSelectItem>
-            <MudSelectItem Value="7" >Court 7</MudSelectItem>
-            <MudSelectItem Value="8" >Court 8</MudSelectItem>
-            <MudSelectItem Value="9" >Court 9</MudSelectItem>
-            <MudSelectItem Value="10" >Court 10</MudSelectItem>
-            <MudSelectItem Value="11" >Court 11</MudSelectItem>
-            <MudSelectItem Value="12" >Court 12</MudSelectItem>
-            <MudSelectItem Value="13" >Court 13</MudSelectItem>
-            <MudSelectItem Value="14" >Court 14</MudSelectItem>
-            <MudSelectItem Value="15" >Court 15</MudSelectItem>
-            <MudSelectItem Value="16" >Court 16</MudSelectItem>
+            <MudSelectItem Value="1" >Court 1 & 2</MudSelectItem>
+            <MudSelectItem Value="3" >Court 3 & 4</MudSelectItem>
+            <MudSelectItem Value="5" >Court 5 & 6</MudSelectItem>
+            <MudSelectItem Value="7" >Court 7 & 8</MudSelectItem>
+            <MudSelectItem Value="9" >Court 9 & 10</MudSelectItem>
+            <MudSelectItem Value="11" >Court 11 & 12</MudSelectItem>
+            <MudSelectItem Value="13" >Court 13 & 14</MudSelectItem>
+            <MudSelectItem Value="15" >Court 15 & 16</MudSelectItem>
             <MudSelectItem Value="17" >Court 17</MudSelectItem>
 
         </MudSelect>
-        @* <MudSelect T="DayOfWeek" Label="WeekDay" @bind-Value="@vm.Weekday">
-            <MudSelectItem Value="DayOfWeek.Monday">Monday</MudSelectItem>
-            <MudSelectItem Value="DayOfWeek.Tuesday">Tuesday</MudSelectItem>
-            <MudSelectItem Value="DayOfWeek.Wednesday">Wednesday</MudSelectItem>
-            <MudSelectItem Value="DayOfWeek.Thursday">Thursday</MudSelectItem>
-            <MudSelectItem Value="DayOfWeek.Friday">Friday</MudSelectItem>
-            <MudSelectItem Value="DayOfWeek.Saturday">Saturday</MudSelectItem>
-            <MudSelectItem Value="DayOfWeek.Sunday">Sunday</MudSelectItem>
-        </MudSelect>
-        <MudSelect 
-            T="TimeOnly"
-            Label="Start Time"
-            @bind-Value="@vm.StartTime"
-                >
-            <MudSelectItem Value="new TimeOnly(8, 0)">08:00</MudSelectItem>
-            <MudSelectItem Value="new TimeOnly(9, 0)">09:00</MudSelectItem>
-            <MudSelectItem Value="new TimeOnly(10, 0)">10:00</MudSelectItem>
-            <MudSelectItem Value="new TimeOnly(11, 0)">11:00</MudSelectItem>
-            <MudSelectItem Value="new TimeOnly(12, 0)">12:00</MudSelectItem>
-            <MudSelectItem Value="new TimeOnly(13, 0)">13:00</MudSelectItem>
-            <MudSelectItem Value="new TimeOnly(14, 0)">14:00</MudSelectItem>
-            <MudSelectItem Value="new TimeOnly(15, 0)">15:00</MudSelectItem>
-            <MudSelectItem Value="new TimeOnly(16, 0)">16:00</MudSelectItem>
-            <MudSelectItem Value="new TimeOnly(17, 0)">17:00</MudSelectItem>
-            <MudSelectItem Value="new TimeOnly(18, 0)">18:00</MudSelectItem>
-            <MudSelectItem Value="new TimeOnly(19, 0)">19:00</MudSelectItem>
-            <MudSelectItem Value="new TimeOnly(20, 0)">20:00</MudSelectItem>
-            <MudSelectItem Value="new TimeOnly(21, 0)">21:00</MudSelectItem>
-            <MudSelectItem Value="new TimeOnly(22, 0)">22:00</MudSelectItem>
-        </MudSelect> *@
-    @* <MudButton Variant="Variant.Filled" Color="Color.Primary" OnClick="UpdateCalendarItems">Load</MudButton> *@
+        
         </MudStack>
     <MudPaper Class="overflow-y-scroll" Style="max-height: 800px;">
     <MudStack Row="true">
@@ -72,16 +33,26 @@
                  ShowMonth="false"
                  ShowWeek="false"
                  ShowToolbar="false"
-                 Items="@vm.Items">
+                 Items="@_vm.Items">
             <CellTemplate>
                 <div style="width: 100%; height: 100%; border: 2px solid">
                     <div><MudText Style="color: #ffffff;" Typo="Typo.body1" Align="Align.Center">@(context.Title)</MudText></div>
                     @* <div class="pa-2"><MudText Typo="Typo.body2">@context.Text</MudText></div> *@
                 <MudPaper>
                             @{
-                                foreach (var person in context.Members)
+                                foreach (var person in context.CourtRental.CourtRentalShares)
                                 {
-                                <MudChip T="string" Variant="Variant.Text" Color="Color.Primary">@person&nbsp;</MudChip>
+                                    @if(person.AmountTotal - person.AmountPaid > 0)
+                                    {
+                                    var toolTip = $"Debt: {(person.AmountTotal - person.AmountPaid).ToString("N0")} kr";
+                                    <MudTooltip Text=@toolTip Placement="Placement.Top">
+                                        <MudChip T="string" Variant="Variant.Text" Color="Color.Error">@person.Customer.Name&nbsp;</MudChip>
+                                        </MudTooltip>
+                                    }
+                                    else
+                                    {
+                                        <MudChip T="string" Variant="Variant.Text" Color="Color.Primary">@person.Customer.Name&nbsp;</MudChip>
+                                    }                                    
                                 }
                         
     }
@@ -104,16 +75,25 @@
              ShowMonth="false"
              ShowWeek="false"
              ShowToolbar="false"
-             Items="@vm2.Items">
+             Items="@_vm2.Items">
     <CellTemplate>
         <div style="width: 100%; height: 100%; border: 2px solid">
             <div><MudText Style="color: #ffffff;" Typo="Typo.body1" Align="Align.Center">@(context.Title)</MudText></div>
-            @* <div class="pa-2"><MudText Typo="Typo.body2">@context.Text</MudText></div> *@
                     <MudPaper>
                         @{
-                            foreach (var person in context.Members)
+                            foreach (var person in context.CourtRental.CourtRentalShares)
                             {
-                                <MudChip T="string" Variant="Variant.Text" Color="Color.Primary">@person&nbsp;</MudChip>
+                                @if (person.AmountTotal - person.AmountPaid > 0)
+                                {
+                                    var toolTip = $"Unpaid: {(person.AmountTotal - person.AmountPaid).ToString("N0")} kr";
+                                    <MudTooltip Text=@toolTip Placement="Placement.Top">
+                                        <MudChip T="string" Variant="Variant.Text" Color="Color.Error">@person.Customer.Name&nbsp;</MudChip>
+                                    </MudTooltip>
+                                }
+                                else
+                                {
+                                    <MudChip T="string" Variant="Variant.Text" Color="Color.Primary">@person.Customer.Name&nbsp;</MudChip>
+                                }
                             }
 
                         }
@@ -125,64 +105,7 @@
 </MudCalendar>
     </MudStack>
 </MudPaper>
-        @* <ModifiedEntityTable @ref="_table" TEntity="CourtRentalResponse" TId="Guid" TRequest="CourtRentalViewModel" Context="@Context">
-            <ExtraActions>
-                <MudMenuItem OnClick="(() => ManageShares(context.Id))">Manage Shares</MudMenuItem>
-            </ExtraActions>
-            <AdvancedSearchContent>
-            </AdvancedSearchContent>
 
-            <EditFormContent>
-                @if (!Context.AddEditModal.IsCreate)
-                {
-                    <MudItem xs="12" md="6">
-                        <MudTextField Value="context.Id" Underline=false ReadOnly Label="CourtRental Id" />
-                    </MudItem>
-                }
-                <MudItem xs="12" md="6">
-                    <MudTextField Label="Court" For="@(() => context.Court)" @bind-Value="context.Court" />
-                </MudItem>
-                <MudItem xs="12" md="6">
-                    <MudTextField Label="Weekday" For="@(() => context.Weekday)" @bind-Value="context.Weekday" />
-                </MudItem>
-                <MudItem xs="12" md="6">
-                    <MudTimePicker Label="Time" Editable="true" @bind-Time="context.StartTimeEditor" />
-                </MudItem>
-                <MudItem xs="12" md="6">
-                    <MudDatePicker Label="Start Date" DateFormat="dddd, MMM dd, yyyy" @bind-Date="context.StartDate" />
-                </MudItem>
-                <MudItem xs="12" md="6">
-                    <MudDatePicker Label="End Date" DateFormat="dddd, MMM dd, yyyy" @bind-Date="context.EndDate" />
-                </MudItem>
-                <MudItem xs="12" md="6">
-                    <MudTextField Label="Amount" For="@(() => context.Amount)" @bind-Value="context.Amount" />
-                </MudItem>
-                <MudItem xs="12" md="6">
-                    <MudTextField Label="Discount" For="@(() => context.Discount)" @bind-Value="context.Discount" />
-                </MudItem>
-                <MudItem xs="12" md="6">
-                    <MudTextField Label="Duration" For="@(() => context.Duration)" @bind-Value="context.Duration" />
-                </MudItem>
-            </EditFormContent>
-
-        </ModifiedEntityTable> *@
-
-@code {
-    // private RenderFragment<CourtRentalResponse> EditIdTemplate => courtrentalresponse => __builder =>
-    // {
-    //     <MudItem>
-    //         <MudChip T=string Icon="@Icons.Material.Filled.Watch" IconColor="Color.Secondary" Label="true" Color="Color.Surface">@courtrentalresponse.StartTime</MudChip>
-    //     </MudItem>
-    // };
-    // private RenderFragment<CourtRentalResponse> PlayersTemplate => courtrentalresponse => __builder =>
-    // {
-    //     <MudItem>
-    //         @{ foreach (var person in courtrentalresponse.CourtRentalShares) {
-    //         <MudChip T="string" Variant="Variant.Outlined">@person.Customer.Name</MudChip>
-    //         }}
-            
-    //     </MudItem>
-    // };
-
+@code {    
     
 } 

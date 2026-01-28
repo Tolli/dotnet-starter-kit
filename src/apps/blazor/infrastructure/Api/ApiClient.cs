@@ -9649,6 +9649,9 @@ namespace FSH.Starter.Blazor.Infrastructure.Api
         [System.Text.Json.Serialization.JsonPropertyName("id")]
         public System.Guid? Id { get; set; } = default!;
 
+        [System.Text.Json.Serialization.JsonPropertyName("courtRentalId")]
+        public System.Guid? CourtRentalId { get; set; } = default!;
+
         [System.Text.Json.Serialization.JsonPropertyName("customer")]
         public CustomerResponse Customer { get; set; } = default!;
 
@@ -10018,6 +10021,42 @@ namespace FSH.Starter.Blazor.Infrastructure.Api
     }
 
     [System.CodeDom.Compiler.GeneratedCode("NJsonSchema", "14.6.1.0 (NJsonSchema v11.5.1.0 (Newtonsoft.Json v13.0.0.0))")]
+    public partial class CustomerRentalResponse
+    {
+
+        [System.Text.Json.Serialization.JsonPropertyName("id")]
+        public System.Guid? Id { get; set; } = default!;
+
+        [System.Text.Json.Serialization.JsonPropertyName("startDate")]
+        public System.DateTime StartDate { get; set; } = default!;
+
+        [System.Text.Json.Serialization.JsonPropertyName("startTime")]
+        public string StartTime { get; set; } = default!;
+
+        [System.Text.Json.Serialization.JsonPropertyName("description")]
+        public string? Description { get; set; } = default!;
+
+        [System.Text.Json.Serialization.JsonPropertyName("endDate")]
+        public System.DateTime EndDate { get; set; } = default!;
+
+        [System.Text.Json.Serialization.JsonPropertyName("weekday")]
+        public string? Weekday { get; set; } = default!;
+
+        [System.Text.Json.Serialization.JsonPropertyName("amount")]
+        public double Amount { get; set; } = default!;
+
+        [System.Text.Json.Serialization.JsonPropertyName("discount")]
+        public double Discount { get; set; } = default!;
+
+        [System.Text.Json.Serialization.JsonPropertyName("duration")]
+        public int Duration { get; set; } = default!;
+
+        [System.Text.Json.Serialization.JsonPropertyName("court")]
+        public int Court { get; set; } = default!;
+
+    }
+
+    [System.CodeDom.Compiler.GeneratedCode("NJsonSchema", "14.6.1.0 (NJsonSchema v11.5.1.0 (Newtonsoft.Json v13.0.0.0))")]
     public partial class CustomerResponse
     {
 
@@ -10048,6 +10087,9 @@ namespace FSH.Starter.Blazor.Infrastructure.Api
         [System.Text.Json.Serialization.JsonPropertyName("postalCode")]
         public string? PostalCode { get; set; } = default!;
 
+        [System.Text.Json.Serialization.JsonPropertyName("courtRentalShares")]
+        public System.Collections.Generic.ICollection<CustomerShareResponse>? CourtRentalShares { get; set; } = default!;
+
     }
 
     [System.CodeDom.Compiler.GeneratedCode("NJsonSchema", "14.6.1.0 (NJsonSchema v11.5.1.0 (Newtonsoft.Json v13.0.0.0))")]
@@ -10074,6 +10116,39 @@ namespace FSH.Starter.Blazor.Infrastructure.Api
 
         [System.Text.Json.Serialization.JsonPropertyName("hasNext")]
         public bool HasNext { get; set; } = default!;
+
+    }
+
+    [System.CodeDom.Compiler.GeneratedCode("NJsonSchema", "14.6.1.0 (NJsonSchema v11.5.1.0 (Newtonsoft.Json v13.0.0.0))")]
+    public partial class CustomerShareResponse
+    {
+
+        [System.Text.Json.Serialization.JsonPropertyName("id")]
+        public System.Guid? Id { get; set; } = default!;
+
+        [System.Text.Json.Serialization.JsonPropertyName("courtRental")]
+        public CustomerRentalResponse CourtRental { get; set; } = default!;
+
+        [System.Text.Json.Serialization.JsonPropertyName("amountTotal")]
+        public double AmountTotal { get; set; } = default!;
+
+        [System.Text.Json.Serialization.JsonPropertyName("amountPaid")]
+        public double AmountPaid { get; set; } = default!;
+
+        [System.Text.Json.Serialization.JsonPropertyName("discount")]
+        public double Discount { get; set; } = default!;
+
+        [System.Text.Json.Serialization.JsonPropertyName("externalReference")]
+        public string? ExternalReference { get; set; } = default!;
+
+        [System.Text.Json.Serialization.JsonPropertyName("isPaid")]
+        public bool IsPaid { get; set; } = default!;
+
+        [System.Text.Json.Serialization.JsonPropertyName("paidDate")]
+        public System.DateTime PaidDate { get; set; } = default!;
+
+        [System.Text.Json.Serialization.JsonPropertyName("dueDate")]
+        public System.DateTime DueDate { get; set; } = default!;
 
     }
 
@@ -10690,11 +10765,20 @@ namespace FSH.Starter.Blazor.Infrastructure.Api
         [System.Text.Json.Serialization.JsonPropertyName("groupId")]
         public System.Guid? GroupId { get; set; } = default!;
 
-        [System.Text.Json.Serialization.JsonPropertyName("minimumRate")]
-        public double? MinimumRate { get; set; } = default!;
+        [System.Text.Json.Serialization.JsonPropertyName("weekday")]
+        public string? Weekday { get; set; } = default!;
 
-        [System.Text.Json.Serialization.JsonPropertyName("maximumRate")]
-        public double? MaximumRate { get; set; } = default!;
+        [System.Text.Json.Serialization.JsonPropertyName("fromTime")]
+        public string? FromTime { get; set; } = default!;
+
+        [System.Text.Json.Serialization.JsonPropertyName("court")]
+        public int? Court { get; set; } = default!;
+
+        [System.Text.Json.Serialization.JsonPropertyName("startDate")]
+        public System.DateTime? StartDate { get; set; } = default!;
+
+        [System.Text.Json.Serialization.JsonPropertyName("endDate")]
+        public System.DateTime? EndDate { get; set; } = default!;
 
     }
 

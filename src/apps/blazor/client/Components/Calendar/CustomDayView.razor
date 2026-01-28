@@ -1,0 +1,17 @@
+﻿@using FSH.Starter.Blazor.Client.Pages.Booking
+@inherits DayView<CourtViewItem>
+
+@Render
+
+@code {
+    protected override RenderFragment RenderHeader => builder =>
+    {
+        builder.OpenElement(0, "div");
+        builder.AddAttribute(1, "class", "ma-2");
+        builder.OpenComponent<MudText>(2);
+        builder.AddAttribute(3, "Typo", Typo.h6);
+        builder.AddContent(4, "Custom Days View");
+        builder.CloseComponent();
+        builder.CloseElement();
+    };
+}

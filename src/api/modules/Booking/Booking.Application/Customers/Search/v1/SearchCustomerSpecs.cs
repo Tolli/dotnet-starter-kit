@@ -10,5 +10,6 @@ public class SearchCustomerSpecs : EntitiesByPaginationFilterSpec<Customer, Cust
     public SearchCustomerSpecs(SearchCustomersCommand command)
         : base(command) =>
         Query
+            .Include(c => c.CourtRentalShares)            
             .OrderBy(c => c.Name, !command.HasOrderBy());
 }
