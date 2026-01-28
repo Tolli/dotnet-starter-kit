@@ -1,4 +1,4 @@
-name: CI - Build and Test
+name: CI - Build and Test (Self-Hosted)
 
 on:
   push:
@@ -15,8 +15,8 @@ env:
 
 jobs:
   build-and-test:
-    name: Build and Test
-    runs-on: ubuntu-latest
+    name: Build and Test on Self-Hosted Runner
+    runs-on: [self-hosted, linux, x64, gke]  # Use self-hosted runner
     
     steps:
     - name: Checkout code
@@ -28,13 +28,13 @@ jobs:
         dotnet-version: ${{ env.DOTNET_VERSION }}
         
     - name: Restore dependencies
-      run: dotnet restore FSH.Starter.sln
+      run: dotnet restore
       
     - name: Build solution
-      run: dotnet build FSH.Starter.sln --configuration Release --no-restore
+      run: dotnet build --configuration Release --no-restore
       
     - name: Run tests
-      run: dotnet test FSH.Starter.sln --configuration Release --no-build --verbosity normal --collect:"XPlat Code Coverage"
+      run: dotnet test --configuration Release --no-build --verbosity normal --collect:"XPlat Code Coverage"
       
     - name: Upload coverage reports
       uses: codecov/codecov-action@v4
@@ -44,11 +44,9 @@ jobs:
         fail_ci_if_error: false
         
   analyze:
-    name: Code Analysis
-    runs-on: ubuntu-latest
-    permissions:
-      security-events: write
-      
+    name: Code Analysis on Self-Hosted Runner
+    runs-on: [self-hosted, linux, x64, gke]  # Use self-hosted runner
+    
     steps:
     - name: Checkout code
       uses: actions/checkout@v4
@@ -59,7 +57,7 @@ jobs:
         dotnet-version: ${{ env.DOTNET_VERSION }}
         
     - name: Restore dependencies
-      run: dotnet restore FSH.Starter.sln
+      run: dotnet restore
       
     - name: Build for analysis
-      run: dotnet build FSH.Starter.sln --configuration Release --no-restore
+      run: dotnet build --configuration Release --no-restore
