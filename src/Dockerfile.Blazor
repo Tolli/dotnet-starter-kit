@@ -1,10 +1,10 @@
 # Build stage
 FROM mcr.microsoft.com/dotnet/sdk:9.0 AS build
 ARG BUILD_CONFIGURATION=Release
-
+WORKDIR /src
 # Copy project files for restore
 COPY ["apps/blazor/client/Directory.Packages.props", "apps/blazor/client/"]
-COPY ["apps/blazor/client/Client.csproj", "apps/blazor/client/"]
+COPY apps/blazor/client/Client.csproj apps/blazor/client/
 COPY ["apps/blazor/infrastructure/Directory.Packages.props", "apps/blazor/infrastructure/"]
 COPY ["apps/blazor/infrastructure/Infrastructure.csproj", "apps/blazor/infrastructure/"]
 COPY ["apps/blazor/shared/Shared.csproj", "apps/blazor/shared/"]
@@ -17,10 +17,10 @@ RUN dotnet restore "apps/blazor/client/Client.csproj"
 # Copy all source code
 COPY apps/blazor/ apps/blazor/
 COPY Shared/ Shared/
-COPY apps/blazor/client/wwwroot/appsettings.Production.json apps/blazor/client/wwwroot/appsettings.json
+COPY ["apps/blazor/client/wwwroot/appsettings.Production.json", "apps/blazor/client/wwwroot/appsettings.json"]
 
 # Build and publish
-WORKDIR "/src/apps/blazor/client"
+WORKDIR /src/apps/blazor/client
 RUN dotnet publish "Client.csproj" -c $BUILD_CONFIGURATION -o /app/publish /p:UseAppHost=false
 
 # Runtime stage - nginx to serve static files
