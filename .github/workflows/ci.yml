@@ -28,13 +28,13 @@ jobs:
         dotnet-version: ${{ env.DOTNET_VERSION }}
         
     - name: Restore dependencies
-      run: dotnet restore src\FSH.Starter.sln
+      run: dotnet restore src/FSH.Starter.sln
       
     - name: Build solution
-      run: dotnet build src\FSH.Starter.sln --configuration Release --no-restore
+      run: dotnet build src/FSH.Starter.sln --configuration Release --no-restore
       
     - name: Run tests
-      run: dotnet test src\FSH.Starter.sln --configuration Release --no-build --verbosity normal --collect:"XPlat Code Coverage"
+      run: dotnet test src/FSH.Starter.sln --configuration Release --no-build --verbosity normal --collect:"XPlat Code Coverage"
       
     - name: Upload coverage reports
       uses: codecov/codecov-action@v4
@@ -59,7 +59,7 @@ jobs:
         dotnet-version: ${{ env.DOTNET_VERSION }}
         
     - name: Restore dependencies
-      run: dotnet restore src\FSH.Starter.sln
+      run: dotnet restore src/FSH.Starter.sln
       
     - name: Build for analysis
-      run: dotnet build src\FSH.Starter.sln --configuration Release --no-restore
+      run: dotnet build src/FSH.Starter.sln --configuration Release --no-restore
