@@ -16,6 +16,7 @@ public static class FshResources
     public const string CourtRentals = nameof(CourtRentals);
     public const string CourtRentalShares = nameof(CourtRentalShares);
     public const string Receipts = nameof(Receipts);
+    public const string Payments = nameof(Payments);
     public const string Todos = nameof(Todos);
     public const string AuditTrails = nameof(AuditTrails);
     public const string ExternalSystems = nameof(ExternalSystems);

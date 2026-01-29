@@ -21,6 +21,7 @@
     <ProjectReference Include="..\migrations\PostgreSQL\PostgreSQL.csproj" />
     <ProjectReference Include="..\modules\Booking\Booking.Infrastructure\Booking.Infrastructure.csproj" />
     <ProjectReference Include="..\modules\Catalog\Catalog.Infrastructure\Catalog.Infrastructure.csproj" />
+    <ProjectReference Include="..\modules\Payments\Payments.Infrastructure\Payments.Infrastructure.csproj" />
     <ProjectReference Include="..\modules\Todo\Todo.csproj" />
   </ItemGroup>
   <ItemGroup>

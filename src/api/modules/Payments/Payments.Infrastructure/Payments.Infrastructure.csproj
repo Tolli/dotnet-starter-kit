@@ -1,0 +1,15 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <AssemblyName>FSH.Starter.WebApi.$(MSBuildProjectName)</AssemblyName>
+    <RootNamespace>FSH.Starter.WebApi.$(MSBuildProjectName.Replace(" ", "_"))</RootNamespace>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\..\..\framework\Core\Core.csproj" />
+    <ProjectReference Include="..\..\..\framework\Infrastructure\Infrastructure.csproj" />
+    <ProjectReference Include="..\Payments.Domain\Payments.Domain.csproj" />
+    <ProjectReference Include="..\Payments.Application\Payments.Application.csproj" />
+  </ItemGroup>
+
+</Project>

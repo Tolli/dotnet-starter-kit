@@ -36,7 +36,7 @@ env:
 jobs:
   build-and-push:
     name: Build and Push Client Image
-    runs-on: ubuntu-latest
+    runs-on: [self-hosted, linux, x64, gke]
     permissions:
       contents: read
       id-token: write
@@ -90,7 +90,7 @@ jobs:
           
   deploy-to-kubernetes:
     name: Deploy Client to Kubernetes
-    runs-on: ubuntu-latest
+    runs-on: [self-hosted, linux, x64, gke]
     needs: build-and-push
     permissions:
       contents: read

@@ -9,6 +9,8 @@
     <IsPackable>true</IsPackable>
   </PropertyGroup>
   <ItemGroup>
+    <PackageVersion Include="ClosedXML" Version="0.104.2" />
+    <PackageVersion Include="CsvHelper" Version="33.0.1" />
     <PackageVersion Include="FluentValidation" Version="12.1.1" />
     <PackageVersion Include="Heron.MudCalendar" Version="3.4.0" />
     <PackageVersion Include="Mapster" Version="7.4.0" />

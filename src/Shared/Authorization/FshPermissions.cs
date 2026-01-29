@@ -76,6 +76,14 @@ public static class FshPermissions
         new("Delete Receipts", FshActions.Delete, FshResources.Receipts),
         new("Export Receipts", FshActions.Export, FshResources.Receipts),
 
+        //payments
+        new("View Payments", FshActions.View, FshResources.Payments, IsBasic: true),
+        new("Search Payments", FshActions.Search, FshResources.Payments, IsBasic: true),
+        new("Create Payments", FshActions.Create, FshResources.Payments),
+        new("Update Payments", FshActions.Update, FshResources.Payments),
+        new("Delete Payments", FshActions.Delete, FshResources.Payments),
+        new("Export Payments", FshActions.Export, FshResources.Payments),
+
         //groups
         new("View Groups", FshActions.View, FshResources.Groups, IsBasic: true),
         new("Search Groups", FshActions.Search, FshResources.Groups, IsBasic: true),

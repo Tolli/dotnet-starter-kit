@@ -6,6 +6,8 @@ using FSH.Starter.WebApi.Catalog.Application;
 using FSH.Starter.WebApi.Catalog.Infrastructure;
 using FSH.Starter.WebApi.Booking.Application;
 using FSH.Starter.WebApi.Booking.Infrastructure;
+using FSH.Starter.WebApi.Payments.Application;
+using FSH.Starter.WebApi.Payments.Infrastructure;
 using FSH.Starter.WebApi.Todo;
 
 namespace FSH.Starter.WebApi.Host;
@@ -21,7 +23,8 @@ public static class Extensions
         {
             //typeof(CatalogMetadata).Assembly,
             typeof(TodoModule).Assembly,
-            typeof(BookingMetadata).Assembly
+            typeof(BookingMetadata).Assembly,
+            typeof(PaymentsMetadata).Assembly
         };
 
         //register validators
@@ -37,6 +40,7 @@ public static class Extensions
         //builder.RegisterCatalogServices();
         builder.RegisterTodoServices();
         builder.RegisterBookingServices();
+        builder.RegisterPaymentsServices();
 
         //add carter endpoint modules
         builder.Services.AddCarter(configurator: config =>
@@ -44,6 +48,7 @@ public static class Extensions
             //config.WithModule<CatalogModule.Endpoints>();
             config.WithModule<TodoModule.Endpoints>();
             config.WithModule<BookingModule.Endpoints>();
+            config.WithModule<PaymentsModule.Endpoints>();
         });
 
         return builder;

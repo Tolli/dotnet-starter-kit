@@ -1,0 +1,4 @@
+CustomerSSN,InvoiceId,Amount,Currency,Method,Description
+1234567890,,100.00,ISK,_2,Monthly membership fee
+0987654321,,250.50,ISK,_0,Court rental payment
+1122334455,00000000-0000-0000-0000-000000000000,500.00,ISK,_3,Invoice payment

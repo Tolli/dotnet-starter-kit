@@ -67,6 +67,38 @@
     <script src="_framework/blazor.webassembly.js"></script>
     <script>navigator.serviceWorker.register('service-worker.js');</script>
     <script src="_content/MudBlazor/MudBlazor.min.js"></script>
+    <script>
+        window.downloadFileFromStream = async (fileName, contentStreamReference) => {
+            try {
+                const arrayBuffer = await contentStreamReference.arrayBuffer();
+                const blob = new Blob([arrayBuffer]);
+                const url = URL.createObjectURL(blob);
+                const anchorElement = document.createElement('a');
+                
+                // Set properties
+                anchorElement.href = url;
+                anchorElement.download = fileName ?? 'download';
+                anchorElement.style.display = 'none';
+                
+                // Add to DOM
+                document.body.appendChild(anchorElement);
+                
+                // Trigger click
+                anchorElement.click();
+                
+                // Clean up after download starts
+                setTimeout(() => {
+                    if (anchorElement && anchorElement.parentNode) {
+                        document.body.removeChild(anchorElement);
+                    }
+                    URL.revokeObjectURL(url);
+                }, 500);
+            } catch (error) {
+                console.error('Download failed:', error);
+                throw error;
+            }
+        }
+    </script>
 </body>
 
 </html>

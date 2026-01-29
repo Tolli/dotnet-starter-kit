@@ -1,0 +1,291 @@
+@using Microsoft.AspNetCore.Components.Forms
+@using MudBlazor
+@using ClosedXML.Excel
+@using CsvHelper
+@using System.Globalization
+@using FSH.Starter.Blazor.Infrastructure.Api
+
+<MudDialog>
+    <DialogContent>
+        <MudText Typo="Typo.h6" Class="mb-4">Import Payments from Excel or CSV</MudText>
+        
+        <MudAlert Severity="Severity.Info" Class="mb-4">
+            <MudText Typo="Typo.body2">
+                Upload an Excel (.xlsx) or CSV file with the following columns:<br/>
+                <strong>CustomerSSN, InvoiceId (optional), Amount, Currency, Method, Description (optional)</strong>
+            </MudText>
+        </MudAlert>
+
+        <MudFileUpload T="IBrowserFile" 
+                      Accept=".xlsx,.xls,.csv" 
+                      FilesChanged="HandleFileSelected"
+                      MaximumFileCount="1">
+            <ActivatorContent>
+                <MudButton Variant="Variant.Filled"
+                          Color="Color.Primary"
+                          StartIcon="@Icons.Material.Filled.CloudUpload">
+                    Select File
+                </MudButton>
+            </ActivatorContent>
+        </MudFileUpload>
+
+        @if (!string.IsNullOrEmpty(selectedFileName))
+        {
+            <MudChip T="string" Color="Color.Info" Class="mt-2">
+                @selectedFileName
+            </MudChip>
+        }
+
+        @if (importResults.Any())
+        {
+            <MudPaper Class="mt-4 pa-4">
+                <MudText Typo="Typo.h6" Class="mb-2">Import Results</MudText>
+                <MudText Typo="Typo.body2" Color="Color.Success">
+                    ? Successfully imported: @importResults.Count(r => r.Success)
+                </MudText>
+                <MudText Typo="Typo.body2" Color="Color.Error">
+                    ? Failed: @importResults.Count(r => !r.Success)
+                </MudText>
+
+                @if (importResults.Any(r => !r.Success))
+                {
+                    <MudDivider Class="my-2" />
+                    <MudText Typo="Typo.subtitle2" Class="mt-2">Errors:</MudText>
+                    @foreach (var result in importResults.Where(r => !r.Success))
+                    {
+                        <MudText Typo="Typo.body2" Color="Color.Error" Class="mt-1">
+                            Row @result.RowNumber: @result.ErrorMessage
+                        </MudText>
+                    }
+                }
+            </MudPaper>
+        }
+
+        @if (isProcessing)
+        {
+            <MudProgressLinear Color="Color.Primary" Indeterminate="true" Class="mt-4" />
+        }
+    </DialogContent>
+    <DialogActions>
+        <MudButton OnClick="Cancel">Cancel</MudButton>
+        <MudButton Color="Color.Primary" 
+                  OnClick="ProcessImport" 
+                  Disabled="@(selectedFile == null || isProcessing)">
+            Import
+        </MudButton>
+    </DialogActions>
+</MudDialog>
+
+@code {
+[CascadingParameter] 
+IMudDialogInstance MudDialog { get; set; } = default!;
+
+[Inject]
+protected IApiClient Client { get; set; } = default!;
+
+    [Inject]
+    protected ISnackbar Snackbar { get; set; } = default!;
+
+    private IBrowserFile? selectedFile;
+    private string selectedFileName = string.Empty;
+    private bool isProcessing = false;
+    private List<ImportResult> importResults = new();
+
+    private void HandleFileSelected(IBrowserFile file)
+    {
+        selectedFile = file;
+        selectedFileName = file.Name;
+        importResults.Clear();
+    }
+
+    private async Task ProcessImport()
+    {
+        if (selectedFile == null) return;
+
+        isProcessing = true;
+        importResults.Clear();
+
+        try
+        {
+            var stream = selectedFile.OpenReadStream(maxAllowedSize: 10 * 1024 * 1024); // 10MB limit
+            
+            if (selectedFile.Name.EndsWith(".csv", StringComparison.OrdinalIgnoreCase))
+            {
+                await ImportFromCsv(stream);
+            }
+            else
+            {
+                await ImportFromExcel(stream);
+            }
+
+            var successCount = importResults.Count(r => r.Success);
+            var failCount = importResults.Count(r => !r.Success);
+
+            if (successCount > 0)
+            {
+                Snackbar.Add($"Successfully imported {successCount} payment(s)", Severity.Success);
+                if (failCount == 0)
+                {
+                    await Task.Delay(2000); // Show success message briefly
+                    MudDialog.Close(DialogResult.Ok(true));
+                }
+            }
+            
+            if (failCount > 0)
+            {
+                Snackbar.Add($"Failed to import {failCount} payment(s)", Severity.Warning);
+            }
+        }
+        catch (Exception ex)
+        {
+            Snackbar.Add($"Import failed: {ex.Message}", Severity.Error);
+        }
+        finally
+        {
+            isProcessing = false;
+        }
+    }
+
+    private async Task ImportFromExcel(Stream stream)
+    {
+        // Read the stream into memory first (required for Blazor WebAssembly)
+        using var memoryStream = new MemoryStream();
+        await stream.CopyToAsync(memoryStream);
+        memoryStream.Position = 0;
+
+        using var workbook = new XLWorkbook(memoryStream);
+        var worksheet = workbook.Worksheet(1);
+        var rows = worksheet.RangeUsed().RowsUsed().Skip(1); // Skip header
+
+        int rowNumber = 2;
+        foreach (var row in rows)
+        {
+            try
+            {
+                var customerSSN = row.Cell(1).GetString();
+                
+                // Look up customer by SSN
+                var customerFilter = new SearchCustomersCommand
+                {
+                    PageNumber = 1,
+                    PageSize = 1,
+                    SearchText = customerSSN
+                };
+                var customers = await Client.SearchCustomersEndpointAsync("1", customerFilter);
+                
+                if (customers == null || !customers.Items.Any())
+                {
+                    throw new Exception($"Customer with SSN '{customerSSN}' not found");
+                }
+                
+                var customer = customers.Items.First();
+                
+                var payment = new CreatePaymentCommand
+                {
+                    CustomerId = customer.Id!.Value,
+                    InvoiceId = string.IsNullOrWhiteSpace(row.Cell(2).GetString()) ? null : Guid.Parse(row.Cell(2).GetString()),
+                    Amount = (double)decimal.Parse(row.Cell(3).GetString()),
+                    Currency = row.Cell(4).GetString(),
+                    Method = Enum.Parse<PaymentMethod>(row.Cell(5).GetString()),
+                    Description = row.Cell(6).GetString()
+                };
+
+                await Client.CreatePaymentEndpointAsync("1", payment);
+                importResults.Add(new ImportResult { RowNumber = rowNumber, Success = true });
+            }
+            catch (Exception ex)
+            {
+                importResults.Add(new ImportResult 
+                { 
+                    RowNumber = rowNumber, 
+                    Success = false, 
+                    ErrorMessage = ex.Message 
+                });
+            }
+
+            rowNumber++;
+        }
+    }
+
+    private async Task ImportFromCsv(Stream stream)
+    {
+        // Read the entire content asynchronously first (required for Blazor WebAssembly)
+        string csvContent;
+        using (var reader = new StreamReader(stream))
+        {
+            csvContent = await reader.ReadToEndAsync();
+        }
+
+        // Now parse the CSV from the string
+        using var stringReader = new StringReader(csvContent);
+        using var csv = new CsvReader(stringReader, CultureInfo.InvariantCulture);
+
+        var records = csv.GetRecords<PaymentImportModel>().ToList();
+        int rowNumber = 2; // Start from 2 (after header)
+
+        foreach (var record in records)
+        {
+            try
+            {
+                // Look up customer by SSN
+                var customerFilter = new SearchCustomersCommand
+                {
+                    PageNumber = 1,
+                    PageSize = 1,
+                    SearchText = record.CustomerSSN
+                };
+                var customers = await Client.SearchCustomersEndpointAsync("1", customerFilter);
+                
+                if (customers == null || !customers.Items.Any())
+                {
+                    throw new Exception($"Customer with SSN '{record.CustomerSSN}' not found");
+                }
+                
+                var customer = customers.Items.First();
+                
+                var payment = new CreatePaymentCommand
+                {
+                    CustomerId = customer.Id!.Value,
+                    InvoiceId = record.InvoiceId,
+                    Amount = (double)record.Amount,
+                    Currency = record.Currency,
+                    Method = record.Method,
+                    Description = record.Description
+                };
+
+                await Client.CreatePaymentEndpointAsync("1", payment);
+                importResults.Add(new ImportResult { RowNumber = rowNumber, Success = true });
+            }
+            catch (Exception ex)
+            {
+                importResults.Add(new ImportResult 
+                { 
+                    RowNumber = rowNumber, 
+                    Success = false, 
+                    ErrorMessage = ex.Message 
+                });
+            }
+
+            rowNumber++;
+        }
+    }
+
+    private void Cancel() => MudDialog.Cancel();
+
+    private class ImportResult
+    {
+        public int RowNumber { get; set; }
+        public bool Success { get; set; }
+        public string? ErrorMessage { get; set; }
+    }
+
+    private class PaymentImportModel
+    {
+        public string CustomerSSN { get; set; } = string.Empty;
+        public Guid? InvoiceId { get; set; }
+        public decimal Amount { get; set; }
+        public string Currency { get; set; } = "ISK";
+        public PaymentMethod Method { get; set; }
+        public string? Description { get; set; }
+    }
+}
